@@ -1,0 +1,53 @@
+body {
+  background-color: #fff;
+  margin: 10px 10px 10px 10px;
+}
+a {
+  text-decoration: none;
+  
+}
+#wait_sensor_back {
+ background-color: #00dddd;
+}
+#no_sensor {
+ background-color: #DD0000;
+}
+#sensor_sent {
+ background-color: #9BA1ED;
+}
+#wait_them {
+ background-color: #DC69DA;
+}
+#site_visit {
+ background-color: #FF0000;
+}
+#sensor_sent {
+ background-color: #9BA1ED;
+}
+#open {
+ background-color: #0e0;
+}
+#banner {
+ background-color: #ccc;
+}
+#banner h3 {
+ margin: 1px 1px 1px 1px;
+ padding: 0 0 0 30px;
+ color: #ff0;
+ border-color: #fff;
+ font-weight: bold;
+ letter-spacing: 0.5em;
+ background-color: #aaa;
+}
+#login {
+ background-color: #eee;
+ text-align: center;
+ border: 2px 2px 2px 2px;
+ border-style: dashed;
+}
+#login h3 {
+ border: 0 0 0 0;
+ margin: 0 0 0 0;
+ color: #00f;
+ letter-spacing: 0.5em;
+}

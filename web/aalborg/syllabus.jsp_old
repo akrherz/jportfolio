@@ -1,0 +1,227 @@
+
+<HTML>
+<HEAD>
+	<TITLE>Portfolio | ICT and Learning</TITLE>
+  <%@include file='setup.jsp'%>
+</HEAD>
+
+<BODY bgcolor="WHITE">
+
+<CENTER>
+<img src="images/ict.png" alt="ICT and Learning">
+</CENTER>
+<BR><%@include file='authBox.jsp'%>
+<HR>
+
+<center><font size=+2>Master of Information Technology in</font>
+<p><font size=+2>ICT and Learning</font>
+<p><b><font size=+1>CaseUSA (M1,k4)</font></b>
+<p><b><font size=+1>Spring Semester 2002</font></b>
+<p><b>Eugene S. Takle (<a href="mailto:gstakle@iastate.edu">gstakle@iastate.edu</a>),
+Iowa State University</b>
+<p><b>Elsebeth Korsgaard Sorensen (<a href="mailto:eks@hum.auc.dk">eks@hum.auc.dk</a>),
+Aalborg University</b></center>
+
+<p><b>________________________________________________________________</b>
+<br>&nbsp;
+<br>&nbsp;
+<p><b>Objectives</b>
+<ol>
+<li>
+To provide you with some new insight into how ICT technology may support
+collaborations across borders, both in a geographical sense and from the
+perspective of collaboration and education across disciplines. Moreover,
+you are provided with som pedagogical "hands on" in relation to m1,k4, as your work with the GC course may be viewed as some way of integrating
+(virtual) practice into the discussions of m1,k4</li>
+
+
+<p>One of the advantages that we are provided with through the use of communication
+technologies as frames for teaching/learning is the possibility of transcending
+geographical boarders in our educational concept. Thus, this activity constitutes
+an example of how it becomes possible, not only with respect to collaborations
+within research but also as a directly integrated part of a curriculum,
+to incorporate both international expertise and collaboration in the learning
+process.
+
+<BR><BR>
+<li>
+To provide you with some new insight into how ICT technology may be used
+to support the design of both on-campus and off-campus education, and into
+the significant features of the two concepts. To us at Aalborg University,
+to many other institutions doing research within ICT and the field of educational
+development, and to you who are trying to learn during this complex development,
+the concept "mixed-mode" within ICT-based education remains a desirable
+but somewhat theoretical concept. The research around this is very limited,
+and though the visions around "mixed-mode" education seem rather clear,
+the challenge of designing for this still remains rather hazy. One of the
+reasons that the GC course in this respect appears so interesting is that
+it is advertised as an on-campus course, but one which is now is being
+- with only very few changes - offered off-campus. In other words,
+we may in principle view the GC course as a qualified suggestion of a "mixed-mode"
+course.</li>
+</ol>
+<b>The tasks as preparation for the video conference Feb. 1 at DPU</b>
+
+<table><tr><td>&nbsp; &nbsp;</td>
+<td>
+<p>Our interest in the GC course is not related to its "course content",
+but to pedagogical form, structure, design and methodology. Dr. Eugene
+Takle is informed of the overall idea of our master in ICT and Learning.
+While recognizing that he himself is not an pedagogical/instructional expert,
+he would very much appreciate <b>your feedback electronically</b> (as experts
+on the integration of ICT and learning) on his design of the GC course<b>
+during the time period of January 17-31. </b>The electronic feedback from
+you should be delivered individually through the solving of three evaluation
+tasks presented in a virtual pilot-portfolio, made available to you from
+Jan 14 (see a brief overview of these tasks below). Part of Dr. Takle’s
+presentation on the video conference will depart thematically from the
+feedback that he receives from you during the solving of the three evaluation
+tasks.
+</td></tr></table>
+
+<br>&nbsp;
+<table>
+<tr>
+<th>Due Date:</th>
+
+<th>Subject/Theme:</th>
+
+<th>Dialogue/Discussion:</th>
+
+<th>Activities:</th>
+</tr>
+
+<tr>
+<td>Jan 22</td>
+
+<td>Web Evaluation I</td>
+
+<td>Coop. Learning</td>
+
+<td>Assignment 1</td>
+</tr>
+
+<tr>
+<td>Jan 26</td>
+
+<td>Web Evaluation II</td>
+
+<td>On-line experiments</td>
+
+<td>Assignment 2</td>
+</tr>
+
+<tr>
+<td>Jan 31</td>
+
+<td>Web Evaluation III</td>
+
+<td>Portfolio</td>
+
+<td>Assignment 3</td>
+</tr>
+</table>
+
+<p><b>Assessment (in Danish)</b>
+<p>Your activities in relation to "Global Change" during the period of
+January 15-31 constitute the expected tasks and input from you in relation
+to M1:OpgCaseUSA. The assessment criteria of the detailed tasks of module
+1 are as follows (in Danish):
+<p>Evaluering (modul 1)
+<br>&copy; Elsebeth K. Sorensen
+<p>Modul 1 evalueres (internt og gradueret) p&aring; baggrund af en samlet
+vurdering af 4 opgaver, der hver t&aelig;ller 25%.
+<p>For hver af debatopgaverne:
+<ul>
+<li>
+OpgB(M1T2)</li>
+
+<li>
+OpgB(M1T3)</li>
+</ul>
+g&aelig;lder f&oslash;lgende retningslinier for den enkeltes kommunikative
+indsats:
+<dir>
+<dir>KVANTITATIV V&AElig;GTNING:</dir>
+</dir>
+
+<ul>
+<ul>
+<li>
+producer mindst 5 indl&aelig;g i alt</li>
+
+<li>
+heraf skal 3 v&aelig;re respons p&aring; mindst 3 andre studerendes indl&aelig;g</li>
+
+<li>
+udl&oslash;s mindst 3 responser fra andre studerende p&aring; dine indl&aelig;g</li>
+</ul>
+</ul>
+
+<dir>
+<dir>KVALITATIV V&AElig;GTNING
+<p>(eksempler p&aring; indholdsm&aelig;ssige karakteristika i indl&aelig;g,
+som befordrer vidensopbygning):</dir>
+</dir>
+
+<ul>
+<ul>
+<li>
+sp&oslash;rgsm&aring;l som eftersp&oslash;rger klarhed</li>
+
+<li>
+at tilf&oslash;re diskussionen ny (m&aring;ske dokumenteret) viden</li>
+
+<li>
+relevans af kommentarer</li>
+
+<li>
+standpunkter som bygger p&aring; logiske argumenter</li>
+
+<li>
+opsamling af kommentarer/information som antyder en ny konklusion p&aring;
+noget</li>
+</ul>
+</ul>
+
+<dir>
+<dir>Rationale:
+<p>M&aring;let er en mellemmenneskelig interaktion der medvirker til udviklingen
+af en kollaborativ, vidensopbyggende diskussion:</dir>
+</dir>
+
+<ul>
+<ul>
+<li>
+deltagelse i diskussion (at man er aktiv i processen from mod et f&aelig;lles
+m&aring;l)</li>
+
+<li>
+respons p&aring; andres indl&aelig;g (at man lytter til andres meninger
+i processen)</li>
+
+<li>
+udl&oslash;se respons fra andre (at man bidrager med relevante synspunkter
+i processen)</li>
+</ul>
+</ul>
+For hver af opgaverne
+<ul>
+<li>
+OpgCaseUSA (med analyse af web-design fra USA)</li>
+
+<li>
+OpgG&aelig;stel&aelig;rer (med g&aelig;stel&aelig;rer fra Norge)</li>
+</ul>
+evalueres der som f&oslash;lger:
+<ul>
+<ul>
+<li>
+Opgavedeltagelse og -l&oslash;sning som det vil blive anvist i forhold
+til de to opgaver&nbsp;</li>
+
+<li>
+Dvs. best&aring;et/ikke-best&aring;et, uden specifikke deltagelseskriterier
+omkring kvantitet og kvalitet af indl&aelig;g</li>
+</ul>
+</ul>

@@ -1,0 +1,16 @@
+#portfolio-header {
+  display: none;
+  visibility: hidden;
+}
+#portfolio-side {
+  display: none;
+  visibility: hidden;
+}
+#mainNavOuter {
+  visibility: hidden;
+  display: none;
+}
+#portfolio-footer {
+  visibility: hidden;
+  display: none;
+}

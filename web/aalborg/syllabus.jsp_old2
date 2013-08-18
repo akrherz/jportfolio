@@ -1,0 +1,405 @@
+
+<HTML>
+<HEAD>
+        <TITLE>Portfolio | ICT and Learning</TITLE>
+  <%@include file='setup.jsp'%>
+</HEAD>
+
+<BODY bgcolor="WHITE">
+
+<CENTER>
+<img src="images/ict.png" alt="ICT and Learning">
+</CENTER>
+<BR><%@include file='authBox.jsp'%>
+<HR>
+
+<style>
+<!--
+ /* Font Definitions */
+@font-face
+	{font-family:Times;
+	panose-1:0 0 0 0 0 0 0 0 0 0;
+	mso-font-alt:"Times New Roman";
+	mso-font-charset:0;
+	mso-generic-font-family:roman;
+	mso-font-format:other;
+	mso-font-pitch:variable;
+	mso-font-signature:3 0 0 0 1 0;}
+ /* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	mso-bidi-font-size:10.0pt;
+	font-family:Times;
+	mso-fareast-font-family:Times;
+	mso-bidi-font-family:"Times New Roman";
+	mso-ansi-language:EN-GB;}
+h1
+	{mso-style-next:Normal;
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	page-break-after:avoid;
+	mso-outline-level:1;
+	font-size:18.0pt;
+	mso-bidi-font-size:10.0pt;
+	font-family:Times;
+	mso-font-kerning:0pt;
+	mso-ansi-language:EN-GB;
+	font-weight:normal;}
+h2
+	{mso-style-next:Normal;
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	page-break-after:avoid;
+	mso-outline-level:2;
+	font-size:12.0pt;
+	mso-bidi-font-size:10.0pt;
+	font-family:Times;
+	mso-ansi-language:EN-GB;
+	mso-bidi-font-weight:normal;}
+p.MsoBodyText, li.MsoBodyText, div.MsoBodyText
+	{margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	mso-bidi-font-size:10.0pt;
+	font-family:Times;
+	mso-fareast-font-family:Times;
+	mso-bidi-font-family:"Times New Roman";
+	mso-ansi-language:EN-GB;
+	font-weight:bold;
+	mso-bidi-font-weight:normal;}
+a:link, span.MsoHyperlink
+	{color:blue;
+	text-decoration:underline;
+	text-underline:single;}
+a:visited, span.MsoHyperlinkFollowed
+	{color:purple;
+	text-decoration:underline;
+	text-underline:single;}
+@page Section1
+	{size:595.3pt 841.9pt;
+	margin:1.0in 1.25in 1.0in 1.25in;
+	mso-header-margin:35.45pt;
+	mso-footer-margin:35.45pt;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+ /* List Definitions */
+@list l0
+	{mso-list-id:2;
+	mso-list-type:simple;
+	mso-list-template-ids:66569;}
+@list l0:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:.25in;
+	mso-level-number-position:left;
+	margin-left:.25in;
+	text-indent:-.25in;
+	font-family:Symbol;}
+@list l1
+	{mso-list-id:3;
+	mso-list-type:simple;
+	mso-list-template-ids:66569;}
+@list l1:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:.25in;
+	mso-level-number-position:left;
+	margin-left:.25in;
+	text-indent:-.25in;
+	font-family:Symbol;}
+ol
+	{margin-bottom:0in;}
+ul
+	{margin-bottom:0in;}
+-->
+</style>
+</head>
+
+<body lang=EN-US link=blue vlink=purple style='tab-interval:.5in'>
+
+<div class=Section1>
+
+<h1><span lang=EN-GB><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></h1>
+
+<p class=MsoNormal align=center style='text-align:center'><b style='mso-bidi-font-weight:
+normal'><span lang=EN-GB style='font-size:18.0pt;mso-bidi-font-size:10.0pt'>Master
+of Information Technology in<o:p></o:p></span></b></p>
+
+<p class=MsoNormal align=center style='text-align:center'><b style='mso-bidi-font-weight:
+normal'><span lang=EN-GB style='font-size:18.0pt;mso-bidi-font-size:10.0pt'>ICT
+and Learning (MIL)</span></b><span lang=EN-GB style='font-size:20.0pt;
+mso-bidi-font-size:10.0pt'><o:p></o:p></span></p>
+
+<h1 align=center style='text-align:center'><b style='mso-bidi-font-weight:normal'><span
+lang=EN-GB style='font-size:12.0pt;mso-bidi-font-size:10.0pt'>Spring Semester
+2003<o:p></o:p></span></b></h1>
+
+<p class=MsoNormal align=center style='text-align:center'><span lang=EN-GB
+style='font-size:20.0pt;mso-bidi-font-size:10.0pt'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal align=center style='text-align:center'><b style='mso-bidi-font-weight:
+normal'><span lang=EN-GB style='font-size:16.0pt;mso-bidi-font-size:10.0pt'>CaseUSA
+(m1k4)<o:p></o:p></span></b></p>
+
+<p class=MsoNormal><span lang=EN-GB style='font-size:20.0pt;mso-bidi-font-size:
+10.0pt'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal align=center style='text-align:center'><b style='mso-bidi-font-weight:
+normal'><span lang=EN-GB>Elsebeth Korsgaard Sorensen (<a
+href="mailto:eks@hum.auc.dk"><span style='font-weight:normal'>eks@hum.auc.dk</span></a>),
+Aalborg University<o:p></o:p></span></b></p>
+
+<p class=MsoNormal align=center style='text-align:center'><b style='mso-bidi-font-weight:
+normal'><span lang=EN-GB>Eugene S. Takle (<a href="mailto:gstakle@iastate.edu"><span
+style='font-weight:normal'>gstakle@iastate.edu</span></a>), Iowa State
+University<o:p></o:p></span></b></p>
+
+<p class=MsoNormal><span lang=EN-GB><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-GB><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-GB><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<h2><span lang=EN-GB>Objectives </span></h2>
+
+<p class=MsoNormal><span lang=EN-GB><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='margin-left:.25in;text-indent:-.25in;mso-list:l0 level1 lfo1;
+tab-stops:list .25in'><![if !supportLists]><span lang=EN-GB style='font-family:
+Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><![endif]><span lang=EN-GB>To provide you with some new insight
+into how ICT technology may support collaborations across borders, both in a
+geographical sense and from the perspective of collaboration and education
+across disciplines. Moreover, you are provided with some pedagogical
+&quot;hands on&quot; in relation to module 1, as your work with the GC course
+may be viewed as some way of integrating (virtual) practice into the discussions
+of module 1. </span></p>
+
+<p class=MsoNormal><span lang=EN-GB><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='margin-left:.25in;text-indent:-.25in;mso-list:l0 level1 lfo1;
+tab-stops:list .25in'><![if !supportLists]><span lang=EN-GB style='font-family:
+Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><![endif]><span lang=EN-GB>One of the advantages that we are
+provided with through the use of communication technologies as frames for teaching/learning
+is the possibility of transcending geographical boarders in our educational
+concept. Thus, this activity constitutes an example of how it becomes possible,
+not only with respect to collaborations within research but also as a directly
+integrated part of a curriculum, to incorporate both international expertise
+and collaboration in the learning process. </span></p>
+
+<p class=MsoNormal style='text-indent:27.0pt'><span lang=EN-GB><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='margin-left:.25in;text-indent:-.25in;mso-list:l0 level1 lfo1;
+tab-stops:list .25in'><![if !supportLists]><span lang=EN-GB style='font-family:
+Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><![endif]><span lang=EN-GB>To provide you with some new insight
+into how ICT technology may be used to support the design of both on-campus and
+off-campus education, and into the significant features of the two concepts. To
+us at MIL, to many other institutions doing research within ICT
+and the field of educational development, and to you who are trying to learn
+during this complex development, the concept &quot;mixed-mode&quot; within
+ICT-based education remains a desirable but somewhat theoretical concept. The
+research around this is very limited, and though the visions around &quot;mixed-mode&quot;
+education seem rather clear, the challenge of designing for this still remains
+rather hazy. One of the reasons that the GC course in this respect appears so
+interesting is that it is developing to a concept that may be fruitfully
+applied and used in both an on-campus and off-campus context. </span></p>
+
+<p class=MsoNormal><span lang=EN-GB><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-GB><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoBodyText><span lang=EN-GB>The tasks as preparation for the video
+conference to be held Friday, January 31, at 18.00 hours at the Danish Pedagogical
+University (DPU) </span></p>
+
+<p class=MsoNormal><span lang=EN-GB><span style="mso-spacerun: yes">  </span></span></p>
+
+<p class=MsoNormal><span lang=EN-GB>Our interest in the GC course is not
+related to its &quot;course content&quot;, but to pedagogical form, structure,
+design and methodology. Dr. Eugene Takle is informed of the overall idea of our
+master in ICT and Learning. While recognizing that he himself is not a pedagogical/instructional
+expert, he would very much appreciate YOUR feedback electronically (as experts
+on the integration of ICT and learning) on his design of the GC course during
+the time period of January 13-30. The electronic feedback from you should be
+delivered individually through the solving of three evaluation tasks presented
+in a virtual pilot-portfolio, made available to you from Jan 13 (see a brief overview
+of these tasks below). The interaction (during the video conference at DPU) between Dr. Takle and us will partly depart thematically from the feedback that
+he receives from you during the solving of the three evaluation
+tasks. So - once again - the quality of the overall learning process
+in this course is dependent on a mutual engagement and input :-)
+</span></p>
+
+<p class=MsoNormal><span lang=EN-GB><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-GB><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<table border=1 cellspacing=0 cellpadding=0 style='border-collapse:collapse;
+ border:none;mso-border-alt:solid windowtext .5pt;mso-padding-alt:0in 5.4pt 0in 5.4pt'>
+ <tr>
+  <td width=83 valign=top style='width:62.1pt;border:solid windowtext 2.25pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><span lang=EN-GB>Due Date:</span></p>
+  </td>
+  <td width=170 valign=top style='width:127.6pt;border:solid windowtext 2.25pt;
+  border-left:none;mso-border-left-alt:solid windowtext 2.25pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><span lang=EN-GB>Subject/Theme:</span></p>
+  </td>
+  <td width=173 valign=top style='width:129.8pt;border:solid windowtext 2.25pt;
+  border-left:none;mso-border-left-alt:solid windowtext 2.25pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><span lang=EN-GB>Dialogue/Discussion:<o:p></o:p></span></p>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><span
+  lang=EN-GB><o:p></o:p></span></p>
+  </td>
+  <td width=177 valign=top style='width:132.45pt;border:solid windowtext 2.25pt;
+  border-left:none;mso-border-left-alt:solid windowtext 2.25pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><span lang=EN-GB>Activities:<o:p></o:p></span></p>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><span
+  lang=EN-GB><o:p></o:p></span></p>
+  </td>
+ </tr>
+
+ <tr>
+  <td width=83 valign=top style='width:62.1pt;border:solid windowtext .5pt;
+  border-top:none;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><span lang=EN-GB>Jan 18</span></p>
+  </td>
+  <td width=170 valign=top style='width:127.6pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><span lang=EN-GB>Web Evaluation I, part 1</span></p>
+  </td>
+  <td width=173 valign=top style='width:129.8pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><span lang=EN-GB>Quizzes &amp; Collaborative Learning</span></p>
+  </td>
+  <td width=177 valign=top style='width:132.45pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><span lang=EN-GB>Assignment I, part 1</span></p>
+  </td>
+ </tr>
+
+ <tr>
+  <td width=83 valign=top style='width:62.1pt;border:solid windowtext .5pt;
+  border-top:none;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><span lang=EN-GB>Jan 22</span></p>
+  </td>
+  <td width=170 valign=top style='width:127.6pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><span lang=EN-GB>Web Evaluation I, part 2</span></p>
+  </td> 
+  <td width=170 valign=top style='width:127.6pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><span lang=EN-GB>Group Design</span></p>
+  </td>
+  <td width=177 valign=top style='width:132.45pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><span lang=EN-GB>Assignment I, part 2</span></p>
+  </td>
+ </tr>
+
+
+
+ <tr>
+  <td width=83 valign=top style='width:62.1pt;border:solid windowtext .5pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><span lang=EN-GB>Jan 24</span></p>
+  </td>
+  <td width=170 valign=top style='width:127.6pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><span lang=EN-GB>Web Evaluation II</span></p>
+  </td>
+  <td width=173 valign=top style='width:129.8pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><span lang=EN-GB>On-line experiments</span></p>
+  </td>
+  <td width=177 valign=top style='width:132.45pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><span lang=EN-GB>Assignment II</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=83 valign=top style='width:62.1pt;border:solid windowtext .5pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><span lang=EN-GB>Jan 29</span></p>
+  </td>
+  <td width=170 valign=top style='width:127.6pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><span lang=EN-GB>Web Evaluation III</span></p>
+  </td>
+  <td width=173 valign=top style='width:129.8pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><span lang=EN-GB>Portfolio and dialogue</span></p>
+  </td>
+  <td width=177 valign=top style='width:132.45pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><span lang=EN-GB>Assignment III</span></p>
+  </td>
+ </tr>
+</table>
+
+<p class=MsoNormal><span lang=EN-GB><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-GB><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<h2><span lang=EN-GB>Assessment of MIL, Modul 1 including m1k4: CaseUSA </span></h2>
+
+<p class=MsoNormal><span lang=EN-GB>© Elsebeth K. Sorensen </span></p>
+
+<p class=MsoNormal><span lang=EN-GB><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-GB>While the courses m1k1 and m1k2 are
+obligatory, m1k3 and m1k4 are optional (some students may want, though, to take
+all of the 4 courses). The assessment of The ICT &amp; Learning, Module 1,
+results in one grade. This grade, however, is a total result derived from the individual
+results of graded student work carried out in 3 (of 4 possible) courses. While
+in m1k2 and m1k3 the assessment process provided you with a grade, you will in
+m1k4 (as in the case of m1k1) be assessed using &quot;passed/not-passed&quot;. </span></p>
+
+<p class=MsoNormal><span lang=EN-GB><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-GB>The tasks included in m1k4:CaseUSA (Web
+Evaluation I, Web Evaluation II, and Web Evaluation III) are evaluated on the
+basis of participation. In this context, participation means:</span></p>
+
+<p class=MsoNormal><span lang=EN-GB><span style="mso-spacerun: yes"> </span></span></p>
+
+<p class=MsoNormal style='margin-left:.75in;text-indent:-.25in;mso-list:l1 level1 lfo2;
+tab-stops:list .75in'><![if !supportLists]><span lang=EN-GB style='font-family:
+Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><![endif]><span lang=EN-GB>demonstrating active, reflective
+online behaviour in the period of January 13-29, through providing comments in the
+US virtual portfolio as requested through engagement in the three Web
+Evaluation tasks.</span></p>
+
+</div>
+
+</body>
+
+</html>

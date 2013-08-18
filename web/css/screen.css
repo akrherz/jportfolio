@@ -1,0 +1,264 @@
+/* Portfolio Style-Sheet */
+body {
+  margin: 5px;
+  margin-top: 60px;
+  padding: 0px;
+  width: 800px;
+}
+a {
+  text-decoration: none;
+}
+
+a:link {
+  color: #00f;
+}
+
+a:visited {
+        color: #00f;
+        }
+h1 {
+  font-size: 1.30em;
+  margin-top: 1em;
+}
+#portfolio-header {
+ background-color: #455372;
+ height: 60px;
+ position: absolute;
+ display: block;
+ margin-left: -5px;
+ margin-top: -60px;
+ width: 800px;
+ z-index: 2;
+}
+body>#portfolio-header { position:fixed;}
+
+#portfolio-header-logo {
+    padding-left: 10px;
+    padding-top: 10px;
+    float: left;
+}
+#portfolio-header-rlogo {
+    padding-right: 10px;
+    padding-top: 10px;
+    float: right;
+}
+#portfolio-header-rlogo img{
+        border: 0px;
+}
+#portfolio-header h1 {
+ margin-left: 20px;
+ margin-top: 1px;
+ margin-bottom: 0px;
+ font-size: 1.30em;
+ color: #fff;
+ float: left;
+}
+#portfolio-header a {
+  color: #fff;
+}
+#portfolio-header ul {
+    list-style: none;
+}
+#portfolio-header li {
+        float: right;
+        padding: 0 6px 0 0;
+        margin: 0 1px 0 0;
+        border-bottom: 1px solid #515358;
+}
+#portfolio-header ul a {
+        float: left;
+        display: block;
+        padding: 4px 4px 4px 10px;
+        font-weight: bold;
+        color: #fff;
+        text-decoration: none;
+}
+#portfolio-auth {
+  float:right;
+  color: #ff0;
+  margin-right: 10px;
+}
+#portfolio-auth a{
+  color: #ff0;
+}
+
+
+#mainNavOuter {
+  position: absolute;
+  margin-top: -25px; 
+  margin-left: 5px; 
+  z-index: 3;
+  width: 780px;
+    /*    background-position: bottom right;
+        background-repeat: no-repeat; */
+        background-color: #c00;
+        }
+
+body>#mainNavOuter { position:fixed;}
+
+#mainNav {
+  z-index: 4;
+        font-weight: bold;
+        font-family: "Luxi Sans", verdana, helvetica, arial, sans-serif;
+        font-size: x-small;
+        }
+
+
+/* float clear hack that has been hacked for Moz 1.5x and below */
+#mainNavOuter:after {
+    content: ".";
+    display: block;
+    height: 1px;
+    margin-top: -1px;
+    overflow: hidden;
+    clear: both;
+    visibility: hidden;
+    }
+/* Holly Hack Targets IE Win only \*/
+* html .mainNavOuter {height: 1%;} 
+/* End Holly Hack */
+
+
+#mainNavInner {
+  z-index: 5;
+        width: 100%;
+        height: 7px;
+        }
+
+#mainNav ul {
+        padding: 0;
+        margin: 0;
+        list-style-type: none;
+        }
+
+#mainNav ul li {
+        background: #b70000;
+        display: block;
+        float: left;
+        padding: 0;
+        margin: 0;
+        }
+
+#mainNav li.mainFirst-active,
+#mainNav li.main-active,
+#mainNav li.mainLast-active {
+  background-color: #800000;
+}
+
+
+#mainNav ul li a {
+        display: block;
+        float: left;
+        text-decoration: none;
+        color: #fff;
+        padding: 5px 15px;
+        font-size: 11px;
+        text-decoration: none !important;
+        }
+
+
+#mainNav ul li a:hover {
+        color: #ff0;
+}
+#linksbar {
+    color: #eee;
+}
+#portfolio-footer {
+  text-align: left;
+  color: #777;
+  margin-bottom: 2em;
+  font-size: 0.8em;
+}
+#portfolio-side {
+  float: left;
+  width: 180px;
+}
+#portfolio-content {
+ margin-left: 200px;
+}
+
+.portfolioBox {
+  border: 0px;
+}
+.portfolioBox h3 {
+  margin: 0px;
+  font-size: 1.2em;
+  font-weight: bold;
+  border-bottom: 1px solid #000;
+}
+.portfolioBox ul {
+  margin: 0px;
+  padding-left: 10px;
+}
+.portfolioBox li {
+  list-style: square;
+  list-style-position: outside;
+}
+.alertBox {
+  border: 3px dashed #000;
+  margin: 5px;
+  padding: 5px;
+  background-color: #eee;
+}
+.alertBox h3 {
+  color: #f00;
+  font-size: 1.2em;
+  margin: 0px;
+}
+
+/* Dialog Stuff */
+.dialog-post {
+  margin-top: 16px;
+  width: 600px;
+  padding: 0px;
+  border-top: 1px solid #000;
+  border-bottom: 1px solid #000;
+}
+.dialog-post-header {
+  background: #def;
+  padding-left: 5px;
+}
+.dialog-post-header h4{
+  font-size: 1.2em;
+  margin: 0px;
+}
+.dialog-post-link {
+  background: #eee;
+  padding: 2px;
+}
+.dialog-post-footer {
+  background: #def;
+  padding: 5px;
+}
+/* Dialog Colors */
+.brainstorming {
+  color: #f0f;
+}
+.articulating {
+  color: #91968F;
+}
+.reacting {
+ color: #f00;
+}
+.organization {
+  color: #bdc500;
+}
+.analysis {
+  color: #60CACE;
+}
+.generalization {
+  color: #0f0;
+}
+.social {
+  color: #00f;
+}
+.other {
+  color: #000;
+}
+/* Disscusion Quickview */
+ul.dqv {
+  margin-left: 0px;
+  padding-left: 15px;
+  text-indent: 0px;
+  list-style: none;
+}

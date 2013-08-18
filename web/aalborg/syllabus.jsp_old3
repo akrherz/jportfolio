@@ -1,0 +1,338 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+        <TITLE>Portfolio | ICT and Learning</TITLE>
+  <%@include file='setup.jsp'%>
+
+	<!--
+		@page { size: 8.5in 11in; margin-right: 1.25in; margin-top: 1in; margin-bottom: 1in }
+		P { margin-bottom: 0in; direction: ltr; color: #000000; text-align: justify }
+		P.western { font-family: "Times"; font-size: 12pt; so-language: en-US; font-weight: bold }
+		P.cjk { font-family: "Times"; font-size: 12pt; font-weight: bold }
+		P.ctl { font-family: "Times"; font-size: 10pt }
+		H1 { margin-top: 0in; margin-bottom: 0in; direction: ltr; color: #000000; text-align: center }
+		H1.western { font-family: "Times"; font-size: 16pt; so-language: en-US }
+		H1.cjk { font-family: "Times"; font-size: 16pt }
+		H1.ctl { font-family: "Times"; font-size: 10pt; font-weight: medium }
+		H2 { margin-top: 0in; margin-bottom: 0in; direction: ltr; color: #000000 }
+		H2.western { font-family: "Times"; font-size: 12pt; so-language: en-US }
+		H2.cjk { font-family: "Times"; font-size: 12pt }
+		H2.ctl { font-family: "Times"; font-size: 10pt; font-weight: medium }
+		A:link { color: #0000ff }
+	-->
+	</STYLE>
+</HEAD>
+                                                                                
+<BODY bgcolor="WHITE">
+                                                                                
+<CENTER>
+<img src="images/ict.png" alt="ICT and Learning">
+</CENTER>
+<BR><%@include file='authBox.jsp'%>
+<HR>
+<a href="syllabus.pdf">PDF Version</a>
+<hr>
+<P ALIGN=CENTER><FONT SIZE=6><B>Master of Information Technology in</B></FONT></P>
+<P CLASS="western" ALIGN=CENTER><FONT SIZE=6><B>ICT and Learning
+(MIL)</B></FONT></P>
+<H1 CLASS="western" ALIGN=CENTER>Spring Semester 2004</H1>
+<P CLASS="western" ALIGN=LEFT STYLE="font-weight: medium"><BR>
+</P>
+<P CLASS="western" ALIGN=CENTER STYLE="font-weight: medium"><B><FONT SIZE=5 STYLE="font-size: 21pt"><FONT COLOR="#000000">Virtuel
+Portfolio: CaseUSA (m1k4)</FONT></FONT></B></P>
+<P CLASS="western" ALIGN=CENTER STYLE="font-weight: medium"><BR>
+</P>
+<P CLASS="western" ALIGN=CENTER><FONT FACE="Times New Roman, serif"><B>&copy;
+Design:</B></FONT></P>
+<P CLASS="western" ALIGN=CENTER STYLE="font-weight: medium"><B><FONT FACE="Times New Roman, serif"><FONT COLOR="#000000">Dr.
+E<FONT SIZE=3>lsebeth Korsgaard Sorensen (</FONT></FONT></FONT></B><FONT COLOR="#0000ff"><U><A HREF="mailto:eks@hum.auc.dk"><FONT SIZE=4 STYLE="font-size: 16pt"><FONT FACE="Times New Roman, serif"><FONT COLOR="#0000ff">eks@hum.auc.dk</FONT></FONT></FONT></A></U></FONT><B><FONT FACE="Times New Roman, serif"><FONT COLOR="#000000">),
+AAU</FONT></FONT></B></P>
+<P CLASS="western" ALIGN=CENTER STYLE="font-weight: medium"><B><FONT FACE="Times New Roman, serif"><FONT COLOR="#000000">Professor
+<FONT SIZE=3>Eugene S. Takle (</FONT></FONT></FONT></B><FONT COLOR="#0000ff"><U><A HREF="mailto:gstakle@iastate.edu"><FONT SIZE=4 STYLE="font-size: 16pt"><FONT FACE="Times New Roman, serif"><FONT COLOR="#0000ff">gstakle@iastate.edu</FONT></FONT></FONT></A></U></FONT><B><FONT FACE="Times New Roman, serif"><FONT COLOR="#000000">),
+ISU</FONT></FONT></B></P>
+<P CLASS="western" ALIGN=CENTER STYLE="font-weight: medium">&nbsp;</P>
+<H2 CLASS="western"><FONT FACE="Times New Roman, serif"><FONT SIZE=3><B>Objectives
+</B></FONT></FONT>
+</H2>
+<P CLASS="western" ALIGN=LEFT STYLE="font-weight: medium"><FONT COLOR="#000000">&nbsp;</FONT></P>
+<UL>
+	<LI><P CLASS="western" ALIGN=JUSTIFY STYLE="font-weight: medium"><FONT FACE="Times New Roman, serif"><FONT SIZE=3><FONT COLOR="#000000">To</FONT></FONT><FONT SIZE=3><FONT COLOR="#000000">
+	provide you with some new insight into how ICT technology may
+	support collaborations across borders, both in a geographical sense
+	and from the perspective of collaboration and education across
+	disciplines. Moreover, you are provided with some pedagogical &quot;hands
+	on&quot; in relation to module 1, as your work with the GC course
+	may be viewed as some way of integrating (virtual) practice into the
+	discussions of module 1. </FONT></FONT></FONT>
+	</P>
+</UL>
+<P CLASS="western" ALIGN=JUSTIFY STYLE="margin-left: -0.25in; text-indent: 0.04in; font-weight: medium">
+<BR>
+</P>
+<UL>
+	<LI><P CLASS="western" ALIGN=JUSTIFY STYLE="font-weight: medium"><FONT FACE="Times New Roman, serif"><FONT SIZE=3><FONT COLOR="#000000">One
+	of the advantages that we are provided with through the use of
+	communication technologies as frames for teaching/learning is the
+	possibility of transcending geographical boarders in our educational
+	concept. Thus, this activity constitutes an e</FONT></FONT><FONT SIZE=3><FONT COLOR="#000000">xample
+	of how it becomes possible, not only with respect to collaborations
+	within research but also as a directly integrated part of a
+	curriculum, to incorporate both international expertise and
+	collaboration in the learning process. </FONT></FONT></FONT>
+	</P>
+</UL>
+<P CLASS="western" ALIGN=JUSTIFY STYLE="margin-left: -0.25in; text-indent: 0.04in; font-weight: medium">
+<BR>
+</P>
+<UL>
+	<LI><P CLASS="western" ALIGN=JUSTIFY STYLE="font-weight: medium"><FONT FACE="Times New Roman, serif"><FONT SIZE=3><FONT COLOR="#000000">To
+	provide</FONT></FONT><FONT SIZE=3><FONT COLOR="#000000"> you with
+	some new insight into how ICT technology may be used to support the
+	design of both on-campus and off-campus education, and into the
+	significant features of the two concepts. To us at MIL, to many
+	other institutions doing research within ICT and the field of
+	educational development, and to you who are trying to learn during
+	this complex development, the concept &quot;mixed-mode&quot; within
+	ICT-based education remains a desirable but somewhat theoretical
+	concept. The research around this is very limited, and though the
+	visions around &quot;mixed-mode&quot; education seem rather clear,
+	the challenge of designing for this still remains rather hazy. One
+	of the reasons that the GC course in this respect appears
+	</FONT></FONT><FONT SIZE=3><FONT COLOR="#000000">interesting is that
+	it </FONT></FONT></FONT><FONT FACE="Times New Roman, serif">has
+	developed</FONT><FONT SIZE=3><FONT FACE="Times New Roman, serif"><FONT COLOR="#000000">
+	</FONT></FONT></FONT><FONT FACE="Times New Roman, serif">in</FONT><FONT SIZE=3><FONT FACE="Times New Roman, serif"><FONT COLOR="#000000">to
+	a concept that </FONT></FONT></FONT><FONT FACE="Times New Roman, serif">can</FONT><FONT SIZE=3><FONT FACE="Times New Roman, serif"><FONT COLOR="#000000">
+	be fruitfully applied and used in both an on-campus and off-campus
+	context. </FONT></FONT></FONT>
+	</P>
+</UL>
+<P CLASS="western" ALIGN=JUSTIFY STYLE="font-weight: medium"><FONT COLOR="#000000">&nbsp;</FONT></P>
+<P CLASS="western" ALIGN=JUSTIFY STYLE="font-weight: medium"><FONT COLOR="#000000">&nbsp;</FONT></P>
+<P CLASS="western"><B><FONT FACE="Times New Roman, serif"><FONT SIZE=3><FONT COLOR="#000000">The
+</FONT></FONT><FONT COLOR="#000000">three evaluation </FONT><FONT COLOR="#000000">tasks
+</FONT><FONT COLOR="#000000">(carried out in the time period of
+January 13-</FONT><FONT COLOR="#000000">28) </FONT><FONT COLOR="#000000">are
+preparations for</FONT><FONT SIZE=3><FONT COLOR="#000000"> </FONT></FONT></FONT></B><FONT FACE="Times New Roman, serif">the
+videoc</FONT><B><FONT FACE="Times New Roman, serif"><FONT SIZE=3><FONT COLOR="#000000">onferen</FONT></FONT><FONT COLOR="#000000">ce
+to be held </FONT><FONT COLOR="#000000">between the Danish University
+of Education</FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000000">(DPU)
+</FONT><FONT COLOR="#000000">and Iowa</FONT><FONT COLOR="#000000">
+</FONT><FONT COLOR="#000000">State University (ISU) on </FONT><FONT COLOR="#000000">Friday,
+January 30</FONT><FONT COLOR="#000000">, at 18.00 hours.</FONT></FONT></B></P>
+<P CLASS="western" ALIGN=JUSTIFY STYLE="font-weight: medium"><FONT COLOR="#000000">&nbsp;
+</FONT>
+</P>
+<P CLASS="western" ALIGN=JUSTIFY STYLE="font-weight: medium"><FONT SIZE=3><FONT FACE="Times New Roman, serif"><FONT COLOR="#000000">Our
+interest in the GC course is not related to its &quot;course
+content&quot;, but to pedagogical form, struc</FONT></FONT></FONT><FONT FACE="Times New Roman, serif">ture,
+design and methodology. Professor</FONT><FONT SIZE=3><FONT FACE="Times New Roman, serif"><FONT COLOR="#000000">
+Eugene Takle is </FONT></FONT></FONT><FONT FACE="Times New Roman, serif">informed</FONT><FONT SIZE=3><FONT FACE="Times New Roman, serif"><FONT COLOR="#000000">
+of the overall idea of our master in ICT and Learning. While
+recognizing that he himself is not a pedagogical/instructional
+expert, he would ver</FONT></FONT></FONT><FONT FACE="Times New Roman, serif">y
+much appreciate YOUR feedback, </FONT><FONT SIZE=3><FONT FACE="Times New Roman, serif"><FONT COLOR="#000000">as
+experts on the </FONT></FONT></FONT><FONT FACE="Times New Roman, serif">integration
+of ICT and learning,</FONT><FONT FACE="Times New Roman, serif"><FONT SIZE=3><FONT COLOR="#000000">
+</FONT></FONT><FONT SIZE=3><FONT COLOR="#000000">electronically</FONT></FONT></FONT><FONT FACE="Times New Roman, serif">
+- through the three evaluation tasks for Danish students - </FONT><FONT SIZE=3><FONT FACE="Times New Roman, serif"><FONT COLOR="#000000">on
+his design of the GC course</FONT></FONT></FONT><FONT FACE="Times New Roman, serif">.
+This feedback should be given</FONT><FONT SIZE=3><FONT FACE="Times New Roman, serif"><FONT COLOR="#000000">
+</FONT></FONT></FONT><FONT FACE="Times New Roman, serif">distributed
+over</FONT><FONT SIZE=3><FONT FACE="Times New Roman, serif"><FONT COLOR="#000000">
+</FONT></FONT></FONT><FONT FACE="Times New Roman, serif">the time
+period of January 13-28</FONT><FONT SIZE=3><FONT FACE="Times New Roman, serif"><FONT COLOR="#000000">.
+</FONT></FONT></FONT><FONT FACE="Times New Roman, serif">It </FONT><FONT SIZE=3><FONT FACE="Times New Roman, serif"><FONT COLOR="#000000">should
+be delivered </FONT></FONT></FONT><FONT FACE="Times New Roman, serif">(mainly
+</FONT><FONT SIZE=3><FONT FACE="Times New Roman, serif"><FONT COLOR="#000000">individually</FONT></FONT></FONT><FONT FACE="Times New Roman, serif">)</FONT><FONT SIZE=3><FONT FACE="Times New Roman, serif"><FONT COLOR="#000000">
+through the solving of three evaluation tasks </FONT></FONT></FONT><FONT FACE="Times New Roman, serif">as
+they are presented in the virtual </FONT><FONT SIZE=3><FONT FACE="Times New Roman, serif"><FONT COLOR="#000000">portfolio,
+made</FONT></FONT></FONT><FONT FACE="Times New Roman, serif">
+available to you from Jan 13. (<B>S</B></FONT><FONT FACE="Times New Roman, serif"><B><FONT SIZE=3><FONT COLOR="#000000">ee
+a brief overview of these tasks below)</FONT></FONT></B><FONT SIZE=3><FONT COLOR="#000000">.
+The interaction (during the video conference at DPU) between Dr.
+Takle and us will partly depart thematically from the feedback that
+he receives from you </FONT></FONT></FONT><FONT FACE="Times New Roman, serif">virtually,
+</FONT><FONT SIZE=3><FONT FACE="Times New Roman, serif"><FONT COLOR="#000000">during
+the solving of the three evaluation tasks. So</FONT></FONT></FONT><FONT FACE="Times New Roman, serif">,
+just to remind you,</FONT><FONT SIZE=3><FONT FACE="Times New Roman, serif"><FONT COLOR="#000000">
+- once again - the quality of the overall learning process in this
+course is dependent on a mutual engagement and input :-) </FONT></FONT></FONT>
+</P>
+<P CLASS="western" ALIGN=JUSTIFY STYLE="font-weight: medium"><BR>
+</P>
+<P CLASS="western" ALIGN=JUSTIFY STYLE="font-weight: medium"><FONT FACE="Times New Roman, serif"><B>Brief
+overview of evaluation tasks:</B><FONT SIZE=3><FONT COLOR="#000000">&nbsp;</FONT></FONT></FONT></P>
+<P CLASS="western" ALIGN=JUSTIFY STYLE="font-weight: medium"><FONT COLOR="#000000">&nbsp;</FONT></P>
+<TABLE WIDTH=591 BORDER=1 BORDERCOLOR="#000000" CELLPADDING=7 CELLSPACING=0>
+	<COL WIDTH=39>
+	<COL WIDTH=147>
+	<COL WIDTH=71>
+	<COL WIDTH=158>
+	<COL WIDTH=104>
+	<TR VALIGN=TOP>
+		<TD WIDTH=39>
+			<P CLASS="western" ALIGN=JUSTIFY><FONT FACE="Times New Roman, serif"><FONT SIZE=2 STYLE="font-size: 11pt"><B>Due
+			date</B></FONT></FONT></P>
+		</TD>
+		<TD WIDTH=147>
+			<P CLASS="western" ALIGN=JUSTIFY STYLE="font-weight: medium"><B><FONT SIZE=2 STYLE="font-size: 11pt"><FONT FACE="Times New Roman, serif">Subject
+			/ Theme</FONT></FONT></B></P>
+		</TD>
+		<TD WIDTH=71>
+			<P CLASS="western" ALIGN=LEFT STYLE="font-weight: medium"><B><FONT SIZE=2 STYLE="font-size: 11pt"><FONT FACE="Times New Roman, serif">Dialogue
+			/ Discussion</FONT></FONT></B></P>
+		</TD>
+		<TD WIDTH=158>
+			<P CLASS="western" ALIGN=LEFT STYLE="font-weight: medium"><B><FONT SIZE=2 STYLE="font-size: 11pt"><FONT FACE="Times New Roman, serif">Assignments</FONT></FONT></B></P>
+		</TD>
+		<TD WIDTH=104>
+			<P CLASS="western" ALIGN=LEFT STYLE="font-weight: medium"><B><FONT SIZE=2 STYLE="font-size: 11pt"><FONT FACE="Times New Roman, serif">Preparation
+			method</FONT></FONT></B></P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=39>
+			<P CLASS="western" ALIGN=JUSTIFY STYLE="font-weight: medium"><FONT FACE="Times New Roman, serif"><FONT SIZE=2 STYLE="font-size: 11pt">Jan
+			18</FONT></FONT></P>
+		</TD>
+		<TD WIDTH=147>
+			<P CLASS="western" ALIGN=LEFT STYLE="font-weight: medium"><FONT FACE="Times New Roman, serif"><FONT SIZE=2 STYLE="font-size: 11pt">Quizzes
+			and collaborative learning</FONT></FONT></P>
+		</TD>
+		<TD WIDTH=71>
+			<P CLASS="western" ALIGN=LEFT STYLE="font-weight: medium"><FONT FACE="Times New Roman, serif"><FONT SIZE=2 STYLE="font-size: 11pt">Online
+			in portfolio</FONT></FONT></P>
+		</TD>
+		<TD WIDTH=158>
+			<P CLASS="western" ALIGN=JUSTIFY STYLE="font-weight: medium"><FONT SIZE=2 STYLE="font-size: 11pt"><FONT FACE="Times New Roman, serif">Web
+			Evaluation I, part 1</FONT></FONT></P>
+		</TD>
+		<TD WIDTH=104>
+			<P CLASS="western" ALIGN=JUSTIFY STYLE="font-weight: medium"><FONT FACE="Times New Roman, serif"><FONT SIZE=2 STYLE="font-size: 11pt">Individual</FONT></FONT></P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=39>
+			<P CLASS="western" ALIGN=JUSTIFY STYLE="font-weight: medium"><FONT FACE="Times New Roman, serif"><FONT SIZE=2 STYLE="font-size: 11pt">Jan
+			26</FONT></FONT></P>
+		</TD>
+		<TD WIDTH=147>
+			<P CLASS="western" ALIGN=LEFT STYLE="font-weight: medium"><FONT FACE="Times New Roman, serif"><FONT SIZE=2 STYLE="font-size: 11pt">Design
+			of group activity</FONT></FONT></P>
+		</TD>
+		<TD WIDTH=71>
+			<P CLASS="western" ALIGN=LEFT STYLE="font-weight: medium"><FONT FACE="Times New Roman, serif"><FONT SIZE=2 STYLE="font-size: 11pt">Online
+			in portfolio</FONT></FONT></P>
+		</TD>
+		<TD WIDTH=158>
+			<P CLASS="western" ALIGN=JUSTIFY STYLE="font-weight: medium"><FONT SIZE=2 STYLE="font-size: 11pt"><FONT FACE="Times New Roman, serif">Web
+			Evaluation I, part 2</FONT></FONT></P>
+		</TD>
+		<TD WIDTH=104>
+			<P CLASS="western" ALIGN=JUSTIFY STYLE="font-weight: medium"><FONT FACE="Times New Roman, serif"><FONT SIZE=2 STYLE="font-size: 11pt">Group</FONT></FONT></P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=39>
+			<P CLASS="western" ALIGN=JUSTIFY STYLE="font-weight: medium"><FONT FACE="Times New Roman, serif"><FONT SIZE=2 STYLE="font-size: 11pt">Jan
+			24</FONT></FONT></P>
+		</TD>
+		<TD WIDTH=147>
+			<P CLASS="western" ALIGN=JUSTIFY STYLE="font-weight: medium"><FONT FACE="Times New Roman, serif"><FONT SIZE=2 STYLE="font-size: 11pt">Online
+			experiments </FONT></FONT>
+			</P>
+		</TD>
+		<TD WIDTH=71>
+			<P CLASS="western" ALIGN=LEFT STYLE="font-weight: medium"><FONT FACE="Times New Roman, serif"><FONT SIZE=2 STYLE="font-size: 11pt">Online
+			in portfolio</FONT></FONT></P>
+		</TD>
+		<TD WIDTH=158>
+			<P CLASS="western" ALIGN=JUSTIFY STYLE="font-weight: medium"><FONT SIZE=2 STYLE="font-size: 11pt"><FONT FACE="Times New Roman, serif">Web
+			Evaluation II</FONT></FONT></P>
+		</TD>
+		<TD WIDTH=104>
+			<P CLASS="western" ALIGN=JUSTIFY STYLE="font-weight: medium"><FONT SIZE=2 STYLE="font-size: 11pt"><FONT FACE="Times New Roman, serif">Individual</FONT></FONT></P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=39>
+			<P CLASS="western" ALIGN=JUSTIFY STYLE="font-weight: medium"><FONT FACE="Times New Roman, serif"><FONT SIZE=2 STYLE="font-size: 11pt">Jan
+			28</FONT></FONT></P>
+		</TD>
+		<TD WIDTH=147>
+			<P CLASS="western" ALIGN=JUSTIFY STYLE="font-weight: medium"><FONT FACE="Times New Roman, serif"><FONT SIZE=2 STYLE="font-size: 11pt">Portfolio
+			and dialogue</FONT></FONT></P>
+		</TD>
+		<TD WIDTH=71>
+			<P CLASS="western" ALIGN=LEFT STYLE="font-weight: medium"><FONT FACE="Times New Roman, serif"><FONT SIZE=2 STYLE="font-size: 11pt">Online
+			in portfolio</FONT></FONT></P>
+		</TD>
+		<TD WIDTH=158>
+			<P CLASS="western" ALIGN=JUSTIFY STYLE="font-weight: medium"><FONT SIZE=2 STYLE="font-size: 11pt"><FONT FACE="Times New Roman, serif">Web
+			Evaluation III</FONT></FONT></P>
+		</TD>
+		<TD WIDTH=104>
+			<P CLASS="western" ALIGN=JUSTIFY STYLE="font-weight: medium"><FONT FACE="Times New Roman, serif"><FONT SIZE=2 STYLE="font-size: 11pt">Individual</FONT></FONT></P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=39>
+			<P CLASS="western" ALIGN=JUSTIFY STYLE="font-weight: medium"><FONT SIZE=2 STYLE="font-size: 11pt"><FONT FACE="Times New Roman, serif">Jan
+			30</FONT></FONT></P>
+		</TD>
+		<TD WIDTH=147>
+			<P CLASS="western" ALIGN=JUSTIFY STYLE="font-weight: medium"><FONT FACE="Times New Roman, serif"><FONT SIZE=2 STYLE="font-size: 11pt">Portfolio,
+			etc.</FONT></FONT></P>
+		</TD>
+		<TD WIDTH=71>
+			<P CLASS="western" ALIGN=LEFT STYLE="font-weight: medium"><FONT SIZE=2 STYLE="font-size: 11pt"><FONT FACE="Times New Roman, serif">F2F</FONT></FONT></P>
+		</TD>
+		<TD WIDTH=158>
+			<P CLASS="western" ALIGN=JUSTIFY STYLE="font-weight: medium"><FONT FACE="Times New Roman, serif"><FONT SIZE=2 STYLE="font-size: 11pt">Videoconference</FONT></FONT></P>
+		</TD>
+		<TD WIDTH=104>
+			<P CLASS="western" ALIGN=LEFT STYLE="font-weight: medium"><FONT SIZE=2 STYLE="font-size: 11pt"><FONT FACE="Times New Roman, serif">Panels</FONT></FONT></P>
+			<P CLASS="western" ALIGN=LEFT STYLE="font-weight: medium"><BR>
+			</P>
+		</TD>
+	</TR>
+</TABLE>
+<P CLASS="western" ALIGN=LEFT STYLE="font-weight: medium"><BR>
+</P>
+<P CLASS="western" ALIGN=LEFT STYLE="font-weight: medium"><BR>
+</P>
+<P CLASS="western" ALIGN=LEFT STYLE="font-weight: medium"><B><FONT FACE="Times New Roman, serif"><FONT COLOR="#000000"><FONT SIZE=3>Assessment
+of </FONT>m1k4 (Virtual Portfolio: CaseUSA)</FONT></FONT></B></P>
+<P CLASS="western" ALIGN=LEFT STYLE="font-weight: medium"><FONT FACE="Times New Roman, serif"><FONT SIZE=3>&copy;
+Elsebeth K. Sorensen </FONT></FONT>
+</P>
+<P CLASS="western" ALIGN=LEFT STYLE="font-weight: medium"><FONT COLOR="#000000">&nbsp;
+</FONT>
+</P>
+<P CLASS="western" ALIGN=LEFT STYLE="font-weight: medium"><FONT FACE="Times New Roman, serif"><FONT COLOR="#000000"><FONT SIZE=3>The
+assessment of The ICT &amp; Learning, Module 1, r</FONT>esults in one
+grade. This grade<FONT SIZE=3> </FONT>is a result derived from<FONT SIZE=3>
+individual results of student work carried out in 3 (of 4 possible)
+courses.&nbsp;</FONT></FONT></FONT></P>
+<P CLASS="western" ALIGN=LEFT STYLE="font-weight: medium"><BR>
+</P>
+<P CLASS="western" ALIGN=LEFT STYLE="font-weight: medium"><FONT FACE="Times New Roman, serif"><FONT COLOR="#000000"><FONT SIZE=3>The
+tasks included in m1k4:CaseUSA (Web Evaluation I, Web Evaluation II,
+and Web Evaluation III) are evaluated on the basis of participation.
+In this context, participation means</FONT> demonstrating<FONT SIZE=3>:
+</FONT></FONT></FONT>
+</P>
+<OL>
+	<LI><P CLASS="western" ALIGN=LEFT STYLE="font-weight: medium"><FONT FACE="Times New Roman, serif"><FONT COLOR="#000000">continuously
+	<FONT SIZE=3>active, reflective online behaviour in the period of
+	</FONT>January 13-28<FONT SIZE=3>, through providing comments in the
+	US virtual portfolio as requested through engagement in</FONT> the
+	three Web Evaluation tasks</FONT></FONT></P>
+	<LI><P CLASS="western" ALIGN=LEFT STYLE="font-weight: medium"><FONT FACE="Times New Roman, serif">participation
+	in the videoconference</FONT></P>
+</OL>
+<P CLASS="western" ALIGN=LEFT STYLE="font-weight: medium"><BR>
+</P>
+</BODY>
+</HTML>
