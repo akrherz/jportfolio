@@ -31,7 +31,7 @@ public class settings {
 
 	public static final String servletHttpBase = "/jportfolio/servlet";
 	
-	public static final String DBurl = "jdbc:postgresql:portfolio";
+	public static final String DBurl = "jdbc:postgresql://iemdb:5432/portfolio";
   	public static final String DBusr = "nobody";
   	public static final String DBpwd = "NULL";
 

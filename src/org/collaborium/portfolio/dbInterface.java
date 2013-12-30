@@ -38,7 +38,7 @@ public class dbInterface {
   * Method to set up the database connections
   */
   public static void dbInterfaceInit() {
-     plogger.report("|||||||| I am initing dbInterface");
+     plogger.report("|||||||| I am initing dbInterface "+ url);
      try {
        Class.forName("org.postgresql.Driver");
      } catch(Exception ex) {
