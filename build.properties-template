@@ -1,0 +1,8 @@
+app.name=jportfolio
+app.path=/jportfolio
+
+catalina.home=/home/akrherz/ws/apache-tomcat-8.0.5
+tomcat.home=/home/akrherz/ws/apache-tomcat-8.0.5
+
+manager.username=tomcat
+manager.password=tomcat
