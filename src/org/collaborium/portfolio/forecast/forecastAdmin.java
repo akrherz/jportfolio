@@ -543,10 +543,10 @@ public class forecastAdmin extends HttpServlet {
 		
 	sbuf.append("<P>Select Case Group:\n"
 		+"<SELECT name=\"case_group\">\n"
-		+"	<option value=0 SELECTED>Section/Period 1\n"
-		+"	<option value=1 SELECTED>Section/Period 2\n"
-		+"	<option value=2 SELECTED>Section/Period 3\n"
-		+"	<option value=3 SELECTED>Section/Period 4\n"
+		+"	<option value='0'>Section/Period 1\n"
+		+"	<option value='1'>Section/Period 2\n"
+		+"	<option value='2'>Section/Period 3\n"
+		+"	<option value='3'>Section/Period 4\n"
 		+"</SELECT>\n");
 		
 		
