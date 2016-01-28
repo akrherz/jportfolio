@@ -75,7 +75,7 @@ public class uploadServlet extends HttpServlet {
 	
 	try {
 	   MultipartParser mp = new MultipartParser(request, 10*1024*1024); // 10MB
-      	   Part part;
+      	   com.oreilly.servlet.multipart.Part part;
            while ((part = mp.readNextPart()) != null) {
         	String name = part.getName();
 
