@@ -70,6 +70,7 @@ public class dbInterface {
     } catch(Exception ex) {
       plogger.report("Exception caught in callDB().\n"+ex);
       ex.printStackTrace();
+      dbInterfaceInit();
     } 
     return rs;
   } // End of callDB()
@@ -88,6 +89,7 @@ public class dbInterface {
     } catch(Exception ex) {
       plogger.report("Exception caught in callDB().\n"+ex);
       ex.printStackTrace();
+      dbInterfaceInit();
     } 
   } // End of updateDB()
 
