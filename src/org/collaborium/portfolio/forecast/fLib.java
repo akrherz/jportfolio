@@ -39,7 +39,6 @@ public class fLib {
    	StringBuffer sbuf = new StringBuffer();
    
    	sbuf.append("	<SELECT name=\"year\">\n"
-		//+"	<option value=\"2000\">2000\n"
 		+"	<option value=\"2001\">2001\n"
 		+"	<option value=\"2002\">2002\n"
 		+"	<option value=\"2003\">2003\n"
@@ -55,8 +54,9 @@ public class fLib {
 		+"	<option value=\"2013\">2013\n"
 		+"	<option value=\"2014\">2014\n"
 		+"	<option value=\"2015\">2015\n"
-		+"	<option value=\"2016\" SELECTED>2016\n"
-		+"	<option value=\"2017\">2017\n"
+		+"	<option value=\"2016\">2016\n"
+		+"	<option value=\"2017\" SELECTED>2017\n"
+		+"	<option value=\"2018\">2018\n"
 		+"	</SELECT>\n");
    
    	return sbuf.toString();
