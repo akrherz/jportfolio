@@ -50,8 +50,6 @@
 
       ResultSet contacts = dbInterface.callDB("SELECT * from iem_site_contacts "
        +" WHERE s_mid = '"+ s_mid +"' and email IS NOT NULL");
-      if ( contacts.next() ){
-        contacts.previous();
         while ( contacts.next() ) {
           String emailAddr = contacts.getString("email");
           String message = "\n"
@@ -76,7 +74,6 @@
               plogger.report("Could Not send email!");
           }
         } // End of while()
-      } // End of if for DB results
     } // End of email Change check
   }  // End of if for the POST
 
