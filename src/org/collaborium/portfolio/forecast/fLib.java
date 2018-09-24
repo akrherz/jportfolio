@@ -28,6 +28,7 @@ package org.collaborium.portfolio.forecast;
 
 import org.collaborium.portfolio.*;
 import java.sql.*;
+import java.util.Calendar;
 
 public class fLib {
 
@@ -37,27 +38,21 @@ public class fLib {
   */
   public static String yearSelect() {
    	StringBuffer sbuf = new StringBuffer();
-   
-   	sbuf.append("	<SELECT name=\"year\">\n"
-		+"	<option value=\"2001\">2001\n"
-		+"	<option value=\"2002\">2002\n"
-		+"	<option value=\"2003\">2003\n"
-		+"	<option value=\"2004\">2004\n"
-		+"	<option value=\"2005\">2005\n"
-		+"	<option value=\"2006\">2006\n"
-		+"	<option value=\"2007\">2007\n"
-		+"	<option value=\"2008\">2008\n"
-		+"	<option value=\"2009\">2009\n"
-		+"	<option value=\"2010\">2010\n"
-		+"	<option value=\"2011\">2011\n"
-		+"	<option value=\"2012\">2012\n"
-		+"	<option value=\"2013\">2013\n"
-		+"	<option value=\"2014\">2014\n"
-		+"	<option value=\"2015\">2015\n"
-		+"	<option value=\"2016\">2016\n"
-		+"	<option value=\"2017\" SELECTED>2017\n"
-		+"	<option value=\"2018\">2018\n"
-		+"	</SELECT>\n");
+    Calendar now = Calendar.getInstance();
+	int year = now.get(Calendar.YEAR);
+    String yearInString = String.valueOf(year);
+	int thisyear = 2001;
+   	sbuf.append("<SELECT name=\"year\">\n");
+	String extra = "";
+	while(thisyear <= year){
+		if (thisyear == year){
+			extra = " SELECTED";
+		}
+		sbuf.append("<option value=\""+ String.valueOf(thisyear) +
+			"\"" + extra + ">" + String.valueOf(thisyear) + "</option>");
+		thisyear++;
+	}
+	sbuf.append("</select>\n");
    
    	return sbuf.toString();
   } // End of yearSelect()
