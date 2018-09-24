@@ -156,10 +156,8 @@
 -->
 
 <!-- Dummy external dependency -->
-<!--
-  <property name="foo.jar"
-           value="/path/to/foo.jar"/>
--->
+<!--  <property name="cos.jar"
+           value="${web.home}/WEB-INF/lib/cos.jar"/> -->
 
 
 <!-- ==================== Compilation Classpath =========================== -->
@@ -189,6 +187,10 @@
     </fileset>
     <pathelement location="${catalina.home}/lib"/>
     <fileset dir="${catalina.home}/lib">
+      <include name="*.jar"/>
+    </fileset>
+
+    <fileset dir="${web.home}/WEB-INF/lib">
       <include name="*.jar"/>
     </fileset>
 
