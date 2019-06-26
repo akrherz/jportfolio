@@ -8,9 +8,11 @@
 <%@ page import="org.collaborium.portfolio.*" %>
 
 <%
-	String portfolio = (String)request.getParameter("portfolio");
+        String portfolio = (String)request.getParameter("portfolio");
+        portfolio = fLib.cleanse(portfolio);
 	String thisPageURL = "/jportfolio/jsp/user/forecast/cumStandings.jsp";
 	String sort = (String)request.getParameter("sort");
+        sort = fLib.cleanse(sort);
 	portfolioUser thisUser = (portfolioUser)session.getAttribute("User");
 	if (thisUser != null && portfolio == null) {
                 portfolio = thisUser.getPortfolio();

@@ -8,9 +8,12 @@
 <BODY bgcolor="WHITE">
 <%
   String portfolio = (String)request.getParameter("portfolio");
+  portfolio = fLib.cleanse(portfolio);
   String sqlDate = (String)request.getParameter("sqlDate");
+  sqlDate = fLib.cleanse(sqlDate);
   String thisPageURL = "/jportfolio/jsp/user/forecast/prevForecast.jsp";
   String sort = (String)request.getParameter("sort");
+  sort = fLib.cleanse(sort);
 
   portfolioUser thisUser = (portfolioUser)session.getAttribute("User");
   if (thisUser != null && portfolio == null) {

@@ -32,6 +32,13 @@ import java.util.Calendar;
 
 public class fLib {
 
+	// remove cruft
+	public static String cleanse(String s) {
+		return s.replaceAll("&", "").replaceAll(">", "")
+			.replaceAll("<", "").replaceAll("\"", "")
+			.replaceAll("'", "");
+	}
+
  /**
   *  Method that prints out a simple SELECT box 
   *  for the years available
