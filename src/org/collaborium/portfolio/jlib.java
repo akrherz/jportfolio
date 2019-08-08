@@ -854,11 +854,12 @@ public class jlib {
   {
 	StringBuffer myBuffer = new StringBuffer();
 	
-	myBuffer.append("<SELECT name='portfolio' size='10'>\n");
+	myBuffer.append("<select name='portfolio' size='10'>\n");
+    myBuffer.append("<optgroup label=\"Active Portfolios\">\n");
 	try{
 		ResultSet rs = dbInterface.callDB("SELECT * from portfolios "
 			+" WHERE portfolio NOT IN (SELECT portfolio from students WHERE username = "
-			+" '"+userID+"') ");
+			+" '"+userID+"') and active");
 	
 		while(rs.next()) {
 			myBuffer.append("<option value='"+rs.getString("portfolio")+"'>"+rs.getString("name") );
@@ -866,7 +867,22 @@ public class jlib {
 	} catch( Exception ex) {
 		System.err.println( ex );
 	}
- 	myBuffer.append("</SELECT>\n");
+    myBuffer.append("</optgroup>\n");
+
+    myBuffer.append("<optgroup label=\"Inactive Portfolios\">\n");
+	try{
+		ResultSet rs = dbInterface.callDB("SELECT * from portfolios "
+			+" WHERE portfolio NOT IN (SELECT portfolio from students WHERE username = "
+			+" '"+userID+"') and not active");
+	
+		while(rs.next()) {
+			myBuffer.append("<option value='"+rs.getString("portfolio")+"'>"+rs.getString("name") );
+	 	}
+	} catch( Exception ex) {
+		System.err.println( ex );
+	}
+    myBuffer.append("</optgroup>\n");
+ 	myBuffer.append("</select>\n");
  	
 	return myBuffer.toString();
   } //End of myFolios()
@@ -1328,18 +1344,32 @@ public class jlib {
   public static String userPortfolios(String userID) {
     StringBuffer sbuf = new StringBuffer();
 	
+    sbuf.append("<optgroup label=\"Active Portfolios\">\n");
     try{
       ResultSet rs = dbInterface.callDB("select s.portfolio, p.name as pname" 
         +" from students s, portfolios p "
         +" WHERE s.username = '"+userID+"' "
-        +" and p.portfolio = s.portfolio ORDER by pname ASC");
+        +" and p.portfolio = s.portfolio and p.active ORDER by pname ASC");
       while( rs.next() ) {
         sbuf.append("<option value='"+rs.getString("portfolio")+"'>"+rs.getString("pname") +"</option>\n");
        }
     } catch( Exception ex) {
       System.err.println( ex );
     }
-  
+    sbuf.append("</optgroup>\n");
+    sbuf.append("<optgroup label=\"Inactive Portfolios\">\n");
+    try{
+      ResultSet rs = dbInterface.callDB("select s.portfolio, p.name as pname" 
+        +" from students s, portfolios p "
+        +" WHERE s.username = '"+userID+"' "
+        +" and p.portfolio = s.portfolio and not p.active ORDER by pname ASC");
+      while( rs.next() ) {
+        sbuf.append("<option value='"+rs.getString("portfolio")+"'>"+rs.getString("pname") +"</option>\n");
+       }
+    } catch( Exception ex) {
+      System.err.println( ex );
+    }
+    sbuf.append("</optgroup>\n");    
     return sbuf.toString();
   } // End of userPortfolios()
 } // End of jlib()
