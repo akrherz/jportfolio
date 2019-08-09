@@ -34,6 +34,9 @@ public class fLib {
 
 	// remove cruft
 	public static String cleanse(String s) {
+        if (s == null){
+            return s;
+        }
 		return s.replaceAll("&", "").replaceAll(">", "")
 			.replaceAll("<", "").replaceAll("\"", "")
 			.replaceAll("'", "");
