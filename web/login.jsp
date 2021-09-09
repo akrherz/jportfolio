@@ -97,8 +97,8 @@ are accessing a new Portfolio for the first time, you will need to <a href="java
 		<TD>Choose a password:</TD>
 		<TD>Verify password:</TD>
 		</TR><TR>
-		<TD><input type='password' name='password1' size='15' MAXLENGTH='12'></TD>
-		<TD><input type='password' name='password2' size='15' MAXLENGTH='12'></TD>
+		<TD><input type='password' name='password1' size='15'></TD>
+		<TD><input type='password' name='password2' size='15'></TD>
 		</TR></TABLE>
 		
 <p><input type="submit" value="Create Account!">
