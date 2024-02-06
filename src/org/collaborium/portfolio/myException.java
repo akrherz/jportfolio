@@ -18,9 +18,7 @@
  */
 package org.collaborium.portfolio;
 
-
 public class myException extends Exception {
   public myException() { super(); }
   public myException(String s) { super(s); }
-  
 }

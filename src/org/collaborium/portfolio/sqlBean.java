@@ -18,60 +18,58 @@
  */
 //
 //  Simple bean to do my SQL calls for me
-// 
+//
 //
 
 package org.collaborium.portfolio;
 
-import java.sql.*;
 import java.lang.String.*;
-import java.util.*;
+import java.sql.*;
 import java.text.*;
+import java.util.*;
 
 public class sqlBean {
 
-  public sqlBean () { 
+  public sqlBean() {}
+
+  public ResultSet doSQL(String querry) {
+
+    //    Connection db;
+
+    //    Statement st       = null;
+    //    String url         = "jdbc:postgresql:portfolio";
+    //    String usr         = "nobody";
+    //    String pwd         = "NULL";
+    //    ResultSet rs       = null;
+
+    //    try {
+    //    	    Class.forName("postgresql.Driver");
+    //    }
+    //    catch(Exception ex) {
+    //    	    System.err.println("Exception caught
+    //    Class.forName().\n"+ex);
+    //   	    ex.printStackTrace();
+    //    }
+
+    //    try {
+    //    	    db = DriverManager.getConnection(url, usr, pwd );
+    //    	    st = db.createStatement();
+    //    }
+    //    catch(Exception ex) {
+    //    	    System.err.println("Exception caught opening db and
+    //    st.\n"+ex); 	    ex.printStackTrace();
+    //    }
+
+    //    try {
+    //    	rs = st.executeQuery(querry);
+    //    }
+    //    catch(Exception ex) {
+    //    	    System.err.println("Exception caught talking to
+    //    database.\n"+ex); 	    ex.printStackTrace();
+    //    }
+
+    ResultSet rs = dbInterface.callDB(querry);
+
+    return rs;
   }
-
-  public ResultSet doSQL (String querry) {
-
-//    Connection db;
-    
-//    Statement st       = null;
-//    String url         = "jdbc:postgresql:portfolio";
-//    String usr         = "nobody";
-//    String pwd         = "NULL";
-//    ResultSet rs       = null;
-
-//    try {
-//    	    Class.forName("postgresql.Driver");
-//    }
-//    catch(Exception ex) {
-//    	    System.err.println("Exception caught Class.forName().\n"+ex);
-//   	    ex.printStackTrace();
-//    }	
-
-//    try {
-//    	    db = DriverManager.getConnection(url, usr, pwd );
-//    	    st = db.createStatement();
-//    }
-//    catch(Exception ex) {
-//    	    System.err.println("Exception caught opening db and st.\n"+ex);
-//    	    ex.printStackTrace();
-//    }
-        
-//    try {	
-//    	rs = st.executeQuery(querry);
-//    }
-//    catch(Exception ex) {
-//    	    System.err.println("Exception caught talking to database.\n"+ex);
-//    	    ex.printStackTrace();
-//    }
-  
-    ResultSet rs = dbInterface.callDB( querry );
-    
-    return rs; 
-  }
-
 }
-

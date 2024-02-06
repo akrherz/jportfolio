@@ -17,9 +17,9 @@
  * Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 /**
- * Class to handle the database connections.  Since this interface is only called once, the
- * servlet engine should share one database connection.  It was a problem that many database
- * connections where getting spawned.
+ * Class to handle the database connections.  Since this interface is only
+ * called once, the servlet engine should share one database connection.  It was
+ * a problem that many database connections where getting spawned.
  * @author Daryl Herzmann
  */
 
@@ -29,70 +29,69 @@ import java.sql.*;
 
 public class dbInterface {
   static Connection db = null;
- 
+
   public static final String url = settings.DBurl;
   public static final String usr = settings.DBusr;
   public static final String pwd = settings.DBpwd;
 
- /**
-  * Method to set up the database connections
-  */
+  /**
+   * Method to set up the database connections
+   */
   public static void dbInterfaceInit() {
-     plogger.report("|||||||| I am initing dbInterface "+ url);
-     try {
-       Class.forName("org.postgresql.Driver");
-     } catch(Exception ex) {
-       plogger.report("Exception caught Class.forName().\n"+ex);
-       ex.printStackTrace();
-     }   
-     try {
-       db = DriverManager.getConnection(url, usr, pwd);
-     } catch(Exception ex) {
-       plogger.report("Exception caught opening db and st.\n"+ex);
-       ex.printStackTrace();
-     } 
+    plogger.report("|||||||| I am initing dbInterface " + url);
+    try {
+      Class.forName("org.postgresql.Driver");
+    } catch (Exception ex) {
+      plogger.report("Exception caught Class.forName().\n" + ex);
+      ex.printStackTrace();
+    }
+    try {
+      db = DriverManager.getConnection(url, usr, pwd);
+    } catch (Exception ex) {
+      plogger.report("Exception caught opening db and st.\n" + ex);
+      ex.printStackTrace();
+    }
   } // End of dbInterfaceInit
 
- /**
-  * Method to return a result set for a query string
-  *
-  * @param String value for the query wanted.
-  */
+  /**
+   * Method to return a result set for a query string
+   *
+   * @param String value for the query wanted.
+   */
   public static ResultSet callDB(String querry) {
     if (db == null)
       dbInterfaceInit();
 
     ResultSet rs = null;
     try {
-      plogger.report(querry +";");
-      Statement st = db.createStatement(
-        ResultSet.TYPE_SCROLL_INSENSITIVE,
-        ResultSet.CONCUR_READ_ONLY);
+      plogger.report(querry + ";");
+      Statement st = db.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
+                                        ResultSet.CONCUR_READ_ONLY);
       rs = st.executeQuery(querry);
-    } catch(Exception ex) {
-      plogger.report("Exception caught in callDB().\n"+ex);
+    } catch (Exception ex) {
+      plogger.report("Exception caught in callDB().\n" + ex);
       ex.printStackTrace();
       dbInterfaceInit();
-    } 
+    }
     return rs;
   } // End of callDB()
 
- /**
-  * Method to return a result set for a query string
-  *
-  * @param String value for the query wanted.
-  */
+  /**
+   * Method to return a result set for a query string
+   *
+   * @param String value for the query wanted.
+   */
   public static void updateDB(String querry) {
-        
+
     try {
-      plogger.report(querry +";");
+      plogger.report(querry + ";");
       Statement st = db.createStatement();
       st.executeUpdate(querry);
-    } catch(Exception ex) {
-      plogger.report("Exception caught in callDB().\n"+ex);
+    } catch (Exception ex) {
+      plogger.report("Exception caught in callDB().\n" + ex);
       ex.printStackTrace();
       dbInterfaceInit();
-    } 
+    }
   } // End of updateDB()
 
 } // End of dbInterface

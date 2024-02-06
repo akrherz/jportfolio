@@ -18,53 +18,48 @@
  */
 package org.collaborium.portfolio;
 
- /**
-  * Logger class for handle error messages from the portfolio.
-  * Variables for this class are set in the init servlet files
-  * Options include logging to standard out or to a text file.
-  */
-  
-import java.io.*;
+/**
+ * Logger class for handle error messages from the portfolio.
+ * Variables for this class are set in the init servlet files
+ * Options include logging to standard out or to a text file.
+ */
+
 import com.oreilly.servlet.*;
+import java.io.*;
 
-
- public class plogger {
+public class plogger {
 
   /**
    * Method that reports an message from the portfolio.
    */
-   public static void report(String errorMessage) {
-	if ( errorMessage != null ) 
-		System.err.println( errorMessage );
-	
-   }
+  public static void report(String errorMessage) {
+    if (errorMessage != null)
+      System.err.println(errorMessage);
+  }
 
   /**
    * Method to mail me messages that I may want to see
    */
-   public static void mail(String errorMessage){
-  
-	try{
-		MailMessage msg = new MailMessage("localhost");
- 		msg.from("nobody@iitappc1.iitap.iastate.edu");
-		msg.to("akrherz@iastate.edu");
-		msg.setSubject("Portfolio Error MSG");
-		
-  		
-		
-		PrintStream out = msg.getPrintStream();
-		out.println("\n"
-			+"# This email was generated from the Portfolio Website \n");
-		
-  		out.println( errorMessage );
-		msg.sendAndClose();
-  
-	
-	} catch(Exception ex) {
-		System.err.println("Problem sending email");
-		ex.printStackTrace();
-	}
-   
-   } // End of mail
+  public static void mail(String errorMessage) {
 
- } // End of plogger
+    try {
+      MailMessage msg = new MailMessage("localhost");
+      msg.from("nobody@iitappc1.iitap.iastate.edu");
+      msg.to("akrherz@iastate.edu");
+      msg.setSubject("Portfolio Error MSG");
+
+      PrintStream out = msg.getPrintStream();
+      out.println("\n"
+                  + "# This email was generated from the Portfolio Website \n");
+
+      out.println(errorMessage);
+      msg.sendAndClose();
+
+    } catch (Exception ex) {
+      System.err.println("Problem sending email");
+      ex.printStackTrace();
+    }
+
+  } // End of mail
+
+} // End of plogger

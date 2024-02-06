@@ -18,11 +18,8 @@
  */
 package org.collaborium.portfolio;
 
-
 public class pUnit {
 
   private String name = null;
   private String number = null;
-
-
 }

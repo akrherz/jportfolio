@@ -18,9 +18,4 @@
  */
 package org.collaborium.portfolio;
 
-
-public class pBlock {
-
-
-
-} // End of pBlock
+public class pBlock {} // End of pBlock

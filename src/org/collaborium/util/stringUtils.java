@@ -23,103 +23,100 @@
  *
  * @author Daryl Herzmann
  */
- 
+
 package org.collaborium.util;
 import java.text.*;
 import java.util.*;
 
 public class stringUtils {
 
- /**
-  * Method to correct formating problems when an entry comes from the database
-  *
-  * @param source String that needs to be fixed
-  * @return fixed String marked up with BR tags....
-  */
-  public static String toBR(String source)
-  {
-    if (source == null) return "";
-	StringTokenizer myTokens = new StringTokenizer(source, "\r", true);
-	StringBuffer myBuffer = new StringBuffer();
-        
-	if (myTokens.countTokens() > 0 && source != null)
-	    {
-		do
-		    {
-			String temp = myTokens.nextToken();
-			if (!temp.equals("\r") ) { myBuffer.append(temp);}
-			else
-			    { 
-				myBuffer.append("<br>");
-			    }      
-		    }
-		while (myTokens.hasMoreTokens());
-	    }
-	else
-	    {
-		myBuffer.append("Error in getting Buffer.  Could not split or source was null");
-	    } 
-	return myBuffer.toString();
+  /**
+   * Method to correct formating problems when an entry comes from the database
+   *
+   * @param source String that needs to be fixed
+   * @return fixed String marked up with BR tags....
+   */
+  public static String toBR(String source) {
+    if (source == null)
+      return "";
+    StringTokenizer myTokens = new StringTokenizer(source, "\r", true);
+    StringBuffer myBuffer = new StringBuffer();
+
+    if (myTokens.countTokens() > 0 && source != null) {
+      do {
+        String temp = myTokens.nextToken();
+        if (!temp.equals("\r")) {
+          myBuffer.append(temp);
+        } else {
+          myBuffer.append("<br>");
+        }
+      } while (myTokens.hasMoreTokens());
+    } else {
+      myBuffer.append(
+          "Error in getting Buffer.  Could not split or source was null");
+    }
+    return myBuffer.toString();
   } // End of toBR()
 
- /**
-  * Method to clean up the apostrophies
-  *
-  * @param source which is the string we need to parse
-  * @return the same string with the necessary changes
-  */
-  public static String cleanString(String source)
-  {
-    if (source == null)  return "";
-	char[] myCharArray = source.toCharArray();
-	StringBuffer myBuffer = new StringBuffer();
-	
-	for (int i = 0; i < source.length(); i++) 
-	    {
-		String temp = java.lang.String.valueOf(myCharArray[i]);
-		if (temp.equals("'") ) { myBuffer.append("&#180;"); }
-		else 			{ myBuffer.append(temp); }
-	    }
-	return myBuffer.toString();
+  /**
+   * Method to clean up the apostrophies
+   *
+   * @param source which is the string we need to parse
+   * @return the same string with the necessary changes
+   */
+  public static String cleanString(String source) {
+    if (source == null)
+      return "";
+    char[] myCharArray = source.toCharArray();
+    StringBuffer myBuffer = new StringBuffer();
+
+    for (int i = 0; i < source.length(); i++) {
+      String temp = java.lang.String.valueOf(myCharArray[i]);
+      if (temp.equals("'")) {
+        myBuffer.append("&#180;");
+      } else {
+        myBuffer.append(temp);
+      }
+    }
+    return myBuffer.toString();
   } // End of cleanString()
 
- /**
-  * Method that parses what the database spits out as a date 
-  * and converts it into a date format
-  * @param String dbDate
-  * @return Date 
-  */
+  /**
+   * Method that parses what the database spits out as a date
+   * and converts it into a date format
+   * @param String dbDate
+   * @return Date
+   */
   public static Date dbDate2Date(String dbDate) {
-  	Date newDate = null;
-  	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss");
-  	try{
-		newDate = sdf.parse( dbDate );
-	} catch( Exception ex){
-		System.err.println("Problem converting SQL date for some reason");
-		ex.printStackTrace();
-	}
-  
-  	return newDate;
+    Date newDate = null;
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss");
+    try {
+      newDate = sdf.parse(dbDate);
+    } catch (Exception ex) {
+      System.err.println("Problem converting SQL date for some reason");
+      ex.printStackTrace();
+    }
+
+    return newDate;
   }
 
- /**
-  * Method that converts a date into the timestamp String
-  * @param myDate which is the date to convert
-  * @return String formated like we like
-  */
+  /**
+   * Method that converts a date into the timestamp String
+   * @param myDate which is the date to convert
+   * @return String formated like we like
+   */
   public static String gmtDate(Date myDate) {
- 	SimpleDateFormat sdf = new SimpleDateFormat();
-	sdf.setTimeZone( TimeZone.getTimeZone("GMT") );
-	sdf.applyPattern("dd MMM yyyy HH:mm z");
-	return sdf.format(myDate);
+    SimpleDateFormat sdf = new SimpleDateFormat();
+    sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
+    sdf.applyPattern("dd MMM yyyy HH:mm z");
+    return sdf.format(myDate);
   } // End of gmtDate
 
   public static String date(Date myDate) {
-        SimpleDateFormat sdf = new SimpleDateFormat();
-        sdf.setTimeZone( TimeZone.getTimeZone("GMT") );
-        sdf.applyPattern("dd MMM yyyy");
-        return sdf.format(myDate);
+    SimpleDateFormat sdf = new SimpleDateFormat();
+    sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
+    sdf.applyPattern("dd MMM yyyy");
+    return sdf.format(myDate);
   } // End of gmtDate
-
 
 } // End of stringUtils
