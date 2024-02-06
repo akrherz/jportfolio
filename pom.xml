@@ -175,6 +175,13 @@
 
     <dependencies>
         <dependency>
+            <groupId>com.oreilly.servlet</groupId>
+            <artifactId>cos</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/src/web/WEB-INF/lib/cos.jar</systemPath>
+        </dependency>
+        <dependency>
             <groupId>rome</groupId>
             <artifactId>rome</artifactId>
             <version>1.0</version>
@@ -299,12 +306,5 @@
             <version>1.15.4</version>
         </dependency>
     </dependencies>
-    <repositories>
-        <!-- Local filesystem path -->
-        <repository>
-            <id>local-repo</id>
-            <url>file://${project.basedir}/src/web/WEB-INF/lib/</url>
-        </repository>
-    </repositories>
 
 </project>
