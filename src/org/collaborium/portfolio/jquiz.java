@@ -413,7 +413,7 @@ public class jquiz extends HttpServlet {
         } else {
           // Those bastards
           //	jlib.updateDB("INSERT into abuse values('"+
-          //thisUser.getUserID()+"')");
+          // thisUser.getUserID()+"')");
 
           sbuf.append(
               "<font class=\"warn\">Access Warning:</font> This quiz has been closed.  This quiz \n"

@@ -90,13 +90,14 @@ public class users extends HttpServlet {
     sbuf.append("<TABLE><TR><TD valign=\"top\">\n");
 
     sbuf.append("<!-- My Picture -->\n");
-    sbuf.append("	<table cellpadding=0 cellspacing=0 border=1 width=200>\n"
-                + "	<caption><B>My Picture:</B></caption>\n"
-                + "	<TR bgcolor=\"ffefd5\"><TD>\n"
-                + "	<BR>\n"
-                + "	<CENTER><img src=\"/jportfolio/FILES/" +
-                requestedUser + "/me.gif\"></CENTER>\n"
-                + "	<BR>\n");
+    sbuf.append(
+        "	<table cellpadding=0 cellspacing=0 border=1 width=200>\n"
+        + "	<caption><B>My Picture:</B></caption>\n"
+        + "	<TR bgcolor=\"ffefd5\"><TD>\n"
+        + "	<BR>\n"
+        + "	<CENTER><img src=\"/jportfolio/FILES/" + requestedUser +
+        "/me.gif\"></CENTER>\n"
+        + "	<BR>\n");
 
     if (writePerm.booleanValue())
       sbuf.append(
@@ -146,7 +147,7 @@ public class users extends HttpServlet {
         sbuf.append("</TABLE>\n");
         //	  if ( writePerm.booleanValue() )
         //	  	sbuf.append("	<a
-        //href=\"/jportfolio/jsp/user/customize/editInfo.jsp\">Edit</a>\n");
+        // href=\"/jportfolio/jsp/user/customize/editInfo.jsp\">Edit</a>\n");
       }
 
       ResultSet rs2 =

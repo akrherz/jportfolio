@@ -692,19 +692,19 @@ public class jlib {
     // +" <a href='/portfolio/servlet/jsib'>Sib Simultation<a/><br>\n"
 
     //	myBuffer.append("   <a class=\"commands\"
-    //href='"+servletHttpBase+"/jportfolio'>Portfolio Manager<a/><br>\n"
+    // href='"+servletHttpBase+"/jportfolio'>Portfolio Manager<a/><br>\n"
     //		+"   <a class=\"commands\"
-    //href='"+httpBase+"/jsp/user/myCalendar.jsp'>Calendar</a><BR>\n"
+    // href='"+httpBase+"/jsp/user/myCalendar.jsp'>Calendar</a><BR>\n"
     //		+"   <a class=\"commands\"
-    //href='"+servletHttpBase+"/ChatDispatch'>Chat</a><BR>\n"
+    // href='"+servletHttpBase+"/ChatDispatch'>Chat</a><BR>\n"
     //		+"   <a class=\"commands\"
-    //href='"+servletHttpBase+"/jdot3'>Dialog</a><br>\n"
+    // href='"+servletHttpBase+"/jdot3'>Dialog</a><br>\n"
     //		+"   <a class=\"commands\"
-    //href='"+servletHttpBase+"/forecast'>Forecast</a><br>\n"
+    // href='"+servletHttpBase+"/forecast'>Forecast</a><br>\n"
     //		+"   <a class=\"commands\"
-    //href='"+servletHttpBase+"/jquiz'>Quiz<a/><br>\n"
+    // href='"+servletHttpBase+"/jquiz'>Quiz<a/><br>\n"
     //		+"   <a class=\"commands\"
-    //href='"+servletHttpBase+"/jportfolio?mode=l'>Log Out</a>\n");
+    // href='"+servletHttpBase+"/jportfolio?mode=l'>Log Out</a>\n");
 
     myBuffer.append("");
     // 	myBuffer.append( botBox() );
@@ -1284,7 +1284,7 @@ public class jlib {
         "<table width='100%' border='0' rowspacing='0' cellpadding='3' cellspacing='0'>\n");
     sbuf.append("<tr><td class=\"topBox\" NOWRAP>"
                 //	+ "<font size=+1
-                //color=\""+boxTitleTextColor+"\"><i>"+title+"</i></font>"
+                // color=\""+boxTitleTextColor+"\"><i>"+title+"</i></font>"
                 + title + "</td></tr>\n");
     sbuf.append("<tr><td class=\"botBox\" NOWRAP>\n");
     return sbuf.toString();

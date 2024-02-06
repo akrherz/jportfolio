@@ -112,7 +112,7 @@ public class portfolioQuestion {
   public String printOption(String qNum, String textVal, String myAnswerID) {
     StringBuffer sbuf = new StringBuffer();
     //	System.err.println("Question num -> "+qNum+"  Answer -> "+answer+"
-    //myAnswer -> "+myAnswerID+" \n");
+    // myAnswer -> "+myAnswerID+" \n");
     if (textVal != null && !textVal.equalsIgnoreCase("")) {
       sbuf.append("<BR><font ");
       if (answer.equalsIgnoreCase(qNum))

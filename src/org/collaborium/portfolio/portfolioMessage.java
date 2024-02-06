@@ -268,7 +268,7 @@ public class portfolioMessage {
     //	if (thisUser != null ) {
     //
     //	  if (thisUser.getUserID().equalsIgnoreCase(author) ||
-    //thisUser.isAdmin() ){
+    // thisUser.isAdmin() ){
     //
     //		tempCat_smiles = cat_smiles.toString();
     //		tempCat_frowns = cat_frowns.toString();
@@ -280,15 +280,15 @@ public class portfolioMessage {
 
     //	sbuf.append("<BR><b>This post is correctly categorized:</b>\n"
     //		+ tempCat_smiles +"<a
-    //href=\"javascript:new_window('/jportfolio/jsp/jdot/cat_smile.jsp?idnum="+
-    //idnum +"');\">"
+    // href=\"javascript:new_window('/jportfolio/jsp/jdot/cat_smile.jsp?idnum="+
+    // idnum +"');\">"
     //		+"<img src=\"/jportfolio/images/icon_smile.gif\"
-    //border=\"0\"></a>\n"
+    // border=\"0\"></a>\n"
     //		+ tempCat_frowns +"<a
-    //href=\"javascript:new_window('/jportfolio/jsp/jdot/cat_frown.jsp?idnum="+
-    //idnum +"');\">"
+    // href=\"javascript:new_window('/jportfolio/jsp/jdot/cat_frown.jsp?idnum="+
+    // idnum +"');\">"
     //		+"<img src=\"/jportfolio/images/icon_frown.gif\"
-    //border=\"0\"></a>\n");
+    // border=\"0\"></a>\n");
 
     //	sbuf.append("<BR><b>This post contributed to my learning:</b>\n"
     //                + tempLearn_smiles +"<a

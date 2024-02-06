@@ -314,11 +314,11 @@ public class jdot {
         + "</UL>\n");
 
     //	sbuf.append("<P>In order to maintain some sense of order within the
-    //discussion, normal users are not allowed\n"
+    // discussion, normal users are not allowed\n"
     //		+" to make top level posts within the <b>public</b> dialog
-    //discussion.  If there is a topic you would\n"
+    // discussion.  If there is a topic you would\n"
     //		+" like covered, please contact the portfolio's
-    //administrator.\n");
+    // administrator.\n");
 
     sbuf.append(
         "<H3>Dialog info:</H3>\n"
@@ -1269,17 +1269,20 @@ public class jdot {
         +
         "onChange=\"location=this.form.dialogType.options[this.form.dialogType.selectedIndex].value\">\n");
 
-    sbuf.append("	<option value=\"" + thisPageURL + "?dialogType=public\" ");
+    sbuf.append("	<option value=\"" + thisPageURL +
+                "?dialogType=public\" ");
     if (dialogType.equalsIgnoreCase("public"))
       sbuf.append("SELECTED");
     sbuf.append(">Public\n");
 
-    sbuf.append("	<option value=\"" + thisPageURL + "?dialogType=group\" ");
+    sbuf.append("	<option value=\"" + thisPageURL +
+                "?dialogType=group\" ");
     if (dialogType.equalsIgnoreCase("group"))
       sbuf.append("SELECTED");
     sbuf.append(">Group\n");
 
-    sbuf.append("	<option value=\"" + thisPageURL + "?dialogType=private\" ");
+    sbuf.append("	<option value=\"" + thisPageURL +
+                "?dialogType=private\" ");
     if (dialogType.equalsIgnoreCase("private"))
       sbuf.append("SELECTED");
     sbuf.append(">Private\n");

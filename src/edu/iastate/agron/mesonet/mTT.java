@@ -66,11 +66,11 @@ public class mTT {
       ex.printStackTrace();
     }
   } // End of doSQL
-    /**
-     *  printTR()
-     *   print table row for this TT.
-     *  @return HTML formated string
-     */
+  /**
+   *  printTR()
+   *   print table row for this TT.
+   *  @return HTML formated string
+   */
   public String printTR() {
     StringBuffer sbuf = new StringBuffer();
     SimpleDateFormat sdf = new SimpleDateFormat("M/d/yy");
