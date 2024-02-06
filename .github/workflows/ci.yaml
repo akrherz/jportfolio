@@ -18,15 +18,14 @@ jobs:
           java-version: ${{ matrix.java }}
           distribution: temurin
 
-      - name: Setup Tomcat
-        run: |
-          set -e
-          wget https://archive.apache.org/dist/tomcat/tomcat-8/v8.0.5/bin/apache-tomcat-8.0.5.tar.gz
-          tar -xvf apache-tomcat-8.0.5.tar.gz
-          sh apache-tomcat-8.0.5/bin/startup.sh
-
-      - name: Build with Ant
-        run: |
-         set -e
-         cp build.properties-template build.properties
-         ant compile
+      - name: Cache Maven repository
+        uses: actions/cache@v1
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-java${{ matrix.java }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-java${{ matrix.java }}-maven-
+            ${{ runner.os }}-
+  
+      - name: Build with Maven
+        run:  mvn -B package
