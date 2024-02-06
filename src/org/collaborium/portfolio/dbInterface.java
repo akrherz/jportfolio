@@ -65,7 +65,9 @@ public class dbInterface {
     ResultSet rs = null;
     try {
       plogger.report(querry +";");
-      Statement st = db.createStatement(); 
+      Statement st = db.createStatement(
+        ResultSet.TYPE_SCROLL_INSENSITIVE,
+        ResultSet.CONCUR_READ_ONLY);
       rs = st.executeQuery(querry);
     } catch(Exception ex) {
       plogger.report("Exception caught in callDB().\n"+ex);
