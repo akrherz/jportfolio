@@ -135,7 +135,7 @@
                     <deployables>
                         <deployable>
                             <properties>
-                                <context>/</context>
+                                <context>/jportfolio</context>
                             </properties>
                         </deployable>
                     </deployables>
@@ -179,7 +179,7 @@
             <artifactId>cos</artifactId>
             <version>1.0</version>
             <scope>system</scope>
-            <systemPath>${basedir}/src/web/WEB-INF/lib/cos.jar</systemPath>
+            <systemPath>${basedir}/src/main/webapp/WEB-INF/lib/cos.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>rome</groupId>

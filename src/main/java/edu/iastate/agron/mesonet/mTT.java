@@ -5,10 +5,8 @@ package edu.iastate.agron.mesonet;
  * Daryl Herzmann 18 May 2002
  */
 
-import java.io.*;
 import java.sql.*;
 import java.text.*;
-import java.util.*;
 import org.collaborium.portfolio.*;
 import org.collaborium.util.*;
 

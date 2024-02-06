@@ -1,6 +1,5 @@
 package edu.iastate.agron.mesonet;
 
-import java.lang.*;
 import java.sql.*;
 import org.collaborium.portfolio.*;
 
