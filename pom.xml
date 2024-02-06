@@ -146,12 +146,6 @@
                                 <todir>conf</todir>
                             </configfile>
                         </configfiles>
-                        <files>
-                            <file>
-                                <file>${project.basedir}/src/it/staticfiles</file>
-                                <todir>staticfiles</todir>
-                            </file>
-                        </files>
                         <properties>
                             <cargo.start.jvmargs>
                                 -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005
@@ -180,12 +174,6 @@
     </build>
 
     <dependencies>
-        <dependency>
-            <groupId>com.mysql</groupId>
-            <artifactId>mysql-connector-j</artifactId>
-            <version>8.0.33</version>
-        </dependency>
-
         <dependency>
             <groupId>rome</groupId>
             <artifactId>rome</artifactId>
@@ -311,4 +299,12 @@
             <version>1.15.4</version>
         </dependency>
     </dependencies>
+    <repositories>
+        <!-- Local filesystem path -->
+        <repository>
+            <id>local-repo</id>
+            <url>file://${project.basedir}/src/web/WEB-INF/lib/</url>
+        </repository>
+    </repositories>
+
 </project>
