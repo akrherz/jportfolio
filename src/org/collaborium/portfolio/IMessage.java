@@ -23,91 +23,74 @@ package org.collaborium.portfolio;
  *
  */
 
-
 import java.util.*;
 
 public class IMessage {
 
-    private Integer id;
-    private String to;
-    private String from;
-    private String contents;
-    private Date submitted;
-   
-/**
-     * Constructor 
-     * 
-     * Gets the unique ID from the generator.
-     */
-    public IMessage()  {
-        submitted = new Date();
-    }
+  private Integer id;
+  private String to;
+  private String from;
+  private String contents;
+  private Date submitted;
 
-    /**
-     * The index number
-     */
-    public void setId( Integer index )
-    {
-        this.id=index;
-    }
+  /**
+   * Constructor
+   *
+   * Gets the unique ID from the generator.
+   */
+  public IMessage() { submitted = new Date(); }
 
-    /**
-     * Get the index number
-     * @return the id
-     */
-    public String getId()
-    {
-        return id.toString();
-    }
+  /**
+   * The index number
+   */
+  public void setId(Integer index) { this.id = index; }
 
-    /**
-     * Get the value of submitted.
-     * @return value of submitted.
-     */
-    public String getSubmitted() 
-    {
-        return submitted.toString();
-    }
-    
-    
-    /**
-     * Get the value of contents.
-     * @return value of contents.
-     */
-    public String getContent() {return contents;}
-    
-    /**
-     * Set the value of contents.
-     * @param v  Value to assign to contents.
-     */
-    public void setContent(String  v) {this.contents = v;}
-    
-        
-    /**
-     * Get the value of name.
-     * @return value of name.
-     */
-    public String getAuthor() {return from;}
-    
-    
-    public String getTo() {return to;}
-    
-    /**
-     * Set the value of name.
-     * @param v  Value to assign to name.
-     */
-    public void setAuthor(String  v) {this.from = v;}
-    
-    
-    public void setTo(String  v) {
-    	System.err.println("I am setting to: "+v );
-	this.to = v;
-    }
-            
-    /**
-     * Get the value of subject.
-     * @return value of subject.
-     */
-  
+  /**
+   * Get the index number
+   * @return the id
+   */
+  public String getId() { return id.toString(); }
+
+  /**
+   * Get the value of submitted.
+   * @return value of submitted.
+   */
+  public String getSubmitted() { return submitted.toString(); }
+
+  /**
+   * Get the value of contents.
+   * @return value of contents.
+   */
+  public String getContent() { return contents; }
+
+  /**
+   * Set the value of contents.
+   * @param v  Value to assign to contents.
+   */
+  public void setContent(String v) { this.contents = v; }
+
+  /**
+   * Get the value of name.
+   * @return value of name.
+   */
+  public String getAuthor() { return from; }
+
+  public String getTo() { return to; }
+
+  /**
+   * Set the value of name.
+   * @param v  Value to assign to name.
+   */
+  public void setAuthor(String v) { this.from = v; }
+
+  public void setTo(String v) {
+    System.err.println("I am setting to: " + v);
+    this.to = v;
+  }
+
+  /**
+   * Get the value of subject.
+   * @return value of subject.
+   */
 
 } // End of IMDatabase

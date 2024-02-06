@@ -19,8 +19,8 @@
 
 package org.collaborium.portfolio;
 
-import java.sql.*;
 import java.io.*;
+import java.sql.*;
 import java.util.*;
 import javax.servlet.http.*;
 import org.collaborium.portfolio.*;
@@ -34,32 +34,27 @@ public class portfolioCred {
   public final static int anonymous = 4;
   private int myCred = 3;
 
- /**
-  * Give me a portfolioCred instance with some initial credential
-  * @param initialCred my initial credential setting
-  */
-  public portfolioCred(int initialCred)
-  {
-    this.myCred = initialCred;
+  /**
+   * Give me a portfolioCred instance with some initial credential
+   * @param initialCred my initial credential setting
+   */
+  public portfolioCred(int initialCred) { this.myCred = initialCred; }
+
+  /**
+   * Method to set credentials
+   * @param newCred new credential setting
+   */
+  public void setCred(int newCred) {
+    if (newCred == 0)
+      this.myCred = this.user;
+    else
+      this.myCred = newCred;
+    plogger.report("Setting portfolioCred to :" + this.myCred);
   }
 
- /**
-  * Method to set credentials
-  * @param newCred new credential setting
-  */
-  public void setCred(int newCred)
-  {
-    if (newCred == 0) this.myCred = this.user;
-    else this.myCred = newCred;
-    plogger.report("Setting portfolioCred to :"+ this.myCred );
-  }
-
- /**
-  * Simple method to return our current credential
-  */
-  public int getCred()
-  {
-    return this.myCred;
-  }
+  /**
+   * Simple method to return our current credential
+   */
+  public int getCred() { return this.myCred; }
 
 } // End of portfolioCred

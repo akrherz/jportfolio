@@ -1,13 +1,12 @@
 package org.collaborium.portfolio.chat;
 
+import com.oreilly.servlet.HttpMessage;
 import java.applet.*;
 import java.awt.*;
 import java.io.*;
 import java.net.*;
-import java.util.*;
 import java.text.*;
-
-import com.oreilly.servlet.HttpMessage;
+import java.util.*;
 
 public class HttpChatApplet extends Applet implements Runnable {
 
@@ -19,7 +18,7 @@ public class HttpChatApplet extends Applet implements Runnable {
   Calendar myCal;
   Integer myHour;
   Integer myMin;
-  
+
   public void init() {
     // Check if this applet was loaded directly from the filesystem.
     // If so, explain to the user that this applet needs to be loaded
@@ -33,15 +32,16 @@ public class HttpChatApplet extends Applet implements Runnable {
       System.out.println("file containing this servlet as");
       System.out.println("\"http://server:port/file.html\".");
       System.out.println();
-      System.exit(1);  // Works only from appletviewer
-                       // Browsers throw an exception and muddle on
+      System.exit(1); // Works only from appletviewer
+                      // Browsers throw an exception and muddle on
     }
 
     // Get this user's name from an applet parameter set by the servlet
     // We could just ask the user, but this demonstrates a
     // form of servlet->applet communication.
     user = getParameter("user");
-    if (user == null) user = "anonymous";
+    if (user == null)
+      user = "anonymous";
 
     // Set up the user interface...
     // On top, a large TextArea showing what everyone's saying.
@@ -61,8 +61,6 @@ public class HttpChatApplet extends Applet implements Runnable {
 
     panel.add("West", label);
     panel.add("Center", input);
-    
-    
   }
 
   public void start() {
@@ -77,25 +75,30 @@ public class HttpChatApplet extends Applet implements Runnable {
         URL url = new URL(getCodeBase(), "/jportfolio/servlet/ChatServlet");
         HttpMessage msg = new HttpMessage(url);
         InputStream in = msg.sendGetMessage();
-        BufferedReader data
-          = new BufferedReader(new InputStreamReader(in));
+        BufferedReader data = new BufferedReader(new InputStreamReader(in));
         nextMessage = data.readLine();
-      }
-      catch (SocketException e) {
+      } catch (SocketException e) {
         // Can't connect to host, report it and wait before trying again
         System.out.println("Can't connect to host: " + e.getMessage());
-        try { Thread.sleep(5000); } catch (InterruptedException ignored) { }
-      }
-      catch (FileNotFoundException e) {
+        try {
+          Thread.sleep(5000);
+        } catch (InterruptedException ignored) {
+        }
+      } catch (FileNotFoundException e) {
         // Servlet doesn't exist, report it and wait before trying again
         System.out.println("Resource not found: " + e.getMessage());
-        try { Thread.sleep(5000); } catch (InterruptedException ignored) { }
-      }
-      catch (Exception e) {
+        try {
+          Thread.sleep(5000);
+        } catch (InterruptedException ignored) {
+        }
+      } catch (Exception e) {
         // Some other problem, report it and wait before trying again
-        System.out.println("General exception: " +
-          e.getClass().getName() + ": " + e.getMessage());
-        try { Thread.sleep(1000); } catch (InterruptedException ignored) { }
+        System.out.println("General exception: " + e.getClass().getName() +
+                           ": " + e.getMessage());
+        try {
+          Thread.sleep(1000);
+        } catch (InterruptedException ignored) {
+        }
       }
     }
     return nextMessage + "\n";
@@ -107,47 +110,44 @@ public class HttpChatApplet extends Applet implements Runnable {
       text.append(getNextMessage());
     }
   }
-  /* http://java.sun.com/j2se/1.5.0/docs/guide/misc/threadPrimitiveDeprecation.html */
-  public void stop() {
-    thread = null;
-  }
+  /* http://java.sun.com/j2se/1.5.0/docs/guide/misc/threadPrimitiveDeprecation.html
+   */
+  public void stop() { thread = null; }
 
   void broadcastMessage(String message) {
     myCal = Calendar.getInstance();
     myHour = new Integer(myCal.get(Calendar.HOUR));
     myMin = new Integer(myCal.get(Calendar.MINUTE));
-    String timeStr = myHour.toString() + ":"+ myMin.toString();
-  
-    message = user + "@"+timeStr+": " + message;  // Pre-pend the speaker's name
+    String timeStr = myHour.toString() + ":" + myMin.toString();
+
+    message =
+        user + "@" + timeStr + ": " + message; // Pre-pend the speaker's name
     try {
       URL url = new URL(getCodeBase(), "/jportfolio/servlet/ChatServlet");
       HttpMessage msg = new HttpMessage(url);
       Properties props = new Properties();
       props.put("message", message);
       msg.sendPostMessage(props);
-    }
-    catch (SocketException e) {
+    } catch (SocketException e) {
       // Can't connect to host, report it and abandon the broadcast
       System.out.println("Can't connect to host: " + e.getMessage());
-    }
-    catch (FileNotFoundException e) {
+    } catch (FileNotFoundException e) {
       // Servlet doesn't exist, report it and abandon the broadcast
       System.out.println("Resource not found: " + e.getMessage());
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       // Some other problem, report it and abandon the broadcast
-      System.out.println("General exception: " +
-        e.getClass().getName() + ": " + e.getMessage());
+      System.out.println("General exception: " + e.getClass().getName() + ": " +
+                         e.getMessage());
     }
   }
 
   public void processEvent(AWTEvent event) {
     switch (event.getID()) {
-      case Event.ACTION_EVENT:
-        if (event.getSource() == input) {
-          broadcastMessage(input.getText());
-          input.setText("");
-        }
+    case Event.ACTION_EVENT:
+      if (event.getSource() == input) {
+        broadcastMessage(input.getText());
+        input.setText("");
+      }
     }
   }
 }

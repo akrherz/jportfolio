@@ -18,8 +18,14 @@ jobs:
           java-version: ${{ matrix.java }}
           distribution: temurin
 
-      - name: Build with Ant
-        run: |
-         cp build.properties-template build.properties
-         sudo mkdir -p /home/akrherz/ws/apache-tomcat-8.0.5/{bin,lib}
-         ant compile
+      - name: Cache Maven repository
+        uses: actions/cache@v1
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-java${{ matrix.java }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-java${{ matrix.java }}-maven-
+            ${{ runner.os }}-
+  
+      - name: Build with Maven
+        run:  mvn -B package

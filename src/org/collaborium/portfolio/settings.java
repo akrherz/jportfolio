@@ -23,20 +23,20 @@
  *
  * @author Daryl Herzmann
  */
- 
-package org.collaborium.portfolio;
 
+package org.collaborium.portfolio;
 
 public class settings {
 
-	public static final String servletHttpBase = "/jportfolio/servlet";
-	
-	public static final String DBurl = "jdbc:postgresql://iemdb.local:5432/portfolio";
-  	public static final String DBusr = "nobody";
-  	public static final String DBpwd = "NULL";
+  public static final String servletHttpBase = "/jportfolio/servlet";
 
-	public static String httpBase = "/jportfolio/";
-	
-	public static String systemPassword = "iitap";
+  public static final String DBurl =
+      "jdbc:postgresql://iemdb.local:5432/portfolio";
+  public static final String DBusr = "nobody";
+  public static final String DBpwd = "NULL";
+
+  public static String httpBase = "/jportfolio/";
+
+  public static String systemPassword = "iitap";
 
 } // End of settings
