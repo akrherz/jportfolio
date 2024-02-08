@@ -24,8 +24,9 @@ package org.collaborium.portfolio;
  * Options include logging to standard out or to a text file.
  */
 
-import com.oreilly.servlet.*;
-import java.io.*;
+import java.util.Properties;
+import javax.mail.*;
+import javax.mail.internet.*;
 
 public class plogger {
 
@@ -41,23 +42,27 @@ public class plogger {
    * Method to mail me messages that I may want to see
    */
   public static void mail(String errorMessage) {
+    Properties props = new Properties();
+    props.put("mail.smtp.host", "localhost");
+
+    Session session = Session.getInstance(props, null);
 
     try {
-      MailMessage msg = new MailMessage("localhost");
-      msg.from("nobody@iitappc1.iitap.iastate.edu");
-      msg.to("akrherz@iastate.edu");
+      MimeMessage msg = new MimeMessage(session);
+      msg.setFrom(new InternetAddress("nobody@iitappc1.iitap.iastate.edu"));
+      msg.setRecipients(Message.RecipientType.TO, "akrherz@iastate.edu");
       msg.setSubject("Portfolio Error MSG");
 
-      PrintStream out = msg.getPrintStream();
-      out.println("\n"
-                  + "# This email was generated from the Portfolio Website \n");
+      String content =
+          "\n"
+          + "# This email was generated from the Portfolio Website \n" +
+          errorMessage;
 
-      out.println(errorMessage);
-      msg.sendAndClose();
+      msg.setText(content);
 
-    } catch (Exception ex) {
-      System.err.println("Problem sending email");
-      ex.printStackTrace();
+      Transport.send(msg);
+    } catch (MessagingException e) {
+      e.printStackTrace();
     }
 
   } // End of mail

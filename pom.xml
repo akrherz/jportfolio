@@ -175,6 +175,11 @@
 
     <dependencies>
         <dependency>
+            <groupId>com.sun.mail</groupId>
+            <artifactId>javax.mail</artifactId>
+            <version>1.6.2</version>
+        </dependency>
+        <dependency>
             <groupId>com.oreilly.servlet</groupId>
             <artifactId>cos</artifactId>
             <version>1.0</version>
