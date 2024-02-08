@@ -83,8 +83,11 @@ public class forecast extends HttpServlet {
       try {
         pageContent.append(enterForecast(thisUser, request));
       } catch (Exception ex) {
-        plogger.mail(" " + ex + " ");
-        plogger.mail(ex.getMessage());
+        StringWriter sw = new StringWriter();
+        PrintWriter pw = new PrintWriter(sw);
+        ex.printStackTrace(pw);
+        String stackTrace = sw.toString();
+        plogger.mail(stackTrace);
         plogger.report("Problem Entering Forecast.\n" + ex);
         pageContent.append("<P>An error occured processing your forecast"
                            + "<BR> " + ex +
