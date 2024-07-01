@@ -206,11 +206,11 @@ public class jquiz extends HttpServlet {
 
     sbuf.append(jlib.topBox("Information:"));
 
-    sbuf.append(
-        "<font class=\"Instructions\"><blockquote>This page contains quiz links and \n"
-        +
-        " information for your portfolio.  Any active quizzes will be listed below.\n"
-        + " </blockquote>\n</font>\n");
+    sbuf.append("<font class=\"Instructions\"><blockquote>This page contains " +
+                "quiz links and \n"
+                + " information for your portfolio.  Any active quizzes will " +
+                  "be listed below.\n"
+                + " </blockquote>\n</font>\n");
 
     sbuf.append(jlib.botBox());
 
@@ -222,20 +222,20 @@ public class jquiz extends HttpServlet {
 
     sbuf.append(jlib.topBox("Quiz Box Info:"));
 
-    sbuf.append(
-        "<font color=\"green\"><blockquote>The box on the left hand side lists out quizzes that are\n"
-        +
-        "currently available to take.  After the quiz has been taken for the maximun number of allowed \n"
-        + " attempts, the quiz appears listed, but unlinked.<BR>\n"
-        +
-        " The second column lists how many times you have taken the quiz and the maximum number of alloted\n"
-        +
-        " times you have to take the quiz.  A value of \"0\" means that you can take the quiz until you get\n"
-        + " it right.<BR>\n"
-        +
-        " The third column shows your score for that quiz.  A \"-\" means that you have yet to take the quiz once.\n"
-        + "</blockquote>\n"
-        + "</font>\n");
+    sbuf.append("<font color=\"green\"><blockquote>The box on the left hand " +
+                "side lists out quizzes that are\n"
+                + "currently available to take.  After the quiz has been " +
+                  "taken for the maximun number of allowed \n"
+                + " attempts, the quiz appears listed, but unlinked.<BR>\n"
+                + " The second column lists how many times you have taken " +
+                  "the quiz and the maximum number of alloted\n"
+                + " times you have to take the quiz.  A value of \"0\" means " +
+                  "that you can take the quiz until you get\n"
+                + " it right.<BR>\n"
+                + " The third column shows your score for that quiz.  A " +
+                  "\"-\" means that you have yet to take the quiz once.\n"
+                + "</blockquote>\n"
+                + "</font>\n");
 
     sbuf.append(jlib.botBox());
 
@@ -270,15 +270,15 @@ public class jquiz extends HttpServlet {
 
     ResultSet rs = null;
     try {
-      rs = jlib.callDB(
-          "SELECT a.qid, q.qname, s.score from quizattempts a, "
-          + " quizes q, scores s "
-          + " WHERE a.userID = '" + thisUser.getUserID() + "' "
-          + " and a.portfolio = '" + thisUser.getPortfolio() + "' "
-          + " and a.qid = q.quiznum and s.assign = q.quiznum "
-          + " and s.userid = a.userID "
-          +
-          " and s.portfolio = a.portfolio and q.stopdate < CURRENT_TIMESTAMP ");
+      rs = jlib.callDB("SELECT a.qid, q.qname, s.score from quizattempts a, "
+                       + " quizes q, scores s "
+                       + " WHERE a.userID = '" + thisUser.getUserID() + "' "
+                       + " and a.portfolio = '" + thisUser.getPortfolio() +
+                       "' "
+                       + " and a.qid = q.quiznum and s.assign = q.quiznum "
+                       + " and s.userid = a.userID "
+                       + (" and s.portfolio = a.portfolio and q.stopdate < " +
+                          "CURRENT_TIMESTAMP "));
       while (rs.next()) {
         sbuf.append("<TR><TD> "
                     + "<a href=\"" + thisPageURL +
@@ -339,11 +339,11 @@ public class jquiz extends HttpServlet {
          * Lets figure out if this user has taken the quiz or not. If they have,
          * then the attempt variable is reset to this current attempt
          */
-        ResultSet rs6 =
-            jlib.callDB("SELECT attempt +1 as att from quizattempts WHERE"
-                        + " userid = '" + thisUser.getUserID() + "' "
-                        + " and portfolio = '" + thisUser.getPortfolio() + "' "
-                        + " and qid = '" + quizID + "' ");
+        ResultSet rs6 = jlib.callDB(
+            "SELECT attempt +1 as att from quizattempts WHERE"
+            + " userid = '" + thisUser.getUserID() + "' "
+            + " and portfolio = '" + thisUser.getPortfolio() + "' "
+            + " and qid = '" + quizID + "' ");
         if (rs6.next()) {
           thisAttempt = rs6.getString("att");
         }
@@ -360,7 +360,8 @@ public class jquiz extends HttpServlet {
           // Delete previous quiz attempts
           jlib.updateDB("DELETE from quizattempts WHERE"
                         + " userid = '" + thisUser.getUserID() + "' "
-                        + " and portfolio = '" + thisUser.getPortfolio() + "' "
+                        + " and portfolio = '" + thisUser.getPortfolio() +
+                        "' "
                         + " and qid = '" + quizID + "' ");
           // Save this quiz attempt
           jlib.updateDB(
@@ -369,8 +370,8 @@ public class jquiz extends HttpServlet {
               + " (" + quizID + ", "
               + " '" + question1 + "', '" + question2 + "', '" + question3 +
               "', "
-              + " '" + thisUser.getUserID() + "', '" + thisUser.getPortfolio() +
-              "', " + thisAttempt + ")");
+              + " '" + thisUser.getUserID() + "', '" +
+              thisUser.getPortfolio() + "', " + thisAttempt + ")");
           sbuf.append("Your quiz attempt has successfully been saved.");
 
           sbuf.append("<H3>Quiz Grade:</H3>");
@@ -400,9 +401,9 @@ public class jquiz extends HttpServlet {
                         " questions right!\n");
 
           } else {
-            sbuf.append(
-                "Your quiz has been saved.  You can find out your grade after the quiz has \n"
-                + " expired.<BR>\n");
+            sbuf.append("Your quiz has been saved.  You can find out your " +
+                        "grade after the quiz has \n"
+                        + " expired.<BR>\n");
           }
 
           /**
@@ -415,10 +416,10 @@ public class jquiz extends HttpServlet {
           //	jlib.updateDB("INSERT into abuse values('"+
           // thisUser.getUserID()+"')");
 
-          sbuf.append(
-              "<font class=\"warn\">Access Warning:</font> This quiz has been closed.  This quiz \n"
-              +
-              " attempt is greater than the maximum allowed number of quiz attempts.\n");
+          sbuf.append("<font class=\"warn\">Access Warning:</font> This quiz " +
+                      "has been closed.  This quiz \n"
+                      + " attempt is greater than the maximum allowed number " +
+                        "of quiz attempts.\n");
         }
 
       } catch (Exception ex) {
@@ -474,8 +475,8 @@ public class jquiz extends HttpServlet {
               "insert into notify(username, portfolio, program "
               + ", message) values('" + thisUserID + "', '" +
               thisUser.getPortfolio() + "' "
-              + ", '" + notifyBaseURL2 +
-              "?dialogType=private&mode=r&idnum=" + myMessage.getidnum() + "' "
+              + ", '" + notifyBaseURL2 + "?dialogType=private&mode=r&idnum=" +
+              myMessage.getidnum() + "' "
               + ", 'Quiz " + thisQuizName +
               " Response: " + thisUser.getRealName() + "')");
         }
@@ -517,7 +518,8 @@ public class jquiz extends HttpServlet {
                                + " and  porthome != '/jportfolio/servlet/' ");
         if (portHome.next()) {
           notifyBaseURL = portHome.getString("porthome") + "/quiz/index.jsp";
-          notifyBaseURL2 = portHome.getString("porthome") + "/dialog/index.jsp";
+          notifyBaseURL2 = portHome.getString("porthome") + ("/dialog/" +
+                                                             "index.jsp");
         }
 
         ResultSet maxth = jlib.callDB(
@@ -547,7 +549,8 @@ public class jquiz extends HttpServlet {
               "insert into notify(username, portfolio, "
               + " program, message) values('" + thisUserID + "', "
               + " '" + thisUser.getPortfolio() + "' , '" + notifyBaseURL2 +
-              "?dialogType=private&mode=r&idnum=" + myMessage.getidnum() + "' "
+              "?dialogType=private&mode=r&idnum=" + myMessage.getidnum() +
+              "' "
               + ",'Post Quiz " + thisQuizName +
               " Response: " + thisUser.getRealName() + "')");
         }
@@ -672,15 +675,16 @@ public class jquiz extends HttpServlet {
 
     ResultSet rs = null;
     try {
-      rs = jlib.callDB(
-          "SELECT quizes.qname, quizes.quiznum, getQuestionText(question1id) as q1,"
-          + " getQuestionText(question2id) as q2, "
-          +
-          " getQuestionText(question3id) as q3 , quizattempts.entered from quizattempts, quizes WHERE "
-          + " quizattempts.portfolio = '" + thisUser.getPortfolio() + "' and "
-          + " quizattempts.userID = '" + thisUser.getUserID() +
-          "' and quizes.quiznum = quizattempts.qid "
-          + " ORDER by entered DESC LIMIT 3");
+      rs = jlib.callDB("SELECT quizes.qname, quizes.quiznum, " +
+                       "getQuestionText(question1id) as q1,"
+                       + " getQuestionText(question2id) as q2, "
+                       + " getQuestionText(question3id) as q3 , " +
+                         "quizattempts.entered from quizattempts, quizes WHERE "
+                       + " quizattempts.portfolio = '" +
+                       thisUser.getPortfolio() + "' and "
+                       + " quizattempts.userID = '" + thisUser.getUserID() +
+                       "' and quizes.quiznum = quizattempts.qid "
+                       + " ORDER by entered DESC LIMIT 3");
       while (rs.next()) {
         myBuffer.append(
             "<P><a href=\"" + thisPageURL +
@@ -740,11 +744,11 @@ public class jquiz extends HttpServlet {
         sbuf.append("<B>Score:</B> " + quizScore + "<BR>");
 
         // Lets go and get the quiz attempt for this quiz
-        ResultSet myQuizAttempt =
-            jlib.callDB("SELECT * from quizattempts "
-                        + " WHERE userid = '" + thisUser.getUserID() + "' "
-                        + " and portfolio = '" + thisUser.getPortfolio() + "' "
-                        + " and qid = " + qid + " ");
+        ResultSet myQuizAttempt = jlib.callDB(
+            "SELECT * from quizattempts "
+            + " WHERE userid = '" + thisUser.getUserID() + "' "
+            + " and portfolio = '" + thisUser.getPortfolio() + "' "
+            + " and qid = " + qid + " ");
         myQuizAttempt.next();
 
         String q1Ans = myQuizAttempt.getString("question1");
@@ -768,8 +772,8 @@ public class jquiz extends HttpServlet {
                 + "<input type='HIDDEN' name='qid' value='" + qid + "'>\n"
                 + "<input type='HIDDEN' name='mode' value='h'>\n");
 
-    sbuf.append(
-        "<p><TEXTAREA NAME='body' WRAP='Virtual' ROWS=\"8\" COLS=\"50\"></TEXTAREA>\n");
+    sbuf.append("<p><TEXTAREA NAME='body' WRAP='Virtual' ROWS=\"8\" " +
+                "COLS=\"50\"></TEXTAREA>\n");
 
     sbuf.append("<br><input type=\"submit\" value=\"Post Message\">\n"
                 + "</form>\n");
@@ -848,11 +852,11 @@ public class jquiz extends HttpServlet {
     String qName = null;
     String scoreName = null;
 
-    rs = dbInterface.callDB(
-        "SELECT quiznum, qname, attempts from quizes"
-        + " WHERE portfolio = '" + thisUser.getPortfolio() + "' "
-        +
-        " and startdate < CURRENT_TIMESTAMP and stopdate > CURRENT_TIMESTAMP ");
+    rs = dbInterface.callDB("SELECT quiznum, qname, attempts from quizes"
+                            + " WHERE portfolio = '" + thisUser.getPortfolio() +
+                            "' "
+                            + (" and startdate < CURRENT_TIMESTAMP and " +
+                               "stopdate > CURRENT_TIMESTAMP "));
 
     if (rs != null) {
       try {
@@ -902,7 +906,7 @@ public class jquiz extends HttpServlet {
         plogger.report("Error caught trying to check for quizzes");
         ex.printStackTrace();
       } // End of try
-    }   // End of if
+    } // End of if
 
     sbuf.append("</TABLE>\n");
     sbuf.append("<P align=\"right\"><a href=\"" + thisPageURL +
@@ -935,13 +939,13 @@ public class jquiz extends HttpServlet {
     StringBuffer myBuffer = new StringBuffer();
 
     myBuffer.append(jlib.topBox("Introduction:"));
-    myBuffer.append(
-        "This is the Quiz servlet for the Portfolio pacakge.  It is designed to allow "
-        +
-        " for any to access interface for students and teachers to take and create quizzes."
-        +
-        " Details on what it is and how it works are coming, but for now you will need to "
-        + " log in and see what you can see.");
+    myBuffer.append("This is the Quiz servlet for the Portfolio pacakge.  It " +
+                    "is designed to allow "
+                    + " for any to access interface for students and " +
+                      "teachers to take and create quizzes."
+                    + " Details on what it is and how it works are coming, " +
+                      "but for now you will need to "
+                    + " log in and see what you can see.");
     myBuffer.append(jlib.botBox());
 
     return myBuffer.toString();

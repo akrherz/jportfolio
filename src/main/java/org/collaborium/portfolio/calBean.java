@@ -162,8 +162,8 @@ public class calBean {
 
           ResultSet myRS = dbInterface.callDB(
               "select * from calendar where portfolio = '" + portfolio +
-              "' and date(valid) = '" + currentYear + " " + (currentMonth + 1) +
-              " " + (numBox - offSet) + "'");
+              "' and date(valid) = '" + currentYear + " " +
+              (currentMonth + 1) + " " + (numBox - offSet) + "'");
 
           try {
             while (myRS.next()) {

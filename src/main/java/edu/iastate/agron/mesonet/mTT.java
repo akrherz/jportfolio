@@ -135,8 +135,8 @@ public class mTT {
           + "  <th align=\"right\"> " + rs.getString("entered") + "</th>\n"
           + "</tr>\n"
           + "<tr>\n"
-          + "  <td colspan=2>\n" + stringUtils.toBR(rs.getString("comments")) +
-          "\n");
+          + "  <td colspan=2>\n" +
+          stringUtils.toBR(rs.getString("comments")) + "\n");
       if (rs.getString("status_c") == null ||
           !rs.getString("status_c").equalsIgnoreCase("OKAY")) {
         sbuf.append("<br><div align=\"right\"><b>Status changed to:</b> "

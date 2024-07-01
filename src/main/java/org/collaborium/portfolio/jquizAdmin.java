@@ -263,8 +263,8 @@ public class jquizAdmin extends HttpServlet {
 
     sbuf.append(jlib.topBox("Quiz Results"));
 
-    sbuf.append(
-        "<blockquote><font color=\"green\">Here are listed the quiz results.</font></blockquote>\n");
+    sbuf.append("<blockquote><font color=\"green\">Here are listed the quiz " +
+                "results.</font></blockquote>\n");
 
     sbuf.append("<H3>Quiz: " + quizName + "\n");
 
@@ -301,12 +301,12 @@ public class jquizAdmin extends HttpServlet {
 
     sbuf.append(jlib.topBox("Which Question?"));
 
-    sbuf.append(
-        "<P><blockquote><font color=\"green\">With this dialog you are able to edit a question that\n"
-        +
-        " resides in the database.  Be careful to edit only questions that have yet to be asked for there is\n"
-        +
-        " no mechanism to change what users may have previously used.</font></blockquote>\n");
+    sbuf.append("<P><blockquote><font color=\"green\">With this dialog you " +
+                "are able to edit a question that\n"
+                + " resides in the database.  Be careful to edit only " +
+                  "questions that have yet to be asked for there is\n"
+                + " no mechanism to change what users may have previously " +
+                  "used.</font></blockquote>\n");
 
     sbuf.append("<FORM METHOD=\"POST\" ACTION=\"" + thisPageURL +
                 "\" name=\"EDIT\">\n"
@@ -348,28 +348,28 @@ public class jquizAdmin extends HttpServlet {
         String optionh = jlib.cleanString(rs.getString("optionh"));
         String answer = rs.getString("answer");
 
-        sbuf.append(
-            "<form method='POST' action='" + thisPageURL + "'>\n"
-            + " <input type='hidden' value='q' name='mode'>\n"
-            + " <input type='hidden' value=\"" + qid + "\" name=\"qid\">\n"
-            + " <TABLE BORDER=0>\n"
-            + " <TR><TD></TD><TD>Is Answer?</TD></TR>"
-            + " <TR><TH align='left'>Enter Question:<BR>\n"
-            +
-            "		<input type='text' size='60' name='question' value=\"" +
-            question + "\"></TD>\n"
-            + "<TD></TD>"
-            + " </TR>\n\n" + mkAnswerOption("a", optiona, answer) +
-            mkAnswerOption("b", optionb, answer) +
-            mkAnswerOption("c", optionc, answer) +
-            mkAnswerOption("d", optiond, answer) +
-            mkAnswerOption("e", optione, answer) +
-            mkAnswerOption("f", optionf, answer) +
-            mkAnswerOption("g", optiong, answer) +
-            mkAnswerOption("h", optionh, answer) + " </TABLE>\n"
-            + " <input type='SUBMIT' VALUE='CHANGE QUESTION'>\n"
-            + " <input type='RESET'>\n"
-            + " </form>");
+        sbuf.append("<form method='POST' action='" + thisPageURL + "'>\n"
+                    + " <input type='hidden' value='q' name='mode'>\n"
+                    + " <input type='hidden' value=\"" + qid +
+                    "\" name=\"qid\">\n"
+                    + " <TABLE BORDER=0>\n"
+                    + " <TR><TD></TD><TD>Is Answer?</TD></TR>"
+                    + " <TR><TH align='left'>Enter Question:<BR>\n"
+                    + ("		<input type='text' size='60' " +
+                       "name='question' value=\"") +
+                    question + "\"></TD>\n"
+                    + "<TD></TD>"
+                    + " </TR>\n\n" + mkAnswerOption("a", optiona, answer) +
+                    mkAnswerOption("b", optionb, answer) +
+                    mkAnswerOption("c", optionc, answer) +
+                    mkAnswerOption("d", optiond, answer) +
+                    mkAnswerOption("e", optione, answer) +
+                    mkAnswerOption("f", optionf, answer) +
+                    mkAnswerOption("g", optiong, answer) +
+                    mkAnswerOption("h", optionh, answer) + " </TABLE>\n"
+                    + " <input type='SUBMIT' VALUE='CHANGE QUESTION'>\n"
+                    + " <input type='RESET'>\n"
+                    + " </form>");
 
       } else {
         sbuf.append("Uh-oh");
@@ -450,7 +450,8 @@ public class jquizAdmin extends HttpServlet {
     } else {
       try {
         jlib.updateDB(
-            "INSERT into questions(portfolio, question, optiona, optionb, optionc, optiond,"
+            "INSERT into questions(portfolio, question, optiona, optionb, " +
+            "optionc, optiond,"
             + " optione, optionf, optiong, optionh, answer)"
             + " VALUES ('" + thisUser.getPortfolio() + "', '" + question +
             "', '" + optiona + "' , '" + optionb + "', '" + optionc + "', "
@@ -532,8 +533,8 @@ public class jquizAdmin extends HttpServlet {
             + " question3, startDate, stopDate, attempts, topicid)"
             + " VALUES ('" + qName + "', '" + thisUser.getPortfolio() + "', " +
             question1 + ", '" + question2 + "' ,"
-            + "  " + question3 + ", '" + startDate + "', '" + endDate + "', " +
-            attempt + ", '" + topicid + "') ");
+            + "  " + question3 + ", '" + startDate + "', '" + endDate +
+            "', " + attempt + ", '" + topicid + "') ");
         // Figure out what quiznum this quiz was assigned
         ResultSet test2 =
             jlib.callDB("SELECT quiznum from quizes WHERE "
@@ -555,8 +556,8 @@ public class jquizAdmin extends HttpServlet {
 
         sbuf.append("Input Quiz was successful!");
       } else {
-        sbuf.append(
-            "<P>A quiz by this name allready exists, please use a different name.\n");
+        sbuf.append("<P>A quiz by this name allready exists, please use a " +
+                    "different name.\n");
       }
 
     } catch (Exception ex) {
@@ -573,11 +574,12 @@ public class jquizAdmin extends HttpServlet {
 
     sbuf.append(jlib.topBox("Jquiz Admin Instructions:"));
 
-    sbuf.append(
-        "<P>The purpose of jquizAdmin is to allow instructor the ability to edit and manipulate quizzes for the portfolio "
-        +
-        " environment.\n The basic features allready work for this servlet, I just need to keep things up quite a bit and do some"
-        + " more documentation.");
+    sbuf.append("<P>The purpose of jquizAdmin is to allow instructor the " +
+                "ability to edit and manipulate quizzes for the portfolio "
+                +
+                " environment.\n The basic features allready work for this " +
+                "servlet, I just need to keep things up quite a bit and do some"
+                + " more documentation.");
 
     sbuf.append(jlib.botBox());
 
@@ -594,17 +596,18 @@ public class jquizAdmin extends HttpServlet {
 
     sbuf.append(jlib.topBox("Create a new Quiz:"));
 
-    sbuf.append(
-        "<blockquote><font color=\"green\">This dialog also you to combine previously created questions into\n"
-        +
-        " a takable quiz. Please make sure to fill in the indentifier section, so that it appears correctly.</font>\n"
-        + " </blockquote><BR>\n");
+    sbuf.append("<blockquote><font color=\"green\">This dialog also you to " +
+                "combine previously created questions into\n"
+                + " a takable quiz. Please make sure to fill in the " +
+                  "indentifier section, so that it appears correctly.</font>\n"
+                + " </blockquote><BR>\n");
 
     sbuf.append(
         "<form method='POST' action='" + thisPageURL + "'>\n"
         + " <input type='hidden' name='mode' value='u'>\n"
 
-        + " <P><B>Assign this quiz an identifier:</B><blink> <- </blink><BR>\n"
+        +
+        " <P><B>Assign this quiz an identifier:</B><blink> <- </blink><BR>\n"
         + " (<i>The quiz identifier appears on the calendar.</i>) "
         + " <input type='text' name='qName' size='30'>\n");
 
@@ -628,7 +631,8 @@ public class jquizAdmin extends HttpServlet {
         + " <P>End Date:<BR>\n"
         + "	<input type='text' name='endDate'>\n"
 
-        + " <P>Enter Allowable Quiz Attempts<BR> (Enter 0 for unlimited):<BR>\n"
+        +
+        " <P>Enter Allowable Quiz Attempts<BR> (Enter 0 for unlimited):<BR>\n"
         + " 	<input type='text' MAXLENGTH='1' size='2' name='attempt'>\n"
 
         + " <CENTER>\n"
