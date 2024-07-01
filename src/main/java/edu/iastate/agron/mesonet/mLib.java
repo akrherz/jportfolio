@@ -63,9 +63,9 @@ public class mLib {
     sbuf.append(
         "<table width=\"100%\">\n"
         + "<tr><th>Name:</th><th>Phone</th>\n<th>Email</th>\n<td></td>\n");
-    ResultSet rs = dbInterface.callDB("SELECT * from iem_site_contacts WHERE "
-                                      + " s_mid = '" + mid +
-                                      "' and portfolio = '" + portfolio + "' ");
+    ResultSet rs = dbInterface.callDB(
+        "SELECT * from iem_site_contacts WHERE "
+        + " s_mid = '" + mid + "' and portfolio = '" + portfolio + "' ");
     if (rs == null) {
       sbuf.append("<tr><th colspan=\"3\">No Entries Found</th></tr>\n");
     } else {
@@ -77,7 +77,7 @@ public class mLib {
             + "<td><a href=\"/jportfolio/mesonet/site/contacts.jsp?c_id=" +
             rs.getString("id") + "\">Delete</a></td></tr>\n");
       } // End of while
-    }   // End of else
+    } // End of else
 
     sbuf.append("</table>\n");
     return sbuf.toString();
