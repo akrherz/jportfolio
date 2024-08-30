@@ -1,5 +1,14 @@
 name: "CodeQL"
 
+on:
+  push:
+    branches-ignore:
+      - 'dependabot/**'
+  pull_request:
+    branches: "**"
+  schedule:
+    - cron: '0 20 * * 6'
+
 jobs:
   analyze:
     name: Analyze
