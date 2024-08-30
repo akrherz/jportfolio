@@ -202,10 +202,10 @@ public class jdotAdmin extends HttpServlet {
 
     sbuf.append(jlib.topBox("Dialog Administrator:"));
 
-    sbuf.append("<P>This page allows you to administer various components of " +
-                "the Dialog.  You can view stats for the dialog \n"
-                + ", assign a dialog to a specific group or to the entire " +
-                  "portfolio.  You can also grade a users dialog.\n");
+    sbuf.append("<P>This page allows you to administer various components of "
+                + "the Dialog.  You can view stats for the dialog \n"
+                + ", assign a dialog to a specific group or to the entire "
+                + "portfolio.  You can also grade a users dialog.\n");
 
     sbuf.append(jlib.botBox());
 
@@ -411,17 +411,17 @@ public class jdotAdmin extends HttpServlet {
                 "' name='motd'>\n");
     sbuf.append("<input type='hidden' name='mode' value='e'>\n");
     sbuf.append("<P><blockquote><font class=\"instructions\">\n"
-                + " With this dialog you can create a group level dialog " +
-                  "assignment.  Notification is then sent to all group\n"
-                + " members that a group level assignment has been posted.  " +
-                  "Please be sure to fill in all the blanks.\n"
+                + " With this dialog you can create a group level dialog "
+                + "assignment.  Notification is then sent to all group\n"
+                + " members that a group level assignment has been posted.  "
+                + "Please be sure to fill in all the blanks.\n"
                 + " </font></blockquote>\n"
                 + "<P>Subject of this post:\n"
                 + "<BR><input type='text' name='subject' size='40'>\n"
 
                 + "<P>Enter the Initial Post for this thread:<BR>\n"
-                + "<textarea COLS='60' ROWS='10' name='bodyText' " +
-                  "wrap='Virtual'></textarea>\n"
+                + "<textarea COLS='60' ROWS='10' name='bodyText' "
+                + "wrap='Virtual'></textarea>\n"
 
                 + "<P>Assign This Thread to a Group:<BR>\n"
                 + "<input type=\"text\" name=\"groupID\" size=\"4\">\n"
@@ -466,8 +466,8 @@ public class jdotAdmin extends HttpServlet {
         + "<BR><input type='text' name='subject' size='40'>\n"
 
         + "<P>Enter the Initial Post for this thread:<BR>\n"
-        + "<textarea COLS='60' ROWS='10' name='bodyText' " +
-          "wrap='Virtual'></textarea>\n"
+        + "<textarea COLS='60' ROWS='10' name='bodyText' "
+        + "wrap='Virtual'></textarea>\n"
 
         + "<input type=\"hidden\" name=\"groupID\" value=\"all\">\n"
 
@@ -575,10 +575,10 @@ public class jdotAdmin extends HttpServlet {
     sbuf.append(
         "<P><B>Post Your Evaluations:</B><BR>\n"
 
-        + "<blockquote>If you do not enter a score for either the dialog " +
-          "section\n "
-        + " or the ethical Q section, the evaluation for that section will " +
-          "not be\n"
+        + "<blockquote>If you do not enter a score for either the dialog "
+        + "section\n "
+        + " or the ethical Q section, the evaluation for that section will "
+        + "not be\n"
         +
         " posted.  This means that you can just do one or the other or both.\n"
         + "</blockquote>\n"
@@ -595,21 +595,21 @@ public class jdotAdmin extends HttpServlet {
         + "  <option value=\"3\">Block 3\n"
         + "</select>\n"
 
-        + ("<P>Assign a dialog score: (<i>Input 0 to not submit grade, only " +
-           "evaluation</i>)<BR>\n")
-        + "<input type=\"text\" name=\"score1\" size=\"4\">\n"
+        + ("<P>Assign a dialog score: (<i>Input 0 to not submit grade, only "
+           + "evaluation</i>)<BR>\n") +
+        "<input type=\"text\" name=\"score1\" size=\"4\">\n"
 
-        + "<P>Enter your dialog evaluation:<BR>\n"
-        + ("<TEXTAREA name=\"body1\" cols=\"60\" ROWS=\"10\" " +
-           "WRAP=\"Virtual\"></TEXTAREA>\n")
+        + "<P>Enter your dialog evaluation:<BR>\n" +
+        ("<TEXTAREA name=\"body1\" cols=\"60\" ROWS=\"10\" "
+         + "WRAP=\"Virtual\"></TEXTAREA>\n")
 
-        + ("<p>Assign a Ethical Q score: (<i>Input 0 to not submit grade, " +
-           "only evaluation</i>)<br>\n")
-        + "<input type=\"text\" name=\"score2\" size=\"4\">\n"
+        + ("<p>Assign a Ethical Q score: (<i>Input 0 to not submit grade, "
+           + "only evaluation</i>)<br>\n") +
+        "<input type=\"text\" name=\"score2\" size=\"4\">\n"
 
-        + "<p>Enter your Ethical Q evaluation:<br>\n"
-        + ("<TEXTAREA name=\"body2\" cols=\"60\" ROWS=\"10\" " +
-           "WRAP=\"Virtual\"></TEXTAREA>\n")
+        + "<p>Enter your Ethical Q evaluation:<br>\n" +
+        ("<TEXTAREA name=\"body2\" cols=\"60\" ROWS=\"10\" "
+         + "WRAP=\"Virtual\"></TEXTAREA>\n")
 
         + "<P><input type=\"SUBMIT\" value=\"Grade\">\n"
         + "</FORM>\n");
@@ -638,8 +638,8 @@ public class jdotAdmin extends HttpServlet {
                 "?mode=g\">user</a>.<BR>\n");
 
     sbuf.append(
-        "<font class=\"instructions\"><blockquote>This page allows you to " +
-        "view a certain users dialog\n"
+        "<font class=\"instructions\"><blockquote>This page allows you to "
+        + "view a certain users dialog\n"
         + " and assign some sort of grade to the user.</blockquote></font>\n");
 
     sbuf.append("<P>View All User Dialog:<BR>");
@@ -671,8 +671,8 @@ public class jdotAdmin extends HttpServlet {
 
     sbuf.append(
         "<blockquote><font color=\"green\">Here is a daily summary of total \n"
-        + " posts and average length of each post for that day.  The length " +
-          "is in terms of \n"
+        + " posts and average length of each post for that day.  The length "
+        + "is in terms of \n"
         + " characters.</font></blockquote>\n");
 
     sbuf.append("<TABLE width=\"100%\">\n");
@@ -681,8 +681,8 @@ public class jdotAdmin extends HttpServlet {
 
     try {
       ResultSet rs = dbInterface.callDB(
-          "SELECT count(username) as posts, date(date) , avg(length(body)) " +
-          "as len from dialog "
+          "SELECT count(username) as posts, date(date) , avg(length(body)) "
+          + "as len from dialog "
           + " WHERE portfolio = '" + portfolio + "' GROUP by date(date)");
       while (rs.next()) {
         String posts = rs.getString("posts");

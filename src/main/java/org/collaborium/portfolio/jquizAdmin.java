@@ -263,8 +263,8 @@ public class jquizAdmin extends HttpServlet {
 
     sbuf.append(jlib.topBox("Quiz Results"));
 
-    sbuf.append("<blockquote><font color=\"green\">Here are listed the quiz " +
-                "results.</font></blockquote>\n");
+    sbuf.append("<blockquote><font color=\"green\">Here are listed the quiz "
+                + "results.</font></blockquote>\n");
 
     sbuf.append("<H3>Quiz: " + quizName + "\n");
 
@@ -301,12 +301,12 @@ public class jquizAdmin extends HttpServlet {
 
     sbuf.append(jlib.topBox("Which Question?"));
 
-    sbuf.append("<P><blockquote><font color=\"green\">With this dialog you " +
-                "are able to edit a question that\n"
-                + " resides in the database.  Be careful to edit only " +
-                  "questions that have yet to be asked for there is\n"
-                + " no mechanism to change what users may have previously " +
-                  "used.</font></blockquote>\n");
+    sbuf.append("<P><blockquote><font color=\"green\">With this dialog you "
+                + "are able to edit a question that\n"
+                + " resides in the database.  Be careful to edit only "
+                + "questions that have yet to be asked for there is\n"
+                + " no mechanism to change what users may have previously "
+                + "used.</font></blockquote>\n");
 
     sbuf.append("<FORM METHOD=\"POST\" ACTION=\"" + thisPageURL +
                 "\" name=\"EDIT\">\n"
@@ -354,9 +354,9 @@ public class jquizAdmin extends HttpServlet {
                     "\" name=\"qid\">\n"
                     + " <TABLE BORDER=0>\n"
                     + " <TR><TD></TD><TD>Is Answer?</TD></TR>"
-                    + " <TR><TH align='left'>Enter Question:<BR>\n"
-                    + ("		<input type='text' size='60' " +
-                       "name='question' value=\"") +
+                    + " <TR><TH align='left'>Enter Question:<BR>\n" +
+                    ("		<input type='text' size='60' "
+                     + "name='question' value=\"") +
                     question + "\"></TD>\n"
                     + "<TD></TD>"
                     + " </TR>\n\n" + mkAnswerOption("a", optiona, answer) +
@@ -450,8 +450,8 @@ public class jquizAdmin extends HttpServlet {
     } else {
       try {
         jlib.updateDB(
-            "INSERT into questions(portfolio, question, optiona, optionb, " +
-            "optionc, optiond,"
+            "INSERT into questions(portfolio, question, optiona, optionb, "
+            + "optionc, optiond,"
             + " optione, optionf, optiong, optionh, answer)"
             + " VALUES ('" + thisUser.getPortfolio() + "', '" + question +
             "', '" + optiona + "' , '" + optionb + "', '" + optionc + "', "
@@ -556,8 +556,8 @@ public class jquizAdmin extends HttpServlet {
 
         sbuf.append("Input Quiz was successful!");
       } else {
-        sbuf.append("<P>A quiz by this name allready exists, please use a " +
-                    "different name.\n");
+        sbuf.append("<P>A quiz by this name allready exists, please use a "
+                    + "different name.\n");
       }
 
     } catch (Exception ex) {
@@ -574,10 +574,10 @@ public class jquizAdmin extends HttpServlet {
 
     sbuf.append(jlib.topBox("Jquiz Admin Instructions:"));
 
-    sbuf.append("<P>The purpose of jquizAdmin is to allow instructor the " +
-                "ability to edit and manipulate quizzes for the portfolio "
+    sbuf.append("<P>The purpose of jquizAdmin is to allow instructor the "
+                + "ability to edit and manipulate quizzes for the portfolio "
+                + " environment.\n The basic features allready work for this "
                 +
-                " environment.\n The basic features allready work for this " +
                 "servlet, I just need to keep things up quite a bit and do some"
                 + " more documentation.");
 
@@ -596,10 +596,10 @@ public class jquizAdmin extends HttpServlet {
 
     sbuf.append(jlib.topBox("Create a new Quiz:"));
 
-    sbuf.append("<blockquote><font color=\"green\">This dialog also you to " +
-                "combine previously created questions into\n"
-                + " a takable quiz. Please make sure to fill in the " +
-                  "indentifier section, so that it appears correctly.</font>\n"
+    sbuf.append("<blockquote><font color=\"green\">This dialog also you to "
+                + "combine previously created questions into\n"
+                + " a takable quiz. Please make sure to fill in the "
+                + "indentifier section, so that it appears correctly.</font>\n"
                 + " </blockquote><BR>\n");
 
     sbuf.append(

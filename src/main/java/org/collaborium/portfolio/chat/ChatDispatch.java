@@ -93,10 +93,10 @@ public class ChatDispatch extends HttpServlet {
 
     myBuffer.append(jlib.topBox("Instructions:"));
 
-    myBuffer.append("<font color=\"green\">This is a simple chat applet. You " +
-                    "join the discussion in progress when"
-                    + " you initially load the page.  This means that the " +
-                      "prior discussion is not visible to you.<BR>"
+    myBuffer.append("<font color=\"green\">This is a simple chat applet. You "
+                    + "join the discussion in progress when"
+                    + " you initially load the page.  This means that the "
+                    + "prior discussion is not visible to you.<BR>"
                     + " Remember that <b>anyone</b> can be watching!!");
 
     myBuffer.append(jlib.botBox());

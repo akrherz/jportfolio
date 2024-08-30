@@ -152,10 +152,10 @@ public class jportfolioAdmin extends HttpServlet {
 
     sbuf.append(jlib.topBox("Select Portfolio Elements"));
 
-    sbuf.append("<font class=\"instructions\">You can restrict which " +
-                "elements are usable by \n"
-                + " your portfolio.  Simply select or deselect elements " +
-                  "listed below.   Portfolio data\n"
+    sbuf.append("<font class=\"instructions\">You can restrict which "
+                + "elements are usable by \n"
+                + " your portfolio.  Simply select or deselect elements "
+                + "listed below.   Portfolio data\n"
                 + " is not lost from this change.</font>\n");
 
     sbuf.append("<FORM METHOD=\"GET\" ACTION=\"" + thisPageURL + "\">\n"
@@ -165,67 +165,67 @@ public class jportfolioAdmin extends HttpServlet {
 
     sbuf.append("<TR><TD>Calendar:</TD>\n");
     if (thisUser.usesCalendar) {
-      sbuf.append("<TD><input type=\"radio\" value=\"yes\" " +
-                  "name=\"usesCalendar\" CHECKED>yes\n"
-                  + "</TD><TD><input type=\"radio\" value=\"no\" " +
-                    "name=\"usesCalendar\">no</TD></TR>\n");
+      sbuf.append("<TD><input type=\"radio\" value=\"yes\" "
+                  + "name=\"usesCalendar\" CHECKED>yes\n"
+                  + "</TD><TD><input type=\"radio\" value=\"no\" "
+                  + "name=\"usesCalendar\">no</TD></TR>\n");
     } else {
       sbuf.append(
           "<TD><input type=\"radio\" value=\"yes\" name=\"usesCalendar\">yes\n"
-          + "</TD><TD><input type=\"radio\" value=\"no\" " +
-            "name=\"usesCalendar\" CHECKED>no</TD></TR>\n");
+          + "</TD><TD><input type=\"radio\" value=\"no\" "
+          + "name=\"usesCalendar\" CHECKED>no</TD></TR>\n");
     }
 
     sbuf.append("<TR><TD>Dialog:</TD>\n");
     if (thisUser.usesDialog) {
-      sbuf.append("<TD><input type=\"radio\" value=\"yes\" " +
-                  "name=\"usesDialog\" CHECKED>yes\n"
-                  + "</TD><TD><input type=\"radio\" value=\"no\" " +
-                    "name=\"usesDialog\">no</TD></TR>\n");
+      sbuf.append("<TD><input type=\"radio\" value=\"yes\" "
+                  + "name=\"usesDialog\" CHECKED>yes\n"
+                  + "</TD><TD><input type=\"radio\" value=\"no\" "
+                  + "name=\"usesDialog\">no</TD></TR>\n");
     } else {
       sbuf.append(
           "<TD><input type=\"radio\" value=\"yes\" name=\"usesDialog\">yes\n"
-          + "</TD><TD><input type=\"radio\" value=\"no\" name=\"usesDialog\" " +
-            "CHECKED>no</TD></TR>\n");
+          + "</TD><TD><input type=\"radio\" value=\"no\" name=\"usesDialog\" "
+          + "CHECKED>no</TD></TR>\n");
     }
 
     sbuf.append("<TR><TD>Forecast:</TD>\n");
     if (thisUser.usesForecast) {
-      sbuf.append("<TD><input type=\"radio\" value=\"yes\" " +
-                  "name=\"usesForecast\" CHECKED>yes\n"
-                  + "</TD><TD><input type=\"radio\" value=\"no\" " +
-                    "name=\"usesForecast\">no</TD></TR>\n");
+      sbuf.append("<TD><input type=\"radio\" value=\"yes\" "
+                  + "name=\"usesForecast\" CHECKED>yes\n"
+                  + "</TD><TD><input type=\"radio\" value=\"no\" "
+                  + "name=\"usesForecast\">no</TD></TR>\n");
     } else {
       sbuf.append(
           "<TD><input type=\"radio\" value=\"yes\" name=\"usesForecast\">yes\n"
-          + "</TD><TD><input type=\"radio\" value=\"no\" " +
-            "name=\"usesForecast\" CHECKED>no</TD></TR>\n");
+          + "</TD><TD><input type=\"radio\" value=\"no\" "
+          + "name=\"usesForecast\" CHECKED>no</TD></TR>\n");
     }
 
     sbuf.append("<TR><TD>Quiz:</TD>\n");
     if (thisUser.usesQuiz) {
-      sbuf.append("<TD><input type=\"radio\" value=\"yes\" name=\"usesQuiz\" " +
-                  "CHECKED>yes\n"
-                  + "</TD><TD><input type=\"radio\" value=\"no\" " +
-                    "name=\"usesQuiz\">no</TD></TR>\n");
+      sbuf.append("<TD><input type=\"radio\" value=\"yes\" name=\"usesQuiz\" "
+                  + "CHECKED>yes\n"
+                  + "</TD><TD><input type=\"radio\" value=\"no\" "
+                  + "name=\"usesQuiz\">no</TD></TR>\n");
     } else {
       sbuf.append(
           "<TD><input type=\"radio\" value=\"yes\" name=\"usesQuiz\">yes\n"
-          + "</TD><TD><input type=\"radio\" value=\"no\" name=\"usesQuiz\" " +
-            "CHECKED>no</TD></TR>\n");
+          + "</TD><TD><input type=\"radio\" value=\"no\" name=\"usesQuiz\" "
+          + "CHECKED>no</TD></TR>\n");
     }
 
     sbuf.append("<TR><TD>Chat:</TD>\n");
     if (thisUser.usesChat) {
-      sbuf.append("<TD><input type=\"radio\" value=\"yes\" name=\"usesChat\" " +
-                  "CHECKED>yes\n"
-                  + "</TD><TD><input type=\"radio\" value=\"no\" " +
-                    "name=\"usesChat\">no</TD></TR>\n");
+      sbuf.append("<TD><input type=\"radio\" value=\"yes\" name=\"usesChat\" "
+                  + "CHECKED>yes\n"
+                  + "</TD><TD><input type=\"radio\" value=\"no\" "
+                  + "name=\"usesChat\">no</TD></TR>\n");
     } else {
       sbuf.append(
           "<TD><input type=\"radio\" value=\"yes\" name=\"usesChat\">yes\n"
-          + "</TD><TD><input type=\"radio\" value=\"no\" name=\"usesChat\" " +
-            "CHECKED>no</TD></TR>\n");
+          + "</TD><TD><input type=\"radio\" value=\"no\" name=\"usesChat\" "
+          + "CHECKED>no</TD></TR>\n");
     }
     sbuf.append("</TABLE>\n");
 
@@ -276,9 +276,9 @@ public class jportfolioAdmin extends HttpServlet {
                 + "<P>Enter Subject:<BR>\n"
                 + "<input type=\"text\" name=\"subject\">\n"
 
-                + "<P>Enter Message:<BR>\n"
-                + ("<TEXTAREA WRAP=\"Virtual\" name=\"message\" ROWS=\"5\" " +
-                   "COLS=\"40\"></TEXTAREA>\n")
+                + "<P>Enter Message:<BR>\n" +
+                ("<TEXTAREA WRAP=\"Virtual\" name=\"message\" ROWS=\"5\" "
+                 + "COLS=\"40\"></TEXTAREA>\n")
 
                 + "<input type=\"SUBMIT\">\n"
                 + "</FORM>\n");
@@ -294,8 +294,8 @@ public class jportfolioAdmin extends HttpServlet {
     sbuf.append("<TABLE>\n");
     try {
       ResultSet rs = dbInterface.callDB(
-          "SELECT sum(score) as tot_score, getUserName(userid) as name from " +
-          "scores s "
+          "SELECT sum(score) as tot_score, getUserName(userid) as name from "
+          + "scores s "
           + " WHERE s.portfolio = '" + portfolio + "' GROUP by s.userid");
       while (rs.next()) {
         sbuf.append("<TR><TD>" + rs.getString("name") + "</TD><TD>" +
@@ -352,10 +352,10 @@ public class jportfolioAdmin extends HttpServlet {
 
     sbuf.append(jlib.topBox("Add Administrator:"));
 
-    sbuf.append("<P><blockquote><font color=\"green\">With this form you can " +
-                "knight somebody else to share\n"
-                + " administrative duties with you.  Just add their username " +
-                  "and you are all set.</font></blockquote>\n");
+    sbuf.append("<P><blockquote><font color=\"green\">With this form you can "
+                + "knight somebody else to share\n"
+                + " administrative duties with you.  Just add their username "
+                + "and you are all set.</font></blockquote>\n");
 
     sbuf.append(
         "<FORM METHOD=\"POST\" ACTION=\"" + thisPageURL + "\">\n"
@@ -572,9 +572,9 @@ public class jportfolioAdmin extends HttpServlet {
                 + "<P>Enter the Calendar Date: (ex 2001-02-18)<BR>\n"
                 + "<input type=\"text\" name=\"validDate\">\n"
 
-                + "<P>Enter SHORT text to appear:<BR>\n"
-                + ("<input type=\"text\" name=\"description\" size=\"20\" " +
-                   "MAXLENGTH=\"20\">\n")
+                + "<P>Enter SHORT text to appear:<BR>\n" +
+                ("<input type=\"text\" name=\"description\" size=\"20\" "
+                 + "MAXLENGTH=\"20\">\n")
 
                 + "<P>Enter a URL for text: (Optional)<BR>\n"
                 + "<input type=\"text\" name=\"URL\" size=\"60\">\n"
@@ -661,20 +661,20 @@ public class jportfolioAdmin extends HttpServlet {
                 "' name='motd'>\n");
     sbuf.append("<input type='hidden' name='mode' value='m'>\n");
 
-    sbuf.append("<blockquote><font color=\"green\">The message of the day " +
-                "appears when the portfolio\n"
-                + " is initially opened.  Good messages would include " +
-                  "reminders of assignments and other announcements.<BR>\n"
-                + " The previous MOTD is saved and easily viewable by a link " +
-                  "on the homepage.\n"
+    sbuf.append("<blockquote><font color=\"green\">The message of the day "
+                + "appears when the portfolio\n"
+                + " is initially opened.  Good messages would include "
+                + "reminders of assignments and other announcements.<BR>\n"
+                + " The previous MOTD is saved and easily viewable by a link "
+                + "on the homepage.\n"
                 + " </font></blockquote>\n");
 
     sbuf.append(
         "<P>Enter Message:<BR>"
         + "<textarea COLS='60' ROWS='10' name='motd' wrap='Virtual'></textarea>"
 
-        + "<P>Send copy as email to all? <input type=\"checkbox\" " +
-          "value=\"Yes\" name=\"sendEmail\">\n"
+        + "<P>Send copy as email to all? <input type=\"checkbox\" "
+        + "value=\"Yes\" name=\"sendEmail\">\n"
 
         + "<P>Submit Message:<BR>"
         + "<input type='submit' value='Enter MOTD'>");
@@ -798,16 +798,16 @@ public class jportfolioAdmin extends HttpServlet {
 
     /* We get a listing of users and roles */
     rs = dbInterface.callDB("SELECT r.id as id, r.name as name, "
-                            + " u.username as username, u.fname ||' '|| " +
-                              "u.lname as realname from roles r, users u, "
+                            + " u.username as username, u.fname ||' '|| "
+                            + "u.lname as realname from roles r, users u, "
                             + " students s WHERE r.id = s.role and "
                             + " s.portfolio = '" + thisUser.getPortfolio() +
                             "' and "
                             + " u.username = s.username");
 
-    sbuf.append("<form method=\"POST\" name=\"assign\" " +
-                "action=\"/jportfolio/servlet/jportfolioAdmin\"><input " +
-                "type=\"hidden\" value=\"r\" name=\"mode\">\n");
+    sbuf.append("<form method=\"POST\" name=\"assign\" "
+                + "action=\"/jportfolio/servlet/jportfolioAdmin\"><input "
+                + "type=\"hidden\" value=\"r\" name=\"mode\">\n");
     sbuf.append("<table border=\"1\"><tr><th>UserName</th><th>Old Role</th>"
                 + " <th>New Role</th></tr>\n");
     try {
@@ -878,16 +878,16 @@ public class jportfolioAdmin extends HttpServlet {
 
     myBuffer.append(
         "<font size=+1>This is the portfolio manager."
-        + " It is used to access the various classess and projects being " +
-          "managed by the "
-        + " Portfolio system. When you authenitcate as a user you will be " +
-          "shown the current"
+        + " It is used to access the various classess and projects being "
+        + "managed by the "
+        + " Portfolio system. When you authenitcate as a user you will be "
+        + "shown the current"
         +
         " portfolio's that you have and be able to navigate your data in them."
-        + " <p>This version of portfolio is a test environment. If you don't " +
-          "know why you are "
-        + " seeing this, most likley you don't want to be here (unless you " +
-          "are just naturally curious"
+        + " <p>This version of portfolio is a test environment. If you don't "
+        + "know why you are "
+        + " seeing this, most likley you don't want to be here (unless you "
+        + "are just naturally curious"
         + " about things on the net). :) ");
 
     myBuffer.append(jlib.botBox());

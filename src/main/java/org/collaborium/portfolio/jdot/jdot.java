@@ -54,10 +54,10 @@ public class jdot {
         "<FORM METHOD='POST' ACTION='" + thisPageURL + "'>\n "
         + "<P><B>Subject:</B><BR>\n"
         + "	<INPUT size=60 NAME='subject' Value=''>\n"
-        + "<P><B>Classify Your Post:</B> <i>(Optional)</i> \n"
-        + (" <a href=\"/jportfolio/info/dialog.html\" target=\"_new\">More " +
-           "Information</a> about classifications.<BR>\n")
-        + " <SELECT name='type'>\n"
+        + "<P><B>Classify Your Post:</B> <i>(Optional)</i> \n" +
+        (" <a href=\"/jportfolio/info/dialog.html\" target=\"_new\">More "
+         + "Information</a> about classifications.<BR>\n") +
+        " <SELECT name='type'>\n"
         + "	<option value='other'>Unclassified\n"
         + "	<option value='ethical'>Ethical Discussion\n"
         + "	<option value='self'>Self Assessment\n"
@@ -66,16 +66,16 @@ public class jdot {
 
         + " <INPUT type='hidden' name='mode' value='q'>\n "
         + " <INPUT type='hidden' name='threadid' value='new'>\n "
-        + "<P><B>Message:</B><br> "
-        + (" <TEXTAREA NAME='body' WRAP='Virtual' ROWS=\"20\" " +
-           "COLS=\"60\"></TEXTAREA>  ")
-        + ("<BR>If you would like to include a link to another webpage, you " +
-           "can enter it ")
-        + " here:<BR>\n <INPUT TYPE='text' name='link' size='60'>\n"
+        + "<P><B>Message:</B><br> " +
+        (" <TEXTAREA NAME='body' WRAP='Virtual' ROWS=\"20\" "
+         + "COLS=\"60\"></TEXTAREA>  ") +
+        ("<BR>If you would like to include a link to another webpage, you "
+         + "can enter it ") +
+        " here:<BR>\n <INPUT TYPE='text' name='link' size='60'>\n"
 
-        + ("<p>(<i>Optional</i>)  If this post is a topic starter, please " +
-           "select the \n")
-        + " topic to assign it to.\n" + jlib.topicsSelect(thisUser, "0") +
+        + ("<p>(<i>Optional</i>)  If this post is a topic starter, please "
+           + "select the \n") +
+        " topic to assign it to.\n" + jlib.topicsSelect(thisUser, "0") +
         " <p> <INPUT TYPE='submit' VALUE='Post message'>\n "
         + " <INPUT TYPE='reset' VALUE='Reset form'>\n "
         + " </FORM> ");
@@ -101,15 +101,15 @@ public class jdot {
 
     /** Set up the format of the top of the page.... */
     sbuf.append("<table width=\"100%\" border=0>\n"
-                + " <tr><td><font class=\"bodyText\"><b>Restrict Thread " +
-                  "Types:</b></font>\n"
+                + " <tr><td><font class=\"bodyText\"><b>Restrict Thread "
+                + "Types:</b></font>\n"
                 + " </td><td>\n"
                 + " <form method=\"GET\" action=\"" + thisPageURL + "\">\n"
-                + " <select name=\"threadType\" "
-                + ("   " +
-                   "onChange=\"location=this.form.threadType.options[this." +
-                   "form.threadType.selectedIndex].value\">\n")
-                + "   <option value=\"" + thisPageURL + "?threadType=all\" ");
+                + " <select name=\"threadType\" " +
+                ("   "
+                 + "onChange=\"location=this.form.threadType.options[this."
+                 + "form.threadType.selectedIndex].value\">\n") +
+                "   <option value=\"" + thisPageURL + "?threadType=all\" ");
     if (threadType.equalsIgnoreCase("all"))
       sbuf.append(" SELECTED ");
     sbuf.append(">ALL \n"
@@ -190,15 +190,15 @@ public class jdot {
     String mySQL2 = null;
     if (thisUser.getDialogSecurity().equalsIgnoreCase("group"))
       if (thisUser.isAdmin())
-        mySQL2 = "select *, getRoleName(username, portfolio) as role from " +
-                 "dialog where idnum > 10000 "
+        mySQL2 = "select *, getRoleName(username, portfolio) as role from "
+                 + "dialog where idnum > 10000 "
                  + " and idnum < 200000 and portfolio = '" +
                  thisUser.getPortfolio() + "' and security = 'group' " + s1 +
                  " ORDER BY date DESC LIMIT " + messageBlock + " OFFSET " +
                  skipMessenges;
       else
-        mySQL2 = "select *, getRoleName(username, portfolio) as role from " +
-                 "dialog where idnum > 10000 "
+        mySQL2 = "select *, getRoleName(username, portfolio) as role from "
+                 + "dialog where idnum > 10000 "
                  + " and idnum < 200000 and portfolio = '" +
                  thisUser.getPortfolio() + "' and security = 'group' " + s1 +
                  " and gid = '" + thisUser.getGroupID() + "' "
@@ -206,15 +206,15 @@ public class jdot {
                  skipMessenges;
     else if (thisUser.getDialogSecurity().equalsIgnoreCase("private"))
       if (thisUser.isAdmin())
-        mySQL2 = "select *, getRoleName(username, portfolio) as role from " +
-                 "dialog where idnum > 10000 "
+        mySQL2 = "select *, getRoleName(username, portfolio) as role from "
+                 + "dialog where idnum > 10000 "
                  + " and idnum < 200000 and portfolio = '" +
                  thisUser.getPortfolio() + "' and security = 'private' " + s1 +
                  " ORDER BY date DESC LIMIT " + messageBlock + " OFFSET " +
                  skipMessenges;
       else
-        mySQL2 = "select *, getRoleName(username, portfolio) as role from " +
-                 "dialog where idnum > 10000 "
+        mySQL2 = "select *, getRoleName(username, portfolio) as role from "
+                 + "dialog where idnum > 10000 "
                  + " and idnum < 200000 and portfolio = '" +
                  thisUser.getPortfolio() + "' and security = 'private' " + s1 +
                  " and (username = '" + thisUser.getUserID() + "' or "
@@ -222,8 +222,8 @@ public class jdot {
                  + " ORDER BY date DESC LIMIT " + messageBlock + " OFFSET " +
                  skipMessenges;
     else
-      mySQL2 = "select *, getRoleName(username, portfolio) as role from " +
-               "dialog where idnum > 10000 "
+      mySQL2 = "select *, getRoleName(username, portfolio) as role from "
+               + "dialog where idnum > 10000 "
                + " and idnum < 200000 and portfolio = '" +
                thisUser.getPortfolio() + "' "
                + " and security = '" + thisUser.getDialogSecurity() + "' " +
@@ -300,15 +300,15 @@ public class jdot {
     sbuf.append(jlib.topBox("Dialog Servlet Information:"));
 
     sbuf.append("<H3>Dialog Help:</H3>\n"
-                + "<P>In the left hand collumn under 'Dialog Commands', you " +
-                  "see various options.<BR>\n"
+                + "<P>In the left hand collumn under 'Dialog Commands', you "
+                + "see various options.<BR>\n"
                 + "<UL>\n"
-                + "  <LI><i>List Discussion Topics</i> shows the discussion " +
-                  "topics.</LI>\n"
-                + "  <LI><i>Create Discussion Topic</i> allows you to create " +
-                  "a top level thread.</LI>\n"
-                + "  <LI><i>Discussion Quick-view</i> allows you to see all " +
-                  "of the messages \n"
+                + "  <LI><i>List Discussion Topics</i> shows the discussion "
+                + "topics.</LI>\n"
+                + "  <LI><i>Create Discussion Topic</i> allows you to create "
+                + "a top level thread.</LI>\n"
+                + "  <LI><i>Discussion Quick-view</i> allows you to see all "
+                + "of the messages \n"
                 + " in a hierarchy of how they relate to each other.</LI>\n"
                 + "</UL>\n");
 
@@ -321,26 +321,25 @@ public class jdot {
 
     sbuf.append(
         "<H3>Dialog info:</H3>\n"
-        + "<P>Dialog is a java servlet program for collaborative web " +
-          "discussions.  The program was\n"
-        + "developed at the International Institute of Theoretical and " +
-          "Applied Physics\n"
-        +
-        " (<a href='http://www.iitap.iastate.edu'>www.iitap.iastate.edu</a>) " +
-        "in support of our\n"
+        + "<P>Dialog is a java servlet program for collaborative web "
+        + "discussions.  The program was\n"
+        + "developed at the International Institute of Theoretical and "
+        + "Applied Physics\n"
+        + " (<a href='http://www.iitap.iastate.edu'>www.iitap.iastate.edu</a>) "
+        + "in support of our\n"
         +
         " effort to provide collaborative tools.  For more information, see \n"
         + " <a href='http://www.collaborium.org'>www.collaborium.org</a>.\n"
 
-        + "<P>More information about Dailog can be found <a " +
-          "href=\"/jportfolio/info/dialog.html\">here</a>.\n");
+        + "<P>More information about Dailog can be found <a "
+        + "href=\"/jportfolio/info/dialog.html\">here</a>.\n");
 
     sbuf.append("<H3>Servlet Authors:</H3>\n"
-                + " <ol>\n<li>Douglas Fils:</li> (<a " +
-                  "href='mailto:fils@iastate.edu'>fils@iastate.edu</a>) </li>\n"
-                + " <li>Daryl Herzmann:</li> (<a " +
-                  "href='mailto:akrherz@iastate.edu'>akrherz@iastate.edu</" +
-                  "a>) </li>\n</ol>");
+                + " <ol>\n<li>Douglas Fils:</li> (<a "
+                + "href='mailto:fils@iastate.edu'>fils@iastate.edu</a>) </li>\n"
+                + " <li>Daryl Herzmann:</li> (<a "
+                + "href='mailto:akrherz@iastate.edu'>akrherz@iastate.edu</"
+                + "a>) </li>\n</ol>");
 
     sbuf.append(jlib.botBox());
 
@@ -632,8 +631,8 @@ public class jdot {
 
       sbuf.append(
           "<table bgcolor=\"white\" style=\"background-repeat: repeat-y;\""
-          + "background=\"/jportfolio/images/dbar.png\" " +
-            "width=\"100%\"><tr><td>\n");
+          + "background=\"/jportfolio/images/dbar.png\" "
+          + "width=\"100%\"><tr><td>\n");
       sbuf.append("<ul class=\"dqv\">\n");
       while (threads.next()) {
         STRidnum = threads.getString("idnum");
@@ -829,8 +828,8 @@ public class jdot {
     sbuf.append(
         "<div class=\"alertBox\"><h3>Alert!</h3>"
         + " Here is a preview of your post.  You can hit the 'back' button\n"
-        + " on your browser to edit changes to your post.  Unless you click " +
-          "the 'Finalize \n"
+        + " on your browser to edit changes to your post.  Unless you click "
+        + "the 'Finalize \n"
         + " Post' button, this post will <b>not</b> be saved.\n");
 
     sbuf.append("<p><form method=\"POST\" action=\"" + thisPageURL + "\">\n"
@@ -1037,12 +1036,12 @@ public class jdot {
         + "<input type='hidden' name='idnum' value='" + myMessage.getidnum() +
         "'>\n"
 
-        + " <P><B>Comments:</B><br> "
-        + (" <TEXTAREA NAME='body' WRAP='Virtual' ROWS=\"20\" " +
-           "COLS=\"70\"></TEXTAREA>  ")
-        + ("<BR>If you would like to include a link to another webpage, you " +
-           "can enter it ")
-        + " here:<BR>\n <INPUT TYPE='text' name='link' size='60'>\n");
+        + " <P><B>Comments:</B><br> " +
+        (" <TEXTAREA NAME='body' WRAP='Virtual' ROWS=\"20\" "
+         + "COLS=\"70\"></TEXTAREA>  ") +
+        ("<BR>If you would like to include a link to another webpage, you "
+         + "can enter it ") +
+        " here:<BR>\n <INPUT TYPE='text' name='link' size='60'>\n");
 
     theBuffer.append(
         "<P><b>Preview your post:</b>\n"
@@ -1154,8 +1153,8 @@ public class jdot {
         + " and idnum < " + secondOne + "0000::numeric ORDER BY date DESC "
         + " LIMIT " + messageBlock + " OFFSET " + skipMessenges);
 
-    myBuffer.append("<font class=\"bodyText\" size=\"+2\">Responses to " +
-                    "Active Post:</font><BR>\n");
+    myBuffer.append("<font class=\"bodyText\" size=\"+2\">Responses to "
+                    + "Active Post:</font><BR>\n");
     if (rs != null) {
       myBuffer.append(displayMessages(thisUser, rs, thisPageURL));
     }
@@ -1267,8 +1266,8 @@ public class jdot {
                 thisPageURL + "\">\n");
     sbuf.append(jlib.topBox("Dialog Level:"));
     sbuf.append("<SELECT name=\"dialogType\" "
-                + "onChange=\"location=this.form.dialogType.options[this." +
-                  "form.dialogType.selectedIndex].value\">\n");
+                + "onChange=\"location=this.form.dialogType.options[this."
+                + "form.dialogType.selectedIndex].value\">\n");
 
     sbuf.append("	<option value=\"" + thisPageURL +
                 "?dialogType=public\" ");

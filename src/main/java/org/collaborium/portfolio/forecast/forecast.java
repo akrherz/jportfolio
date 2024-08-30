@@ -158,9 +158,9 @@ public class forecast extends HttpServlet {
     {
     case 'c':
       pageContent.append("<P align=\"right\">"
-                         + "<a " +
-                           "href=\"/jportfolio/jsp/user/forecast/" +
-                           "cumStandings.jsp\">Printable Version</a>\n");
+                         + "<a "
+                         + "href=\"/jportfolio/jsp/user/forecast/"
+                         + "cumStandings.jsp\">Printable Version</a>\n");
       try {
         pageContent.append(
             fLib.cumulativeResults(thisUser.getPortfolio(), sort, thisPageURL));
@@ -173,14 +173,14 @@ public class forecast extends HttpServlet {
       if (sqlDate != null)
         pageContent.append(
             "<P align=\"right\">"
-            + "<a " +
-              "href=\"/jportfolio/jsp/user/forecast/prevForecast.jsp?sqlDate=" +
+            + "<a "
+            + "href=\"/jportfolio/jsp/user/forecast/prevForecast.jsp?sqlDate=" +
             sqlDate + "\">Printable Version</a>\n");
       else
         pageContent.append("<P align=\"right\">"
-                           + "<a " +
-                             "href=\"/jportfolio/jsp/user/forecast/" +
-                             "prevForecast.jsp\">Printable Version</a>\n");
+                           + "<a "
+                           + "href=\"/jportfolio/jsp/user/forecast/"
+                           + "prevForecast.jsp\">Printable Version</a>\n");
 
       try {
         pageContent.append(fLib.forecastResults(thisUser.getPortfolio(),
@@ -355,15 +355,15 @@ public class forecast extends HttpServlet {
     StringBuffer sbuf = new StringBuffer();
 
     sbuf.append("<h3>Welcome!!</h3>\n");
-    sbuf.append("<P>This is the Forecasting Activity Application inside of " +
-                "Portfolio.  Your \n"
-                + " portfolio may not be participating in the Activity, so " +
-                  "this page may be ignored. \n");
+    sbuf.append("<P>This is the Forecasting Activity Application inside of "
+                + "Portfolio.  Your \n"
+                + " portfolio may not be participating in the Activity, so "
+                + "this page may be ignored. \n");
 
-    sbuf.append("<P>In the column to the left, you will find options " +
-                "available for this portfolio \n"
-                + " and valid at this particular time.  The \"Make " +
-                  "Forecast\" link only works when a forecast \n"
+    sbuf.append("<P>In the column to the left, you will find options "
+                + "available for this portfolio \n"
+                + " and valid at this particular time.  The \"Make "
+                + "Forecast\" link only works when a forecast \n"
                 + " needs to be made.\n");
 
     return sbuf.toString();
@@ -424,18 +424,18 @@ public class forecast extends HttpServlet {
     sbuf.append(
         "<form method='POST' action='" + thisPageURL + "'>\n"
         + " <input type='hidden' name='mode' value='f'>\n"
-        + " <P><TABLE>\n"
-        + ("<tr><td colspan=5 bgcolor=\"#0000f0\"><font " +
-           "color=\"#f0f0f0\"><b>Enter your numeric " +
-           "forecast:</b></font></td></tr>\n")
-        + (" <TR><TD></TD><TD>High Temp:</TD><TD>Low Temp:</TD><TD>Precip " +
-           "Cat:</TD><TD>Snow Cat:</TD></TR>\n")
-        + " <TR><TH>Local:</TH>\n"
-        + (" <TD><input type='text' size='4' MAXLENGTH='3' name='local_high' " +
-           "value='") +
-        thisDay.getLocalHighTemp() + "'></TD>\n"
-        + (" <TD><input type='text' size='4' MAXLENGTH='3' name='local_low' " +
-           "value='") +
+        + " <P><TABLE>\n" +
+        ("<tr><td colspan=5 bgcolor=\"#0000f0\"><font "
+         + "color=\"#f0f0f0\"><b>Enter your numeric "
+         + "forecast:</b></font></td></tr>\n") +
+        (" <TR><TD></TD><TD>High Temp:</TD><TD>Low Temp:</TD><TD>Precip "
+         + "Cat:</TD><TD>Snow Cat:</TD></TR>\n") +
+        " <TR><TH>Local:</TH>\n" +
+        (" <TD><input type='text' size='4' MAXLENGTH='3' name='local_high' "
+         + "value='") +
+        thisDay.getLocalHighTemp() + "'></TD>\n" +
+        (" <TD><input type='text' size='4' MAXLENGTH='3' name='local_low' "
+         + "value='") +
         thisDay.getLocalLowTemp() + "'></TD>\n"
         + "	<TD>" +
         fLib.rainSelect("local_prec", thisDay.getLocalPrecCat()) + "</TD>\n"
@@ -443,22 +443,22 @@ public class forecast extends HttpServlet {
         fLib.snowSelect("local_snow", thisDay.getLocalSnowCat()) + "</TD>\n"
         + "	</TR>\n"
 
-        + " <TR><TH>" + thisDay.getFloaterSite() + ":</TH>\n"
-        + ("	<TD><input type='text' size='4' MAXLENGTH='3' " +
-           "name='float_high' value='") +
-        thisDay.getFloaterHighTemp() + "'></TD>\n"
-        + ("	<TD><input type='text' size='4' MAXLENGTH='3' " +
-           "name='float_low' value='") +
+        + " <TR><TH>" + thisDay.getFloaterSite() + ":</TH>\n" +
+        ("	<TD><input type='text' size='4' MAXLENGTH='3' "
+         + "name='float_high' value='") +
+        thisDay.getFloaterHighTemp() + "'></TD>\n" +
+        ("	<TD><input type='text' size='4' MAXLENGTH='3' "
+         + "name='float_low' value='") +
         thisDay.getFloaterLowTemp() + "'></TD>\n"
         + "	<TD>" +
         fLib.rainSelect("float_prec", thisDay.getFloaterPrecCat()) + "</TD>\n"
         + "	<TD>" +
         fLib.snowSelect("float_snow", thisDay.getFloaterSnowCat()) + "</TD>\n"
-        + "	</TR>"
-        + ("<tr><td colspan=5 bgcolor=\"#0000f0\"><font " +
-           "color=\"#f0f0f0\"><b>Justification:</b> " +
-           "(<i>Optional</i>)</font></td></tr>\n")
-        + "<tr><td colspan=5><b>Rate your confidence in this forecast?</b>"
+        + "	</TR>" +
+        ("<tr><td colspan=5 bgcolor=\"#0000f0\"><font "
+         + "color=\"#f0f0f0\"><b>Justification:</b> "
+         + "(<i>Optional</i>)</font></td></tr>\n") +
+        "<tr><td colspan=5><b>Rate your confidence in this forecast?</b>"
         + " <br><i>1 (not confident) - 10 (confident)</i>"
         + " <input type=\"text\" name=\"confidence\" value=\"" +
         thisDay.getConfidence() + "\" size=2 maxsize=2>"

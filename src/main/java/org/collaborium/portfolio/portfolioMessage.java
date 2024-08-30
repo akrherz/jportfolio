@@ -220,8 +220,8 @@ public class portfolioMessage {
         postTS = tempstamp;
 
       if (tempstamp.before(postTS)) {
-        newStr = "<img src=\"/jportfolio/images/new.gif\" alt=\"new\" " +
-                 "align=\"left\">\n";
+        newStr = "<img src=\"/jportfolio/images/new.gif\" alt=\"new\" "
+                 + "align=\"left\">\n";
       }
     } catch (Exception ex) {
       plogger.report("Line 217 in portfolioMessage, argh");
@@ -310,8 +310,8 @@ public class portfolioMessage {
                   "&idnum=" + idnum + "'>"
                   + "Post a follow up</a>\n");
     else
-      sbuf.append("\n<i>Sorry, this post is too deep in the discussion to " +
-                  "respond to.</i>\n");
+      sbuf.append("\n<i>Sorry, this post is too deep in the discussion to "
+                  + "respond to.</i>\n");
 
     String numMessages = subPosts();
 
