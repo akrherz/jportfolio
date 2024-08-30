@@ -101,7 +101,8 @@ public class users extends HttpServlet {
 
     if (writePerm.booleanValue())
       sbuf.append(
-          "	<a href=\"/jportfolio/jsp/user/customize/editPict.jsp\">Edit</a>\n");
+          "	<a "
+          + "href=\"/jportfolio/jsp/user/customize/editPict.jsp\">Edit</a>\n");
 
     sbuf.append("	</TD></TR></TABLE>\n");
     sbuf.append("<!-- End of My Picture -->\n");

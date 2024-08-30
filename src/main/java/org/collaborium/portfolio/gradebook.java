@@ -100,8 +100,8 @@ public class gradebook {
     dbInterface.updateDB("INSERT into scores"
                          + " (portfolio, userID, assign, app, score) VALUES"
                          + " ('" + thisUser.getPortfolio() + "', "
-                         + " '" + thisUser.getUserID() + "', '" + ID + "', '" +
-                         app + "', '" + score + "') ");
+                         + " '" + thisUser.getUserID() + "', '" + ID +
+                         "', '" + app + "', '" + score + "') ");
 
     return true;
   } // End of addScoreElement()

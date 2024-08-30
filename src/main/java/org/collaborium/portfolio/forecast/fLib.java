@@ -288,12 +288,12 @@ public class fLib {
       sortCol = "final_tot";
 
     /** Now we have a date, lets get how the kids forecasted **/
-    ResultSet forecasts = dbInterface.callDB(
-        "SELECT getUserName(userid) as realname, *, "
-        +
-        " (p0_total+ p1_total + p2_total + p3_total) AS final_tot from forecast_totals "
-        + " WHERE portfolio = '" + portfolio + "' "
-        + " order by " + sortCol + " ");
+    ResultSet forecasts =
+        dbInterface.callDB("SELECT getUserName(userid) as realname, *, "
+                           + " (p0_total+ p1_total + p2_total + p3_total) AS "
+                           + "final_tot from forecast_totals "
+                           + " WHERE portfolio = '" + portfolio + "' "
+                           + " order by " + sortCol + " ");
 
     sbuf.append(
         "<TABLE>\n"
@@ -557,14 +557,15 @@ public class fLib {
                          portfolio + "' ");
 
     /** Total all forecasts first */
-    dbInterface.updateDB(
-        "INSERT into forecast_totals ( SELECT userid, portfolio, sum(local_high), "
-        +
-        " sum(local_low), sum(local_prec), sum(local_snow), sum(local_err), sum(float_high), "
-        +
-        " sum(float_low), sum(float_prec), sum(float_snow), sum(float_err) from "
-        + " forecast_grades WHERE portfolio = '" + portfolio + "' "
-        + " GROUP by userid, portfolio ) ");
+    dbInterface.updateDB("INSERT into forecast_totals ( SELECT userid, "
+                         + "portfolio, sum(local_high), "
+                         + " sum(local_low), sum(local_prec), "
+                         + "sum(local_snow), sum(local_err), sum(float_high), "
+                         + " sum(float_low), sum(float_prec), "
+                         + "sum(float_snow), sum(float_err) from "
+                         + " forecast_grades WHERE portfolio = '" + portfolio +
+                         "' "
+                         + " GROUP by userid, portfolio ) ");
 
     ResultSet students = dbInterface.callDB(
         "SELECT getUserName( username) as realname, "
@@ -672,8 +673,8 @@ public class fLib {
         } else {
           dbInterface.updateDB(
               "INSERT into forecasts (userid, portfolio, day, local_high, "
-              +
-              " local_low, local_prec, local_snow, float_high, float_low, float_prec, "
+              + " local_low, local_prec, local_snow, float_high, float_low, "
+              + "float_prec, "
               + " float_snow, type) VALUES ('" + thisUserID + "', '" +
               portfolio + "', "
               + " '" + sqlDate + "', '" + cl_local_high + "', '" +
@@ -725,8 +726,8 @@ public class fLib {
 
         dbInterface.updateDB(
             "INSERT into forecast_grades ( userid, portfolio, day, local_high, "
-            +
-            " local_low, local_prec, local_snow, local_err, float_high, float_low, float_prec, "
+            + " local_low, local_prec, local_snow, local_err, float_high, "
+            + "float_low, float_prec, "
             + " float_snow, float_err, total_err, case_group) VALUES ('" +
             thisUserID + "', '" + portfolio + "', "
             + " '" + sqlDate + "', '" + local_high_err.toString() + "', '" +

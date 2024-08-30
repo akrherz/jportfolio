@@ -80,9 +80,9 @@ public class jlib {
     }
 
     sbuf.append(topBox("Sign In:"));
-    sbuf.append(
-        "Signed Up Successfully! Now you can return to the portfolio manager and log into your newly created"
-        + " portfolio");
+    sbuf.append("Signed Up Successfully! Now you can return to the portfolio "
+                + "manager and log into your newly created"
+                + " portfolio");
     sbuf.append(botBox());
 
     return sbuf.toString();
@@ -249,10 +249,10 @@ public class jlib {
         + "<script language=\"JavaScript\" type=\"text/javascript\">\n"
         + "<!--//BEGIN Script\n"
         + "function new_window(url) {\n"
-        + "	link = \n"
-        +
-        "	window.open(url,\"Link\",\"toolbar=0,location=0,directories=0,status=0"
-        + ",menubar=no,scrollbars=yes,resizable=yes,width=522,height=282\");\n"
+        + "	link = \n" +
+        ("	window.open(url,\"Link\",\"toolbar=0,location=0,directories="
+         + "0,status=0") +
+        ",menubar=no,scrollbars=yes,resizable=yes,width=522,height=282\");\n"
         + "} \n"
         + "//END Script-->\n"
         + "</script>\n"
@@ -330,8 +330,8 @@ public class jlib {
     sbuf.append("<div id=\"portfolio-auth\">" + realname + " (" + portfolio +
                 ") </div>\n</div>\n");
 
-    sbuf.append(
-        "\n<div id=\"mainNavOuter\">\n<div id=\"mainNav\">\n<div id=\"mainNavInner\">\n<ul>\n");
+    sbuf.append("\n<div id=\"mainNavOuter\">\n<div id=\"mainNav\">\n<div "
+                + "id=\"mainNavInner\">\n<ul>\n");
 
     String uri = "";
     /* Okay, if we are logged in */
@@ -516,7 +516,8 @@ public class jlib {
     StringBuffer theBuffer = new StringBuffer();
 
     theBuffer.append(
-        "<br clear=\"all\" /><div class=\"portfolio-footer\">Portfolio Application Suite"
+        "<br clear=\"all\" /><div class=\"portfolio-footer\">Portfolio "
+        + "Application Suite"
         + "<BR>&copy; 1995-2005 Iowa State University\n"
         + "<BR>[ Local System time is " + new java.util.Date().toString() +
         " ]\n"
@@ -660,17 +661,19 @@ public class jlib {
         if (nowUser.equalsIgnoreCase(thisUser)) {
           myBuffer.append("<B>" + nowUser + "</B>: ");
         } else {
-          myBuffer.append(
-              "<a href=\"javascript:new_window('/jportfolio/jsp/user/IMPost.jsp?toUser=" +
-              tmp.toString() + "');\">" + nowUser + "</a>: ");
+          myBuffer.append("<a "
+                          + "href=\"javascript:new_window('/jportfolio/jsp/"
+                          + "user/IMPost.jsp?toUser=" + tmp.toString() +
+                          "');\">" + nowUser + "</a>: ");
         }
         myBuffer.append(allUsers.get(tmp).toString() + "<BR>");
       } while (myKeys.hasMoreElements());
     }
 
     if (IMDatabase.hasMessage(thisUser).booleanValue())
-      myBuffer.append(
-          "<BR><a href=\"javascript:new_window('/jportfolio/jsp/user/IMCat.jsp');\">You have an IM</a>");
+      myBuffer.append("<BR><a "
+                      + "href=\"javascript:new_window('/jportfolio/jsp/user/"
+                      + "IMCat.jsp');\">You have an IM</a>");
 
     myBuffer.append(botBox());
 
@@ -766,10 +769,11 @@ public class jlib {
 
     sbuf.append(topBox("General Help"));
 
-    sbuf.append(
-        "If you have any questions about this system, please send an email to \n"
-        +
-        "<a href=\"mailto:systems@iitap.iastate.edu\">systems@iitap.iastate.edu</a>\n");
+    sbuf.append("If you have any questions about this system, please send an "
+                + "email to \n"
+                + "<a "
+                + "href=\"mailto:systems@iitap.iastate.edu\">systems@iitap."
+                + "iastate.edu</a>\n");
 
     sbuf.append(botBox());
 
@@ -809,11 +813,11 @@ public class jlib {
     ResultSet rs = null;
     boolean returnVal = false;
     try {
-      rs = dbInterface.callDB(
-          "SELECT quiznum, qname, attempts from quizes"
-          + " WHERE portfolio = '" + thisUser.getPortfolio() + "' "
-          +
-          " and startdate < CURRENT_TIMESTAMP and stopdate > CURRENT_TIMESTAMP ");
+      rs = dbInterface.callDB("SELECT quiznum, qname, attempts from quizes"
+                              + " WHERE portfolio = '" +
+                              thisUser.getPortfolio() + "' " +
+                              (" and startdate < CURRENT_TIMESTAMP and "
+                               + "stopdate > CURRENT_TIMESTAMP "));
       if (rs.next()) {
         returnVal = true;
       }
@@ -848,11 +852,11 @@ public class jlib {
     myBuffer.append("<select name='portfolio' size='10'>\n");
     myBuffer.append("<optgroup label=\"Active Portfolios\">\n");
     try {
-      ResultSet rs = dbInterface.callDB(
-          "SELECT * from portfolios "
-          +
-          " WHERE portfolio NOT IN (SELECT portfolio from students WHERE username = "
-          + " '" + userID + "') and active");
+      ResultSet rs =
+          dbInterface.callDB("SELECT * from portfolios "
+                             + " WHERE portfolio NOT IN (SELECT portfolio "
+                             + "from students WHERE username = "
+                             + " '" + userID + "') and active");
 
       while (rs.next()) {
         myBuffer.append("<option value='" + rs.getString("portfolio") + "'>" +
@@ -865,11 +869,11 @@ public class jlib {
 
     myBuffer.append("<optgroup label=\"Inactive Portfolios\">\n");
     try {
-      ResultSet rs = dbInterface.callDB(
-          "SELECT * from portfolios "
-          +
-          " WHERE portfolio NOT IN (SELECT portfolio from students WHERE username = "
-          + " '" + userID + "') and not active");
+      ResultSet rs =
+          dbInterface.callDB("SELECT * from portfolios "
+                             + " WHERE portfolio NOT IN (SELECT portfolio "
+                             + "from students WHERE username = "
+                             + " '" + userID + "') and not active");
 
       while (rs.next()) {
         myBuffer.append("<option value='" + rs.getString("portfolio") + "'>" +
@@ -1122,8 +1126,8 @@ public class jlib {
                     + "<TD>" + message + " :</TD>\n"
                     + "<TD><a href=\"" + program +
                     "\">View</a>\n &nbsp; <b>/</b> &nbsp;"
-                    + "<a href=\"" + notifyBaseURL + "?mode=o&idnum=" + idnum +
-                    "\">Clear</a></TD>\n"
+                    + "<a href=\"" + notifyBaseURL +
+                    "?mode=o&idnum=" + idnum + "\">Clear</a></TD>\n"
                     + "</TR>\n");
       }
 
@@ -1193,14 +1197,15 @@ public class jlib {
                     + "<TD>" + message + " :</TD>\n"
                     + "<TD><a href=\"" + program +
                     "\">View</a>\n &nbsp; <b>/</b> &nbsp;"
-                    + "<a href=\"" + notifyBaseURL + "?mode=o&idnum=" + idnum +
-                    "\">Clear</a></TD>\n"
+                    + "<a href=\"" + notifyBaseURL +
+                    "?mode=o&idnum=" + idnum + "\">Clear</a></TD>\n"
                     + "</TR>\n");
       }
 
       if (rs.previous())
-        sbuf.append(
-            "<TR><TD colspan=\"5\"><a href=\"/jportfolio/jsp/user/myNotify.jsp\">View All</a></TD></TR>\n");
+        sbuf.append("<TR><TD colspan=\"5\"><a "
+                    + "href=\"/jportfolio/jsp/user/myNotify.jsp\">View "
+                    + "All</a></TD></TR>\n");
       else {
         sbuf.append("<b>No messages found for your portfolio</b>\n");
       }
@@ -1251,10 +1256,11 @@ public class jlib {
   public static String getMotd(String portfolio) {
     StringBuffer sbuf = new StringBuffer();
     try {
-      ResultSet rs = dbInterface.callDB(
-          "SELECT id, body, to_char(issue, 'DD Month YYYY HH12:MI AM') as issued, issue "
-          + " from motd WHERE portfolio = '" + portfolio +
-          "'  ORDER by issue DESC LIMIT 1");
+      ResultSet rs =
+          dbInterface.callDB("SELECT id, body, to_char(issue, 'DD Month YYYY "
+                             + "HH12:MI AM') as issued, issue "
+                             + " from motd WHERE portfolio = '" + portfolio +
+                             "'  ORDER by issue DESC LIMIT 1");
       rs.next();
       sbuf.append("<P>Posted on: " + rs.getString("issued") + "<BR />\n");
       String body = rs.getString("body");
@@ -1280,8 +1286,8 @@ public class jlib {
     StringBuffer sbuf = new StringBuffer();
 
     sbuf.append("\n\n\t<!-- Begin box element for " + title + " -->\n");
-    sbuf.append(
-        "<table width='100%' border='0' rowspacing='0' cellpadding='3' cellspacing='0'>\n");
+    sbuf.append("<table width='100%' border='0' rowspacing='0' "
+                + "cellpadding='3' cellspacing='0'>\n");
     sbuf.append("<tr><td class=\"topBox\" NOWRAP>"
                 //	+ "<font size=+1
                 // color=\""+boxTitleTextColor+"\"><i>"+title+"</i></font>"
@@ -1361,12 +1367,12 @@ public class jlib {
     sbuf.append("</optgroup>\n");
     sbuf.append("<optgroup label=\"Inactive Portfolios\">\n");
     try {
-      ResultSet rs = dbInterface.callDB(
-          "select s.portfolio, p.name as pname"
-          + " from students s, portfolios p "
-          + " WHERE s.username = '" + userID + "' "
-          +
-          " and p.portfolio = s.portfolio and not p.active ORDER by pname ASC");
+      ResultSet rs =
+          dbInterface.callDB("select s.portfolio, p.name as pname"
+                             + " from students s, portfolios p "
+                             + " WHERE s.username = '" + userID + "' " +
+                             (" and p.portfolio = s.portfolio and not "
+                              + "p.active ORDER by pname ASC"));
       while (rs.next()) {
         sbuf.append("<option value='" + rs.getString("portfolio") + "'>" +
                     rs.getString("pname") + "</option>\n");

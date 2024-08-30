@@ -282,8 +282,8 @@ public class jportfolio extends HttpServlet {
 
     sbuf.append(jlib.topBox("User Preferences:"));
 
-    sbuf.append(
-        "<font color=\"green\"><blockquote>This page modifies your user preferences.</blockquote></font>\n");
+    sbuf.append("<font color=\"green\"><blockquote>This page modifies your "
+                + "user preferences.</blockquote></font>\n");
 
     sbuf.append("<P><B>Current Settings:</B><BR>\n"
                 + "<TABLE>\n"
@@ -372,8 +372,8 @@ public class jportfolio extends HttpServlet {
                   portfolioID + "\">log in</a> \n"
                   + " to your portfolio and configure it.\n");
     } else {
-      sbuf.append(
-          "Incorrect system password, email support@iitap.iastate.edu if you need assistance");
+      sbuf.append("Incorrect system password, email "
+                  + "support@iitap.iastate.edu if you need assistance");
     }
 
     sbuf.append(jlib.botBox());
@@ -395,27 +395,29 @@ public class jportfolio extends HttpServlet {
     sbuf.append(jlib.topBox("Create a new Portfolio:"));
 
     sbuf.append(
-        "<font class=\"instructions\"><blockquote>This page is intended for instructors to create class portfolios.  In order\n"
-        +
-        " to register a portfolio, a system administration password needs to be known.\n</blockquote></font>");
+        "<font class=\"instructions\"><blockquote>This page is intended for "
+        + "instructors to create class portfolios.  In order\n"
+        + " to register a portfolio, a system administration password needs "
+        + "to be known.\n</blockquote></font>");
 
     sbuf.append(
         "<BR><FORM method='POST' name='create' action='" + thisPageURL + "'>\n"
         + " <input type='hidden' name='mode' value='u'>\n"
 
-        + " <P>System access password: (Contact akrherz@iastate.edu for)<BR>\n"
+        +
+        " <P>System access password: (Contact akrherz@iastate.edu for)<BR>\n"
         + "  <input type='text' name='sysPass' size='10'>\n"
 
         + " <P>Enter a Portfolio Name:<BR>\n"
         + " <input type='text' name='portfolioName' size='40'>\n"
 
-        +
-        " <P>Enter a Portfolio Abreviation (no spaces) (Include year) Ex) gcp2001:<BR>\n"
-        + " <input type='text' name='portfolioID' size='20'>\n"
+        + (" <P>Enter a Portfolio Abreviation (no spaces) (Include year) Ex) "
+           + "gcp2001:<BR>\n") +
+        " <input type='text' name='portfolioID' size='20'>\n"
 
-        +
-        " <P>Enter Portfolio Description: (appears on Portfolio homepage)<BR>\n"
-        + " <textarea name='about' cols='50' rows='10'></textarea>\n"
+        + (" <P>Enter Portfolio Description: (appears on Portfolio "
+           + "homepage)<BR>\n") +
+        " <textarea name='about' cols='50' rows='10'></textarea>\n"
 
         + " <P>Portfolio challenge password:<BR>\n"
         + " <input name='passwd' type='text' size='40'>\n"
@@ -439,14 +441,15 @@ public class jportfolio extends HttpServlet {
     StringBuffer sbuf = new StringBuffer();
 
     sbuf.append(jlib.topBox("Commands:"));
-    sbuf.append(
-        "<ul>\n"
-        +
-        " <li><a class=\"commands\" href='/jportfolio/login.jsp?logoutPortfolio=yes'>Switch Portfolios</a></li>\n"
-        + "    <LI><a class=\"commands\" href='" + thisPageURL +
-        "?mode=u'>Create Portfolio</a></LI>\n"
-        +
-        "    <LI><a class=\"commands\" href='/jportfolio/login.jsp?logoutPortfolio=yes'>Register for Portfolio</a></LI>\n");
+    sbuf.append("<ul>\n"
+                + " <li><a class=\"commands\" "
+                + "href='/jportfolio/login.jsp?logoutPortfolio=yes'>Switch "
+                + "Portfolios</a></li>\n"
+                + "    <LI><a class=\"commands\" href='" + thisPageURL +
+                "?mode=u'>Create Portfolio</a></LI>\n" +
+                ("    <LI><a class=\"commands\" "
+                 + "href='/jportfolio/login.jsp?logoutPortfolio=yes'>Register "
+                 + "for Portfolio</a></LI>\n"));
 
     if (portfolio != null) {
       sbuf.append("    <LI><a class=\"commands\" "
@@ -483,21 +486,22 @@ public class jportfolio extends HttpServlet {
 
     myBuffer.append(
         "<H3 align=\"CENTER\">Welcome to the Portfolio Manager.</H3>\n"
-        +
-        "<blockquote>In order to use this system, you must have an account.  Once you have an account, you can use the log-in\n"
+        + "<blockquote>In order to use this system, you must have an "
+        + "account.  Once you have an account, you can use the log-in\n"
         + "box in the upper-right hand corner.</blockquote>\n"
-        +
-        "<HR width=\"450\"><BR><BR><H3><font color=\"red\">Attention New Users:</font></H3>\n"
+        + "<HR width=\"450\"><BR><BR><H3><font color=\"red\">Attention New "
+        + "Users:</font></H3>\n"
         +
         "<blockquote>If you are new to the system, you will probably want to \n"
         + " <a href='" + thisPageURL +
         "?mode=i'>Create a New User Account.</blockquote><br>\n"
 
-        + "<H3><font color=\"red\">Help:</font></H3>\n"
-        +
-        "<blockquote>If you have any questions about this system, please send\n"
-        +
-        "an email to <a href=\"mailto:systems@iitap.iastate.edu\">systems@iitap.iastate.edu</a> </blockquote><br>\n");
+        + "<H3><font color=\"red\">Help:</font></H3>\n" +
+        ("<blockquote>If you have any questions about this system, please "
+         + "send\n") +
+        ("an email to <a "
+         + "href=\"mailto:systems@iitap.iastate.edu\">systems@iitap.iastate."
+         + "edu</a> </blockquote><br>\n"));
 
     myBuffer.append(jlib.botBox());
 
@@ -559,10 +563,10 @@ public class jportfolio extends HttpServlet {
           "You are currently accessing the <i>generic portfolio interface.</i>"
               + " The " + className +
               " portfolio has a custom interface which can be "
-              + " <a href=\"" + porthome + "\">found here.</a>\n"
-              +
-              "<br /><strong>Note:</strong>  You can still use this page, but specialized"
-              + " content will be missing.\n"));
+              + " <a href=\"" + porthome + "\">found here.</a>\n" +
+              ("<br /><strong>Note:</strong>  You can still use this page, "
+               + "but specialized") +
+              " content will be missing.\n"));
 
     sbuf.append("<P><B><I>Message of the Day (MOTD):</I></b>\n"
                 + "<blockquote>\n"
