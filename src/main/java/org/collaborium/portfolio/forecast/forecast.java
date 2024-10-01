@@ -228,7 +228,9 @@ public class forecast extends HttpServlet {
       break;
     }
 
-    sideContent.append(classOptions(thisUser, thisPageURL));
+    if (thisUser != null) {
+      sideContent.append(classOptions(thisUser, thisPageURL));
+    }
 
     out.println(jlib.makePage(sideContent.toString(), pageContent.toString()));
     // Finish the page and close output
