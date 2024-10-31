@@ -463,7 +463,7 @@ public class forecast extends HttpServlet {
         "<tr><td colspan=5><b>Rate your confidence in this forecast?</b>"
         + " <br><i>1 (not confident) - 10 (confident)</i>"
         + " <input type=\"text\" name=\"confidence\" value=\"" +
-        thisDay.getConfidence() + "\" size=2 maxsize=2>"
+        thisDay.getConfidence() + "\" size=\"2\" maxlength=\"2\">"
 
         + "<p><b>Discuss your thoughts regarding this forecast.</b>"
         + "<br>You will <b>not</b> be graded for this discussion."
@@ -538,8 +538,15 @@ public class forecast extends HttpServlet {
 
     String confidence = (String)req.getParameter("confidence");
     String discussion = stringUtils.cleanString(req.getParameter("discussion"));
-    if (confidence.equals(""))
+    if (confidence.equals("")) {
       confidence = "0";
+    } else {
+      try {
+        Integer.parseInt(confidence);
+      } catch (NumberFormatException e) {
+        confidence = "0";
+      }
+    }
 
     if (!isForecastDay(thisUser)) {
       return "Forecast Period Expired.  Sorry!";
