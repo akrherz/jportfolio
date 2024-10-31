@@ -146,7 +146,8 @@
                                 <todir>conf</todir>
                             </configfile>
                         </configfiles>
-                        <properties>
+			<properties>
+			    <cargo.servlet.port>9080</cargo.servlet.port>
                             <cargo.start.jvmargs>
                                 -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005
                             </cargo.start.jvmargs>
