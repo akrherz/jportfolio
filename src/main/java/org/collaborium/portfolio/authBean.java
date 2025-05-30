@@ -32,50 +32,47 @@ public class authBean {
   public authBean(HttpServletRequest request, HttpSession session) {
     /* Test pull from the session */
     thisUser = (portfolioUser)session.getAttribute("User");
+
+    /* Check for SSO authentication first */
+    if (thisUser == null && SSOHelper.isSSO(request)) {
+      plogger.report("authBean.java: SSO authentication detected");
+      thisUser = SSOHelper.getSSOUser(request);
+      if (thisUser != null) {
+        session.setAttribute("User", thisUser);
+        session.setMaxInactiveInterval(10800);
+        return; // SSO user is authenticated, no need for further processing
+      }
+    }
+
     /* Pull vars from the request */
-    String cgiUser = getCGI(request, "username");
-    String cgiPass = getCGI(request, "password");
     String cgiPortPass = getCGI(request, "portpass");
     String cgiPort = getCGI(request, "portfolio");
-    String logout = getCGI(request, "logout");
+    // String logout = getCGI(request, "logout");
     String logoutPortfolio = getCGI(request, "logoutPortfolio");
-    String cgiPass1 = getCGI(request, "password1");
-    String cgiPass2 = getCGI(request, "password2");
 
-    /* Scenario 3: They posted a logoutPortfolio request
-     * Need to keep in this order, or else #0 catches all
-     */
+    // Exit portfolio
     if (thisUser != null && logoutPortfolio != null) {
       plogger.report("authbean.java: #3, Switching Portfolios");
       thisUser.setPortfolio(null);
     }
-    /* Scenario 6: They want to log out */
-    if (logout != null) {
-      plogger.report("authBean.java: #6, Logging out user");
-      thisUser = null;
-    }
 
-    /* Scenario 0: Nothing to do, if user is logged in and has portfolio! */
+    // Logout, which doesn't work with SSO really
+    // if (logout != null) {
+    //  plogger.report("authBean.java: #6, Logging out user");
+    //  thisUser = null;
+    //}
+
+    // Nothing to do
     if (thisUser != null && thisUser.getPortfolio() != null)
       return;
 
-    /* Scenario 1: No User set and we posted a username, password ! */
-    if (thisUser == null && cgiUser != null && cgiPass != null) {
-      plogger.report("authBean.java: #1, Doing login stuff");
-      doAuth(cgiUser, cgiPass);
-    }
-    /* Scenario 5: They posted a username, but no password and createAccount */
-    if (cgiUser != null && cgiPass1 != null) {
-      plogger.report("authBean.java: #5, Creating Account");
-      thisUser = createUser(request);
-    }
-    /* Scenario 4: They posted a portpass and portfolio, so they wish to join!
-     */
+    // Attempting to join a portfolio
     if (cgiPortPass != null && cgiPort != null) {
       plogger.report("authBean.java: #4, Sign up for a portfolio");
       jlib.signUpForPortfolio(thisUser, request);
     }
-    /* Scenario 2: We have a user set and a posted Port! */
+
+    // Logging in to a portfolio
     if (thisUser != null && cgiPort != null) {
       plogger.report("authBean.java: #2, Logging into Portfolio!");
       loginPort(cgiPort);
