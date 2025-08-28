@@ -26,15 +26,10 @@
 package org.collaborium.portfolio.forecast;
 
 import java.io.*;
-import java.lang.*;
-import java.lang.String.*;
 import java.sql.*;
-import java.text.*;
-import java.util.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import org.collaborium.portfolio.*;
-import org.collaborium.portfolio.forecast.*;
 
 public class forecastAdmin extends HttpServlet {
 

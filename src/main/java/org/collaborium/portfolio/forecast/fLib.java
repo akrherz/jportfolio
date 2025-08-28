@@ -45,14 +45,13 @@ public class fLib {
   }
 
   /**
-   *  Method that prints out a simple SELECT box
-   *  for the years available
+   * Method that prints out a simple SELECT box
+   * for the years available
    */
   public static String yearSelect() {
     StringBuffer sbuf = new StringBuffer();
     Calendar now = Calendar.getInstance();
     int year = now.get(Calendar.YEAR);
-    String yearInString = String.valueOf(year);
     int thisyear = 2001;
     sbuf.append("<SELECT name=\"year\">\n");
     String extra = "";
@@ -70,8 +69,8 @@ public class fLib {
   } // End of yearSelect()
 
   /**
-   *  Method that prints out a simple SELECT box
-   *  for the months available
+   * Method that prints out a simple SELECT box
+   * for the months available
    */
   public static String monthSelect() {
     StringBuffer sbuf = new StringBuffer();
@@ -104,8 +103,9 @@ public class fLib {
 
   /**
    * Generic method to get the user to select a date
-   * @param portfolio which is the Current Portfolio
-   * @param callMode value to send back to the CGI server
+   *
+   * @param portfolio   which is the Current Portfolio
+   * @param callMode    value to send back to the CGI server
    * @param thisPageURL value of the page to reference in the form
    * @return HTMLformated string
    */
@@ -143,8 +143,8 @@ public class fLib {
   }
 
   /**
-   *  Method that prints out a simple SELECT box
-   *  for the months available
+   * Method that prints out a simple SELECT box
+   * for the months available
    */
   public static String daySelect() {
     StringBuffer sbuf = new StringBuffer();
@@ -160,9 +160,10 @@ public class fLib {
 
   /**
    * Method that prints out the results for the last forecast
-   * @param portfolio value of the current portfolio
-   * @param sqlDate which is the value of the date wanted
-   * @param sortCol self-explainatory
+   *
+   * @param portfolio   value of the current portfolio
+   * @param sqlDate     which is the value of the date wanted
+   * @param sortCol     self-explainatory
    * @param thisPageURL value of the current pageURL
    */
   public static String forecastResults(String portfolio, String sqlDate,
@@ -172,7 +173,7 @@ public class fLib {
     StringBuffer sbuf = new StringBuffer();
     sbuf.append("<H3>Previous Forecast Results:</H3>\n");
 
-    /** If no date is specified, lets then see if the last answers works**/
+    /** If no date is specified, lets then see if the last answers works **/
     if (sqlDate == null) {
       ResultSet availDates = dbInterface.callDB(
           "SELECT day "
@@ -274,9 +275,10 @@ public class fLib {
 
   /**
    * Method that prints out the results for the last forecast
-   * @param portfolio value of the current portfolio
-   * @param sqlDate which is the value of the date wanted
-   * @param sortCol self-explainatory
+   *
+   * @param portfolio   value of the current portfolio
+   * @param sqlDate     which is the value of the date wanted
+   * @param sortCol     self-explainatory
    * @param thisPageURL value of the current pageURL
    */
   public static String cumulativeResults(String portfolio, String sortCol,
@@ -604,8 +606,9 @@ public class fLib {
 
   /**
    * gradeForecasts() does the automated grading of the entered forecasts
+   *
    * @param portfolio which is the current Portfolio
-   * @param sqlDate which is the forecast Date we will be verifying
+   * @param sqlDate   which is the forecast Date we will be verifying
    * @return String data
    */
   public static String gradeForecasts(String portfolio, String sqlDate)
@@ -695,29 +698,30 @@ public class fLib {
         }
 
         Integer local_high_err =
-            new Integer(gradeTemp(local_high, u_local_high));
-        Integer local_low_err = new Integer(gradeTemp(local_low, u_local_low));
+            Integer.parseInt(gradeTemp(local_high, u_local_high));
+        Integer local_low_err =
+            Integer.parseInt(gradeTemp(local_low, u_local_low));
         Integer local_prec_err =
-            new Integer(gradePrec(local_prec, u_local_prec));
+            Integer.parseInt(gradePrec(local_prec, u_local_prec));
         Integer local_snow_err =
-            new Integer(gradePrec(local_snow, u_local_snow));
+            Integer.parseInt(gradePrec(local_snow, u_local_snow));
 
         Integer float_high_err =
-            new Integer(gradeTemp(float_high, u_float_high));
-        Integer float_low_err = new Integer(gradeTemp(float_low, u_float_low));
+            Integer.parseInt(gradeTemp(float_high, u_float_high));
+        Integer float_low_err =
+            Integer.parseInt(gradeTemp(float_low, u_float_low));
         Integer float_prec_err =
-            new Integer(gradePrec(float_prec, u_float_prec));
+            Integer.parseInt(gradePrec(float_prec, u_float_prec));
         Integer float_snow_err =
-            new Integer(gradePrec(float_snow, u_float_snow));
+            Integer.parseInt(gradePrec(float_snow, u_float_snow));
 
         Integer local_err =
-            new Integer(local_high_err.intValue() + local_low_err.intValue() +
-                        local_prec_err.intValue() + local_snow_err.intValue());
+            local_high_err.intValue() + local_low_err.intValue() +
+            local_prec_err.intValue() + local_snow_err.intValue();
         Integer float_err =
-            new Integer(float_high_err.intValue() + float_low_err.intValue() +
-                        float_prec_err.intValue() + float_snow_err.intValue());
-        Integer total_err =
-            new Integer(local_err.intValue() + float_err.intValue());
+            float_high_err.intValue() + float_low_err.intValue() +
+            float_prec_err.intValue() + float_snow_err.intValue();
+        Integer total_err = local_err.intValue() + float_err.intValue();
 
         dbInterface.updateDB("DELETE from forecast_grades WHERE "
                              + " portfolio = '" + portfolio + "' and day = '" +

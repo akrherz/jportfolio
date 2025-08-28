@@ -27,13 +27,11 @@
  * @author Daryl Herzmann
  */
 
-package org.collaborium.portfolio.users;
+package org.collaborium.users;
 
 import java.io.*;
-import java.lang.*;
 import java.sql.*;
 import java.text.*;
-import java.util.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import org.collaborium.portfolio.*;

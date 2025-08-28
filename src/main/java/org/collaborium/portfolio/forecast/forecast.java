@@ -25,12 +25,11 @@
 package org.collaborium.portfolio.forecast;
 
 import java.io.*;
-import java.lang.*;
 import java.sql.*;
+import java.util.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import org.collaborium.portfolio.*;
-import org.collaborium.portfolio.forecast.*;
 import org.collaborium.util.*;
 
 public class forecast extends HttpServlet {
@@ -251,9 +250,6 @@ public class forecast extends HttpServlet {
     thisDay.getForecast();
     thisDay.getValidation();
     thisDay.getClimo();
-
-    if (thisDay == null)
-      return "Unable to retrieve information for this day!";
 
     sbuf.append("<P>Forecast Numbers for " + sqlDate + "\n"
 
@@ -497,11 +493,12 @@ public class forecast extends HttpServlet {
           + " WHERE portfolio = '" + thisUser.getPortfolio() + "' "
           + " and day = 'TODAY'::date + '1 day'::interval ");
       if (rs.next()) {
-        ResultSet rs2 = dbInterface.callDB(
+        ResultSet rs2 = dbInterface.callDBWithParameters(
             "SELECT * from portfolios "
-            + " WHERE portfolio = '" + thisUser.getPortfolio() + "' and "
-            +
-            " fxtime > to_char(CURRENT_TIMESTAMP::timestamp, 'HH24')::int ");
+                + " WHERE portfolio = ? and "
+                + " fxtime > extract(hour from now() at time zone "
+                + "'America/Chicago') ",
+            Arrays.asList(thisUser.getPortfolio()));
         if (rs2.next())
           return true;
       }
@@ -523,16 +520,16 @@ public class forecast extends HttpServlet {
     String sqlDate = "tomorrow";
 
     String local_high = req.getParameter("local_high");
-    Integer Int_local_high = new Integer(local_high.trim());
+    Integer Int_local_high = Integer.parseInt(local_high.trim());
     String local_low = req.getParameter("local_low");
-    Integer Int_local_low = new Integer(local_low.trim());
+    Integer Int_local_low = Integer.parseInt(local_low.trim());
     String local_prec = req.getParameter("local_prec");
     String local_snow = req.getParameter("local_snow");
 
     String float_high = req.getParameter("float_high");
-    Integer Int_float_high = new Integer(float_high.trim());
+    Integer Int_float_high = Integer.parseInt(float_high.trim());
     String float_low = req.getParameter("float_low");
-    Integer Int_float_low = new Integer(float_low.trim());
+    Integer Int_float_low = Integer.parseInt(float_low.trim());
     String float_prec = req.getParameter("float_prec");
     String float_snow = req.getParameter("float_snow");
 
