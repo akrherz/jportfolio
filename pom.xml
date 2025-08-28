@@ -147,7 +147,7 @@
                             </configfile>
                         </configfiles>
 			<properties>
-			    <cargo.servlet.port>9080</cargo.servlet.port>
+			    <cargo.servlet.port>8080</cargo.servlet.port>
                             <cargo.start.jvmargs>
                                 -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005
                             </cargo.start.jvmargs>
@@ -305,7 +305,11 @@
             <artifactId>httpclient</artifactId>
             <version>4.5.14</version>
         </dependency>
-
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.7.7</version>
+        </dependency>
         <dependency>
             <groupId>org.jsoup</groupId>
             <artifactId>jsoup</artifactId>
