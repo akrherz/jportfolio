@@ -26,6 +26,7 @@
 package org.collaborium.portfolio;
 
 import java.sql.*;
+import java.util.List;
 
 public class dbInterface {
   static Connection db = null;
@@ -52,6 +53,31 @@ public class dbInterface {
       ex.printStackTrace();
     }
   } // End of dbInterfaceInit
+
+  /**
+   * Method to call the database with a list of parameters
+   */
+  public static ResultSet callDBWithParameters(String query,
+                                               List<Object> params) {
+    if (db == null)
+      dbInterfaceInit();
+
+    ResultSet rs = null;
+    try {
+      plogger.report(query + ";");
+      PreparedStatement pst = db.prepareStatement(
+          query, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+      for (int i = 0; i < params.size(); i++) {
+        pst.setObject(i + 1, params.get(i));
+      }
+      rs = pst.executeQuery();
+    } catch (Exception ex) {
+      plogger.report("Exception caught in callDBWithParameters().\n" + ex);
+      ex.printStackTrace();
+      dbInterfaceInit();
+    }
+    return rs;
+  }
 
   /**
    * Method to return a result set for a query string
