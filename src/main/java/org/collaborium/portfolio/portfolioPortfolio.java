@@ -19,11 +19,8 @@
 
 package org.collaborium.portfolio;
 
-import java.io.*;
 import java.sql.*;
 import java.util.*;
-import javax.servlet.http.*;
-import org.collaborium.portfolio.*;
 
 public class portfolioPortfolio {
 
@@ -40,7 +37,6 @@ public class portfolioPortfolio {
   public boolean usesDialog = false;
   public boolean usesForecast = false;
   public boolean usesQuiz = false;
-  public boolean usesChat = false;
 
   /**
    * Generic container
@@ -56,7 +52,6 @@ public class portfolioPortfolio {
     this.usesDialog = false;
     this.usesForecast = false;
     this.usesQuiz = false;
-    this.usesChat = false;
     this.pList = "('" + newID + "')";
     this.admins = new Vector();
 
@@ -68,13 +63,11 @@ public class portfolioPortfolio {
         this.usesDialog = rs.getBoolean("use_dialog");
         this.usesForecast = rs.getBoolean("use_forecast");
         this.usesQuiz = rs.getBoolean("use_quiz");
-        this.usesChat = rs.getBoolean("use_chat");
       } else {
         this.usesCalendar = true;
         this.usesDialog = true;
         this.usesForecast = true;
         this.usesQuiz = true;
-        this.usesChat = true;
       }
 
       rs = dbInterface.callDB("SELECT porthome, name, groupp from portfolios "

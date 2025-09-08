@@ -19,14 +19,11 @@
 package org.collaborium.portfolio;
 
 import java.io.*;
-import java.lang.*;
-import java.lang.String.*;
 import java.sql.*;
 import java.text.*;
 import java.util.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
-import org.collaborium.portfolio.*;
 import org.collaborium.util.*;
 
 public class jportfolioAdmin extends HttpServlet {
@@ -215,18 +212,6 @@ public class jportfolioAdmin extends HttpServlet {
           + "CHECKED>no</TD></TR>\n");
     }
 
-    sbuf.append("<TR><TD>Chat:</TD>\n");
-    if (thisUser.usesChat) {
-      sbuf.append("<TD><input type=\"radio\" value=\"yes\" name=\"usesChat\" "
-                  + "CHECKED>yes\n"
-                  + "</TD><TD><input type=\"radio\" value=\"no\" "
-                  + "name=\"usesChat\">no</TD></TR>\n");
-    } else {
-      sbuf.append(
-          "<TD><input type=\"radio\" value=\"yes\" name=\"usesChat\">yes\n"
-          + "</TD><TD><input type=\"radio\" value=\"no\" name=\"usesChat\" "
-          + "CHECKED>no</TD></TR>\n");
-    }
     sbuf.append("</TABLE>\n");
 
     sbuf.append("<INPUT TYPE=\"submit\" value=\"Make Changes\"></form>\n");
@@ -245,7 +230,6 @@ public class jportfolioAdmin extends HttpServlet {
     String usesDialog = (String)request.getParameter("usesDialog");
     String usesForecast = (String)request.getParameter("usesForecast");
     String usesQuiz = (String)request.getParameter("usesQuiz");
-    String usesChat = (String)request.getParameter("usesChat");
     try {
       dbInterface.updateDB("INSERT into appregistry VALUES('" +
                            thisUser.getPortfolio() + "') ");
@@ -254,7 +238,6 @@ public class jportfolioAdmin extends HttpServlet {
           + " , use_dialog = '" + usesDialog + "' "
           + " , use_forecast = '" + usesForecast + "' "
           + " , use_quiz = '" + usesQuiz + "' "
-          + " , use_chat = '" + usesChat + "' "
           + " WHERE portfolio = '" + thisUser.getPortfolio() + "' ");
     } catch (Exception ex) {
       plogger.report("Problem setting vals in appregistry");

@@ -47,8 +47,6 @@ public class users extends HttpServlet {
     /** Standard stuff to set up the servlet **/
     response.setContentType("text/html");
     PrintWriter out = response.getWriter();
-    StringBuffer sideContent = new StringBuffer();
-    StringBuffer pageContent = new StringBuffer();
 
     /** Get information from the Request **/
     String location = request.getRequestURI();

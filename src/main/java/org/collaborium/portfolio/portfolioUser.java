@@ -51,7 +51,6 @@ public class portfolioUser implements HttpSessionBindingListener {
   public boolean usesDialog = false;
   public boolean usesForecast = false;
   public boolean usesQuiz = false;
-  public boolean usesChat = false;
 
   // An Array to hold idnums for messages a user responded to
   private Hashtable notedPosts = new Hashtable();
@@ -321,7 +320,6 @@ public class portfolioUser implements HttpSessionBindingListener {
     usesDialog = myPortfolio.usesDialog;
     usesForecast = myPortfolio.usesForecast;
     usesQuiz = myPortfolio.usesQuiz;
-    usesChat = myPortfolio.usesChat;
 
     try {
       ResultSet rs =

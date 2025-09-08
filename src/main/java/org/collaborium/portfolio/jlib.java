@@ -353,12 +353,6 @@ public class jlib {
         sbuf.append(tabBox("main", "Calendar", uri, selected));
       }
 
-      /* Chat, again nobody overrides */
-      if (thisUser.usesChat) {
-        uri = "/jportfolio/servlet/ChatDispatch";
-        sbuf.append(tabBox("main", "Chat", uri, selected));
-      }
-
       /* Dialog */
       if (thisUser.usesDialog) {
         uri = "/jportfolio/servlet/jdot3";
@@ -691,28 +685,7 @@ public class jlib {
 
     StringBuffer myBuffer = new StringBuffer();
 
-    //	myBuffer.append( topBoxNoBR("Portfolio Apps:") );
-
-    // +" <a href='/portfolio/servlet/jpinball'>Pinball Simulation<a/><br>\n"
-    // +" <a href='/portfolio/servlet/jsib'>Sib Simultation<a/><br>\n"
-
-    //	myBuffer.append("   <a class=\"commands\"
-    // href='"+servletHttpBase+"/jportfolio'>Portfolio Manager<a/><br>\n"
-    //		+"   <a class=\"commands\"
-    // href='"+httpBase+"/jsp/user/myCalendar.jsp'>Calendar</a><BR>\n"
-    //		+"   <a class=\"commands\"
-    // href='"+servletHttpBase+"/ChatDispatch'>Chat</a><BR>\n"
-    //		+"   <a class=\"commands\"
-    // href='"+servletHttpBase+"/jdot3'>Dialog</a><br>\n"
-    //		+"   <a class=\"commands\"
-    // href='"+servletHttpBase+"/forecast'>Forecast</a><br>\n"
-    //		+"   <a class=\"commands\"
-    // href='"+servletHttpBase+"/jquiz'>Quiz<a/><br>\n"
-    //		+"   <a class=\"commands\"
-    // href='"+servletHttpBase+"/jportfolio?mode=l'>Log Out</a>\n");
-
     myBuffer.append("");
-    // 	myBuffer.append( botBox() );
 
     return myBuffer.toString();
 
@@ -728,8 +701,6 @@ public class jlib {
     ResultSet rs = null;
 
     try {
-      // rs = callDB("select fname, lname from users where username =
-      // '"+userID+"' ");
       rs = dbInterface.callDB("SELECT getUserName('" + userID + "') as name");
       rs.next();
       name = rs.getString("name");
