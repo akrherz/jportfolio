@@ -21,14 +21,9 @@ package org.collaborium.portfolio.jdot;
 import java.io.*;
 import java.math.*;
 import java.sql.*;
-import java.util.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import org.collaborium.portfolio.*;
-
-// our rewrite of the Orielly Multipart Request to
-// interface with the SQL server and not the file system
-// import com.oreilly.servlet.MultipartRequestSQL;
 
 public class jdotAdmin extends HttpServlet {
 

@@ -24,10 +24,14 @@
  */
 package org.collaborium.portfolio;
 
-import com.oreilly.servlet.multipart.*;
 import java.io.*;
+import java.util.List;
 import javax.servlet.*;
 import javax.servlet.http.*;
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.commons.io.FilenameUtils;
 import org.collaborium.portfolio.*;
 
 public class uploadServlet extends HttpServlet {
@@ -71,36 +75,35 @@ public class uploadServlet extends HttpServlet {
       out.println(jlib.basicHeader(thisUser, "Portfolio Upload"));
 
       try {
-        MultipartParser mp =
-            new MultipartParser(request, 10 * 1024 * 1024); // 10MB
-        com.oreilly.servlet.multipart.Part part;
-        while ((part = mp.readNextPart()) != null) {
-          String name = part.getName();
+        // Use Apache Commons FileUpload
+        if (ServletFileUpload.isMultipartContent(request)) {
+          DiskFileItemFactory factory = new DiskFileItemFactory();
+          factory.setSizeThreshold(1024 * 1024);
+          ServletFileUpload upload = new ServletFileUpload(factory);
+          upload.setSizeMax(10 * 1024 * 1024); // 10MB
 
-          if (part.isParam()) {
-            // it's a parameter part
-            ParamPart paramPart = (ParamPart)part;
-            String value = paramPart.getStringValue();
-            out.println("param; name=" + name + ", value=" + value);
-          } else if (part.isFile()) {
-            // it's a file part
-            FilePart filePart = (FilePart)part;
-            String fileName = filePart.getFileName();
-            String fileType = filePart.getContentType();
-            if (fileName != null && fileType.equals("image/gif")) {
-              // the part actually contained a file
-              long size = filePart.writeTo(userDir);
-              out.println("file; name=" + name + "; filename=" + fileName +
-                          ", content type=" + filePart.getContentType() +
-                          " size=" + size);
+          List<FileItem> items = upload.parseRequest(request);
+          for (FileItem item : items) {
+            String name = item.getFieldName();
+            if (item.isFormField()) {
+              String value = item.getString();
+              out.println("param; name=" + name + ", value=" + value);
             } else {
-              // the field did not contain a file
-              out.println("file; name=" + name + "; EMPTY");
+              String fileName = FilenameUtils.getName(item.getName());
+              String fileType = item.getContentType();
+              if (fileName != null && "image/gif".equals(fileType)) {
+                File uploaded = new File(userDir, fileName);
+                item.write(uploaded);
+                out.println("file; name=" + name + "; filename=" + fileName +
+                            ", content type=" + fileType +
+                            " size=" + uploaded.length());
+              } else {
+                out.println("file; name=" + name + "; EMPTY");
+              }
             }
           }
         }
-
-      } catch (IOException lEx) {
+      } catch (Exception lEx) {
         plogger.report(lEx + "error reading or saving file");
       }
 

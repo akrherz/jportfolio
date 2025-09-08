@@ -24,10 +24,9 @@
 
 package org.collaborium.portfolio;
 
-import com.oreilly.servlet.*;
+import com.oreilly.servlet.MailMessage;
 import java.io.*;
 import java.sql.*;
-import org.collaborium.portfolio.*;
 
 public class portfolioUtils {
 
