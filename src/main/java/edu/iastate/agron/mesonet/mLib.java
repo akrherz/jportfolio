@@ -1,16 +1,13 @@
 package edu.iastate.agron.mesonet;
-/**
- * mLib , library for mesonet needs
- */
-
+/** mLib , library for mesonet needs */
 import java.sql.*;
 import org.collaborium.portfolio.*;
 
 public class mLib {
 
   /**
-   * stationSelect()
-   *  - create HTML formated select for stations in network
+   * stationSelect() - create HTML formated select for stations in network
+   *
    * @param portfolio - value of portfolio
    * @return HTML formated string
    */
@@ -30,8 +27,8 @@ public class mLib {
   } // End of stationSelect
 
   /**
-   * stationSelectMulti()
-   *  - create HTML formated select for stations in network
+   * stationSelectMulti() - create HTML formated select for stations in network
+   *
    * @param portfolio - value of portfolio
    * @return HTML formated string
    */
@@ -51,8 +48,8 @@ public class mLib {
   } // End of stationSelect
 
   /**
-   * listContacts()
-   *  - create HTML formated TABLE for site contacts
+   * listContacts() - create HTML formated TABLE for site contacts
+   *
    * @param site value of mesonet site
    * @param portfolio value of the current portfolio
    * @return HTML formated string
@@ -82,5 +79,4 @@ public class mLib {
     sbuf.append("</table>\n");
     return sbuf.toString();
   }
-
 } // End of mLib

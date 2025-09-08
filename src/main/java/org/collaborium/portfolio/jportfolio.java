@@ -1,40 +1,34 @@
 /**
- * Copyright 2001-2005 Iowa State University
- * jportfolio@collaborium.org
+ * Copyright 2001-2005 Iowa State University jportfolio@collaborium.org
  *
- * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation; either version 2.1 of the License, or (at
- * your option) any later version.
+ * <p>This library is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as published by the
+ * Free Software Foundation; either version 2.1 of the License, or (at your
+ * option) any later version.
  *
- * This library is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser
- * General Public License for more details.
+ * <p>This library is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License
+ * for more details.
  *
- * You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation,
- * Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * <p>You should have received a copy of the GNU Lesser General Public License
+ * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-
 package org.collaborium.portfolio;
 
 /**
- * This servlet is a template for the generic portfolio.  Any portfolio
- * can take advantage of this servlet, but some portfolios will be automatically
+ * This servlet is a template for the generic portfolio. Any portfolio can take
+ * advantage of this servlet, but some portfolios will be automatically
  * forwarded out.
+ *
  * @author Daryl Herzmann 4 July 2001
  */
-
 import java.io.*;
-import java.lang.*;
-import java.lang.String.*;
 import java.sql.*;
-import java.text.*;
-import java.util.*;
+import java.util.Arrays;
 import javax.servlet.*;
 import javax.servlet.http.*;
-import org.collaborium.portfolio.*;
 
 public class jportfolio extends HttpServlet {
 
@@ -47,6 +41,7 @@ public class jportfolio extends HttpServlet {
 
   /**
    * Method for when the servlet loads.
+   *
    * @param config is the servlet configuration
    */
   public void init(ServletConfig config) throws ServletException {
@@ -77,7 +72,6 @@ public class jportfolio extends HttpServlet {
     response.setContentType("text/html");
 
     PrintWriter out = response.getWriter();
-    String forward = request.getParameter("forward");
 
     // Container for page content
     StringBuffer sideContent = new StringBuffer();
@@ -100,8 +94,8 @@ public class jportfolio extends HttpServlet {
     {
     case 'o':
       /**
-       * If idnum is specified, they must be removing the message
-       * from the page which prints out all of the messages
+       * If idnum is specified, they must be removing the message from the page
+       * which prints out all of the messages
        */
       String testIDnum = (String)request.getParameter("idnum");
       if (testIDnum != null)
@@ -189,7 +183,6 @@ public class jportfolio extends HttpServlet {
 
     out.println(jlib.footer());
     plogger.report("------ End Jportfolio\n");
-
   } // End of doGet()
 
   /**
@@ -225,10 +218,6 @@ public class jportfolio extends HttpServlet {
 
     plogger.report(callMethod + "\n");
 
-    String forward = request.getParameter("forward");
-    String baseForward = request.getParameter("baseForward");
-    String username = null;
-    String password = null;
     String f = null;
 
     switch (callMethod.charAt(0)) {
@@ -300,21 +289,16 @@ public class jportfolio extends HttpServlet {
     sbuf.append("<P><B>Change Settings:</B><BR>\n"
                 + " <FORM ACTION=\"" + thisPageURL + "\" METHOD=\"POST\">\n"
                 + "	<input type=\"hidden\" name=\"mode\" value=\"v\">\n"
-
                 + "<TABLE>\n"
-
                 + "<TR><TH>Email Address:</TH>\n"
                 + "<TD><input type=\"text\" name=\"email\" value=\"" +
                 thisUser.getEmailAddress() + "\"></TD></TR>\n"
-
                 + "<TR><TH>First Name:</TH>\n"
                 + "<TD><input type=\"text\" name=\"fName\" value=\"" +
                 thisUser.getFirstName() + "\"></TD></TR>\n"
-
                 + "<TR><TH>Last Name:</TH>\n"
                 + "<TD><input type=\"text\" name=\"lName\" value=\"" +
                 thisUser.getLastName() + "\"></TD></TR>\n"
-
                 + "<TR><TH>Style:</TH>\n"
                 + "<TD><SELECT name=\"style\">\n"
                 + "	<option value=\"basic\">Default Theme (basic)\n"
@@ -403,28 +387,21 @@ public class jportfolio extends HttpServlet {
     sbuf.append(
         "<BR><FORM method='POST' name='create' action='" + thisPageURL + "'>\n"
         + " <input type='hidden' name='mode' value='u'>\n"
-
         +
         " <P>System access password: (Contact akrherz@iastate.edu for)<BR>\n"
         + "  <input type='text' name='sysPass' size='10'>\n"
-
         + " <P>Enter a Portfolio Name:<BR>\n"
-        + " <input type='text' name='portfolioName' size='40'>\n"
-
-        + (" <P>Enter a Portfolio Abreviation (no spaces) (Include year) Ex) "
-           + "gcp2001:<BR>\n") +
-        " <input type='text' name='portfolioID' size='20'>\n"
-
-        + (" <P>Enter Portfolio Description: (appears on Portfolio "
-           + "homepage)<BR>\n") +
+        + " <input type='text' name='portfolioName' size='40'>\n" +
+        (" <P>Enter a Portfolio Abreviation (no spaces) (Include year) Ex) "
+         + "gcp2001:<BR>\n") +
+        " <input type='text' name='portfolioID' size='20'>\n" +
+        (" <P>Enter Portfolio Description: (appears on Portfolio "
+         + "homepage)<BR>\n") +
         " <textarea name='about' cols='50' rows='10'></textarea>\n"
-
         + " <P>Portfolio challenge password:<BR>\n"
         + " <input name='passwd' type='text' size='40'>\n"
-
         + " <P>Enter your formal name: (appears on Portfolio homepage)<BR>\n"
         + " <input type='text' name='instructor' size='40'>\n"
-
         + " <P><input type=\"submit\" value=\"Create Portfolio\"></form>\n");
 
     sbuf.append("</TD></TR></TABLE>\n");
@@ -434,6 +411,7 @@ public class jportfolio extends HttpServlet {
 
   /**
    * Produces the available Commands box on the right.
+   *
    * @param portfolio - value of the current portfolio
    * @return HTML formatted string
    */
@@ -495,7 +473,6 @@ public class jportfolio extends HttpServlet {
         "<blockquote>If you are new to the system, you will probably want to \n"
         + " <a href='" + thisPageURL +
         "?mode=i'>Create a New User Account.</blockquote><br>\n"
-
         + "<H3><font color=\"red\">Help:</font></H3>\n" +
         ("<blockquote>If you have any questions about this system, please "
          + "send\n") +
@@ -518,7 +495,6 @@ public class jportfolio extends HttpServlet {
   public String portfolioMain(portfolioUser thisUser) {
     StringBuffer sbuf = new StringBuffer();
     ResultSet rs = null;
-    ResultSet rs2 = null;
     String motd = null;
     String issue = null;
     String about = null;
@@ -600,7 +576,6 @@ public class jportfolio extends HttpServlet {
     sbuf.append(jlib.printMessages(thisUser));
 
     return sbuf.toString();
-
   } // End of classPort()
 
   /**
@@ -609,7 +584,6 @@ public class jportfolio extends HttpServlet {
    * @param portfolio string value for the current portfolio
    * @return HTML formated string
    */
-
   public String sideBar(portfolioUser thisUser) {
     StringBuffer theBuffer = new StringBuffer();
 
@@ -628,7 +602,6 @@ public class jportfolio extends HttpServlet {
    * @param portfolio string value for the current portfolio
    * @return HTML formated string
    */
-
   public String adminSideBar(portfolioUser thisUser) {
     StringBuffer theBuffer = new StringBuffer();
 
@@ -656,11 +629,12 @@ public class jportfolio extends HttpServlet {
     sbuf.append(jlib.topBox("Listing of all MOTDs:"));
 
     try {
-      rs = dbInterface.callDB(
+      rs = dbInterface.callDBWithParameters(
           "SELECT body, to_char(issue, 'DD Month YYYY HH12:MI AM') "
-          + " as issued, issue "
-          + " from motd WHERE portfolio = '" + thisUser.getPortfolio() + "' "
-          + " ORDER by issue DESC");
+              + " as issued, issue "
+              + " from motd WHERE portfolio = ? "
+              + " ORDER by issue DESC",
+          Arrays.asList(thisUser.getPortfolio()));
 
       while (rs.next()) {
         sbuf.append("<BR><B>Issued On:</B> " + rs.getString("issued") + " "
@@ -675,5 +649,4 @@ public class jportfolio extends HttpServlet {
 
     return sbuf.toString();
   } // End of listAllMotd()
-
 } // End of jportfolio()

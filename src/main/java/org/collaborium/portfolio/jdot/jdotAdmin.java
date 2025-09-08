@@ -1,34 +1,28 @@
 /**
- * Copyright 2001-2005 Iowa State University
- * jportfolio@collaborium.org
+ * Copyright 2001-2005 Iowa State University jportfolio@collaborium.org
  *
- * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation; either version 2.1 of the License, or (at
- * your option) any later version.
+ * <p>This library is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as published by the
+ * Free Software Foundation; either version 2.1 of the License, or (at your
+ * option) any later version.
  *
- * This library is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser
- * General Public License for more details.
+ * <p>This library is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License
+ * for more details.
  *
- * You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation,
- * Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * <p>You should have received a copy of the GNU Lesser General Public License
+ * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 package org.collaborium.portfolio.jdot;
 
 import java.io.*;
 import java.math.*;
 import java.sql.*;
-import java.util.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import org.collaborium.portfolio.*;
-
-// our rewrite of the Orielly Multipart Request to
-// interface with the SQL server and not the file system
-// import com.oreilly.servlet.MultipartRequestSQL;
 
 public class jdotAdmin extends HttpServlet {
 
@@ -44,7 +38,6 @@ public class jdotAdmin extends HttpServlet {
    */
   public void init(ServletConfig config) throws ServletException {
     super.init(config);
-
   } // End of init()
 
   /**
@@ -104,13 +97,12 @@ public class jdotAdmin extends HttpServlet {
     out.println(jlib.makePage(sideContent.toString(), pageContent.toString()));
 
     out.println(jlib.footer());
-
   } // End of doPost()
 
   /**
    * Standard servlet method
    *
-   * @param request  HttpServlet request
+   * @param request HttpServlet request
    * @param response HttpServlet response
    */
   public void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -189,7 +181,6 @@ public class jdotAdmin extends HttpServlet {
     out.println(jlib.makePage(sideContent.toString(), pageContent.toString()));
 
     out.println(jlib.footer());
-
   } // End of doGet()
 
   /**
@@ -242,10 +233,11 @@ public class jdotAdmin extends HttpServlet {
       ResultSet maxth = dbInterface.callDB(
           "select MAX (idnum)+1 as result "
           + "from dialog WHERE idnum > 10000 and idnum < 20000");
-      maxth.next();
-      String newSTRidnum = maxth.getString("result");
-
-      if (newSTRidnum == null) // In case this is the first post
+      String newSTRidnum = null;
+      if (maxth != null && maxth.next()) {
+        newSTRidnum = maxth.getString("result");
+      }
+      if (newSTRidnum == null)
         newSTRidnum = "10001";
 
       // If this is a post that should go to all
@@ -333,9 +325,16 @@ public class jdotAdmin extends HttpServlet {
           dbInterface.callDB("select MAX (idnum)+1 as result1, "
                              + " MAX (idnum)+2 as result2 from dialog "
                              + " WHERE idnum > 10000 and idnum < 20000");
-      maxth.next();
-      String newSTRidnum1 = maxth.getString("result1");
-      String newSTRidnum2 = maxth.getString("result2");
+      String newSTRidnum1 = null;
+      String newSTRidnum2 = null;
+      if (maxth != null && maxth.next()) {
+        newSTRidnum1 = maxth.getString("result1");
+        newSTRidnum2 = maxth.getString("result2");
+      }
+      if (newSTRidnum1 == null)
+        newSTRidnum1 = "10001";
+      if (newSTRidnum2 == null)
+        newSTRidnum2 = "10002";
 
       if (score1 != null && score1.length() != 0) {
         jlib.updateDB(
@@ -393,7 +392,6 @@ public class jdotAdmin extends HttpServlet {
     sbuf.append("<P>Got the entry in the DB\n");
 
     return sbuf.toString();
-
   } // End of postEvaluation()
 
   /**
@@ -418,11 +416,9 @@ public class jdotAdmin extends HttpServlet {
                 + " </font></blockquote>\n"
                 + "<P>Subject of this post:\n"
                 + "<BR><input type='text' name='subject' size='40'>\n"
-
                 + "<P>Enter the Initial Post for this thread:<BR>\n"
                 + "<textarea COLS='60' ROWS='10' name='bodyText' "
                 + "wrap='Virtual'></textarea>\n"
-
                 + "<P>Assign This Thread to a Group:<BR>\n"
                 + "<input type=\"text\" name=\"groupID\" size=\"4\">\n"
 
@@ -461,14 +457,11 @@ public class jdotAdmin extends HttpServlet {
         + " post, and a calendar entry is made.  Perhaps you would rather just "
         + " make a top level post from the normal 'Dialog' interface?\n"
         + " </font>\n"
-
         + "<P>Subject of this post:\n"
         + "<BR><input type='text' name='subject' size='40'>\n"
-
         + "<P>Enter the Initial Post for this thread:<BR>\n"
         + "<textarea COLS='60' ROWS='10' name='bodyText' "
         + "wrap='Virtual'></textarea>\n"
-
         + "<input type=\"hidden\" name=\"groupID\" value=\"all\">\n"
 
         //	+ "<P>When should this thread by answered by:\n"
@@ -574,7 +567,6 @@ public class jdotAdmin extends HttpServlet {
 
     sbuf.append(
         "<P><B>Post Your Evaluations:</B><BR>\n"
-
         + "<blockquote>If you do not enter a score for either the dialog "
         + "section\n "
         + " or the ethical Q section, the evaluation for that section will "
@@ -582,41 +574,33 @@ public class jdotAdmin extends HttpServlet {
         +
         " posted.  This means that you can just do one or the other or both.\n"
         + "</blockquote>\n"
-
         + "<FORM action=\"" + thisPageURL + "\" method=\"POST\">\n"
         + "<input type=\"hidden\" value=\"p\" name=\"mode\">\n"
         + "<input type=\"hidden\" value=\"" + userID +
         "\" name=\"selectedUser\">\n"
-
         + "<p>Select Block ID:<br>\n"
         + "<select name='blockID'>\n"
         + "  <option value=\"1\" SELECTED>Block 1\n"
         + "  <option value=\"2\">Block 2\n"
         + "  <option value=\"3\">Block 3\n"
-        + "</select>\n"
-
-        + ("<P>Assign a dialog score: (<i>Input 0 to not submit grade, only "
-           + "evaluation</i>)<BR>\n") +
+        + "</select>\n" +
+        ("<P>Assign a dialog score: (<i>Input 0 to not submit grade, only "
+         + "evaluation</i>)<BR>\n") +
         "<input type=\"text\" name=\"score1\" size=\"4\">\n"
-
         + "<P>Enter your dialog evaluation:<BR>\n" +
         ("<TEXTAREA name=\"body1\" cols=\"60\" ROWS=\"10\" "
-         + "WRAP=\"Virtual\"></TEXTAREA>\n")
-
-        + ("<p>Assign a Ethical Q score: (<i>Input 0 to not submit grade, "
-           + "only evaluation</i>)<br>\n") +
+         + "WRAP=\"Virtual\"></TEXTAREA>\n") +
+        ("<p>Assign a Ethical Q score: (<i>Input 0 to not submit grade, "
+         + "only evaluation</i>)<br>\n") +
         "<input type=\"text\" name=\"score2\" size=\"4\">\n"
-
         + "<p>Enter your Ethical Q evaluation:<br>\n" +
         ("<TEXTAREA name=\"body2\" cols=\"60\" ROWS=\"10\" "
-         + "WRAP=\"Virtual\"></TEXTAREA>\n")
-
-        + "<P><input type=\"SUBMIT\" value=\"Grade\">\n"
+         + "WRAP=\"Virtual\"></TEXTAREA>\n") +
+        "<P><input type=\"SUBMIT\" value=\"Grade\">\n"
         + "</FORM>\n");
 
     sbuf.append(jlib.botBox());
     return sbuf.toString();
-
   } // End of gradeDialog()
 
   /**
@@ -756,5 +740,4 @@ public class jdotAdmin extends HttpServlet {
 
     return myBuffer.toString();
   } // End of adminCommands
-
 } // End of jquizAdmin()

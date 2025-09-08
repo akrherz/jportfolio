@@ -1,29 +1,26 @@
 /**
- * Copyright 2001-2005 Iowa State University
- * jportfolio@collaborium.org
+ * Copyright 2001-2005 Iowa State University jportfolio@collaborium.org
  *
- * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation; either version 2.1 of the License, or (at
- * your option) any later version.
+ * <p>This library is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as published by the
+ * Free Software Foundation; either version 2.1 of the License, or (at your
+ * option) any later version.
  *
- * This library is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser
- * General Public License for more details.
+ * <p>This library is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License
+ * for more details.
  *
- * You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation,
- * Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * <p>You should have received a copy of the GNU Lesser General Public License
+ * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
 /**
  * Forecast Library full of needed things for the forecast exercise
  *
- *
  * @author Daryl Herzmann 26 July 2001
  */
-
 package org.collaborium.portfolio.forecast;
 
 import java.sql.*;
@@ -44,10 +41,7 @@ public class fLib {
         .replaceAll("'", "");
   }
 
-  /**
-   * Method that prints out a simple SELECT box
-   * for the years available
-   */
+  /** Method that prints out a simple SELECT box for the years available */
   public static String yearSelect() {
     StringBuffer sbuf = new StringBuffer();
     Calendar now = Calendar.getInstance();
@@ -68,10 +62,7 @@ public class fLib {
     return sbuf.toString();
   } // End of yearSelect()
 
-  /**
-   * Method that prints out a simple SELECT box
-   * for the months available
-   */
+  /** Method that prints out a simple SELECT box for the months available */
   public static String monthSelect() {
     StringBuffer sbuf = new StringBuffer();
 
@@ -93,9 +84,7 @@ public class fLib {
     return sbuf.toString();
   } // End of monthSelect()
 
-  /**
-   * Protoype to whichDay()
-   */
+  /** Protoype to whichDay() */
   public static String whichDay(String portfolio, String callMode,
                                 String thisPageURL) throws SQLException {
     return whichDay(portfolio, callMode, thisPageURL, "1970-01-01");
@@ -104,8 +93,8 @@ public class fLib {
   /**
    * Generic method to get the user to select a date
    *
-   * @param portfolio   which is the Current Portfolio
-   * @param callMode    value to send back to the CGI server
+   * @param portfolio which is the Current Portfolio
+   * @param callMode value to send back to the CGI server
    * @param thisPageURL value of the page to reference in the form
    * @return HTMLformated string
    */
@@ -142,10 +131,7 @@ public class fLib {
     return sbuf.toString();
   }
 
-  /**
-   * Method that prints out a simple SELECT box
-   * for the months available
-   */
+  /** Method that prints out a simple SELECT box for the months available */
   public static String daySelect() {
     StringBuffer sbuf = new StringBuffer();
 
@@ -161,9 +147,9 @@ public class fLib {
   /**
    * Method that prints out the results for the last forecast
    *
-   * @param portfolio   value of the current portfolio
-   * @param sqlDate     which is the value of the date wanted
-   * @param sortCol     self-explainatory
+   * @param portfolio value of the current portfolio
+   * @param sqlDate which is the value of the date wanted
+   * @param sortCol self-explainatory
    * @param thisPageURL value of the current pageURL
    */
   public static String forecastResults(String portfolio, String sqlDate,
@@ -173,7 +159,7 @@ public class fLib {
     StringBuffer sbuf = new StringBuffer();
     sbuf.append("<H3>Previous Forecast Results:</H3>\n");
 
-    /** If no date is specified, lets then see if the last answers works **/
+    /** If no date is specified, lets then see if the last answers works * */
     if (sqlDate == null) {
       ResultSet availDates = dbInterface.callDB(
           "SELECT day "
@@ -187,7 +173,7 @@ public class fLib {
     }
     sbuf.append(whichDay(portfolio, "l", thisPageURL, sqlDate));
 
-    /** We need to get results from the database **/
+    /** We need to get results from the database * */
     forecastDay thisDay = new forecastDay(portfolio, sqlDate);
     thisDay.getValidation();
     thisDay.getClimo();
@@ -199,7 +185,7 @@ public class fLib {
     sbuf.append(thisDay.catAnswers());
     sbuf.append("<BR><LI>Table Sorted by: " + sortCol + "</LI>");
 
-    /** Now we have a date, lets get how the kids forecasted **/
+    /** Now we have a date, lets get how the kids forecasted * */
     ResultSet forecasts = dbInterface.callDB(
         "SELECT "
         + " getUserName(userid) as realname, * from forecast_grades "
@@ -217,7 +203,6 @@ public class fLib {
         + "      <a href=\"" + thisPageURL + "?portfolio=" + portfolio +
         "&mode=l&sqlDate=" + sqlDate + "&sort=total_err\">Total:</a></TH>\n"
         + "</TR>\n"
-
         + "<TR>\n"
         + "<TH><a href=\"" + thisPageURL + "?portfolio=" + portfolio +
         "&mode=l&sqlDate=" + sqlDate + "&sort=local_high\">High:</a></TH>\n"
@@ -229,7 +214,6 @@ public class fLib {
         "&mode=l&sqlDate=" + sqlDate + "&sort=local_snow\">Snow:</a></TH>\n"
         + "<TH><a href=\"" + thisPageURL + "?portfolio=" + portfolio +
         "&mode=l&sqlDate=" + sqlDate + "&sort=local_err\">Tot:</a></TH>\n"
-
         + "<TH><a href=\"" + thisPageURL + "?portfolio=" + portfolio +
         "&mode=l&sqlDate=" + sqlDate + "&sort=float_high\">High:</a></TH>\n"
         + "<TH><a href=\"" + thisPageURL + "?portfolio=" + portfolio +
@@ -276,9 +260,9 @@ public class fLib {
   /**
    * Method that prints out the results for the last forecast
    *
-   * @param portfolio   value of the current portfolio
-   * @param sqlDate     which is the value of the date wanted
-   * @param sortCol     self-explainatory
+   * @param portfolio value of the current portfolio
+   * @param sqlDate which is the value of the date wanted
+   * @param sortCol self-explainatory
    * @param thisPageURL value of the current pageURL
    */
   public static String cumulativeResults(String portfolio, String sortCol,
@@ -289,7 +273,7 @@ public class fLib {
     if (sortCol == null)
       sortCol = "final_tot";
 
-    /** Now we have a date, lets get how the kids forecasted **/
+    /** Now we have a date, lets get how the kids forecasted * */
     ResultSet forecasts =
         dbInterface.callDB("SELECT getUserName(userid) as realname, *, "
                            + " (p0_total+ p1_total + p2_total + p3_total) AS "
@@ -316,7 +300,6 @@ public class fLib {
         + "	<TH rowspan=\"2\"><a href=\"" + thisPageURL + "?portfolio=" +
         portfolio + "&mode=c&sortfinal_total\">Cum Total</a></TH>\n"
         + "</TR>\n"
-
         + "<TR>\n"
         + "<TH><a href=\"" + thisPageURL + "?portfolio=" + portfolio +
         "&mode=c&sort=local_high\">High:</a></TH>\n"
@@ -328,7 +311,6 @@ public class fLib {
         "&mode=c&sort=local_snow\">Snow:</a></TH>\n"
         + "<TH><a href=\"" + thisPageURL + "?portfolio=" + portfolio +
         "&mode=c&sort=local_err\">Tot:</a></TH>\n"
-
         + "<TH><a href=\"" + thisPageURL + "?portfolio=" + portfolio +
         "&mode=c&sort=float_high\">High:</a></TH>\n"
         + "<TH><a href=\"" + thisPageURL + "?portfolio=" + portfolio +
@@ -608,7 +590,7 @@ public class fLib {
    * gradeForecasts() does the automated grading of the entered forecasts
    *
    * @param portfolio which is the current Portfolio
-   * @param sqlDate   which is the forecast Date we will be verifying
+   * @param sqlDate which is the forecast Date we will be verifying
    * @return String data
    */
   public static String gradeForecasts(String portfolio, String sqlDate)
@@ -786,22 +768,17 @@ public class fLib {
     else if (answer.equals("9"))
       answer = "1";
 
-    Integer answerInt = new java.lang.Integer(answer);
-    Integer guessInt = new java.lang.Integer(guess);
+    Integer answerInt = Integer.valueOf(answer);
+    Integer guessInt = Integer.valueOf(guess);
 
-    return new java.lang
-        .Integer(4 *
-                 java.lang.Math.abs(answerInt.intValue() - guessInt.intValue()))
+    return Integer
+        .valueOf(4 * Math.abs(answerInt.intValue() - guessInt.intValue()))
         .toString();
-
   } // End of gradePrec()
 
   public static String gradeTemp(String answer, String guess) {
-    Integer answerInt = new java.lang.Integer(answer);
-    Integer guessInt = new java.lang.Integer(guess);
-    return new java.lang
-        .Integer(java.lang.Math.abs(answerInt.intValue() - guessInt.intValue()))
-        .toString();
+    int answerInt = Integer.parseInt(answer);
+    int guessInt = Integer.parseInt(guess);
+    return Integer.valueOf(Math.abs(answerInt - guessInt)).toString();
   }
-
 } // End of fLib

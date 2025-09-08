@@ -1,22 +1,20 @@
 /**
- * Copyright 2001-2005 Iowa State University
- * jportfolio@collaborium.org
+ * Copyright 2001-2005 Iowa State University jportfolio@collaborium.org
  *
- * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation; either version 2.1 of the License, or (at
- * your option) any later version.
+ * <p>This library is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as published by the
+ * Free Software Foundation; either version 2.1 of the License, or (at your
+ * option) any later version.
  *
- * This library is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser
- * General Public License for more details.
+ * <p>This library is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License
+ * for more details.
  *
- * You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation,
- * Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * <p>You should have received a copy of the GNU Lesser General Public License
+ * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-
 package org.collaborium.portfolio;
 
 import java.sql.*;
@@ -67,7 +65,8 @@ public class calBean {
     /* Get day of week for Jan 1 of given year. */
     firstDay = CalcJanuaryFirst(year);
 
-    /* Increase firstDay by days in year before given month to get first day
+    /*
+     * Increase firstDay by days in year before given month to get first day
      * of month.
      */
     for (i = 0; i < month; i++)
@@ -112,13 +111,15 @@ public class calBean {
     /* Calculate number of years in interval that are a multiple of 4. */
     leapYears = (year - 1581) / 4;
 
-    /* Calculate number of years in interval that are a multiple of 100;
+    /*
+     * Calculate number of years in interval that are a multiple of 100;
      * subtract, since they are not leap years.
      */
     hundreds = (year - 1501) / 100;
     leapYears -= hundreds;
 
-    /* Calculate number of years in interval that are a multiple of 400;
+    /*
+     * Calculate number of years in interval that are a multiple of 400;
      * add back in, since they are still leap years.
      */
     fourHundreds = (year - 1201) / 400;
@@ -136,11 +137,12 @@ public class calBean {
     int numBox = 0;
 
     String portfolio = thisUser.getPortfolio();
-    int offSet = CalcFirstOfMonth(cal.get(cal.YEAR), cal.get(cal.MONTH));
-    int maxDays = cal.getActualMaximum(cal.DAY_OF_MONTH);
+    int offSet =
+        CalcFirstOfMonth(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH));
+    int maxDays = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
 
-    int currentMonth = cal.get(cal.MONTH);
-    int currentYear = cal.get(cal.YEAR);
+    int currentMonth = cal.get(Calendar.MONTH);
+    int currentYear = cal.get(Calendar.YEAR);
 
     myBuffer.append("<table width=\"100%\" border=\"1\">");
 

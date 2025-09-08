@@ -1,32 +1,27 @@
 /**
- * Copyright 2001-2005 Iowa State University
- * jportfolio@collaborium.org
+ * Copyright 2001-2005 Iowa State University jportfolio@collaborium.org
  *
- * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation; either version 2.1 of the License, or (at
- * your option) any later version.
+ * <p>This library is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as published by the
+ * Free Software Foundation; either version 2.1 of the License, or (at your
+ * option) any later version.
  *
- * This library is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser
- * General Public License for more details.
+ * <p>This library is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License
+ * for more details.
  *
- * You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation,
- * Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * <p>You should have received a copy of the GNU Lesser General Public License
+ * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 package org.collaborium.portfolio;
 /**
- *		portfolioQuiz
- * Container for portfolio Quizes.
+ * portfolioQuiz Container for portfolio Quizes.
  *
  * @author Daryl Herzmann
  */
-
 import java.sql.*;
-import java.util.*;
-import org.collaborium.portfolio.*;
 import org.collaborium.util.*;
 
 public class portfolioQuiz {
@@ -46,6 +41,7 @@ public class portfolioQuiz {
 
   /**
    * Constructor for a quiz.
+   *
    * @param thisQuizID, needed to find this quiz
    */
   public portfolioQuiz(String thisQuizID, String initQuestions) {
@@ -80,6 +76,7 @@ public class portfolioQuiz {
 
   /**
    * Method to print out a select box with the possible answers in it
+   *
    * @return HTML formated String
    */
   public String printQ1() {
@@ -94,6 +91,7 @@ public class portfolioQuiz {
 
   /**
    * Method to print out a select box with the possible answers in it
+   *
    * @return HTML formated String
    */
   public String printQ2() {
@@ -109,6 +107,7 @@ public class portfolioQuiz {
 
   /**
    * Method to print out a select box with the possible answers in it
+   *
    * @return HTML formated String
    */
   public String printQ3() {
@@ -121,9 +120,7 @@ public class portfolioQuiz {
     return sbuf.toString();
   }
 
-  /**
-   * A method to tell if this quiz is a valid one or not
-   */
+  /** A method to tell if this quiz is a valid one or not */
   public boolean isValid() {
     if (quizID == null || quizID.equals(""))
       return false;
@@ -133,9 +130,7 @@ public class portfolioQuiz {
       return true;
   }
 
-  /**
-   * Method that returns if this quiz is currently available to take
-   */
+  /** Method that returns if this quiz is currently available to take */
   public boolean isActive() {
     java.util.Date now = new java.util.Date();
     if (now.after(startDate) && now.before(endDate))
@@ -152,9 +147,7 @@ public class portfolioQuiz {
       return false;
   }
 
-  /**
-   * Method to get the string value of the current quizName
-   */
+  /** Method to get the string value of the current quizName */
   public String getQuizName() { return this.quizName; }
 
   public String numberQuestions() {
@@ -171,8 +164,8 @@ public class portfolioQuiz {
     if (thisAttempt == null)
       return true;
 
-    int thisA = new java.lang.Integer(thisAttempt).intValue();
-    int allowA = new java.lang.Integer(attempts).intValue();
+    int thisA = Integer.parseInt(thisAttempt);
+    int allowA = Integer.parseInt(attempts);
 
     if (thisA <= allowA)
       return true;
@@ -189,14 +182,11 @@ public class portfolioQuiz {
     if (q3Ans.equals(question3.getAnswer()))
       numRight = numRight + 1;
 
-    String numberRight = new java.lang.Integer(numRight).toString();
+    String numberRight = Integer.valueOf(numRight).toString();
     return numberRight;
   }
 
-  /**
-   * Method that prints out how this student did on the quiz
-   *
-   */
+  /** Method that prints out how this student did on the quiz */
   public String printResults(String theirQ1Ans, String theirQ2Ans,
                              String theirQ3Ans) {
     StringBuffer sbuf = new StringBuffer();
@@ -207,5 +197,4 @@ public class portfolioQuiz {
 
     return sbuf.toString();
   } // End of printResults()
-
 } // End of portfolioQuiz

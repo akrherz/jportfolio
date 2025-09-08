@@ -1,36 +1,30 @@
 /**
- * Copyright 2001-2005 Iowa State University
- * jportfolio@collaborium.org
+ * Copyright 2001-2005 Iowa State University jportfolio@collaborium.org
  *
- * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation; either version 2.1 of the License, or (at
- * your option) any later version.
+ * <p>This library is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as published by the
+ * Free Software Foundation; either version 2.1 of the License, or (at your
+ * option) any later version.
  *
- * This library is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser
- * General Public License for more details.
+ * <p>This library is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License
+ * for more details.
  *
- * You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation,
- * Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * <p>You should have received a copy of the GNU Lesser General Public License
+ * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 /**
- * Container Class for Portfolio Messages.  It will dramatically clean up
- * jdot*
+ * Container Class for Portfolio Messages. It will dramatically clean up jdot*
  *
  * @author Daryl Herzmann
  */
-
 package org.collaborium.portfolio;
-import java.io.*;
+
 import java.math.*;
 import java.sql.*;
 import java.text.*;
-import java.util.*;
-import javax.servlet.http.*;
-import org.collaborium.portfolio.*;
 import org.collaborium.util.*;
 
 public class portfolioMessage {
@@ -53,16 +47,14 @@ public class portfolioMessage {
   private String topicid = "";
   private String role = null;
   private portfolioUser thisUser = null;
-  private Integer smiles = new Integer(0);
-  private Integer frowns = new Integer(0);
-  private Integer cat_smiles = new Integer(0);
-  private Integer cat_frowns = new Integer(0);
-  private Integer learn_smiles = new Integer(0);
-  private Integer learn_frowns = new Integer(0);
+  private int smiles = 0;
+  private int frowns = 0;
+  private int cat_smiles = 0;
+  private int cat_frowns = 0;
+  private int learn_smiles = 0;
+  private int learn_frowns = 0;
 
-  /**
-   * Set up Message from a ResultSet
-   */
+  /** Set up Message from a ResultSet */
   public portfolioMessage(ResultSet rs) throws SQLException {
 
     // Okay, now we begin assignments
@@ -70,6 +62,7 @@ public class portfolioMessage {
   }
   /**
    * Prototype to portfolioMessage because we need thisUser container
+   *
    * @param rs ResultSet of the message to save
    * @param newUser which is the portfolioUser container
    * @return instance of portfolioMessage
@@ -127,6 +120,7 @@ public class portfolioMessage {
   }
   /**
    * Prototype to portfolioMessage because we need thisUser container
+   *
    * @param messageID which is the message you would like to retrieve
    * @param retreieveDB which should I actually get the message (Save DBtime)
    * @param newUser which is the portfolioUser container
@@ -144,6 +138,7 @@ public class portfolioMessage {
 
   /**
    * Prototype to portfolioMessage because we need thisUser container
+   *
    * @param messageID which is the message you would like to retrieve
    * @param newUser which is the portfolioUser container
    * @return instance of portfolioMessage
@@ -157,8 +152,8 @@ public class portfolioMessage {
   }
 
   /**
-   * Create a quick reference to a portfolioMessage, just so that
-   * we can do DB IO for it
+   * Create a quick reference to a portfolioMessage, just so that we can do DB
+   * IO for it
    */
   public portfolioMessage(String messageID, boolean retrieveDB)
       throws SQLException {
@@ -166,28 +161,21 @@ public class portfolioMessage {
     if (retrieveDB) {
       getMessage();
     }
-
   } // End of portfolioMessage
 
   /**
-   * If we are instanced with a messageID, then the message is
-   * in the DB.  Horray.  We pull the message and set up vars
+   * If we are instanced with a messageID, then the message is in the DB.
+   * Horray. We pull the message and set up vars
    */
   public portfolioMessage(String messageID) throws SQLException {
     setidnum(messageID);
     getMessage();
   } // End of portfolioMessage
 
-  /**
-   * Here we are instancing with no args, thus we have a new message
-   *
-   */
+  /** Here we are instancing with no args, thus we have a new message */
   public portfolioMessage() {} // End of portfolioMessage
 
-  /**
-   * Method to comit a Post to the Database
-   *
-   */
+  /** Method to comit a Post to the Database */
   public void commitMessage() {
     //    plogger.report(authorName +"::"+ subject +"::"+ body );
     dbInterface.updateDB(
@@ -208,6 +196,7 @@ public class portfolioMessage {
 
   /**
    * Method that prints out a standard box for post
+   *
    * @return HTML formatted String
    */
   public String printStandard() {
@@ -252,9 +241,7 @@ public class portfolioMessage {
     return sbuf.toString();
   }
 
-  /**
-   * Method to display more info about the post
-   */
+  /** Method to display more info about the post */
   public String printExtended(String thisPageURL) {
     StringBuffer sbuf = new StringBuffer();
 
@@ -350,9 +337,10 @@ public class portfolioMessage {
   } // End of subPosts()
 
   /**
-   *  Print a long version of the post
-   *  @param thisPageURL  which is a reference to this current page
-   *  @return HTML formatted string
+   * Print a long version of the post
+   *
+   * @param thisPageURL which is a reference to this current page
+   * @return HTML formatted string
    */
   public String printLong(String thisPageURL) {
     StringBuffer sbuf = new StringBuffer();
@@ -418,12 +406,14 @@ public class portfolioMessage {
 
   /**
    * Method to set the Role for this Post
+   *
    * @param newRole which is the new Role
    */
   public void setRole(String newRole) { this.role = newRole; }
 
   /**
    * Method to return a nice formated Date String
+   *
    * @return String for GMT Date
    */
   public java.util.Date getDate() {
@@ -441,47 +431,23 @@ public class portfolioMessage {
 
   public void setUser(portfolioUser newUser) { this.thisUser = newUser; }
 
-  /**
-   * Set cat_smiles from DB
-   */
-  public void setCatSmiles(int thisSmiles) {
-    this.cat_smiles = new Integer(thisSmiles);
-  }
+  /** Set cat_smiles from DB */
+  public void setCatSmiles(int thisSmiles) { this.cat_smiles = thisSmiles; }
 
-  /**
-   * Set learn_smiles from DB
-   */
-  public void setLearnSmiles(int thisSmiles) {
-    this.learn_smiles = new Integer(thisSmiles);
-  }
+  /** Set learn_smiles from DB */
+  public void setLearnSmiles(int thisSmiles) { this.learn_smiles = thisSmiles; }
 
-  /**
-   * Set smiles from DB
-   */
-  public void setSmiles(int thisSmiles) {
-    this.smiles = new Integer(thisSmiles);
-  }
+  /** Set smiles from DB */
+  public void setSmiles(int thisSmiles) { this.smiles = thisSmiles; }
 
-  /**
-   * Set frowns from DB
-   */
-  public void setFrowns(int thisFrowns) {
-    this.frowns = new Integer(thisFrowns);
-  }
+  /** Set frowns from DB */
+  public void setFrowns(int thisFrowns) { this.frowns = thisFrowns; }
 
-  /**
-   * Set cat_frowns from DB
-   */
-  public void setCatFrowns(int thisFrowns) {
-    this.cat_frowns = new Integer(thisFrowns);
-  }
+  /** Set cat_frowns from DB */
+  public void setCatFrowns(int thisFrowns) { this.cat_frowns = thisFrowns; }
 
-  /**
-   * Set learn_frowns from DB
-   */
-  public void setLearnFrowns(int thisFrowns) {
-    this.learn_frowns = new Integer(thisFrowns);
-  }
+  /** Set learn_frowns from DB */
+  public void setLearnFrowns(int thisFrowns) { this.learn_frowns = thisFrowns; }
 
   public void addSmile() {
     try {
@@ -491,7 +457,7 @@ public class portfolioMessage {
     } catch (Exception ex) {
       plogger.report("Error in trying to add a smile.");
     }
-    this.smiles = new Integer(smiles.intValue() + 1);
+    this.smiles = this.smiles + 1;
   } // End of addSmile()
 
   public void addFrown() {
@@ -502,7 +468,7 @@ public class portfolioMessage {
     } catch (Exception ex) {
       plogger.report("Error in trying to add a frown.");
     }
-    this.frowns = new Integer(frowns.intValue() + 1);
+    this.frowns = this.frowns + 1;
   }
 
   public void addCatFrown() {
@@ -513,7 +479,7 @@ public class portfolioMessage {
     } catch (Exception ex) {
       plogger.report("Error in trying to add a frown.");
     }
-    this.cat_frowns = new Integer(cat_frowns.intValue() + 1);
+    this.cat_frowns = this.cat_frowns + 1;
   }
 
   public void addLearnFrown() {
@@ -525,7 +491,7 @@ public class portfolioMessage {
     } catch (Exception ex) {
       plogger.report("Error in trying to add a frown.");
     }
-    this.learn_frowns = new Integer(learn_frowns.intValue() + 1);
+    this.learn_frowns = this.learn_frowns + 1;
   }
 
   public void addCatSmile() {
@@ -536,7 +502,7 @@ public class portfolioMessage {
     } catch (Exception ex) {
       plogger.report("Error in trying to add a smile.");
     }
-    this.cat_smiles = new Integer(cat_smiles.intValue() + 1);
+    this.cat_smiles = this.cat_smiles + 1;
   }
 
   public void addLearnSmile() {
@@ -548,21 +514,19 @@ public class portfolioMessage {
     } catch (Exception ex) {
       plogger.report("Error in trying to add a smile.");
     }
-    this.learn_smiles = new Integer(learn_smiles.intValue() + 1);
+    this.learn_smiles = this.learn_smiles + 1;
   }
 
-  /**
-   * Set portfolio
-   */
+  /** Set portfolio */
   public void setPortfolio(String newPortfolio) {
     if (newPortfolio != null)
       this.portfolio = newPortfolio;
   }
+
   public String getPortfolio() { return this.portfolio; }
 
   /**
-   *  This method is needed to set classification if a user puts in
-   *  their own!
+   * This method is needed to set classification if a user puts in their own!
    */
   public void setClassification(String newCfc, String myCfc) {
     if (myCfc != null && !myCfc.equalsIgnoreCase("")) {
@@ -572,123 +536,108 @@ public class portfolioMessage {
       plogger.report("Default Classification:" + newCfc + ":\n");
       this.classification = newCfc;
     }
-
   } // End
 
-  /**
-   * Set classifciation
-   */
+  /** Set classifciation */
   public void setClassification(String newClassification) {
     if (newClassification != null)
       this.classification = newClassification;
   }
+
   public String getClassification() { return this.classification; }
 
-  /**
-   * Set idnum
-   */
+  /** Set idnum */
   public void setidnum(String newidnum) {
     if (newidnum != null)
       this.idnum = newidnum;
   }
+
   public String getidnum() { return this.idnum; }
-  /**
-   * Set Author Name
-   */
+  /** Set Author Name */
   public void setAuthorName(String newAuthorName) {
     if (newAuthorName != null)
       this.authorName = newAuthorName;
   }
+
   public String getAuthorName() { return this.authorName; }
 
-  /**
-   * Set topicid
-   */
+  /** Set topicid */
   public void setTopicid(String newTopicid) {
     if (newTopicid != null)
       this.topicid = newTopicid;
   }
+
   public String getTopicid() { return this.topicid; }
 
-  /**
-   * Set Link of this message
-   */
+  /** Set Link of this message */
   public void setLink(String newLink) {
     if (newLink != null)
       this.link = newLink;
   }
+
   public String getLink() { return this.link; }
 
-  /**
-   * Set GID of this message
-   */
+  /** Set GID of this message */
   public void setGID(String newGID) {
     if (newGID != null)
       this.gid = newGID;
   }
+
   public String getGID() { return this.gid; }
 
-  /**
-   * Set security of this message
-   */
+  /** Set security of this message */
   public void setSecurity(String newSecurity) {
     if (newSecurity != null)
       this.security = newSecurity;
   }
+
   public String getSecurity() { return this.security; }
 
-  /**
-   * Set threadID of this message
-   */
+  /** Set threadID of this message */
   public void setThreadID(String newThreadID) {
     if (newThreadID != null)
       this.threadID = newThreadID;
   }
+
   public String getThreadID() { return this.threadID; }
 
-  /**
-   * Set postedDate of the message
-   */
+  /** Set postedDate of the message */
   public void setPostedDate(String newPostedDate) {
     if (newPostedDate != null)
       this.postedDate = newPostedDate;
   }
+
   public String getPostedDate() { return this.postedDate; }
 
-  /**
-   * Set replyAuthor of the message
-   */
+  /** Set replyAuthor of the message */
   public void setReplyAuthor(String newReplyAuthor) {
     if (newReplyAuthor != null)
       this.replyAuthor = newReplyAuthor;
   }
+
   public String getReplyAuthor() { return this.replyAuthor; }
 
-  /**
-   * Set body of the message
-   */
+  /** Set body of the message */
   public void setBody(String newBody) {
     if (newBody != null)
       this.body = newBody;
   }
+
   public String getBody() { return this.body; }
 
-  /**
-   * Set Subject of the message
-   */
+  /** Set Subject of the message */
   public void setSubject(String newSubject) {
     if (newSubject != null)
       this.subject = newSubject;
   }
+
   public String getSubject() { return this.subject; }
 
-  /**
-   * Set Author Name of Post
-   */
+  /** Set Author Name of Post */
   public void setAuthor(String newAuthor) {
     if (newAuthor != null)
       this.author = newAuthor;
   }
-  public String getAuthor() { return this.author; }
 
+  public String getAuthor() { return this.author; }
 } // End of portfolioUser

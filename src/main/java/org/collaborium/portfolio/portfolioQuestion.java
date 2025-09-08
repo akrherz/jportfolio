@@ -1,35 +1,30 @@
 /**
- * Copyright 2001 Iowa State University
- * jportfolio@collaborium.org
+ * Copyright 2001 Iowa State University jportfolio@collaborium.org
  *
- * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation; either version 2.1 of the License, or (at
- * your option) any later version.
+ * <p>This library is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as published by the
+ * Free Software Foundation; either version 2.1 of the License, or (at your
+ * option) any later version.
  *
- * This library is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser
- * General Public License for more details.
+ * <p>This library is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License
+ * for more details.
  *
- * You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation,
- * Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * <p>You should have received a copy of the GNU Lesser General Public License
+ * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 package org.collaborium.portfolio;
 /**
- *		portfolioQuestion
- * Container for portfolio Quiz Questions.
+ * portfolioQuestion Container for portfolio Quiz Questions.
  *
  * @author Daryl Herzmann
  */
-
 import java.sql.*;
-import java.util.*;
 
 public class portfolioQuestion {
 
-  private String questionID = null;
   private String optiona = null;
   private String optionb = null;
   private String optionc = null;
@@ -41,12 +36,9 @@ public class portfolioQuestion {
   private String question = null;
   private String answer = null;
 
-  /**
-   * Contructor for a portfolio Question
-   */
+  /** Contructor for a portfolio Question */
   public portfolioQuestion(String thisQuestionID) {
 
-    this.questionID = thisQuestionID;
     ResultSet rs = dbInterface.callDB("SELECT * from questions "
                                       + " WHERE qid = " + thisQuestionID + " ");
     try {
@@ -69,14 +61,11 @@ public class portfolioQuestion {
     }
   } // End of portfolioQuestion()
 
-  /**
-   * Method to return the question text
-   */
+  /** Method to return the question text */
   public String getQuestion() { return this.question; }
+
   public String getAnswer() { return this.answer; }
-  /**
-   * Method to print out the answer select Box
-   */
+  /** Method to print out the answer select Box */
   public String checkBoxen(String questionSeq) {
     StringBuffer sbuf = new StringBuffer();
 
@@ -92,10 +81,7 @@ public class portfolioQuestion {
     return sbuf.toString();
   } // End of selectBox()
 
-  /**
-   * Method to make an option for the quiz creatation
-   *
-   */
+  /** Method to make an option for the quiz creatation */
   public String mkOption(String num, String formName, String formVal,
                          String formSeen) {
     StringBuffer sbuf = new StringBuffer();

@@ -11,32 +11,6 @@
       JPortfolio.
     </description>
     <!-- Define servlets that are included in the example application -->
-      <servlet>
-        <servlet-name>
-            ChatDispatch
-        </servlet-name>
-        <servlet-class>
-            org.collaborium.portfolio.chat.ChatDispatch
-        </servlet-class>
-    </servlet>
-
-     <servlet>
-        <servlet-name>
-            ChatServer
-        </servlet-name>
-        <servlet-class>
-            org.collaborium.portfolio.chat.ChatServer
-        </servlet-class>
-    </servlet>
-
-     <servlet>
-        <servlet-name>
-            ChatServlet
-        </servlet-name>
-        <servlet-class>
-            org.collaborium.portfolio.chat.ChatServlet
-        </servlet-class>
-    </servlet>
 
     <servlet>
         <servlet-name>
@@ -136,18 +110,6 @@
         </servlet-class>
     </servlet>
 
-    <servlet-mapping>
-      <servlet-name>ChatDispatch</servlet-name>
-      <url-pattern>/servlet/ChatDispatch</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-      <servlet-name>ChatServer</servlet-name>
-      <url-pattern>/servlet/ChatServer</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-      <servlet-name>ChatServlet</servlet-name>
-      <url-pattern>/servlet/ChatServlet</url-pattern>
-    </servlet-mapping>
     <servlet-mapping>
       <servlet-name>uploadServlet</servlet-name>
       <url-pattern>/servlet/uploadServlet</url-pattern>

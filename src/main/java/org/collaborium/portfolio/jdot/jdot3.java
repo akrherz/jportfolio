@@ -1,38 +1,30 @@
 /**
- * Copyright 2001-2005 Iowa State University
- * jportfolio@collaborium.org
+ * Copyright 2001-2005 Iowa State University jportfolio@collaborium.org
  *
- * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation; either version 2.1 of the License, or (at
- * your option) any later version.
+ * <p>This library is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as published by the
+ * Free Software Foundation; either version 2.1 of the License, or (at your
+ * option) any later version.
  *
- * This library is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser
- * General Public License for more details.
+ * <p>This library is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License
+ * for more details.
  *
- * You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation,
- * Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * <p>You should have received a copy of the GNU Lesser General Public License
+ * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 package org.collaborium.portfolio.jdot;
 /**
- * jdot3.java is the dialog engine for the Portfolio Application Suite
- * It is a frontend to the jdot.java, which contains the methods
- * The dialog engine is in it's purest form here.  The 3 in jdot is a
- * version number :)
+ * jdot3.java is the dialog engine for the Portfolio Application Suite It is a
+ * frontend to the jdot.java, which contains the methods The dialog engine is in
+ * it's purest form here. The 3 in jdot is a version number :)
  *
  * @author Doug Fils fils@collaborium.org
  * @author Daryl Herzmann akrherz@collaborium.org
  */
-
 import java.io.*;
-import java.lang.*;
-import java.lang.String.*;
-import java.sql.*;
-import java.text.*;
-import java.util.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import org.collaborium.portfolio.*;
@@ -40,26 +32,22 @@ import org.collaborium.portfolio.*;
 public class jdot3 extends HttpServlet {
 
   /**
-   * Since the jdot methods can be called from JSP, we need to tell the
-   * internal methods where to create links to.  Maybe this can be handled
-   * differently with an external class??
+   * Since the jdot methods can be called from JSP, we need to tell the internal
+   * methods where to create links to. Maybe this can be handled differently
+   * with an external class??
    */
   String servletHttpBase = jlib.servletHttpBase;
+
   String thisPageURL = servletHttpBase + "/jdot3";
 
-  /**
-   * method to init the servlet
-   */
+  /** method to init the servlet */
   public void init(ServletConfig config) throws ServletException {
     super.init(config);
   } // End of int()
 
-  /**
-   * Method to supposedly destroy a servlet
-   */
+  /** Method to supposedly destroy a servlet */
   public void destroy() {
     plogger.report("jdot3 was just destroyed!");
-
   } // End of destroy()
 
   /**
@@ -76,7 +64,7 @@ public class jdot3 extends HttpServlet {
     StringBuffer sideContent = new StringBuffer();
     StringBuffer pageContent = new StringBuffer();
 
-    /** Set up output HTML stream **/
+    /** Set up output HTML stream * */
     response.setContentType("text/html");
     PrintWriter out = response.getWriter();
 
@@ -85,8 +73,6 @@ public class jdot3 extends HttpServlet {
     String STRidnum = request.getParameter("idnum");
     String threadID = request.getParameter("threadid");
     String skipNum = request.getParameter("skipNum");
-    String searchStr = request.getParameter("searchStr");
-    String oidid = request.getParameter("oidid");
     String postedDialogType = request.getParameter("dialogType");
     String postedThreadType = request.getParameter("threadType");
 
@@ -112,8 +98,8 @@ public class jdot3 extends HttpServlet {
     }
 
     /**
-     * If the user posted a value for dialogSecurity, then
-     * we had better switch the setting
+     * If the user posted a value for dialogSecurity, then we had better switch
+     * the setting
      */
     if (postedDialogType != null) {
       thisUser.setDialogSecurity(postedDialogType);
@@ -124,15 +110,10 @@ public class jdot3 extends HttpServlet {
     /**
      * Switch Statement breakdown
      *
-     * o | Read more specifying a single message
-     * e | Tree Messages view of a threadID
-     * i | Print out Servlet Information
-     * p | Post a reply to a certain message
-     * n | new thread
-     * r | readMore of a specific thread
-     * z | do Nothing!!
+     * <p>o | Read more specifying a single message e | Tree Messages view of a
+     * threadID i | Print out Servlet Information p | Post a reply to a certain
+     * message n | new thread r | readMore of a specific thread z | do Nothing!!
      */
-
     if (callMethod == null)
       callMethod = "x";
 
@@ -185,13 +166,13 @@ public class jdot3 extends HttpServlet {
     out.println(jlib.footer());
 
     plogger.report("\n--- End of jdot3 ");
-
   } // End of doGet()
 
   /**
    * Standard method to handle method POST
-   *  @param req servlet request
-   *  @param res servlet response
+   *
+   * @param req servlet request
+   * @param res servlet response
    */
   public void doPost(HttpServletRequest req, HttpServletResponse res)
       throws ServletException, IOException {
@@ -207,16 +188,12 @@ public class jdot3 extends HttpServlet {
 
     HttpSession session = req.getSession(true);
     portfolioUser thisUser = (portfolioUser)session.getAttribute("User");
-    portfolioMessage sMessage =
-        (portfolioMessage)session.getAttribute("sMessage");
-
-    String STRidnum = req.getParameter("idnum");
     String searchStr = req.getParameter("searchStr");
     String searchCol = req.getParameter("searchCol");
     String skipNum = req.getParameter("skipNum");
     String callMethod = req.getParameter("mode");
 
-    if (thisUser != null || thisUser.getPortfolio() == null) {
+    if (thisUser.getPortfolio() == null) {
       jlib.addUser(thisUser.getUserID(), "Dialog");
     } else {
       res.setHeader("Refresh", "0; URL=./jportfolio");
@@ -254,12 +231,8 @@ public class jdot3 extends HttpServlet {
     /**
      * Switch cases
      *
-     * s | search for string
-     * z | abort
-     * q | preview post
-     * f | finalize post
+     * <p>s | search for string z | abort q | preview post f | finalize post
      */
-
     switch (callMethod.charAt(0)) {
     case 's':
       if (searchStr != null && !searchStr.equals("")) {
@@ -284,7 +257,7 @@ public class jdot3 extends HttpServlet {
       myMessage.setUser(thisUser);
       pageContent.append(jdot.inputPost(myMessage, thisPageURL));
       break;
-    // -F-  Finalize Post
+      // -F-  Finalize Post
     case 'f':
       myMessage = (portfolioMessage)session.getAttribute("sMessage");
       pageContent.append(jlib.topBox("Results of Your Posting:"));
@@ -311,13 +284,11 @@ public class jdot3 extends HttpServlet {
     out.println(jlib.footer());
 
     plogger.report("\n--- End of jdot3 ");
-
   } // End of doPost()
 
   /**
    * Method that prints out a listing of side bar items, should be modified to
    * fit a certain application
-   *
    */
   public String sideBarItems(portfolioUser thisUser, String thisPageURL) {
     StringBuffer sbuf = new StringBuffer();

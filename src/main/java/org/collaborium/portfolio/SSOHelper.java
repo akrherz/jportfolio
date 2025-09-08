@@ -2,21 +2,17 @@ package org.collaborium.portfolio;
 
 import javax.servlet.http.HttpServletRequest;
 
-/**
- * SSO integration helper for Apache OIDC authentication
- */
+/** SSO integration helper for Apache OIDC authentication */
 public class SSOHelper {
 
-  /**
-   * Check if the request contains SSO authentication headers
-   */
+  /** Check if the request contains SSO authentication headers */
   public static boolean isSSO(HttpServletRequest request) {
     return request.getHeader("X-Remote-User-Email") != null;
   }
 
   /**
-   * Get the authenticated user ID from SSO headers
-   * Extract username from email by splitting on '@'
+   * Get the authenticated user ID from SSO headers Extract username from email
+   * by splitting on '@'
    */
   public static String getSSOUserID(HttpServletRequest request) {
     String email = request.getHeader("X-Remote-User-Email");
@@ -26,23 +22,17 @@ public class SSOHelper {
     return email;
   }
 
-  /**
-   * Get the authenticated user email from SSO headers
-   */
+  /** Get the authenticated user email from SSO headers */
   public static String getSSOUserEmail(HttpServletRequest request) {
     return request.getHeader("X-Remote-User-Email");
   }
 
-  /**
-   * Get the authenticated user full name from SSO headers
-   */
+  /** Get the authenticated user full name from SSO headers */
   public static String getSSOUserName(HttpServletRequest request) {
     return request.getHeader("X-Remote-User-Name");
   }
 
-  /**
-   * Create or retrieve a portfolioUser based on SSO authentication
-   */
+  /** Create or retrieve a portfolioUser based on SSO authentication */
   public static portfolioUser getSSOUser(HttpServletRequest request) {
     String userID = getSSOUserID(request);
     String email = getSSOUserEmail(request);
@@ -70,9 +60,7 @@ public class SSOHelper {
     return user;
   }
 
-  /**
-   * Create a new user account from SSO information
-   */
+  /** Create a new user account from SSO information */
   private static void createSSOUser(String userID, String email,
                                     String fullName) {
     String firstName = "";

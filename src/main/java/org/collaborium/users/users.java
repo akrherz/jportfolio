@@ -1,32 +1,28 @@
 /**
- * Copyright 2001-2005 Iowa State University
- * jportfolio@collaborium.org
+ * Copyright 2001-2005 Iowa State University jportfolio@collaborium.org
  *
- * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation; either version 2.1 of the License, or (at
- * your option) any later version.
+ * <p>This library is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as published by the
+ * Free Software Foundation; either version 2.1 of the License, or (at your
+ * option) any later version.
  *
- * This library is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser
- * General Public License for more details.
+ * <p>This library is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License
+ * for more details.
  *
- * You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation,
- * Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * <p>You should have received a copy of the GNU Lesser General Public License
+ * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
 /**
- * Servlet that will handle the user side of portfolio activities
- * Some of the neat features planned for this application is
- *	o  Upload Pictures of themselves
- *	o  Display information about the person
- *	o  Able to link their homepage in
+ * Servlet that will handle the user side of portfolio activities Some of the
+ * neat features planned for this application is o Upload Pictures of themselves
+ * o Display information about the person o Able to link their homepage in
  *
  * @author Daryl Herzmann
  */
-
 package org.collaborium.users;
 
 import java.io.*;
@@ -44,13 +40,11 @@ public class users extends HttpServlet {
 
     plogger.report("---- Begin users");
 
-    /** Standard stuff to set up the servlet **/
+    /** Standard stuff to set up the servlet * */
     response.setContentType("text/html");
     PrintWriter out = response.getWriter();
-    StringBuffer sideContent = new StringBuffer();
-    StringBuffer pageContent = new StringBuffer();
 
-    /** Get information from the Request **/
+    /** Get information from the Request * */
     String location = request.getRequestURI();
     HttpSession session = request.getSession(true);
     Boolean writePerm = Boolean.FALSE;
@@ -78,10 +72,7 @@ public class users extends HttpServlet {
     plogger.report("---- End users");
   } // End of doGet()
 
-  /**
-   * This makes the Picture available
-   *
-   */
+  /** This makes the Picture available */
   public String printInfo(String requestedUser, Boolean writePerm) {
     StringBuffer sbuf = new StringBuffer();
 
@@ -159,7 +150,7 @@ public class users extends HttpServlet {
       plogger.report("Problem in printInfo()");
     }
 
-    java.sql.Timestamp lastLogin = jlib.lastLogin(requestedUser);
+    Timestamp lastLogin = jlib.lastLogin(requestedUser);
     SimpleDateFormat sdf = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss Z");
     sdf.setTimeZone(java.util.TimeZone.getTimeZone("GMT"));
     if (lastLogin != null)
@@ -179,6 +170,7 @@ public class users extends HttpServlet {
 
   /**
    * Method to get the user specified from the given location
+   *
    * @param location String value of the current location
    * @return String value of the user requested
    */
@@ -189,7 +181,5 @@ public class users extends HttpServlet {
     plogger.report("User parsed name is :" + userName + ":");
 
     return userName;
-
   } // End of getUserFromURI
-
 } // End of users

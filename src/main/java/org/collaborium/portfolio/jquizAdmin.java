@@ -1,34 +1,28 @@
 /**
- * Copyright 2001-2007 Iowa State University
- * jportfolio@collaborium.org
+ * Copyright 2001-2007 Iowa State University jportfolio@collaborium.org
  *
- * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation; either version 2.1 of the License, or (at
- * your option) any later version.
+ * <p>This library is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as published by the
+ * Free Software Foundation; either version 2.1 of the License, or (at your
+ * option) any later version.
  *
- * This library is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser
- * General Public License for more details.
+ * <p>This library is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License
+ * for more details.
  *
- * You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation,
- * Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * <p>You should have received a copy of the GNU Lesser General Public License
+ * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 package org.collaborium.portfolio;
 //
 // JquizAdmin, administrative access to the DB system
 
 import java.io.*;
-// import java.lang.*;
-import java.lang.String.*;
 import java.sql.*;
-import java.text.*;
-import java.util.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
-import org.collaborium.portfolio.*;
 import org.collaborium.util.*;
 
 public class jquizAdmin extends HttpServlet {
@@ -46,7 +40,6 @@ public class jquizAdmin extends HttpServlet {
    */
   public void init(ServletConfig config) throws ServletException {
     super.init(config);
-
   } // End of init()
 
   public void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -80,18 +73,14 @@ public class jquizAdmin extends HttpServlet {
       callMethod = "x";
 
     /**
-     * What our swith does
-     * l | quiz results for a specific quiz
-     * q | Post a new Question
-     * u | Post a new Quiz
+     * What our swith does l | quiz results for a specific quiz q | Post a new
+     * Question u | Post a new Quiz
      */
-
     switch (callMethod.charAt(0)) {
     case 'l':
       pageContent.append(quizResults(thisUser, quizID));
       break;
     case 'q':
-
       try {
         pageContent.append(jlib.topBox("Post Results:"));
         pageContent.append(inputQuestion(thisUser, request));
@@ -112,7 +101,6 @@ public class jquizAdmin extends HttpServlet {
       }
       break;
     default:
-
       pageContent.append("Invalid Post!\n");
 
       break;
@@ -125,13 +113,12 @@ public class jquizAdmin extends HttpServlet {
     out.println(jlib.footer());
 
     plogger.report("--- jquizAdmin Done \n");
-
   } // End of doPost()
 
   /**
    * Standard servlet method
    *
-   * @request  HttpServlet request
+   * @request HttpServlet request
    * @response HttpServlet response
    */
   public void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -150,7 +137,6 @@ public class jquizAdmin extends HttpServlet {
     HttpSession session = request.getSession(true);
     portfolioUser thisUser = (portfolioUser)session.getAttribute("User");
     String callMethod = request.getParameter("mode");
-    String quizID = request.getParameter("quizNum");
 
     if (thisUser == null) {
       response.setHeader("Refresh", "0; URL=./jportfolio");
@@ -179,15 +165,12 @@ public class jquizAdmin extends HttpServlet {
       pageContent.append(listQuestions(thisUser));
       break;
     case 'd':
-
       pageContent.append(mkIntroduction());
       break;
     case 'q':
-
       pageContent.append(newQuestion());
       break;
     case 'u':
-
       pageContent.append(newQuiz(thisUser));
       break;
     case 'v':
@@ -209,13 +192,9 @@ public class jquizAdmin extends HttpServlet {
     out.println(jlib.footer());
 
     plogger.report("--- jquiz end");
-
   } // End of doGet()
 
-  /**
-   * Method to prompt for which quiz
-   *
-   */
+  /** Method to prompt for which quiz */
   public String whichQuiz(portfolioUser thisUser) {
     StringBuffer sbuf = new StringBuffer();
 
@@ -256,7 +235,7 @@ public class jquizAdmin extends HttpServlet {
    * Method to Print the Results of a Quiz
    *
    * @param portfolio String value for the current portfolio
-   * @param quizName String value for the  quiz we are interested in...
+   * @param quizName String value for the quiz we are interested in...
    */
   public String quizResults(portfolioUser thisUser, String quizName) {
     StringBuffer sbuf = new StringBuffer();
@@ -471,6 +450,7 @@ public class jquizAdmin extends HttpServlet {
 
   /**
    * Method to input the Quiz into the database
+   *
    * @param thisUser which is the portfolioUser container
    * @param req which is the HTTP request.
    * @return HTML formated string
@@ -605,7 +585,6 @@ public class jquizAdmin extends HttpServlet {
     sbuf.append(
         "<form method='POST' action='" + thisPageURL + "'>\n"
         + " <input type='hidden' name='mode' value='u'>\n"
-
         +
         " <P><B>Assign this quiz an identifier:</B><blink> <- </blink><BR>\n"
         + " (<i>The quiz identifier appears on the calendar.</i>) "
@@ -616,25 +595,18 @@ public class jquizAdmin extends HttpServlet {
     sbuf.append(jlib.topicsSelect(thisUser, "0"));
 
     sbuf.append(
-        " <P>Select Question 1:<BR>\n" + listQuestions(thisUser, "1")
-
-        + " <P>Select Question 2:<BR>\n" + listQuestions(thisUser, "2")
-
-        + " <P>Select Question 3:<BR>\n" + listQuestions(thisUser, "3")
-
-        + " <P>Quiz Time Limits:<BR>\n"
+        " <P>Select Question 1:<BR>\n" + listQuestions(thisUser, "1") +
+        " <P>Select Question 2:<BR>\n" + listQuestions(thisUser, "2") +
+        " <P>Select Question 3:<BR>\n" + listQuestions(thisUser, "3") +
+        " <P>Quiz Time Limits:<BR>\n"
         + " <blockquote>Format: YYYY-MM-DD HH:MM:SS </blockquote>\n"
-
         + " <P>Start Date:<BR>\n"
         + " 	<input type='text' name='startDate'>\n"
-
         + " <P>End Date:<BR>\n"
         + "	<input type='text' name='endDate'>\n"
-
         +
         " <P>Enter Allowable Quiz Attempts<BR> (Enter 0 for unlimited):<BR>\n"
         + " 	<input type='text' MAXLENGTH='1' size='2' name='attempt'>\n"
-
         + " <CENTER>\n"
         + " <input type='SUBMIT' value='Create Quiz'>\n"
         + " <input type='RESET'>\n"
@@ -680,6 +652,7 @@ public class jquizAdmin extends HttpServlet {
 
   /**
    * Method to create select box for all available questions
+   *
    * @param thisUser which is the portfolioUser container
    * @param id which is the id of this particular question
    * @return HTML formated string of questions in a select box
@@ -805,5 +778,4 @@ public class jquizAdmin extends HttpServlet {
 
     return sbuf.toString();
   }
-
 } // End of jquizAdmin()

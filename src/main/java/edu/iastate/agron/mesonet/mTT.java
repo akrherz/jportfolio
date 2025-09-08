@@ -1,23 +1,19 @@
 package edu.iastate.agron.mesonet;
-/**
- * Mesonet Trouble Ticket container
- * I love java :)
- * Daryl Herzmann 18 May 2002
- */
 
+/**
+ * Mesonet Trouble Ticket container I love java :) Daryl Herzmann 18 May 2002
+ */
 import java.sql.*;
 import java.text.*;
+import java.util.Arrays;
 import org.collaborium.portfolio.*;
 import org.collaborium.util.*;
 
 public class mTT {
   private String id = null;
-  private String portfolio = null;
   private String s_mid = null;
   private String s_name = null;
   private Timestamp entered = null;
-  private Timestamp last = null;
-  private Timestamp closed = null;
   private String subject = null;
   private String status = null;
   private String author = null;
@@ -28,12 +24,16 @@ public class mTT {
   public mTT() {}
 
   public mTT(String portfolio, String tt_id) throws SQLException {
-    ResultSet rs = dbInterface.callDB(
+    ResultSet rs = dbInterface.callDBWithParameters(
         "SELECT *, getUsername(author) as rname "
-        + " ,getSiteName(s_mid) as s_name from tt_base WHERE "
-        + " portfolio = '" + portfolio + "' and id = " + tt_id);
-    rs.next();
-    this.doSQL(rs);
+            + " ,getSiteName(s_mid) as s_name from tt_base WHERE "
+            + " portfolio = ? and id = ?",
+        Arrays.asList(portfolio, tt_id));
+    if (rs != null && rs.next()) {
+      this.doSQL(rs);
+    } else {
+      plogger.report("No trouble ticket found for " + tt_id);
+    }
   }
 
   public mTT(ResultSet rs) { this.doSQL(rs); } // End of mTT constructor
@@ -41,19 +41,14 @@ public class mTT {
   public void doSQL(ResultSet rs) {
     try {
       this.id = rs.getString("id");
-      this.portfolio = rs.getString("portfolio");
       this.s_mid = rs.getString("s_mid");
       this.s_name = rs.getString("s_name");
       this.sensor = rs.getString("sensor");
       try {
         this.entered = rs.getTimestamp("entered");
-        this.last = rs.getTimestamp("last");
-        this.closed = rs.getTimestamp("closed");
       } catch (Exception ex) {
         plogger.report("Error loading TT timestamps");
         this.entered = new Timestamp(1000000000);
-        this.last = new Timestamp(1000000000);
-        this.closed = new Timestamp(1000000000);
       }
       this.subject = rs.getString("subject");
       this.status = rs.getString("status");
@@ -64,10 +59,11 @@ public class mTT {
       ex.printStackTrace();
     }
   } // End of doSQL
+
   /**
-   *  printTR()
-   *   print table row for this TT.
-   *  @return HTML formated string
+   * printTR() print table row for this TT.
+   *
+   * @return HTML formated string
    */
   public String printTR() {
     StringBuffer sbuf = new StringBuffer();
@@ -81,9 +77,9 @@ public class mTT {
                 + " <td>" + this.author + "</td>\n");
     // sbuf.append(" <td><font color=\"");
     // if (this.status.equalsIgnoreCase("OPEN") )
-    //    sbuf.append("red");
+    // sbuf.append("red");
     // else
-    //    sbuf.append("green");
+    // sbuf.append("green");
     sbuf.append("<td>" + this.status + "</font></td>\n");
     sbuf.append(" <td>" + this.s_name + "</td>\n"
                 + " <td>" + this.subject + "</td>\n"
@@ -117,8 +113,8 @@ public class mTT {
   }
 
   /**
-   * printHistory()
-   *  - prints out the history of a station with all the comments
+   * printHistory() - prints out the history of a station with all the comments
+   *
    * @return HTML formated string for the comments
    */
   public String printHistory() throws SQLException {
@@ -150,7 +146,10 @@ public class mTT {
   }
 
   public String getS_mid() { return this.s_mid; }
+
   public String getSubject() { return this.subject; }
+
   public String getSensor() { return this.sensor; }
+
   public void setStatus(String newStatus) { this.status = newStatus; }
 } // End of class definition

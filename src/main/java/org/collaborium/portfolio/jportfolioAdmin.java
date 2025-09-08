@@ -1,32 +1,27 @@
 /**
- * Copyright 2001-2005 Iowa State University
- * jportfolio@collaborium.org
+ * Copyright 2001-2005 Iowa State University jportfolio@collaborium.org
  *
- * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation; either version 2.1 of the License, or (at
- * your option) any later version.
+ * <p>This library is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as published by the
+ * Free Software Foundation; either version 2.1 of the License, or (at your
+ * option) any later version.
  *
- * This library is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser
- * General Public License for more details.
+ * <p>This library is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License
+ * for more details.
  *
- * You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation,
- * Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * <p>You should have received a copy of the GNU Lesser General Public License
+ * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 package org.collaborium.portfolio;
 
 import java.io.*;
-import java.lang.*;
-import java.lang.String.*;
 import java.sql.*;
 import java.text.*;
-import java.util.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
-import org.collaborium.portfolio.*;
 import org.collaborium.util.*;
 
 public class jportfolioAdmin extends HttpServlet {
@@ -39,7 +34,6 @@ public class jportfolioAdmin extends HttpServlet {
   public void init(ServletConfig config) throws ServletException {
 
     super.init(config);
-
   } // End of init()
 
   public void destroy() { super.destroy(); }
@@ -79,9 +73,7 @@ public class jportfolioAdmin extends HttpServlet {
     }
 
     switch (callMethod.charAt(0)) {
-      /**
-       * u -- create Unit Topic
-       */
+      /** u -- create Unit Topic */
     default:
       pageContent.append(classPortfolio(thisUser.getPortfolio()));
       break;
@@ -144,9 +136,7 @@ public class jportfolioAdmin extends HttpServlet {
     return sbuf.toString();
   }
 
-  /**
-   * Method to allow admin to select what apps are used for this portfolio
-   */
+  /** Method to allow admin to select what apps are used for this portfolio */
   public String selectApps(portfolioUser thisUser, String thisPageURL) {
     StringBuffer sbuf = new StringBuffer();
 
@@ -215,18 +205,6 @@ public class jportfolioAdmin extends HttpServlet {
           + "CHECKED>no</TD></TR>\n");
     }
 
-    sbuf.append("<TR><TD>Chat:</TD>\n");
-    if (thisUser.usesChat) {
-      sbuf.append("<TD><input type=\"radio\" value=\"yes\" name=\"usesChat\" "
-                  + "CHECKED>yes\n"
-                  + "</TD><TD><input type=\"radio\" value=\"no\" "
-                  + "name=\"usesChat\">no</TD></TR>\n");
-    } else {
-      sbuf.append(
-          "<TD><input type=\"radio\" value=\"yes\" name=\"usesChat\">yes\n"
-          + "</TD><TD><input type=\"radio\" value=\"no\" name=\"usesChat\" "
-          + "CHECKED>no</TD></TR>\n");
-    }
     sbuf.append("</TABLE>\n");
 
     sbuf.append("<INPUT TYPE=\"submit\" value=\"Make Changes\"></form>\n");
@@ -236,16 +214,13 @@ public class jportfolioAdmin extends HttpServlet {
     return sbuf.toString();
   } // End of selectApps()
 
-  /**
-   * Method that enacts the changes in the portfolio
-   */
+  /** Method that enacts the changes in the portfolio */
   public String changeApps(portfolioUser thisUser, HttpServletRequest request) {
     StringBuffer sbuf = new StringBuffer();
     String usesCalendar = (String)request.getParameter("usesCalendar");
     String usesDialog = (String)request.getParameter("usesDialog");
     String usesForecast = (String)request.getParameter("usesForecast");
     String usesQuiz = (String)request.getParameter("usesQuiz");
-    String usesChat = (String)request.getParameter("usesChat");
     try {
       dbInterface.updateDB("INSERT into appregistry VALUES('" +
                            thisUser.getPortfolio() + "') ");
@@ -254,7 +229,6 @@ public class jportfolioAdmin extends HttpServlet {
           + " , use_dialog = '" + usesDialog + "' "
           + " , use_forecast = '" + usesForecast + "' "
           + " , use_quiz = '" + usesQuiz + "' "
-          + " , use_chat = '" + usesChat + "' "
           + " WHERE portfolio = '" + thisUser.getPortfolio() + "' ");
     } catch (Exception ex) {
       plogger.report("Problem setting vals in appregistry");
@@ -272,15 +246,12 @@ public class jportfolioAdmin extends HttpServlet {
     sbuf.append(jlib.topBox("Email Portfolio:"));
     sbuf.append("<FORM METHOD=\"POST\" ACTION=\"" + thisPageURL + "\">\n"
                 + "<input type=\"hidden\" value=\"n\" name=\"mode\">\n"
-
                 + "<P>Enter Subject:<BR>\n"
                 + "<input type=\"text\" name=\"subject\">\n"
-
                 + "<P>Enter Message:<BR>\n" +
                 ("<TEXTAREA WRAP=\"Virtual\" name=\"message\" ROWS=\"5\" "
-                 + "COLS=\"40\"></TEXTAREA>\n")
-
-                + "<input type=\"SUBMIT\">\n"
+                 + "COLS=\"40\"></TEXTAREA>\n") +
+                "<input type=\"SUBMIT\">\n"
                 + "</FORM>\n");
 
     sbuf.append(jlib.botBox());
@@ -312,6 +283,7 @@ public class jportfolioAdmin extends HttpServlet {
 
   /**
    * Method to list out grades for one selected user
+   *
    * @param portfolio String value
    * @param selectedUserID which is the string value of selected user
    * @return HTML formatted string
@@ -344,7 +316,6 @@ public class jportfolioAdmin extends HttpServlet {
     sbuf2.append("</TABLE>\n");
     sbuf2.append(jlib.botBox());
     return sbuf.toString() + sbuf2.toString();
-
   } // End of listStudentGrades()
 
   public String addAdminDialog(String portfolio) {
@@ -388,7 +359,6 @@ public class jportfolioAdmin extends HttpServlet {
     response.setContentType("text/html");
     PrintWriter out = response.getWriter();
 
-    String type = null; // hold my image type is any
     // start to put in some session tracking info...
     HttpSession session = request.getSession(true);
 
@@ -449,7 +419,6 @@ public class jportfolioAdmin extends HttpServlet {
     out.println(jlib.footer());
 
     destroy();
-
   } // End of doPost()
 
   /**
@@ -551,10 +520,7 @@ public class jportfolioAdmin extends HttpServlet {
     return sbuf.toString();
   } // End of postMOTD()
 
-  /**
-   * Method to add a calendar element to the DB and thus the calendar
-   *
-   */
+  /** Method to add a calendar element to the DB and thus the calendar */
   public String addCalendarElement() {
     StringBuffer sbuf = new StringBuffer();
 
@@ -565,22 +531,16 @@ public class jportfolioAdmin extends HttpServlet {
                 + "appear on the calendar for the date that you enter.  "
                 + " You can optionally enter a URL and then the text will \n"
                 + "be presented as a link to the user.</font>\n"
-
                 + "<FORM METHOD=\"POST\" ACTION=\"" + thisPageURL + "\">\n"
                 + "<input type=\"hidden\" value=\"c\" name=\"mode\">\n"
-
                 + "<P>Enter the Calendar Date: (ex 2001-02-18)<BR>\n"
                 + "<input type=\"text\" name=\"validDate\">\n"
-
                 + "<P>Enter SHORT text to appear:<BR>\n" +
                 ("<input type=\"text\" name=\"description\" size=\"20\" "
-                 + "MAXLENGTH=\"20\">\n")
-
-                + "<P>Enter a URL for text: (Optional)<BR>\n"
+                 + "MAXLENGTH=\"20\">\n") +
+                "<P>Enter a URL for text: (Optional)<BR>\n"
                 + "<input type=\"text\" name=\"URL\" size=\"60\">\n"
-
                 + "<input type=\"SUBMIT\" value=\"Create Entry\">\n"
-
                 + "</FORM>\n");
 
     sbuf.append(jlib.botBox());
@@ -589,6 +549,7 @@ public class jportfolioAdmin extends HttpServlet {
 
   /**
    * Method to enter in the calendar Element.
+   *
    * @param req HttpServletRequest object
    * @param portfolio String value of the current portfolio
    * @return HTML formated String...
@@ -648,10 +609,7 @@ public class jportfolioAdmin extends HttpServlet {
     return sbuf.toString();
   } // End of listStudents
 
-  /**
-   * Method to generate a form to create a new MOTD
-   *
-   */
+  /** Method to generate a form to create a new MOTD */
   public String editMOTD() {
     StringBuffer sbuf = new StringBuffer();
 
@@ -672,10 +630,8 @@ public class jportfolioAdmin extends HttpServlet {
     sbuf.append(
         "<P>Enter Message:<BR>"
         + "<textarea COLS='60' ROWS='10' name='motd' wrap='Virtual'></textarea>"
-
         + "<P>Send copy as email to all? <input type=\"checkbox\" "
         + "value=\"Yes\" name=\"sendEmail\">\n"
-
         + "<P>Submit Message:<BR>"
         + "<input type='submit' value='Enter MOTD'>");
 
@@ -775,7 +731,8 @@ public class jportfolioAdmin extends HttpServlet {
 
   /**
    * A method to print out users, so that we can assign roles
-   * @param thisUser  portfolioUser
+   *
+   * @param thisUser portfolioUser
    * @return HTML formatted string
    */
   public String assignRolesForm(portfolioUser thisUser) {
@@ -830,10 +787,10 @@ public class jportfolioAdmin extends HttpServlet {
 
   public String postRoles(HttpServletRequest req, portfolioUser thisUser) {
     StringBuffer sbuf = new StringBuffer();
-    Enumeration myE = req.getParameterNames();
-    while (myE.hasMoreElements()) {
-      String userID = (String)myE.nextElement();
-      String roleID = (String)req.getParameter(userID);
+    java.util.Enumeration<?> params = req.getParameterNames();
+    while (params.hasMoreElements()) {
+      String userID = String.valueOf(params.nextElement());
+      String roleID = req.getParameter(userID);
       try {
         if (!userID.equalsIgnoreCase("mode")) {
           jlib.updateDB("UPDATE students SET role = '" + roleID + "' "
@@ -852,10 +809,10 @@ public class jportfolioAdmin extends HttpServlet {
   public String postGroupIDs(HttpServletRequest req, String portfolio) {
     StringBuffer sbuf = new StringBuffer();
 
-    Enumeration myE = req.getParameterNames();
-    while (myE.hasMoreElements()) {
-      String userID = (String)myE.nextElement();
-      String gID = (String)req.getParameter(userID);
+    java.util.Enumeration<?> params = req.getParameterNames();
+    while (params.hasMoreElements()) {
+      String userID = String.valueOf(params.nextElement());
+      String gID = req.getParameter(userID);
 
       try {
         if (!userID.equalsIgnoreCase("mode") && !gID.equals("")) {
@@ -941,6 +898,5 @@ public class jportfolioAdmin extends HttpServlet {
     sbuf.append(jlib.botBox());
 
     return sbuf.toString();
-
   } // End of classPort()
 } // End of jportfolioAdmin()

@@ -1,25 +1,24 @@
 /**
- * Copyright 2001-2005 Iowa State University
- * jportfolio@collaborium.org
+ * Copyright 2001-2005 Iowa State University jportfolio@collaborium.org
  *
- * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation; either version 2.1 of the License, or (at
- * your option) any later version.
+ * <p>This library is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as published by the
+ * Free Software Foundation; either version 2.1 of the License, or (at your
+ * option) any later version.
  *
- * This library is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser
- * General Public License for more details.
+ * <p>This library is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License
+ * for more details.
  *
- * You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation,
- * Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * <p>You should have received a copy of the GNU Lesser General Public License
+ * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
 /**
- * Servlet that handles administrative duties of the forecast
- *  activity in Portfolio.
+ * Servlet that handles administrative duties of the forecast activity in
+ * Portfolio.
  *
  * @author Daryl Herzmann 4 July 2001
  */
@@ -37,6 +36,7 @@ public class forecastAdmin extends HttpServlet {
 
   /**
    * Method to handle method GET to the servlet
+   *
    * @param HttpServletRequest
    * @param HttpServletResponse
    */
@@ -130,6 +130,7 @@ public class forecastAdmin extends HttpServlet {
 
   /**
    * Method to handle servlet POST actions
+   *
    * @param HttpServletRequest
    * @param HttpServletResponse
    */
@@ -366,7 +367,6 @@ public class forecastAdmin extends HttpServlet {
         + "	<TD>" + fLib.rainSelect("local_prec", local_prec) + "</TD>\n"
         + "	<TD>" + fLib.snowSelect("local_snow", local_snow) + "</TD>\n"
         + "	</TR>\n"
-
         + " <TR><TH>Floater:</TH>\n" +
         ("	<TD><input type='text' size='4' MAXLENGTH='3' "
          + "name='float_high' value='") +
@@ -389,7 +389,7 @@ public class forecastAdmin extends HttpServlet {
                               HttpServletRequest req) throws myException {
     StringBuffer sbuf = new StringBuffer();
 
-    /** I had better figure out something better than this **/
+    /** I had better figure out something better than this * */
     String sqlDate = req.getParameter("sqlDate");
 
     String local_high = req.getParameter("local_high");
@@ -429,7 +429,6 @@ public class forecastAdmin extends HttpServlet {
                 + " <BR>Local Site Low: " + local_low + "\n"
                 + " <BR>Local Precip Cat: " + local_prec + "\n"
                 + " <BR>Local Snow Cat: " + local_snow + "\n"
-
                 + "<P>Floater Site High: " + float_high + "\n"
                 + "<BR>Floater Site Low: " + float_low + "\n"
                 + "<BR>Floater Precip Cat: " + float_prec + "\n"
@@ -438,9 +437,7 @@ public class forecastAdmin extends HttpServlet {
     return sbuf.toString();
   } // End of enterForecast()
 
-  /**
-   * Method to Modify a forecast for a certain student
-   */
+  /** Method to Modify a forecast for a certain student */
   public String alterStudent(portfolioUser thisUser, String thisPageURL) {
     StringBuffer sbuf = new StringBuffer();
 
@@ -492,9 +489,7 @@ public class forecastAdmin extends HttpServlet {
     return sbuf.toString();
   } // End of alterStudent
 
-  /**
-   * Method to switch if an admin can or cant forecast
-   */
+  /** Method to switch if an admin can or cant forecast */
   public String whoForecasts(portfolioUser thisUser, String thisPageURL) {
     StringBuffer sbuf = new StringBuffer();
 
@@ -535,9 +530,7 @@ public class forecastAdmin extends HttpServlet {
     return sbuf.toString();
   } // End of whoForecasts
 
-  /**
-   * Method to make a dialog to create a new forecasting Day
-   */
+  /** Method to make a dialog to create a new forecasting Day */
   public String createForecastDay(String thisPageURL) {
     StringBuffer sbuf = new StringBuffer();
 
@@ -555,9 +548,7 @@ public class forecastAdmin extends HttpServlet {
                 + "Month:</TH>\n<TH>Select Day:</TH>\n</TR>\n"
                 + "<TR>\n"
                 + "<TD>\n" + fLib.yearSelect() + "</TD>\n"
-
                 + "<TD>\n" + fLib.monthSelect() + "</TD>\n"
-
                 + "<TD>\n" + fLib.daySelect() + "</TD>\n"
                 + "</TR></TABLE>");
 
@@ -572,10 +563,8 @@ public class forecastAdmin extends HttpServlet {
     sbuf.append(
         "<H3>Input the station code:</H3>\n"
         + "<input type=\"text\" size=\"20\" MAXLENGTH=\"50\" name=\"code\">\n"
-
         + "<H3>Input the station name:</H3>\n"
         + "<input type=\"text\" MAXLENGTH=\"50\" name=\"station\">\n"
-
         +
         "<BR><input type=\"submit\" value=\"Add this floater city\"></form>\n");
 
@@ -586,6 +575,7 @@ public class forecastAdmin extends HttpServlet {
 
   /**
    * Method to create validation for a forecast date
+   *
    * @param portfolio which is the String value of the current portfolio
    * @param sqlDate which is the date we are entering validation for
    * @return HTML formated String for the Validation
@@ -613,7 +603,6 @@ public class forecastAdmin extends HttpServlet {
         + "	<TD>High T</TD><TD>Low T</TD>\n"
         + "	<TD>Prec Cat</TD><TD>Prec Text</TD>\n"
         + "	<TD>Snow Cat</TD><TD>Snow Text</TD></TR>\n"
-
         + " <TR><TH>Local:</TH>\n" +
         ("	<TD><input type='text' size='4' MAXLENGTH='3' "
          + "name='local_high' value='") +
@@ -634,7 +623,6 @@ public class forecastAdmin extends HttpServlet {
          + "value=\"") +
         thisDay.getVLocalSnowNum() + "\"></TD>\n"
         + "	</TR>\n"
-
         + " <TR><TH>" + thisDay.getFloaterSiteID() + ":</TH>\n" +
         ("	<TD><input type='text' size='4' MAXLENGTH='3' "
          + "name='float_high' value='") +
@@ -655,7 +643,6 @@ public class forecastAdmin extends HttpServlet {
          + "value=\"") +
         thisDay.getVFloaterSnowNum() + "\"></TD>\n"
         + "	</TR>\n"
-
         + " <TR><TH>Climo Local:</TH>\n" +
         ("	<TD><input type='text' size='4' MAXLENGTH='3' "
          + "name='cl_local_high' value='") +
@@ -676,7 +663,6 @@ public class forecastAdmin extends HttpServlet {
          + "name=\"cl_local_snow_txt\" value=\"") +
         thisDay.getCLocalSnowNum() + "\"></TD>\n"
         + "	</TR>\n"
-
         + " <TR><TH>Climo " + thisDay.getFloaterSiteID() + ":</TH>\n" +
         ("	<TD><input type='text' size='4' MAXLENGTH='3' "
          + "name='cl_float_high' value='") +
@@ -697,7 +683,6 @@ public class forecastAdmin extends HttpServlet {
          + "name=\"cl_float_snow_txt\" value=\"") +
         thisDay.getCFloaterSnowNum() + "\"></TD>\n"
         + "	</TR>\n"
-
         + "</TABLE>\n");
 
     sbuf.append("<P><input type='submit'></form>\n");
@@ -709,7 +694,7 @@ public class forecastAdmin extends HttpServlet {
                                         HttpServletRequest req) {
     StringBuffer sbuf = new StringBuffer();
 
-    /** I had better figure out something better than this **/
+    /** I had better figure out something better than this * */
     String sqlDate = req.getParameter("sqlDate");
 
     String local_high = req.getParameter("local_high");
@@ -789,8 +774,9 @@ public class forecastAdmin extends HttpServlet {
   } // End of enterForecast()
 
   /**
-   * Method that creates a new forecasting day.
-   *	Also puts a message in the calendar about the new forecast that is due
+   * Method that creates a new forecasting day. Also puts a message in the
+   * calendar about the new forecast that is due
+   *
    * @param request which is the HttpServletRequest
    * @param portfolio which is the value of the portfolio
    */
@@ -852,5 +838,4 @@ public class forecastAdmin extends HttpServlet {
 
     return sbuf.toString();
   } // End of classOptions
-
 } // End of forecastAdmin

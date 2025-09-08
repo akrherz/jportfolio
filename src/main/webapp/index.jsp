@@ -3,6 +3,10 @@
 <%
  authBean auth = new authBean(request, session);
  portfolioUser thisUser = (portfolioUser)session.getAttribute("User");
+    if (thisUser != null) {
+        response.sendRedirect("/jportfolio/login.jsp");
+        return;
+    }
 %>
 <%= jlib.genHeader(thisUser, "JPortfolio", "Portfolio") %>
 
