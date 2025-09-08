@@ -21,7 +21,8 @@ package org.collaborium.portfolio;
 
 // Import these for good use.
 import java.sql.*; // obviously for the database connections
-import java.util.*;
+import java.util.Map;
+import java.util.TimeZone;
 import javax.servlet.http.*;   // for the auth section
 import org.collaborium.util.*; // Import IITAP Utilities
 
@@ -36,7 +37,9 @@ public class jlib {
 
   public static String servletHttpBase = settings.servletHttpBase;
   public static String httpBase = settings.httpBase;
-  private static Hashtable allUsers = new Hashtable();
+  private static java.util.concurrent
+      .ConcurrentHashMap<String, String> allUsers =
+      new java.util.concurrent.ConcurrentHashMap<>();
 
   /**
    * Method allowing students to sign up for a portfolio.
@@ -128,6 +131,10 @@ public class jlib {
                        "October", "November", "December"};
     sbuf.append("<select name=\"" + name + "\">\n");
     for (int i = 1; i < 13; i++) {
+      sbuf.append("<option value=\"" + i + "\"");
+      if (i == selected)
+        sbuf.append(" selected");
+      sbuf.append(">" + months[i] + "</option>\n");
     }
     sbuf.append("</select>\n");
     return sbuf.toString();
@@ -242,9 +249,8 @@ public class jlib {
         + "<HTML>\n"
         + "<HEAD>\n"
         + " \t<TITLE>" + title + "</TITLE>\n"
-        + " \t<link rel=stylesheet type=text/css href=" + httpBase +
-        "/css/screen.css>\n"
-
+        + " \t<link rel=stylesheet type=text/css href=\"" + httpBase +
+        "/css/screen.css?style=" + style + "\">\n"
         + "<script language=\"JavaScript\" type=\"text/javascript\">\n"
         + "<!--//BEGIN Script\n"
         + "function new_window(url) {\n"
@@ -310,21 +316,22 @@ public class jlib {
     if (title == null)
       title = "Portfolio";
 
-    sbuf.append("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 3.2//EN\">\n"
-                + "<html>\n"
-                + "<head>\n"
-                + " \t<title>" + title + "</title>\n"
-                + " \t<link rel=\"stylesheet\" type=\"text/css\" href=\"" +
-                httpBase + "/css/screen.css\" media=\"all\">\n"
-                + " \t<link rel=\"stylesheet\" type=\"text/css\" href=\"" +
-                httpBase + "/css/print.css\" media=\"print\">\n"
-                + "<script src=\"" + httpBase +
-                "/js/portfolio.js\" type=\"text/javascript\"></script>\n"
-                + "</head>\n"
-                + "<body>\n"
+    sbuf.append(
+        "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 3.2//EN\">\n"
+        + "<html>\n"
+        + "<head>\n"
+        + " \t<title>" + title + "</title>\n"
+        + " \t<link rel=\"stylesheet\" type=\"text/css\" href=\"" + httpBase +
+        "/css/screen.css?style=" + style + "\" media=\"all\">\n"
+        + " \t<link rel=\"stylesheet\" type=\"text/css\" href=\"" + httpBase +
+        "/css/print.css?style=" + style + "\" media=\"print\">\n"
+        + "<script src=\"" + httpBase +
+        "/js/portfolio.js\" type=\"text/javascript\"></script>\n"
+        + "</head>\n"
+        + "<body>\n"
 
-                + "<div id=\"portfolio-header\">\n"
-                + "<h1>" + portfolioName + "</h1>\n");
+        + "<div id=\"portfolio-header\">\n"
+        + "<h1>" + portfolioName + "</h1>\n");
 
     sbuf.append("<div id=\"portfolio-auth\">" + realname + " (" + portfolio +
                 ") </div>\n</div>\n");
@@ -589,23 +596,16 @@ public class jlib {
    * @param eventName which is what you want to appear beside name
    */
   public static void addUser(String username, String eventName) {
-    String testVal = null;
+    if (username == null)
+      return;
 
-    if (allUsers.size() > 15)
+    if (allUsers.size() > 15) {
       allUsers.clear();
+    }
 
-    // If the dictionary is not empty
-    if (!allUsers.isEmpty()) {
-      testVal = (String)allUsers.get((Object)username);
-      if (testVal != null) { // IF a value exists for the key
-        if (!testVal.equalsIgnoreCase(eventName)) { // If the new value is diff
-          allUsers.put((Object)username, eventName);
-        }
-      } else {
-        allUsers.put((Object)username, eventName);
-      }
-    } else if (username != null) {
-      allUsers.put((Object)username, eventName);
+    String testVal = allUsers.get(username);
+    if (testVal == null || !testVal.equalsIgnoreCase(eventName)) {
+      allUsers.put(username, eventName);
     }
   } // End of addUser()
 
@@ -614,13 +614,9 @@ public class jlib {
   }
 
   public static void deleteUser(String username, String eventName) {
-    // 	System.err.println("In deleteUser:"+ allUsers.toString() );
-    if (!allUsers.isEmpty() && (username != null)) {
-      if (allUsers.containsKey((Object)username)) {
-        allUsers.remove((Object)username);
-      }
-    }
-    //	System.err.println("Out deleteUser:"+ allUsers.toString() );
+    if (username == null)
+      return;
+    allUsers.remove(username);
   }
 
   public static String currentUsers(portfolioUser thisUser) {
@@ -644,26 +640,21 @@ public class jlib {
 
     //	myBuffer.append( allUsers.toString() + "Hello");
 
-    Enumeration myKeys = allUsers.keys();
-
     if (!allUsers.isEmpty()) {
-      do {
-        Object tmp = myKeys.nextElement();
-        String nowUser = tmp.toString();
-
-        // plogger.report("ThisUser is :"+thisUser +": NowUser is
-        // :"+nowUser+":\n");
+      for (Map.Entry<String, String> e : allUsers.entrySet()) {
+        String nowUser = e.getKey();
+        String event = e.getValue();
 
         if (nowUser.equalsIgnoreCase(thisUser)) {
           myBuffer.append("<B>" + nowUser + "</B>: ");
         } else {
           myBuffer.append("<a "
                           + "href=\"javascript:new_window('/jportfolio/jsp/"
-                          + "user/IMPost.jsp?toUser=" + tmp.toString() +
-                          "');\">" + nowUser + "</a>: ");
+                          + "user/IMPost.jsp?toUser=" + nowUser + "');\">" +
+                          nowUser + "</a>: ");
         }
-        myBuffer.append(allUsers.get(tmp).toString() + "<BR>");
-      } while (myKeys.hasMoreElements());
+        myBuffer.append(event + "<BR>");
+      }
     }
 
     if (IMDatabase.hasMessage(thisUser).booleanValue())

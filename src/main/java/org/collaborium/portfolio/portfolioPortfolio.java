@@ -31,7 +31,7 @@ public class portfolioPortfolio {
   private String base = "/jportfolio/servlet/";
   private String pList = "('null')";
   private String groupp = null;
-  private Vector admins = new Vector();
+  private List<String> admins = new ArrayList<>();
 
   public boolean usesCalendar = false;
   public boolean usesDialog = false;
@@ -53,7 +53,7 @@ public class portfolioPortfolio {
     this.usesForecast = false;
     this.usesQuiz = false;
     this.pList = "('" + newID + "')";
-    this.admins = new Vector();
+    this.admins = new ArrayList<>();
 
     try {
       ResultSet rs = dbInterface.callDB("SELECT * from appregistry "
@@ -101,7 +101,7 @@ public class portfolioPortfolio {
   public String getName() { return this.name; }
   public String getHome() { return this.home; }
   public String getBase() { return this.base; }
-  public Vector getAdmins() { return this.admins; }
+  public List<String> getAdmins() { return this.admins; }
 
   /**
    * Return the value of the dialog Security

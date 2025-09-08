@@ -23,17 +23,16 @@ package org.collaborium.portfolio;
  *
  */
 
-import java.io.*;
-import java.lang.*;
-import java.util.*;
-// import java.beans.*;
-
 public class IMDatabase {
 
-  private static Hashtable messages = new Hashtable();
+  private static java.util.concurrent
+      .ConcurrentHashMap<Integer, IMessage> messages =
+      new java.util.concurrent.ConcurrentHashMap<>();
 
   // Contains to and Message ID.
-  private static Hashtable pickupMessages = new Hashtable();
+  private static java.util.concurrent
+      .ConcurrentHashMap<Integer, String> pickupMessages =
+      new java.util.concurrent.ConcurrentHashMap<>();
 
   private static int nextId = 1;
 
@@ -56,7 +55,7 @@ public class IMDatabase {
            e1.close();
            e2.writeObject( messages );
            e2.close();
-           e3.writeObject( new Integer(nextId) );
+           e3.writeObject( Integer.valueOf(nextId) );
            e3.close();
            } catch( Exception ex){
                    plogger.report("Problem with XMLEncoder");
@@ -76,12 +75,15 @@ public class IMDatabase {
            XMLDecoder d3 = new XMLDecoder( new BufferedInputStream(
                        new FileInputStream("IMnextID.xml")));
 
-           pickupMessages = (Hashtable)d1.readObject();
-           d1.close();
-           messages = (Hashtable)d2.readObject();
-           d2.close();
-           Integer temp = (Integer)d3.readObject();
-           nextId = temp.intValue();
+           // If you want to restore from XML, use typed maps below:
+           // pickupMessages =
+       (java.util.concurrent.ConcurrentHashMap<Integer,String>)d1.readObject();
+           // d1.close();
+           // messages =
+       (java.util.concurrent.ConcurrentHashMap<Integer,IMessage>)d2.readObject();
+           // d2.close();
+           // Integer temp = (Integer)d3.readObject();
+           // nextId = temp.intValue();
            d3.close();
            } catch( Exception ex){
                    plogger.report("Problem with XMLDecoder");
@@ -95,7 +97,7 @@ public class IMDatabase {
 
   public static synchronized void removeMessage(String idNum) {
     System.err.println("I am removing " + idNum);
-    Integer oIdNum = new java.lang.Integer(idNum);
+    Integer oIdNum = Integer.valueOf(idNum);
     messages.remove(oIdNum);
     pickupMessages.remove(oIdNum);
   }
@@ -104,7 +106,7 @@ public class IMDatabase {
    * Post a new message.
    */
   public static synchronized void postMessage(IMessage message) {
-    Integer nextNumber = new Integer(nextId++);
+    Integer nextNumber = Integer.valueOf(nextId++);
     message.setId(nextNumber);
     messages.put(nextNumber, message);
 
@@ -143,45 +145,33 @@ public class IMDatabase {
     //		} while( testIDs.hasMoreElements() );
     //	}
 
-    Enumeration myKeys = pickupMessages.keys();
-
     if (!pickupMessages.isEmpty()) {
-
-      do {
-        String thisValue = (String)pickupMessages.get(myKeys.nextElement());
+      for (String thisValue : pickupMessages.values()) {
         if (thisValue.equalsIgnoreCase(user))
           return Boolean.TRUE;
-      } while (myKeys.hasMoreElements());
+      }
     }
 
     return Boolean.FALSE;
   }
 
-  public static Vector getIDs(String userID) {
-
-    Vector returnVector = new Vector();
-
-    Enumeration myKeys = pickupMessages.keys();
-
+  public static java.util.List<String> getIDs(String userID) {
+    java.util.List<String> returnList = new java.util.ArrayList<>();
     if (!pickupMessages.isEmpty()) {
-
-      do {
-        Object thisElement = myKeys.nextElement();
-        String thisValue = (String)pickupMessages.get(thisElement);
-        if (thisValue.equalsIgnoreCase(userID)) {
-          returnVector.add(thisElement.toString());
+      for (java.util.Map.Entry<Integer, String> e : pickupMessages.entrySet()) {
+        if (e.getValue().equalsIgnoreCase(userID)) {
+          returnList.add(e.getKey().toString());
         }
-      } while (myKeys.hasMoreElements());
+      }
     }
-
-    return returnVector;
+    return returnList;
   }
 
   /**
    * Get a specific message
    */
   public static synchronized IMessage getMessage(String index) {
-    return (IMessage)messages.get(new Integer(index));
+    return messages.get(Integer.valueOf(index));
   }
 
   /**

@@ -21,7 +21,6 @@ package org.collaborium.portfolio;
 import java.io.*;
 import java.sql.*;
 import java.text.*;
-import java.util.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import org.collaborium.util.*;
@@ -371,7 +370,6 @@ public class jportfolioAdmin extends HttpServlet {
     response.setContentType("text/html");
     PrintWriter out = response.getWriter();
 
-    String type = null; // hold my image type is any
     // start to put in some session tracking info...
     HttpSession session = request.getSession(true);
 
@@ -813,10 +811,10 @@ public class jportfolioAdmin extends HttpServlet {
 
   public String postRoles(HttpServletRequest req, portfolioUser thisUser) {
     StringBuffer sbuf = new StringBuffer();
-    Enumeration myE = req.getParameterNames();
-    while (myE.hasMoreElements()) {
-      String userID = (String)myE.nextElement();
-      String roleID = (String)req.getParameter(userID);
+    java.util.Enumeration<?> params = req.getParameterNames();
+    while (params.hasMoreElements()) {
+      String userID = String.valueOf(params.nextElement());
+      String roleID = req.getParameter(userID);
       try {
         if (!userID.equalsIgnoreCase("mode")) {
           jlib.updateDB("UPDATE students SET role = '" + roleID + "' "
@@ -835,10 +833,10 @@ public class jportfolioAdmin extends HttpServlet {
   public String postGroupIDs(HttpServletRequest req, String portfolio) {
     StringBuffer sbuf = new StringBuffer();
 
-    Enumeration myE = req.getParameterNames();
-    while (myE.hasMoreElements()) {
-      String userID = (String)myE.nextElement();
-      String gID = (String)req.getParameter(userID);
+    java.util.Enumeration<?> params = req.getParameterNames();
+    while (params.hasMoreElements()) {
+      String userID = String.valueOf(params.nextElement());
+      String gID = req.getParameter(userID);
 
       try {
         if (!userID.equalsIgnoreCase("mode") && !gID.equals("")) {

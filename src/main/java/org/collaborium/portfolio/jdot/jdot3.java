@@ -28,11 +28,6 @@ package org.collaborium.portfolio.jdot;
  */
 
 import java.io.*;
-import java.lang.*;
-import java.lang.String.*;
-import java.sql.*;
-import java.text.*;
-import java.util.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import org.collaborium.portfolio.*;
@@ -85,8 +80,6 @@ public class jdot3 extends HttpServlet {
     String STRidnum = request.getParameter("idnum");
     String threadID = request.getParameter("threadid");
     String skipNum = request.getParameter("skipNum");
-    String searchStr = request.getParameter("searchStr");
-    String oidid = request.getParameter("oidid");
     String postedDialogType = request.getParameter("dialogType");
     String postedThreadType = request.getParameter("threadType");
 
@@ -207,16 +200,12 @@ public class jdot3 extends HttpServlet {
 
     HttpSession session = req.getSession(true);
     portfolioUser thisUser = (portfolioUser)session.getAttribute("User");
-    portfolioMessage sMessage =
-        (portfolioMessage)session.getAttribute("sMessage");
-
-    String STRidnum = req.getParameter("idnum");
     String searchStr = req.getParameter("searchStr");
     String searchCol = req.getParameter("searchCol");
     String skipNum = req.getParameter("skipNum");
     String callMethod = req.getParameter("mode");
 
-    if (thisUser != null || thisUser.getPortfolio() == null) {
+    if (thisUser.getPortfolio() == null) {
       jlib.addUser(thisUser.getUserID(), "Dialog");
     } else {
       res.setHeader("Refresh", "0; URL=./jportfolio");

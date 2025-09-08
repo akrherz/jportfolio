@@ -17,19 +17,14 @@
  * Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 package org.collaborium.portfolio;
+
 /**
  * Container to modify a student's grades.
  *
  * @author Daryl Herzmann
  */
 
-import java.io.*;
-import java.lang.*;
-import java.lang.String.*;
 import java.sql.*;
-import java.text.*;
-import java.util.*;
-import org.collaborium.portfolio.*;
 
 public class gradebook {
 
@@ -37,6 +32,7 @@ public class gradebook {
 
   /**
    * Constructor to build the gradebook interface.
+   *
    * @param thisUser which is the current portfolio User
    *
    */
@@ -46,7 +42,7 @@ public class gradebook {
    * Method to total all the points for a particular user
    *
    * @return sends back an int for the total score
-   * @param user the users ID
+   * @param user    the users ID
    * @param classID the class ID
    */
   public String totalScores() {
@@ -107,8 +103,8 @@ public class gradebook {
   } // End of addScoreElement()
 
   /**
-   * This method is for legacy support.  Back in the day, I did a stupid thing
-   * and stored the quizName in the scores table instead of the qid.  The result
+   * This method is for legacy support. Back in the day, I did a stupid thing
+   * and stored the quizName in the scores table instead of the qid. The result
    * was bad.
    */
   public String getScoreElement(String app, String ID, String quizName) {

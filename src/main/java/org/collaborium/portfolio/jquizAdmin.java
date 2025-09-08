@@ -21,14 +21,9 @@ package org.collaborium.portfolio;
 // JquizAdmin, administrative access to the DB system
 
 import java.io.*;
-// import java.lang.*;
-import java.lang.String.*;
 import java.sql.*;
-import java.text.*;
-import java.util.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
-import org.collaborium.portfolio.*;
 import org.collaborium.util.*;
 
 public class jquizAdmin extends HttpServlet {
@@ -150,7 +145,6 @@ public class jquizAdmin extends HttpServlet {
     HttpSession session = request.getSession(true);
     portfolioUser thisUser = (portfolioUser)session.getAttribute("User");
     String callMethod = request.getParameter("mode");
-    String quizID = request.getParameter("quizNum");
 
     if (thisUser == null) {
       response.setHeader("Refresh", "0; URL=./jportfolio");

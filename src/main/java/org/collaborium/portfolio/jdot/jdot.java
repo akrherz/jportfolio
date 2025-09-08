@@ -27,8 +27,6 @@ package org.collaborium.portfolio.jdot;
 
 import java.math.*;
 import java.sql.*;
-import java.text.*;
-import java.util.*;
 import org.collaborium.portfolio.*;
 import org.collaborium.util.*;
 
@@ -527,8 +525,6 @@ public class jdot {
     if (skipNum == null)
       skipNum = "0";
 
-    int skipMessenges = Integer.parseInt(skipNum) * messageBlock;
-
     ResultSet threads = null;
     ResultSet threads2 = null;
     ResultSet threads3 = null;
@@ -862,7 +858,6 @@ public class jdot {
     String newthreadid = null;
     String newSTRidnum = null;
     String startNum = null;
-    String instructorID = null;
     String notifyBaseURL = "/jportfolio/servlet/jdot3";
 
     /* We need to get the porthome value for use in notifications */

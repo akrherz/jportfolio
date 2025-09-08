@@ -23,7 +23,6 @@ package org.collaborium.portfolio.forecast;
  * @author Daryl Herzmann 7 Sep 2001
  */
 
-import java.io.*;
 import java.sql.*;
 import org.collaborium.portfolio.*;
 
@@ -44,47 +43,47 @@ public class forecastDay {
   private String discussion = "None entered";
 
   /** forecasted values by User for float */
-  private Integer floaterHighTemp = new Integer(-99);
-  private Integer floaterLowTemp = new Integer(-99);
-  private Integer floaterPrecCat = new Integer(-99);
-  private Integer floaterSnowCat = new Integer(-99);
+  private int floaterHighTemp = -99;
+  private int floaterLowTemp = -99;
+  private int floaterPrecCat = -99;
+  private int floaterSnowCat = -99;
 
   /** forecasted values by User for local */
-  private Integer localHighTemp = new Integer(-99);
-  private Integer localLowTemp = new Integer(-99);
-  private Integer localPrecCat = new Integer(-99);
-  private Integer localSnowCat = new Integer(-99);
+  private int localHighTemp = -99;
+  private int localLowTemp = -99;
+  private int localPrecCat = -99;
+  private int localSnowCat = -99;
 
   /** Validation Values of this date for the floater site */
-  private Integer VfloaterHighTemp = new Integer(-99);
-  private Integer VfloaterLowTemp = new Integer(-99);
-  private Integer VfloaterPrecCat = new Integer(-99);
+  private int VfloaterHighTemp = -99;
+  private int VfloaterLowTemp = -99;
+  private int VfloaterPrecCat = -99;
   private String VfloaterPrecNum = "-99";
-  private Integer VfloaterSnowCat = new Integer(-99);
+  private int VfloaterSnowCat = -99;
   private String VfloaterSnowNum = "-99";
 
   /** Validation Values for the local site */
-  private Integer VlocalHighTemp = new Integer(-99);
-  private Integer VlocalLowTemp = new Integer(-99);
-  private Integer VlocalPrecCat = new Integer(-99);
+  private int VlocalHighTemp = -99;
+  private int VlocalLowTemp = -99;
+  private int VlocalPrecCat = -99;
   private String VlocalPrecNum = "-99";
-  private Integer VlocalSnowCat = new Integer(-99);
+  private int VlocalSnowCat = -99;
   private String VlocalSnowNum = "-99";
 
   /** Climate Values of this date for the floater site */
-  private Integer CfloaterHighTemp = new Integer(-99);
-  private Integer CfloaterLowTemp = new Integer(-99);
-  private Integer CfloaterPrecCat = new Integer(-99);
+  private int CfloaterHighTemp = -99;
+  private int CfloaterLowTemp = -99;
+  private int CfloaterPrecCat = -99;
   private String CfloaterPrecNum = "-99";
-  private Integer CfloaterSnowCat = new Integer(-99);
+  private int CfloaterSnowCat = -99;
   private String CfloaterSnowNum = "-99";
 
   /** Climate Values for the local site */
-  private Integer ClocalHighTemp = new Integer(-99);
-  private Integer ClocalLowTemp = new Integer(-99);
-  private Integer ClocalPrecCat = new Integer(-99);
+  private int ClocalHighTemp = -99;
+  private int ClocalLowTemp = -99;
+  private int ClocalPrecCat = -99;
   private String ClocalPrecNum = "-99";
-  private Integer ClocalSnowCat = new Integer(-99);
+  private int ClocalSnowCat = -99;
   private String ClocalSnowNum = "-99";
 
   public forecastDay(String newPortfolio, String newSqlDate) {
@@ -149,21 +148,21 @@ public class forecastDay {
                              + " WHERE portfolio = '" + portfolio + "' "
                              + " and day = '" + sqlDate + "' ");
       if (rs.next()) {
-        this.VfloaterHighTemp = new Integer(rs.getInt("float_high"));
-        this.VfloaterLowTemp = new Integer(rs.getInt("float_low"));
-        this.VfloaterPrecCat = new Integer(rs.getInt("float_prec"));
+        this.VfloaterHighTemp = rs.getInt("float_high");
+        this.VfloaterLowTemp = rs.getInt("float_low");
+        this.VfloaterPrecCat = rs.getInt("float_prec");
         this.VfloaterPrecNum = rs.getString("float_prec_txt");
-        this.VfloaterSnowCat = new Integer(rs.getInt("float_snow"));
+        this.VfloaterSnowCat = rs.getInt("float_snow");
         this.VfloaterSnowNum = rs.getString("float_snow_txt");
 
         // plogger.report("I am setting VlocalSnowCat to "+
         // rs.getString("local_snow") );
 
-        this.VlocalHighTemp = new Integer(rs.getInt("local_high"));
-        this.VlocalLowTemp = new Integer(rs.getInt("local_low"));
-        this.VlocalPrecCat = new Integer(rs.getInt("local_prec"));
+        this.VlocalHighTemp = rs.getInt("local_high");
+        this.VlocalLowTemp = rs.getInt("local_low");
+        this.VlocalPrecCat = rs.getInt("local_prec");
         this.VlocalPrecNum = rs.getString("local_prec_txt");
-        this.VlocalSnowCat = new Integer(rs.getInt("local_snow"));
+        this.VlocalSnowCat = rs.getInt("local_snow");
         this.VlocalSnowNum = rs.getString("local_snow_txt");
 
         return true;
@@ -190,18 +189,18 @@ public class forecastDay {
                              + " WHERE portfolio = '" + portfolio + "' "
                              + " and day = '" + sqlDate + "' ");
       if (rs.next()) {
-        this.CfloaterHighTemp = new Integer(rs.getInt("float_high"));
-        this.CfloaterLowTemp = new Integer(rs.getInt("float_low"));
-        this.CfloaterPrecCat = new Integer(rs.getInt("float_prec"));
+        this.CfloaterHighTemp = rs.getInt("float_high");
+        this.CfloaterLowTemp = rs.getInt("float_low");
+        this.CfloaterPrecCat = rs.getInt("float_prec");
         this.CfloaterPrecNum = rs.getString("float_prec_txt");
-        this.CfloaterSnowCat = new Integer(rs.getInt("float_snow"));
+        this.CfloaterSnowCat = rs.getInt("float_snow");
         this.CfloaterSnowNum = rs.getString("float_snow_txt");
 
-        this.ClocalHighTemp = new Integer(rs.getInt("local_high"));
-        this.ClocalLowTemp = new Integer(rs.getInt("local_low"));
-        this.ClocalPrecCat = new Integer(rs.getInt("local_prec"));
+        this.ClocalHighTemp = rs.getInt("local_high");
+        this.ClocalLowTemp = rs.getInt("local_low");
+        this.ClocalPrecCat = rs.getInt("local_prec");
         this.ClocalPrecNum = rs.getString("local_prec_txt");
-        this.ClocalSnowCat = new Integer(rs.getInt("local_snow"));
+        this.ClocalSnowCat = rs.getInt("local_snow");
         this.ClocalSnowNum = rs.getString("local_snow_txt");
 
         return true;
@@ -229,21 +228,24 @@ public class forecastDay {
         + "<TR><TD></TD><TD>" + localSite + "( " + localSiteID + " ) </TD>\n"
         + " <TD>" + floaterSite + "( " + floaterSiteID + " ) </TD></TR>\n"
 
-        + " <TR><TH>High Temp:</TH><TD>" + VlocalHighTemp.toString() +
+        + " <TR><TH>High Temp:</TH><TD>" + String.valueOf(localHighTemp) +
         "</TD>\n"
-        + " <TD>" + VfloaterHighTemp.toString() + "</TD></TR>\n"
+        + " <TD>" + String.valueOf(VfloaterHighTemp) + "</TD></TR>\n"
 
-        + " <TR><TH>Low Temp:</TH><TD>" + VlocalLowTemp.toString() + "</TD>\n"
-        + " <TD>" + VfloaterLowTemp.toString() + "</TD></TR>\n"
+        + " <TR><TH>Low Temp:</TH><TD>" + String.valueOf(VlocalLowTemp) +
+        "</TD>\n"
+        + " <TD>" + String.valueOf(VfloaterLowTemp) + "</TD></TR>\n"
 
-        + " <TR><TH>Precip:</TH><TD>CAT: " + VlocalPrecCat.toString() + " "
+        + " <TR><TH>Precip:</TH><TD>CAT: " + String.valueOf(VlocalPrecCat) +
+        " "
         + " ( " + VlocalPrecNum + ") </TD>\n"
-        + " <TD>CAT: " + VfloaterPrecCat.toString() + " "
+        + " <TD>CAT: " + String.valueOf(VfloaterPrecCat) + " "
         + " ( " + VfloaterPrecNum + ")</TD></TR>\n"
 
-        + " <TR><TH>Snowfall:</TH><TD>CAT: " + VlocalSnowCat.toString() + " "
+        + " <TR><TH>Snowfall:</TH><TD>CAT: " + String.valueOf(VlocalSnowCat) +
+        " "
         + " ( " + VlocalSnowNum + ") </TD>\n"
-        + " <TD>CAT: " + VfloaterSnowCat.toString() + " "
+        + " <TD>CAT: " + String.valueOf(VfloaterSnowCat) + " "
         + " ( " + VfloaterSnowNum + ")</TD></TR>\n"
         + "</TABLE>\n");
 
@@ -263,15 +265,15 @@ public class forecastDay {
           + " WHERE userid = '" + userID + "' and portfolio = "
           + " '" + portfolio + "' and day = '" + sqlDate + "' ");
       if (rs.next()) {
-        this.floaterHighTemp = new Integer(rs.getInt("float_high"));
-        this.floaterLowTemp = new Integer(rs.getInt("float_low"));
-        this.floaterPrecCat = new Integer(rs.getInt("float_prec"));
-        this.floaterSnowCat = new Integer(rs.getInt("float_snow"));
+        this.floaterHighTemp = rs.getInt("float_high");
+        this.floaterLowTemp = rs.getInt("float_low");
+        this.floaterPrecCat = rs.getInt("float_prec");
+        this.floaterSnowCat = rs.getInt("float_snow");
 
-        this.localHighTemp = new Integer(rs.getInt("local_high"));
-        this.localLowTemp = new Integer(rs.getInt("local_low"));
-        this.localPrecCat = new Integer(rs.getInt("local_prec"));
-        this.localSnowCat = new Integer(rs.getInt("local_snow"));
+        this.localHighTemp = rs.getInt("local_high");
+        this.localLowTemp = rs.getInt("local_low");
+        this.localPrecCat = rs.getInt("local_prec");
+        this.localSnowCat = rs.getInt("local_snow");
 
         this.discussion = rs.getString("discussion");
         this.confidence = rs.getString("confidence");
@@ -285,43 +287,47 @@ public class forecastDay {
     return false;
   } // End of getForecast()
 
-  public String getFloaterHighTemp() { return floaterHighTemp.toString(); }
-  public String getFloaterLowTemp() { return floaterLowTemp.toString(); }
-  public String getFloaterPrecCat() { return floaterPrecCat.toString(); }
-  public String getFloaterSnowCat() { return floaterSnowCat.toString(); }
+  public String getFloaterHighTemp() { return String.valueOf(floaterHighTemp); }
+  public String getFloaterLowTemp() { return String.valueOf(floaterLowTemp); }
+  public String getFloaterPrecCat() { return String.valueOf(floaterPrecCat); }
+  public String getFloaterSnowCat() { return String.valueOf(floaterSnowCat); }
 
-  public String getLocalHighTemp() { return localHighTemp.toString(); }
-  public String getLocalLowTemp() { return localLowTemp.toString(); }
-  public String getLocalPrecCat() { return localPrecCat.toString(); }
-  public String getLocalSnowCat() { return localSnowCat.toString(); }
+  public String getLocalHighTemp() { return String.valueOf(localHighTemp); }
+  public String getLocalLowTemp() { return String.valueOf(localLowTemp); }
+  public String getLocalPrecCat() { return String.valueOf(localPrecCat); }
+  public String getLocalSnowCat() { return String.valueOf(localSnowCat); }
 
-  public String getVFloaterHighTemp() { return VfloaterHighTemp.toString(); }
-  public String getVFloaterLowTemp() { return VfloaterLowTemp.toString(); }
-  public String getVFloaterPrecCat() { return VfloaterPrecCat.toString(); }
-  public String getVFloaterPrecNum() { return VfloaterPrecNum.toString(); }
-  public String getVFloaterSnowCat() { return VfloaterSnowCat.toString(); }
-  public String getVFloaterSnowNum() { return VfloaterSnowNum.toString(); }
+  public String getVFloaterHighTemp() {
+    return String.valueOf(VfloaterHighTemp);
+  }
+  public String getVFloaterLowTemp() { return String.valueOf(VfloaterLowTemp); }
+  public String getVFloaterPrecCat() { return String.valueOf(VfloaterPrecCat); }
+  public String getVFloaterPrecNum() { return String.valueOf(VfloaterPrecNum); }
+  public String getVFloaterSnowCat() { return String.valueOf(VfloaterSnowCat); }
+  public String getVFloaterSnowNum() { return String.valueOf(VfloaterSnowNum); }
 
-  public String getVLocalHighTemp() { return VlocalHighTemp.toString(); }
-  public String getVLocalLowTemp() { return VlocalLowTemp.toString(); }
-  public String getVLocalPrecCat() { return VlocalPrecCat.toString(); }
-  public String getVLocalPrecNum() { return VlocalPrecNum.toString(); }
-  public String getVLocalSnowCat() { return VlocalSnowCat.toString(); }
-  public String getVLocalSnowNum() { return VlocalSnowNum.toString(); }
+  public String getVLocalHighTemp() { return String.valueOf(VlocalHighTemp); }
+  public String getVLocalLowTemp() { return String.valueOf(VlocalLowTemp); }
+  public String getVLocalPrecCat() { return String.valueOf(VlocalPrecCat); }
+  public String getVLocalPrecNum() { return String.valueOf(VlocalPrecNum); }
+  public String getVLocalSnowCat() { return String.valueOf(VlocalSnowCat); }
+  public String getVLocalSnowNum() { return String.valueOf(VlocalSnowNum); }
 
-  public String getCFloaterHighTemp() { return CfloaterHighTemp.toString(); }
-  public String getCFloaterLowTemp() { return CfloaterLowTemp.toString(); }
-  public String getCFloaterPrecCat() { return CfloaterPrecCat.toString(); }
-  public String getCFloaterPrecNum() { return CfloaterPrecNum.toString(); }
-  public String getCFloaterSnowCat() { return CfloaterSnowCat.toString(); }
-  public String getCFloaterSnowNum() { return CfloaterSnowNum.toString(); }
+  public String getCFloaterHighTemp() {
+    return String.valueOf(CfloaterHighTemp);
+  }
+  public String getCFloaterLowTemp() { return String.valueOf(CfloaterLowTemp); }
+  public String getCFloaterPrecCat() { return String.valueOf(CfloaterPrecCat); }
+  public String getCFloaterPrecNum() { return String.valueOf(CfloaterPrecNum); }
+  public String getCFloaterSnowCat() { return String.valueOf(CfloaterSnowCat); }
+  public String getCFloaterSnowNum() { return String.valueOf(CfloaterSnowNum); }
 
-  public String getCLocalHighTemp() { return ClocalHighTemp.toString(); }
-  public String getCLocalLowTemp() { return ClocalLowTemp.toString(); }
-  public String getCLocalPrecCat() { return ClocalPrecCat.toString(); }
-  public String getCLocalPrecNum() { return ClocalPrecNum.toString(); }
-  public String getCLocalSnowCat() { return ClocalSnowCat.toString(); }
-  public String getCLocalSnowNum() { return ClocalSnowNum.toString(); }
+  public String getCLocalHighTemp() { return String.valueOf(ClocalHighTemp); }
+  public String getCLocalLowTemp() { return String.valueOf(ClocalLowTemp); }
+  public String getCLocalPrecCat() { return String.valueOf(ClocalPrecCat); }
+  public String getCLocalPrecNum() { return String.valueOf(ClocalPrecNum); }
+  public String getCLocalSnowCat() { return String.valueOf(ClocalSnowCat); }
+  public String getCLocalSnowNum() { return String.valueOf(ClocalSnowNum); }
 
   public String getFloaterSite() { return floaterSite; }
   public String getFloaterSiteID() { return floaterSiteID; }

@@ -24,13 +24,9 @@
  */
 
 package org.collaborium.portfolio;
-import java.io.*;
 import java.math.*;
 import java.sql.*;
 import java.text.*;
-import java.util.*;
-import javax.servlet.http.*;
-import org.collaborium.portfolio.*;
 import org.collaborium.util.*;
 
 public class portfolioMessage {
@@ -53,12 +49,12 @@ public class portfolioMessage {
   private String topicid = "";
   private String role = null;
   private portfolioUser thisUser = null;
-  private Integer smiles = new Integer(0);
-  private Integer frowns = new Integer(0);
-  private Integer cat_smiles = new Integer(0);
-  private Integer cat_frowns = new Integer(0);
-  private Integer learn_smiles = new Integer(0);
-  private Integer learn_frowns = new Integer(0);
+  private int smiles = 0;
+  private int frowns = 0;
+  private int cat_smiles = 0;
+  private int cat_frowns = 0;
+  private int learn_smiles = 0;
+  private int learn_frowns = 0;
 
   /**
    * Set up Message from a ResultSet
@@ -444,44 +440,32 @@ public class portfolioMessage {
   /**
    * Set cat_smiles from DB
    */
-  public void setCatSmiles(int thisSmiles) {
-    this.cat_smiles = new Integer(thisSmiles);
-  }
+  public void setCatSmiles(int thisSmiles) { this.cat_smiles = thisSmiles; }
 
   /**
    * Set learn_smiles from DB
    */
-  public void setLearnSmiles(int thisSmiles) {
-    this.learn_smiles = new Integer(thisSmiles);
-  }
+  public void setLearnSmiles(int thisSmiles) { this.learn_smiles = thisSmiles; }
 
   /**
    * Set smiles from DB
    */
-  public void setSmiles(int thisSmiles) {
-    this.smiles = new Integer(thisSmiles);
-  }
+  public void setSmiles(int thisSmiles) { this.smiles = thisSmiles; }
 
   /**
    * Set frowns from DB
    */
-  public void setFrowns(int thisFrowns) {
-    this.frowns = new Integer(thisFrowns);
-  }
+  public void setFrowns(int thisFrowns) { this.frowns = thisFrowns; }
 
   /**
    * Set cat_frowns from DB
    */
-  public void setCatFrowns(int thisFrowns) {
-    this.cat_frowns = new Integer(thisFrowns);
-  }
+  public void setCatFrowns(int thisFrowns) { this.cat_frowns = thisFrowns; }
 
   /**
    * Set learn_frowns from DB
    */
-  public void setLearnFrowns(int thisFrowns) {
-    this.learn_frowns = new Integer(thisFrowns);
-  }
+  public void setLearnFrowns(int thisFrowns) { this.learn_frowns = thisFrowns; }
 
   public void addSmile() {
     try {
@@ -491,7 +475,7 @@ public class portfolioMessage {
     } catch (Exception ex) {
       plogger.report("Error in trying to add a smile.");
     }
-    this.smiles = new Integer(smiles.intValue() + 1);
+    this.smiles = this.smiles + 1;
   } // End of addSmile()
 
   public void addFrown() {
@@ -502,7 +486,7 @@ public class portfolioMessage {
     } catch (Exception ex) {
       plogger.report("Error in trying to add a frown.");
     }
-    this.frowns = new Integer(frowns.intValue() + 1);
+    this.frowns = this.frowns + 1;
   }
 
   public void addCatFrown() {
@@ -513,7 +497,7 @@ public class portfolioMessage {
     } catch (Exception ex) {
       plogger.report("Error in trying to add a frown.");
     }
-    this.cat_frowns = new Integer(cat_frowns.intValue() + 1);
+    this.cat_frowns = this.cat_frowns + 1;
   }
 
   public void addLearnFrown() {
@@ -525,7 +509,7 @@ public class portfolioMessage {
     } catch (Exception ex) {
       plogger.report("Error in trying to add a frown.");
     }
-    this.learn_frowns = new Integer(learn_frowns.intValue() + 1);
+    this.learn_frowns = this.learn_frowns + 1;
   }
 
   public void addCatSmile() {
@@ -536,7 +520,7 @@ public class portfolioMessage {
     } catch (Exception ex) {
       plogger.report("Error in trying to add a smile.");
     }
-    this.cat_smiles = new Integer(cat_smiles.intValue() + 1);
+    this.cat_smiles = this.cat_smiles + 1;
   }
 
   public void addLearnSmile() {
@@ -548,7 +532,7 @@ public class portfolioMessage {
     } catch (Exception ex) {
       plogger.report("Error in trying to add a smile.");
     }
-    this.learn_smiles = new Integer(learn_smiles.intValue() + 1);
+    this.learn_smiles = this.learn_smiles + 1;
   }
 
   /**

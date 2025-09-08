@@ -25,8 +25,6 @@ package org.collaborium.portfolio;
  */
 
 import java.sql.*;
-import java.util.*;
-import org.collaborium.portfolio.*;
 import org.collaborium.util.*;
 
 public class portfolioQuiz {
@@ -171,8 +169,8 @@ public class portfolioQuiz {
     if (thisAttempt == null)
       return true;
 
-    int thisA = new java.lang.Integer(thisAttempt).intValue();
-    int allowA = new java.lang.Integer(attempts).intValue();
+    int thisA = Integer.parseInt(thisAttempt);
+    int allowA = Integer.parseInt(attempts);
 
     if (thisA <= allowA)
       return true;
@@ -189,7 +187,7 @@ public class portfolioQuiz {
     if (q3Ans.equals(question3.getAnswer()))
       numRight = numRight + 1;
 
-    String numberRight = new java.lang.Integer(numRight).toString();
+    String numberRight = Integer.valueOf(numRight).toString();
     return numberRight;
   }
 

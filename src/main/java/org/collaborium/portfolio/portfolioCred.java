@@ -19,12 +19,6 @@
 
 package org.collaborium.portfolio;
 
-import java.io.*;
-import java.sql.*;
-import java.util.*;
-import javax.servlet.http.*;
-import org.collaborium.portfolio.*;
-
 public class portfolioCred {
 
   public final static int admin = -1;
@@ -36,17 +30,19 @@ public class portfolioCred {
 
   /**
    * Give me a portfolioCred instance with some initial credential
+   *
    * @param initialCred my initial credential setting
    */
   public portfolioCred(int initialCred) { this.myCred = initialCred; }
 
   /**
    * Method to set credentials
+   *
    * @param newCred new credential setting
    */
   public void setCred(int newCred) {
     if (newCred == 0)
-      this.myCred = this.user;
+      this.myCred = user;
     else
       this.myCred = newCred;
     plogger.report("Setting portfolioCred to :" + this.myCred);

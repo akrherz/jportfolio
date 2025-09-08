@@ -25,11 +25,9 @@ package org.collaborium.portfolio;
  */
 
 import java.sql.*;
-import java.util.*;
 
 public class portfolioQuestion {
 
-  private String questionID = null;
   private String optiona = null;
   private String optionb = null;
   private String optionc = null;
@@ -46,7 +44,6 @@ public class portfolioQuestion {
    */
   public portfolioQuestion(String thisQuestionID) {
 
-    this.questionID = thisQuestionID;
     ResultSet rs = dbInterface.callDB("SELECT * from questions "
                                       + " WHERE qid = " + thisQuestionID + " ");
     try {

@@ -52,10 +52,10 @@ public class portfolioUser implements HttpSessionBindingListener {
   public boolean usesForecast = false;
   public boolean usesQuiz = false;
 
-  // An Array to hold idnums for messages a user responded to
-  private Hashtable notedPosts = new Hashtable();
-  private Hashtable notedCatPosts = new Hashtable();
-  private Hashtable notedLearnPosts = new Hashtable();
+  // A Set to hold idnums for messages a user responded to
+  private Set<String> notedPosts = new HashSet<>();
+  private Set<String> notedCatPosts = new HashSet<>();
+  private Set<String> notedLearnPosts = new HashSet<>();
 
   // Reference to the portfolio they are currently in
   public portfolioPortfolio myPortfolio = new portfolioPortfolio();
@@ -148,12 +148,12 @@ public class portfolioUser implements HttpSessionBindingListener {
   public boolean checkDialogidnum(String idnum) {
     // notedPosts
     if (!notedPosts.isEmpty()) {
-      if (notedPosts.containsKey(idnum))
+      if (notedPosts.contains(idnum))
         return false;
       else
         return true;
     }
-    notedPosts.put(idnum, "Hello");
+    notedPosts.add(idnum);
     return true;
   } // End of checkDialogidnum()
 
@@ -164,12 +164,12 @@ public class portfolioUser implements HttpSessionBindingListener {
   public boolean checkDialogidnum_cat(String idnum) {
     // notedPosts
     if (!notedCatPosts.isEmpty()) {
-      if (notedCatPosts.containsKey(idnum))
+      if (notedCatPosts.contains(idnum))
         return false;
       else
         return true;
     }
-    notedCatPosts.put(idnum, "Hello");
+    notedCatPosts.add(idnum);
     return true;
   } // End of checkDialogidnum()
 
@@ -180,12 +180,12 @@ public class portfolioUser implements HttpSessionBindingListener {
   public boolean checkDialogidnum_learn(String idnum) {
     // notedPosts
     if (!notedLearnPosts.isEmpty()) {
-      if (notedLearnPosts.containsKey(idnum))
+      if (notedLearnPosts.contains(idnum))
         return false;
       else
         return true;
     }
-    notedLearnPosts.put(idnum, "Hello");
+    notedLearnPosts.add(idnum);
     return true;
   } // End of checkDialogidnum()
 

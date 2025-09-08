@@ -27,20 +27,14 @@ package org.collaborium.portfolio;
  */
 
 import java.io.*;
-// import java.lang.*;
-import java.lang.String.*;
 import java.sql.*;
-import java.text.*;
-import java.util.*;
+import java.util.List;
 import javax.servlet.*;
 import javax.servlet.http.*;
-import org.collaborium.portfolio.*;
-import org.collaborium.util.*;
 
 public class jquiz extends HttpServlet {
 
   public static final String TITLE = "Portfolio Quiz";
-  private int baseCred = portfolioCred.user; /* Must be a user to access */
   static String servletHttpBase = jlib.servletHttpBase;
   static String thisPageURL = servletHttpBase + "/jquiz";
 
@@ -162,7 +156,6 @@ public class jquiz extends HttpServlet {
 
     portfolioUser thisUser = (portfolioUser)session.getAttribute("User");
     String callMethod = request.getParameter("mode");
-    String qid = (String)request.getParameter("qid");
 
     jlib.addUser(thisUser.getUserID(), "jquiz");
     studentGrades = new gradebook(thisUser);
@@ -468,7 +461,7 @@ public class jquiz extends HttpServlet {
 
         myMessage.commitMessage();
 
-        Vector myVect = thisUser.myPortfolio.getAdmins();
+        List<String> myVect = thisUser.myPortfolio.getAdmins();
         for (int i = 0; i < myVect.size(); i++) {
           String thisUserID = (String)myVect.get(i);
           dbInterface.updateDB(
@@ -542,7 +535,7 @@ public class jquiz extends HttpServlet {
 
         myMessage.commitMessage();
 
-        Vector myVect = thisUser.myPortfolio.getAdmins();
+        List<String> myVect = thisUser.myPortfolio.getAdmins();
         for (int i = 0; i < myVect.size(); i++) {
           String thisUserID = (String)myVect.get(i);
           dbInterface.updateDB(
@@ -583,8 +576,6 @@ public class jquiz extends HttpServlet {
                                 String thisPageURL) {
 
     StringBuffer sbuf = new StringBuffer();
-    ResultSet rs = null;
-    ResultSet rs2 = null;
 
     sbuf.append(jlib.topBox("Take Quiz:"));
 
@@ -718,9 +709,6 @@ public class jquiz extends HttpServlet {
   public static String viewQuiz(portfolioUser thisUser, gradebook myGrades,
                                 String qid) {
     StringBuffer sbuf = new StringBuffer();
-
-    ResultSet rs = null;
-    ResultSet rs2 = null;
 
     sbuf.append(jlib.topBox("Quiz Review:"));
 

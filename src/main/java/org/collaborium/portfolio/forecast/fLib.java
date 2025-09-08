@@ -786,22 +786,19 @@ public class fLib {
     else if (answer.equals("9"))
       answer = "1";
 
-    Integer answerInt = new java.lang.Integer(answer);
-    Integer guessInt = new java.lang.Integer(guess);
+    Integer answerInt = Integer.valueOf(answer);
+    Integer guessInt = Integer.valueOf(guess);
 
-    return new java.lang
-        .Integer(4 *
-                 java.lang.Math.abs(answerInt.intValue() - guessInt.intValue()))
+    return Integer
+        .valueOf(4 * Math.abs(answerInt.intValue() - guessInt.intValue()))
         .toString();
 
   } // End of gradePrec()
 
   public static String gradeTemp(String answer, String guess) {
-    Integer answerInt = new java.lang.Integer(answer);
-    Integer guessInt = new java.lang.Integer(guess);
-    return new java.lang
-        .Integer(java.lang.Math.abs(answerInt.intValue() - guessInt.intValue()))
-        .toString();
+    int answerInt = Integer.parseInt(answer);
+    int guessInt = Integer.parseInt(guess);
+    return Integer.valueOf(Math.abs(answerInt - guessInt)).toString();
   }
 
 } // End of fLib
