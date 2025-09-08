@@ -29,6 +29,5 @@ public class HttpMessage {
       }
       os.write(sb.toString().getBytes("UTF-8"));
     }
-    int rc = conn.getResponseCode();
   }
 }

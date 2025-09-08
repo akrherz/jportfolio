@@ -23,10 +23,7 @@
 
 package org.collaborium.portfolio;
 
-import java.lang.String.*;
 import java.sql.*;
-import java.text.*;
-import java.util.*;
 
 public class sqlBean {
 

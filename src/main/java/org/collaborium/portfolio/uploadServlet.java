@@ -32,7 +32,6 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.io.FilenameUtils;
-import org.collaborium.portfolio.*;
 
 public class uploadServlet extends HttpServlet {
   private File dir;

@@ -5,7 +5,6 @@ import java.applet.*;
 import java.awt.*;
 import java.io.*;
 import java.net.*;
-import java.text.*;
 import java.util.*;
 
 public class HttpChatApplet extends Applet implements Runnable {

@@ -67,7 +67,8 @@ public class calBean {
     /* Get day of week for Jan 1 of given year. */
     firstDay = CalcJanuaryFirst(year);
 
-    /* Increase firstDay by days in year before given month to get first day
+    /*
+     * Increase firstDay by days in year before given month to get first day
      * of month.
      */
     for (i = 0; i < month; i++)
@@ -112,13 +113,15 @@ public class calBean {
     /* Calculate number of years in interval that are a multiple of 4. */
     leapYears = (year - 1581) / 4;
 
-    /* Calculate number of years in interval that are a multiple of 100;
+    /*
+     * Calculate number of years in interval that are a multiple of 100;
      * subtract, since they are not leap years.
      */
     hundreds = (year - 1501) / 100;
     leapYears -= hundreds;
 
-    /* Calculate number of years in interval that are a multiple of 400;
+    /*
+     * Calculate number of years in interval that are a multiple of 400;
      * add back in, since they are still leap years.
      */
     fourHundreds = (year - 1201) / 400;
@@ -136,11 +139,12 @@ public class calBean {
     int numBox = 0;
 
     String portfolio = thisUser.getPortfolio();
-    int offSet = CalcFirstOfMonth(cal.get(cal.YEAR), cal.get(cal.MONTH));
-    int maxDays = cal.getActualMaximum(cal.DAY_OF_MONTH);
+    int offSet =
+        CalcFirstOfMonth(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH));
+    int maxDays = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
 
-    int currentMonth = cal.get(cal.MONTH);
-    int currentYear = cal.get(cal.YEAR);
+    int currentMonth = cal.get(Calendar.MONTH);
+    int currentYear = cal.get(Calendar.YEAR);
 
     myBuffer.append("<table width=\"100%\" border=\"1\">");
 

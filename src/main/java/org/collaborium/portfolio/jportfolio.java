@@ -27,14 +27,10 @@ package org.collaborium.portfolio;
  */
 
 import java.io.*;
-import java.lang.*;
-import java.lang.String.*;
 import java.sql.*;
-import java.text.*;
-import java.util.*;
+import java.util.Arrays;
 import javax.servlet.*;
 import javax.servlet.http.*;
-import org.collaborium.portfolio.*;
 
 public class jportfolio extends HttpServlet {
 
@@ -47,6 +43,7 @@ public class jportfolio extends HttpServlet {
 
   /**
    * Method for when the servlet loads.
+   *
    * @param config is the servlet configuration
    */
   public void init(ServletConfig config) throws ServletException {
@@ -77,7 +74,6 @@ public class jportfolio extends HttpServlet {
     response.setContentType("text/html");
 
     PrintWriter out = response.getWriter();
-    String forward = request.getParameter("forward");
 
     // Container for page content
     StringBuffer sideContent = new StringBuffer();
@@ -195,7 +191,7 @@ public class jportfolio extends HttpServlet {
   /**
    * Method to handle method POST from the WEB server
    *
-   * @param request http servlet request container
+   * @param request  http servlet request container
    * @param response http servlet response container
    */
   public void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -225,15 +221,11 @@ public class jportfolio extends HttpServlet {
 
     plogger.report(callMethod + "\n");
 
-    String forward = request.getParameter("forward");
-    String baseForward = request.getParameter("baseForward");
-    String username = null;
-    String password = null;
     String f = null;
 
     switch (callMethod.charAt(0)) {
-      // u == create portfolio
-      // v == switch the style of the page
+    // u == create portfolio
+    // v == switch the style of the page
     case 'v':
       String style = request.getParameter("style");
       String postedEmail = request.getParameter("email");
@@ -331,7 +323,7 @@ public class jportfolio extends HttpServlet {
   /**
    * Method to enter new portfolio values into the DB
    *
-   * @param req HTTP servlet request
+   * @param req  HTTP servlet request
    * @param user current User ID
    * @return returns a HTML string
    */
@@ -434,6 +426,7 @@ public class jportfolio extends HttpServlet {
 
   /**
    * Produces the available Commands box on the right.
+   *
    * @param portfolio - value of the current portfolio
    * @return HTML formatted string
    */
@@ -511,14 +504,13 @@ public class jportfolio extends HttpServlet {
   /**
    * Method to print out portfolio information that appears right off the bat
    *
-   * @param user String value for the current user
+   * @param user      String value for the current user
    * @param portfolio String value for the current portfolio
    * @return String formated HTML
    */
   public String portfolioMain(portfolioUser thisUser) {
     StringBuffer sbuf = new StringBuffer();
     ResultSet rs = null;
-    ResultSet rs2 = null;
     String motd = null;
     String issue = null;
     String about = null;
@@ -656,11 +648,12 @@ public class jportfolio extends HttpServlet {
     sbuf.append(jlib.topBox("Listing of all MOTDs:"));
 
     try {
-      rs = dbInterface.callDB(
+      rs = dbInterface.callDBWithParameters(
           "SELECT body, to_char(issue, 'DD Month YYYY HH12:MI AM') "
-          + " as issued, issue "
-          + " from motd WHERE portfolio = '" + thisUser.getPortfolio() + "' "
-          + " ORDER by issue DESC");
+              + " as issued, issue "
+              + " from motd WHERE portfolio = ? "
+              + " ORDER by issue DESC",
+          Arrays.asList(thisUser.getPortfolio()));
 
       while (rs.next()) {
         sbuf.append("<BR><B>Issued On:</B> " + rs.getString("issued") + " "
