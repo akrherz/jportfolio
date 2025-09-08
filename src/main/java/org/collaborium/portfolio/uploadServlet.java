@@ -1,20 +1,19 @@
 /**
- * Copyright 2001 Iowa State University
- * jportfolio@collaborium.org
+ * Copyright 2001 Iowa State University jportfolio@collaborium.org
  *
- * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation; either version 2.1 of the License, or (at
- * your option) any later version.
+ * <p>This library is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as published by the
+ * Free Software Foundation; either version 2.1 of the License, or (at your
+ * option) any later version.
  *
- * This library is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser
- * General Public License for more details.
+ * <p>This library is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License
+ * for more details.
  *
- * You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation,
- * Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * <p>You should have received a copy of the GNU Lesser General Public License
+ * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
 /*
@@ -50,17 +49,15 @@ public class uploadServlet extends HttpServlet {
     }
   }
 
-  /**
-   * Handle Http Method Post to the Servlet
-   */
+  /** Handle Http Method Post to the Servlet */
   public void doPost(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
 
-    /** Standard Servlet Stuff to get this going **/
+    /** Standard Servlet Stuff to get this going * */
     PrintWriter out = response.getWriter();
     response.setContentType("text/html");
 
-    /** Go get info about user from session **/
+    /** Go get info about user from session * */
     HttpSession session = request.getSession(true);
     portfolioUser thisUser = (portfolioUser)session.getAttribute("User");
 
@@ -69,7 +66,7 @@ public class uploadServlet extends HttpServlet {
       userDir.mkdir();
     }
 
-    /** Allow this Upload **/
+    /** Allow this Upload * */
     if (thisUser != null && thisUser.isPortfolioUser()) {
       out.println(jlib.basicHeader(thisUser, "Portfolio Upload"));
 
@@ -112,6 +109,5 @@ public class uploadServlet extends HttpServlet {
     }
 
     out.flush();
-
   } // End of doPost()
 }

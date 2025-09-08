@@ -1,31 +1,28 @@
 /**
- * Copyright 2001-2005 Iowa State University
- * jportfolio@collaborium.org
+ * Copyright 2001-2005 Iowa State University jportfolio@collaborium.org
  *
- * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation; either version 2.1 of the License, or (at
- * your option) any later version.
+ * <p>This library is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as published by the
+ * Free Software Foundation; either version 2.1 of the License, or (at your
+ * option) any later version.
  *
- * This library is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser
- * General Public License for more details.
+ * <p>This library is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License
+ * for more details.
  *
- * You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation,
- * Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * <p>You should have received a copy of the GNU Lesser General Public License
+ * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 package org.collaborium.portfolio;
 /**
- * Portfolio Application Suite
- *	Quiz Engine
- * Servlet that does the dirty work for the quiz engine
+ * Portfolio Application Suite Quiz Engine Servlet that does the dirty work for
+ * the quiz engine
  *
  * @author Doug Fils
  * @author Daryl Herzmann
  */
-
 import java.io.*;
 import java.sql.*;
 import java.util.List;
@@ -41,13 +38,9 @@ public class jquiz extends HttpServlet {
   public void init(ServletConfig config) throws ServletException {
     plogger.report("Firing up jquiz engine.");
     super.init(config);
-
   } // End of init()
 
-  /**
-   * Method to destroy the servlet, called only once!
-   *
-   */
+  /** Method to destroy the servlet, called only once! */
   public void destroy() {
     super.destroy();
     plogger.report("Method Destroy is called in jquiz.");
@@ -93,10 +86,7 @@ public class jquiz extends HttpServlet {
     /**
      * Switch Statement Logic
      *
-     * h | quiz help Box
-     * p | view Quiz
-     * r | review Quizes
-     * t | take Quiz
+     * <p>h | quiz help Box p | view Quiz r | review Quizes t | take Quiz
      * default page
      */
     switch (callMethod.charAt(0)) {
@@ -127,13 +117,9 @@ public class jquiz extends HttpServlet {
     out.println(jlib.footer());
 
     plogger.report("---Ending Jquiz---\n");
-
   } // End of doGet()
 
-  /**
-   * Method to handle method post
-   *
-   */
+  /** Method to handle method post */
   public void doPost(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
     // plogger.report("--- Start Jquiz\n");
@@ -166,9 +152,8 @@ public class jquiz extends HttpServlet {
     /**
      * Switching logic
      *
-     * h | post a dialog response
-     * u | input the Quiz allready
-     * default | ask why are you here
+     * <p>h | post a dialog response u | input the Quiz allready default | ask
+     * why are you here
      */
     switch (callMethod.charAt(0)) {
     case 'u':
@@ -191,7 +176,6 @@ public class jquiz extends HttpServlet {
     out.println(jlib.footer());
 
     plogger.report("---Ending Jquiz\n");
-
   } // End of doPost()
 
   public static String introduction() {
@@ -399,9 +383,7 @@ public class jquiz extends HttpServlet {
                         + " expired.<BR>\n");
           }
 
-          /**
-           * Add the score to the database
-           */
+          /** Add the score to the database */
           studentGrades.addScoreElement("jquiz", quizID, myRight);
 
         } else {
@@ -431,16 +413,15 @@ public class jquiz extends HttpServlet {
           thisQuizName = (thisQuiz.getQuizName()).substring(0, 4);
         }
         /**
-        ResultSet portHome = dbInterface.callDB("SELECT porthome from portfolios
-        "
-          +" WHERE portfolio = '"+ thisUser.getPortfolio() +"' and "
-          +" porthome != '/jportfolio/servlet/' ");
-        if ( portHome.next() ) {
-          notifyBaseURL = portHome.getString("porthome") +"/quiz/index.jsp";
-          notifyBaseURL2 = portHome.getString("porthome") +"/dialog/index.jsp";
-        }
-        */
-
+         * ResultSet portHome = dbInterface.callDB("SELECT porthome from
+         * portfolios " +" WHERE portfolio = '"+ thisUser.getPortfolio() +"' and
+         * " +" porthome != '/jportfolio/servlet/'
+         * "); if ( portHome.next() ) { notifyBaseURL =
+         * portHome.getString("porthome")
+         * +"/quiz/index.jsp"; notifyBaseURL2 = portHome.getString("porthome")
+         * +"/dialog/index.jsp";
+         * }
+         */
         ResultSet maxth =
             jlib.callDB("select MAX (idnum)+1 as result from dialog"
                         + " WHERE idnum > 10000 and idnum < 20000");
@@ -601,10 +582,8 @@ public class jquiz extends HttpServlet {
             " The post is saved within the dialog as a private post, that only"
             + " the instructor and yourself can view.  The instructor will be "
             + " notified of your comment. </blockquote></p>\n"
-
             + " <p><TEXTAREA NAME='body' WRAP='Virtual' ROWS=\"8\" COLS=\"50\">"
             + " </TEXTAREA>\n"
-
             + " <p>\n<input type='SUBMIT' value='Submit Answers'>\n"
             + " <input type='RESET'>\n</FORM>\n");
       } else {
@@ -694,7 +673,6 @@ public class jquiz extends HttpServlet {
     myBuffer.append("</td></tr></table>\n");
 
     return myBuffer.toString();
-
   } // End of listQuizzes()
 
   /**
@@ -866,12 +844,12 @@ public class jquiz extends HttpServlet {
                             + " and qid = " + qID + " ");
           if (rs2.next()) {
             myAttempts = rs2.getString("attempt");
-            if (java.lang.Integer.parseInt(myAttempts) ==
+            if (Integer.parseInt(myAttempts) ==
                 -1) // Student got them all right!
               sbuf.append("<TR><TH>" + qName + "</TH><TD>Done</TD>\n");
-            else if (java.lang.Integer.parseInt(allowedAttempts) == 0 ||
-                     java.lang.Integer.parseInt(myAttempts) <
-                         java.lang.Integer.parseInt(allowedAttempts))
+            else if (Integer.parseInt(allowedAttempts) == 0 ||
+                     Integer.parseInt(myAttempts) <
+                         Integer.parseInt(allowedAttempts))
               sbuf.append("<TR><TH><a href='" + thisPageURL +
                           "?mode=t&qid=" + qID + "'> " + qName + "</a></TH>\n"
                           + "<TD>" + myAttempts + " - " + allowedAttempts +
@@ -887,7 +865,6 @@ public class jquiz extends HttpServlet {
           sbuf.append("<TH>" +
                       studentGrades.getScoreElement("jquiz", qID, scoreName) +
                       "</TH></TR>\n");
-
         } // End of while()
 
       } catch (Exception ex) {
@@ -902,7 +879,6 @@ public class jquiz extends HttpServlet {
     sbuf.append(jlib.botBox());
 
     return sbuf.toString();
-
   } // End of takableQuizzes
 
   public static String commands(portfolioUser thisUser) {
@@ -938,5 +914,4 @@ public class jquiz extends HttpServlet {
 
     return myBuffer.toString();
   } // End of intro()
-
 } // End of jQuiz()

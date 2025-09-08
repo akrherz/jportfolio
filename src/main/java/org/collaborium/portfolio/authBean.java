@@ -13,6 +13,7 @@ public class authBean {
 
   /**
    * If a form variable is "", then return null to!
+   *
    * @param request which is the servlet request
    * @param varname which is the name of the variable
    * @return string or perhaps null!
@@ -24,9 +25,7 @@ public class authBean {
     return null;
   }
 
-  /**
-   * Constructor for the authBean class
-   */
+  /** Constructor for the authBean class */
   public authBean(HttpServletRequest request, HttpSession session) {
     /* Test pull from the session */
     thisUser = (portfolioUser)session.getAttribute("User");
@@ -58,7 +57,7 @@ public class authBean {
     // if (logout != null) {
     //  plogger.report("authBean.java: #6, Logging out user");
     //  thisUser = null;
-    //}
+    // }
 
     // Nothing to do
     if (thisUser != null && thisUser.getPortfolio() != null)
@@ -79,11 +78,11 @@ public class authBean {
     /* Now we set the session var */
     session.setAttribute("User", thisUser);
     session.setMaxInactiveInterval(10800);
-
   } // End of authBean constructor
 
   /**
    * Method that creates a new Portfolio User Account
+   *
    * @param request HttpServletRequest variable
    */
   public portfolioUser createUser(HttpServletRequest request) {
@@ -128,9 +127,7 @@ public class authBean {
     return false;
   }
 
-  /**
-   * Method to handle the authenication involved in a Jportfolio session
-   */
+  /** Method to handle the authenication involved in a Jportfolio session */
   private void doAuth(String username, String passwd) {
     ResultSet rs = null;
     String dbPass = null;
@@ -157,9 +154,7 @@ public class authBean {
     }
   } // End of doAuth
 
-  /**
-   * Method to set up a user with a Portfolio if needed
-   */
+  /** Method to set up a user with a Portfolio if needed */
   private void loginPort(String portfolio) {
     if (jlib.isMember(thisUser.getUserID(), portfolio)) {
       thisUser.setPortfolio(portfolio);
@@ -173,7 +168,5 @@ public class authBean {
     } else if (portfolio.equals("appease linter")) {
       doAuth(portfolio, "");
     }
-
   } // End of loginPort
-
 } // End of authBean class

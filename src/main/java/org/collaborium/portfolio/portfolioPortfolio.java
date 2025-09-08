@@ -1,22 +1,20 @@
 /**
- * Copyright 2001-2005 Iowa State University
- * jportfolio@collaborium.org
+ * Copyright 2001-2005 Iowa State University jportfolio@collaborium.org
  *
- * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation; either version 2.1 of the License, or (at
- * your option) any later version.
+ * <p>This library is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as published by the
+ * Free Software Foundation; either version 2.1 of the License, or (at your
+ * option) any later version.
  *
- * This library is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser
- * General Public License for more details.
+ * <p>This library is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License
+ * for more details.
  *
- * You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation,
- * Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * <p>You should have received a copy of the GNU Lesser General Public License
+ * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-
 package org.collaborium.portfolio;
 
 import java.sql.*;
@@ -38,9 +36,7 @@ public class portfolioPortfolio {
   public boolean usesForecast = false;
   public boolean usesQuiz = false;
 
-  /**
-   * Generic container
-   */
+  /** Generic container */
   public portfolioPortfolio() {}
 
   public portfolioPortfolio(String newID) {
@@ -92,25 +88,30 @@ public class portfolioPortfolio {
     } catch (Exception ex) {
       plogger.report("Problem setting new Portfolio");
     }
-
   } // End of portfolioPortfolio
 
   public String getPList() { return this.pList; }
 
   public String getID() { return this.id; }
+
   public String getName() { return this.name; }
+
   public String getHome() { return this.home; }
+
   public String getBase() { return this.base; }
+
   public List<String> getAdmins() { return this.admins; }
 
   /**
    * Return the value of the dialog Security
+   *
    * @return String value of dialogSecurity
    */
   public String getDialogSecurity() { return this.dialogSecurity; }
 
   /**
    * Method to set dialogSecurity
+   *
    * @param String value to set to
    */
   public void setDialogSecurity(String newDialogSecurity) {
@@ -121,6 +122,7 @@ public class portfolioPortfolio {
 
   /**
    * Method to print a select box with each student ID in it!!!
+   *
    * @return HTML formatted String
    */
   public String printUserSelect() {
@@ -132,5 +134,4 @@ public class portfolioPortfolio {
     }
     return "Not Implemented";
   } // End of printUserSelect()
-
 } // End of portfolioPortfolio

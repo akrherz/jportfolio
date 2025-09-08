@@ -1,28 +1,27 @@
 /**
- * Copyright 2001-2005 Iowa State University
- * jportfolio@collaborium.org
+ * Copyright 2001-2005 Iowa State University jportfolio@collaborium.org
  *
- * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation; either version 2.1 of the License, or (at
- * your option) any later version.
+ * <p>This library is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as published by the
+ * Free Software Foundation; either version 2.1 of the License, or (at your
+ * option) any later version.
  *
- * This library is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser
- * General Public License for more details.
+ * <p>This library is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License
+ * for more details.
  *
- * You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation,
- * Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * <p>You should have received a copy of the GNU Lesser General Public License
+ * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 /**
- * Class to handle the database connections.  Since this interface is only
- * called once, the servlet engine should share one database connection.  It was
- * a problem that many database connections where getting spawned.
+ * Class to handle the database connections. Since this interface is only called
+ * once, the servlet engine should share one database connection. It was a
+ * problem that many database connections where getting spawned.
+ *
  * @author Daryl Herzmann
  */
-
 package org.collaborium.portfolio;
 
 import java.sql.*;
@@ -35,9 +34,7 @@ public class dbInterface {
   public static final String usr = settings.DBusr;
   public static final String pwd = settings.DBpwd;
 
-  /**
-   * Method to set up the database connections
-   */
+  /** Method to set up the database connections */
   public static void dbInterfaceInit() {
     plogger.report("|||||||| I am initing dbInterface " + url);
     try {
@@ -54,9 +51,7 @@ public class dbInterface {
     }
   } // End of dbInterfaceInit
 
-  /**
-   * Method to call the database with a list of parameters
-   */
+  /** Method to call the database with a list of parameters */
   public static ResultSet callDBWithParameters(String query,
                                                List<Object> params) {
     if (db == null)
@@ -119,5 +114,4 @@ public class dbInterface {
       dbInterfaceInit();
     }
   } // End of updateDB()
-
 } // End of dbInterface

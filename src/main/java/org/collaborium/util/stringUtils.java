@@ -1,30 +1,29 @@
 /**
- * Copyright 2001,2003 Iowa State University
- * jportfolio@collaborium.org
+ * Copyright 2001,2003 Iowa State University jportfolio@collaborium.org
  *
- * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation; either version 2.1 of the License, or (at
- * your option) any later version.
+ * <p>This library is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as published by the
+ * Free Software Foundation; either version 2.1 of the License, or (at your
+ * option) any later version.
  *
- * This library is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser
- * General Public License for more details.
+ * <p>This library is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License
+ * for more details.
  *
- * You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation,
- * Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * <p>You should have received a copy of the GNU Lesser General Public License
+ * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
 /**
- * This is a java code to handle miscellaneous String operations
- * that the portfolio code needs to do.
+ * This is a java code to handle miscellaneous String operations that the
+ * portfolio code needs to do.
  *
  * @author Daryl Herzmann
  */
-
 package org.collaborium.util;
+
 import java.text.*;
 import java.util.Date;
 import java.util.StringTokenizer;
@@ -84,8 +83,9 @@ public class stringUtils {
   } // End of cleanString()
 
   /**
-   * Method that parses what the database spits out as a date
-   * and converts it into a date format
+   * Method that parses what the database spits out as a date and converts it
+   * into a date format
+   *
    * @param String dbDate
    * @return Date
    */
@@ -104,6 +104,7 @@ public class stringUtils {
 
   /**
    * Method that converts a date into the timestamp String
+   *
    * @param myDate which is the date to convert
    * @return String formated like we like
    */
@@ -120,5 +121,4 @@ public class stringUtils {
     sdf.applyPattern("dd MMM yyyy");
     return sdf.format(myDate);
   } // End of gmtDate
-
 } // End of stringUtils

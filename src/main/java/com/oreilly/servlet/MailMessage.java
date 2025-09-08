@@ -18,9 +18,13 @@ public class MailMessage {
   public MailMessage(String mailhost) { this.mailhost = mailhost; }
 
   public void from(String f) { this.from = f; }
+
   public void to(String t) { this.to.add(t); }
+
   public void cc(String c) { this.cc.add(c); }
+
   public void bcc(String b) { this.bcc.add(b); }
+
   public void setSubject(String s) { this.subject = s; }
 
   public PrintStream getPrintStream() { return ps; }

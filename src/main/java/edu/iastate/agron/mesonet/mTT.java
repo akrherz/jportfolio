@@ -1,11 +1,8 @@
 package edu.iastate.agron.mesonet;
 
 /**
- * Mesonet Trouble Ticket container
- * I love java :)
- * Daryl Herzmann 18 May 2002
+ * Mesonet Trouble Ticket container I love java :) Daryl Herzmann 18 May 2002
  */
-
 import java.sql.*;
 import java.text.*;
 import java.util.Arrays;
@@ -32,8 +29,11 @@ public class mTT {
             + " ,getSiteName(s_mid) as s_name from tt_base WHERE "
             + " portfolio = ? and id = ?",
         Arrays.asList(portfolio, tt_id));
-    rs.next();
-    this.doSQL(rs);
+    if (rs != null && rs.next()) {
+      this.doSQL(rs);
+    } else {
+      plogger.report("No trouble ticket found for " + tt_id);
+    }
   }
 
   public mTT(ResultSet rs) { this.doSQL(rs); } // End of mTT constructor
@@ -61,8 +61,7 @@ public class mTT {
   } // End of doSQL
 
   /**
-   * printTR()
-   * print table row for this TT.
+   * printTR() print table row for this TT.
    *
    * @return HTML formated string
    */
@@ -114,8 +113,7 @@ public class mTT {
   }
 
   /**
-   * printHistory()
-   * - prints out the history of a station with all the comments
+   * printHistory() - prints out the history of a station with all the comments
    *
    * @return HTML formated string for the comments
    */

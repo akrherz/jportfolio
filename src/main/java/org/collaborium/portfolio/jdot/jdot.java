@@ -1,30 +1,27 @@
 /**
- * Copyright 2001,2005 Iowa State University
- * jportfolio@collaborium.org
+ * Copyright 2001,2005 Iowa State University jportfolio@collaborium.org
  *
- * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation; either version 2.1 of the License, or (at
- * your option) any later version.
+ * <p>This library is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as published by the
+ * Free Software Foundation; either version 2.1 of the License, or (at your
+ * option) any later version.
  *
- * This library is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser
- * General Public License for more details.
+ * <p>This library is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License
+ * for more details.
  *
- * You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation,
- * Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * <p>You should have received a copy of the GNU Lesser General Public License
+ * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 package org.collaborium.portfolio.jdot;
 /**
- * Methods for use in the dialog engine.  Just a method container
+ * Methods for use in the dialog engine. Just a method container
  *
  * @author Doug Fils fils@collaborium.org
  * @author Daryl Herzmann akrherz@collaborium.org
- *
  */
-
 import java.math.*;
 import java.sql.*;
 import org.collaborium.portfolio.*;
@@ -38,9 +35,9 @@ public class jdot {
   public static int messageBlock = 10;
 
   /**
-   * Method to create a new Discussion Thread.  Nothing special being done here.
+   * Method to create a new Discussion Thread. Nothing special being done here.
    *
-   * @param thisUser  portfolioUser container
+   * @param thisUser portfolioUser container
    * @param thisPageURL the place to where this form should be posted...
    * @return HTML formatted String
    */
@@ -61,7 +58,6 @@ public class jdot {
         + "	<option value='self'>Self Assessment\n"
         + "	<option value='unit'>Unit Topic\n"
         + " </SELECT>\n"
-
         + " <INPUT type='hidden' name='mode' value='q'>\n "
         + " <INPUT type='hidden' name='threadid' value='new'>\n "
         + "<P><B>Message:</B><br> " +
@@ -69,10 +65,9 @@ public class jdot {
          + "COLS=\"60\"></TEXTAREA>  ") +
         ("<BR>If you would like to include a link to another webpage, you "
          + "can enter it ") +
-        " here:<BR>\n <INPUT TYPE='text' name='link' size='60'>\n"
-
-        + ("<p>(<i>Optional</i>)  If this post is a topic starter, please "
-           + "select the \n") +
+        " here:<BR>\n <INPUT TYPE='text' name='link' size='60'>\n" +
+        ("<p>(<i>Optional</i>)  If this post is a topic starter, please "
+         + "select the \n") +
         " topic to assign it to.\n" + jlib.topicsSelect(thisUser, "0") +
         " <p> <INPUT TYPE='submit' VALUE='Post message'>\n "
         + " <INPUT TYPE='reset' VALUE='Reset form'>\n "
@@ -258,7 +253,6 @@ public class jdot {
                   myMessage.printExtended(thisPageURL));
 
       sbuf.append("</div>\n");
-
     } // End of Loop
 
     return sbuf.toString();
@@ -266,6 +260,7 @@ public class jdot {
 
   /**
    * Simple thing to print out a legend of dialog posts
+   *
    * @return HTML Formatted string
    */
   public static String dialogLegend() {
@@ -328,7 +323,6 @@ public class jdot {
         +
         " effort to provide collaborative tools.  For more information, see \n"
         + " <a href='http://www.collaborium.org'>www.collaborium.org</a>.\n"
-
         + "<P>More information about Dailog can be found <a "
         + "href=\"/jportfolio/info/dialog.html\">here</a>.\n");
 
@@ -346,6 +340,7 @@ public class jdot {
 
   /**
    * Method to print out the commands that are available
+   *
    * @param dialogType String value for the dialogType
    * @param isAdmin Boolean value for if this user is an administrator
    * @return HTML formatted string for this action
@@ -378,6 +373,7 @@ public class jdot {
 
   /**
    * Displays the cute little search box on the side of the screen...
+   *
    * @param thisPageURL which is the URL this form should link to
    * @return HTML formated String
    */
@@ -410,7 +406,6 @@ public class jdot {
    * @param rs which is the resultset holding our values
    * @param thisPageURL which is needed to print out listing
    */
-
   public static String listMessages(ResultSet rs, String thisPageURL)
       throws SQLException {
     StringBuffer sbuf = new StringBuffer();
@@ -432,7 +427,6 @@ public class jdot {
     rs.close(); // again, you must close the result when done
 
     return sbuf.toString();
-
   } // End of listMessages()
 
   /**
@@ -456,9 +450,10 @@ public class jdot {
 
   /**
    * Method to print out a message for anonymous viewing
+   *
    * @param thisUser PortfolioUser
    * @param message ResultSet
-   * @param indentCols  number of columns to indent
+   * @param indentCols number of columns to indent
    * @param dataCols number of data columns
    * @return HTML Formatted String
    */
@@ -561,9 +556,7 @@ public class jdot {
                + " and gID = '" + thisUser.getGroupID() +
                "' and security = 'group' ";
       }
-    }
-
-    else if (thisUser.getDialogSecurity().equalsIgnoreCase("private")) {
+    } else if (thisUser.getDialogSecurity().equalsIgnoreCase("private")) {
       if (thisUser.isAdmin()) {
         SQL = "SELECT * from dialog WHERE " + threadSpec + " and "
               + " portfolio = '" + thisUser.getPortfolio() + "' "
@@ -621,7 +614,7 @@ public class jdot {
       sbuf.append("<p><a href=\"/jportfolio/jsp/user/threadCat.jsp?threadID=" +
                   threadID + "\">Printable View of Thread</a>\n");
 
-      //+"  background-repeat: repeat-y;\n"
+      // +"  background-repeat: repeat-y;\n"
 
       //    +"  background-color: #FFFFFF;\n"
 
@@ -753,11 +746,11 @@ public class jdot {
     sbuf.append(jlib.botBox());
 
     return sbuf.toString();
-
   } // End of listMessages()
 
   /**
    * printMessageLine() is a function to print out a line for treeView
+   *
    * @param thisUser
    * @param STRidnum which is the id of the thread
    * @param number of columns to indent
@@ -781,7 +774,7 @@ public class jdot {
     try {
       postTS = rs.getTimestamp("date");
     } catch (Exception ex) {
-      postTS = new java.sql.Timestamp(1000000000);
+      postTS = new Timestamp(1000000000);
     }
     String postType = rs.getString("type");
     java.util.Date date = stringUtils.dbDate2Date(dateStr);
@@ -794,7 +787,6 @@ public class jdot {
                 + "<a class=\"boxlink\" "
                 + " href=\"javascript: setLayerDisplay('post" + STRidnum +
                 "');\">+/-</a>\n"
-
                 + "<a "
                 + "href=\"" + thisPageURL + "?mode=o&idnum=" + STRidnum +
                 "\">" + subject + "</a>"
@@ -809,13 +801,9 @@ public class jdot {
                 + "</div></li>\n");
 
     return sbuf.toString();
-
   } // End of printMessageLine
 
-  /**
-   * Method to print back a view of the post BEFORE submitting it...
-   *
-   */
+  /** Method to print back a view of the post BEFORE submitting it... */
   public static String inputPost(portfolioMessage myMessage,
                                  String thisPageURL) {
     StringBuffer sbuf = new StringBuffer();
@@ -842,12 +830,12 @@ public class jdot {
   } // End of inputPost
 
   /**
-   * Method to post messages to the database.  Thank goodness for the new
-   * message container class, since now my job is about 10 times easier
+   * Method to post messages to the database. Thank goodness for the new message
+   * container class, since now my job is about 10 times easier
+   *
    * @param myMessage message Container
    * @param thisPageURL URl of calling page.
    * @return HTMLformated String
-   *
    */
   public static String inputPostFinal(portfolioMessage myMessage,
                                       String thisPageURL)
@@ -924,7 +912,7 @@ public class jdot {
       myMessage.setSecurity(test2.getString("security"));
       if (newSTRidnum == null)
         newSTRidnum = myMessage.getidnum() + "0001"; // first post in the
-                                                       // thread
+      // thread
 
       myMessage.setidnum(newSTRidnum);
       myMessage.setThreadID(newthreadid);
@@ -967,12 +955,9 @@ public class jdot {
                 myMessage.getidnum() + "\">View Post</a>\n");
 
     return sbuf.toString();
-
   } // End of inputPostFinal
 
-  /**
-   * Prototype to postMessage, but without dialogType defined
-   */
+  /** Prototype to postMessage, but without dialogType defined */
   public static String postMessage(String threadid, String STRidnum,
                                    String thisPageURL)
       throws SQLException, ClassNotFoundException {
@@ -1004,15 +989,12 @@ public class jdot {
         + " <input type='hidden' name='replyAuthor' "
         + " value='" + myMessage.getAuthor() + "'>\n"
         + "<input type='hidden' name='mode' value='q'>\n"
-
         + "<b>Subject:</b><br />\n"
         + "<INPUT size=60 NAME='subject' Value='" + myMessage.getSubject() +
         "'>\n"
-
         + "<br /><b>Classify Your Post:</b> &nbsp; <i>(Optional)</i> \n"
         + " <br><a href=\"/jportfolio/info/dialog.html\" "
         + "    target=\"_new\">More Information</a> about classifications.\n"
-
         + "<br />Classification: <SELECT name='type'>\n"
         + "	<option value='other'>Unclassified\n"
         + "	<option value='analysis'>Analysis\n"
@@ -1027,10 +1009,8 @@ public class jdot {
         + " </SELECT>\n"
         + "  <b>-or-</b> Other: \n"
         + "  <input type='text' name='mytype' size='20' maxsize='30'>\n"
-
         + "<input type='hidden' name='idnum' value='" + myMessage.getidnum() +
         "'>\n"
-
         + " <P><B>Comments:</B><br> " +
         (" <TEXTAREA NAME='body' WRAP='Virtual' ROWS=\"20\" "
          + "COLS=\"70\"></TEXTAREA>  ") +
@@ -1065,13 +1045,11 @@ public class jdot {
       throws SQLException {
     String queryStr = "DELETE from dialog WHERE threadid = '" + idnum + "' ";
     jlib.updateDB(queryStr);
-
   } // End of deleteMessage()
 
   /**
-   *readMore()
-   *	- given a threadID and skipNum it generates a resultSet to
-   *       hand off to displayMessage() to view
+   * readMore() - given a threadID and skipNum it generates a resultSet to hand
+   * off to displayMessage() to view
    */
   public static String readMore(portfolioUser thisUser, String idNum,
                                 String skipNum, String dialogType,
@@ -1098,8 +1076,10 @@ public class jdot {
         "select count(name) as result from dialog "
         + "where idnum > " + beginID + "0000::numeric and idnum < " +
         secondOne + "0000::numeric ");
-    rs2.next();
-    int numMessages = Integer.parseInt(rs2.getString("result"));
+    int numMessages = 0;
+    if (rs2 != null && rs2.next()) {
+      numMessages = Integer.parseInt(rs2.getString("result"));
+    }
 
     if (numMessages > messageBlock) {
       myBuffer.append(
@@ -1160,16 +1140,14 @@ public class jdot {
   } // End of readMore()
 
   /**
-   * threadLeader()
-   *	-method that prints out a special box with the current post that is
-   *active
+   * threadLeader() -method that prints out a special box with the current post
+   * that is active
    *
    * @param idNum String value for the post we want to display
    * @param identCols int value for the number of columns that this post needs
-   *to be shifted over
+   *     to be shifted over
    * @return String html
    */
-
   public static String threadLeader(String idNum, int identCols,
                                     String thisPageURL) throws SQLException {
     StringBuffer sbuf = new StringBuffer();
@@ -1242,7 +1220,6 @@ public class jdot {
     rs.close();
 
     return sbuf.toString();
-
   } // End of execSearch()
 
   /**
@@ -1288,5 +1265,4 @@ public class jdot {
 
     return sbuf.toString();
   } // End of switchDialogType
-
 } // End of jdotbase

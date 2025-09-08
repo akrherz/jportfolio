@@ -4,4 +4,15 @@
           "https://checkstyle.org/dtds/configuration_1_3.dtd">
 
 <module name="Checker">
+    <!-- Use SuppressionFilter to scope Checkstyle to our package tree -->
+    <module name="SuppressionFilter">
+        <property name="file" value="checkstyle-suppressions.xml"/>
+    </module>
+    <!-- Basic checks to catch wildcard imports and unused imports. This is intentionally small and conservative. -->
+    <module name="TreeWalker">
+        <module name="UnusedImports"/>
+        <module name="ImportOrder">
+            <property name="ordered" value="true"/>
+        </module>
+    </module>
 </module>

@@ -1,24 +1,23 @@
 /**
- * Copyright 2001-2008 Iowa State University
- * akrherz@iastate.edu
+ * Copyright 2001-2008 Iowa State University akrherz@iastate.edu
  *
- * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation; either version 2.1 of the License, or (at
- * your option) any later version.
+ * <p>This library is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as published by the
+ * Free Software Foundation; either version 2.1 of the License, or (at your
+ * option) any later version.
  *
- * This library is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser
- * General Public License for more details.
+ * <p>This library is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License
+ * for more details.
  *
- * You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation,
- * Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * <p>You should have received a copy of the GNU Lesser General Public License
+ * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 /**
- * I am back and will incorperate the forecast activity into
- * the portfolio system.  The transition should be excellent
+ * I am back and will incorperate the forecast activity into the portfolio
+ * system. The transition should be excellent
  *
  * @author Daryl Herzmann 4 July 2001
  */
@@ -36,7 +35,6 @@ public class forecast extends HttpServlet {
 
   public void init(ServletConfig config) throws ServletException {
     super.init(config);
-
   } // End of init()
 
   public void destroy() {} // End of destroy()
@@ -51,7 +49,7 @@ public class forecast extends HttpServlet {
       throws IOException, ServletException {
     plogger.report("---- Forecast\n");
 
-    /** Set up containers to hold HTML, before sending it out. **/
+    /** Set up containers to hold HTML, before sending it out. * */
     StringBuffer sideContent = new StringBuffer();
     StringBuffer pageContent = new StringBuffer();
 
@@ -106,15 +104,13 @@ public class forecast extends HttpServlet {
     out.write(jlib.footer());
     out.close();
     plogger.report("--- End of forecast");
-
   } // End of doPost()
 
   /**
    * Method to handle method GET to the server
    *
-   * @param HttpServletRequest  request
+   * @param HttpServletRequest request
    * @param HttpServletResponse response
-   *
    */
   public void doGet(HttpServletRequest request, HttpServletResponse response)
       throws IOException, ServletException {
@@ -239,10 +235,7 @@ public class forecast extends HttpServlet {
     plogger.report("--- End of forecast");
   }
 
-  /**
-   * Method to print out what a user forecasted
-   *
-   */
+  /** Method to print out what a user forecasted */
   public String userForecastResults(portfolioUser thisUser, String sqlDate) {
     StringBuffer sbuf = new StringBuffer();
 
@@ -252,26 +245,22 @@ public class forecast extends HttpServlet {
     thisDay.getClimo();
 
     sbuf.append("<P>Forecast Numbers for " + sqlDate + "\n"
-
                 + "  <P><TABLE border=1>\n"
                 + "  <caption><B>You forecasted:</B></caption>\n"
                 + "  <TR><TH>Forecast Site:</TH><TH>High:</TH>\n"
                 + "	<TH>Low:</TH><TH>Prec Cat:</TH>\n"
                 + "	<TH>Snow Cat:</TH></TR>\n"
-
                 + "  <TR><TD>" + thisDay.getLocalSite() + "</TD>\n"
                 + "	<TD>" + thisDay.getLocalHighTemp() + "</TD>\n"
                 + "	<TD>" + thisDay.getLocalLowTemp() + "</TD>\n"
                 + "	<TD>CAT " + thisDay.getLocalPrecCat() + "</TD>\n"
                 + "	<TD>CAT " + thisDay.getLocalSnowCat() + "</TD></TR>\n"
-
                 + "  <TR><TD>" + thisDay.getFloaterSite() + "</TD>\n"
                 + "	<TD>" + thisDay.getFloaterHighTemp() + "</TD>\n"
                 + "	<TD>" + thisDay.getFloaterLowTemp() + "</TD>\n"
                 + "	<TD>CAT " + thisDay.getFloaterPrecCat() + "</TD>\n"
                 + "	<TD>CAT " + thisDay.getFloaterSnowCat() +
                 "</TD></TR>\n"
-
                 + "</TABLE>\n");
     sbuf.append("<br><b>Confidence:</b> " + thisDay.getConfidence() +
                 "<br><b>Discussion:</b> " +
@@ -282,7 +271,6 @@ public class forecast extends HttpServlet {
                 + "  <TR><TH>Forecast Site:</TH><TH>High:</TH>\n"
                 + "	<TH>Low:</TH><TH>Prec Cat:</TH>\n"
                 + "	<TH>Snow Cat:</TH></TR>\n"
-
                 + "  <TR><TD>" + thisDay.getLocalSite() + "</TD>\n"
                 + "	<TD>" + thisDay.getVLocalHighTemp() + "</TD>\n"
                 + "	<TD>" + thisDay.getVLocalLowTemp() + "</TD>\n"
@@ -290,7 +278,6 @@ public class forecast extends HttpServlet {
                 + "	( " + thisDay.getVLocalPrecNum() + " ) </TD>\n"
                 + "	<TD>CAT " + thisDay.getVLocalSnowCat() + " "
                 + "	( " + thisDay.getVLocalSnowNum() + " ) </TD></TR>\n"
-
                 + "  <TR><TD>" + thisDay.getFloaterSite() + "</TD>\n"
                 + "	<TD>" + thisDay.getVFloaterHighTemp() + "</TD>\n"
                 + "	<TD>" + thisDay.getVFloaterLowTemp() + "</TD>\n"
@@ -298,7 +285,6 @@ public class forecast extends HttpServlet {
                 + "	( " + thisDay.getVFloaterPrecNum() + " ) </TD>\n"
                 + "	<TD>CAT " + thisDay.getVFloaterSnowCat() + " "
                 + "	( " + thisDay.getVFloaterSnowNum() + " )</TD></TR>\n"
-
                 + "</TABLE>\n");
 
     sbuf.append(
@@ -346,9 +332,7 @@ public class forecast extends HttpServlet {
     return sbuf.toString();
   } // End of userForecastResults
 
-  /**
-   * Method to print out a simple welcome to the forecasting exercise
-   */
+  /** Method to print out a simple welcome to the forecasting exercise */
   public String mkIntro() {
     StringBuffer sbuf = new StringBuffer();
 
@@ -398,10 +382,7 @@ public class forecast extends HttpServlet {
     return sbuf.toString();
   } // End of classOptions
 
-  /**
-   *
-   *
-   */
+  /** */
   public String makeForecast(portfolioUser thisUser, String sqlDate,
                              String thisPageURL) {
     StringBuffer sbuf = new StringBuffer();
@@ -440,7 +421,6 @@ public class forecast extends HttpServlet {
         + "	<TD>" +
         fLib.snowSelect("local_snow", thisDay.getLocalSnowCat()) + "</TD>\n"
         + "	</TR>\n"
-
         + " <TR><TH>" + thisDay.getFloaterSite() + ":</TH>\n" +
         ("	<TD><input type='text' size='4' MAXLENGTH='3' "
          + "name='float_high' value='") +
@@ -460,7 +440,6 @@ public class forecast extends HttpServlet {
         + " <br><i>1 (not confident) - 10 (confident)</i>"
         + " <input type=\"text\" name=\"confidence\" value=\"" +
         thisDay.getConfidence() + "\" size=\"2\" maxlength=\"2\">"
-
         + "<p><b>Discuss your thoughts regarding this forecast.</b>"
         + "<br>You will <b>not</b> be graded for this discussion."
         + "<br><textarea name=\"discussion\" cols=50 rows=4>" +
@@ -508,14 +487,13 @@ public class forecast extends HttpServlet {
     }
 
     return false;
-
   } // End of isForecastDay
 
   public String enterForecast(portfolioUser thisUser, HttpServletRequest req)
       throws myException {
     StringBuffer sbuf = new StringBuffer();
 
-    /** I had better figure out something better than this **/
+    /** I had better figure out something better than this * */
     // String sqlDate = req.getParameter("sqlDate");
     String sqlDate = "tomorrow";
 
@@ -591,7 +569,6 @@ public class forecast extends HttpServlet {
                 + " <BR>Local Site Low: " + local_low + "\n"
                 + " <BR>Local Precip Cat: " + local_prec + "\n"
                 + " <BR>Local Snow Cat: " + local_snow + "\n"
-
                 + "<P>Floater Site High: " + float_high + "\n"
                 + "<BR>Floater Site Low: " + float_low + "\n"
                 + "<BR>Floater Precip Cat: " + float_prec + "\n"
@@ -622,5 +599,4 @@ public class forecast extends HttpServlet {
 
     return sbuf.toString();
   } // End of selectForecastDays()
-
 } // End of Forecast()

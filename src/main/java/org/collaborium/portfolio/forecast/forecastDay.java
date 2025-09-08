@@ -1,28 +1,26 @@
 /**
- * Copyright 2001,2003 Iowa State University
- * jportfolio@collaborium.org
+ * Copyright 2001,2003 Iowa State University jportfolio@collaborium.org
  *
- * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation; either version 2.1 of the License, or (at
- * your option) any later version.
+ * <p>This library is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as published by the
+ * Free Software Foundation; either version 2.1 of the License, or (at your
+ * option) any later version.
  *
- * This library is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser
- * General Public License for more details.
+ * <p>This library is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License
+ * for more details.
  *
- * You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation,
- * Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * <p>You should have received a copy of the GNU Lesser General Public License
+ * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 package org.collaborium.portfolio.forecast;
 /**
- * Java class for forecast days, will clean up other java
- * programs
+ * Java class for forecast days, will clean up other java programs
+ *
  * @author Daryl Herzmann 7 Sep 2001
  */
-
 import java.sql.*;
 import org.collaborium.portfolio.*;
 
@@ -44,18 +42,21 @@ public class forecastDay {
 
   /** forecasted values by User for float */
   private int floaterHighTemp = -99;
+
   private int floaterLowTemp = -99;
   private int floaterPrecCat = -99;
   private int floaterSnowCat = -99;
 
   /** forecasted values by User for local */
   private int localHighTemp = -99;
+
   private int localLowTemp = -99;
   private int localPrecCat = -99;
   private int localSnowCat = -99;
 
   /** Validation Values of this date for the floater site */
   private int VfloaterHighTemp = -99;
+
   private int VfloaterLowTemp = -99;
   private int VfloaterPrecCat = -99;
   private String VfloaterPrecNum = "-99";
@@ -64,6 +65,7 @@ public class forecastDay {
 
   /** Validation Values for the local site */
   private int VlocalHighTemp = -99;
+
   private int VlocalLowTemp = -99;
   private int VlocalPrecCat = -99;
   private String VlocalPrecNum = "-99";
@@ -72,6 +74,7 @@ public class forecastDay {
 
   /** Climate Values of this date for the floater site */
   private int CfloaterHighTemp = -99;
+
   private int CfloaterLowTemp = -99;
   private int CfloaterPrecCat = -99;
   private String CfloaterPrecNum = "-99";
@@ -80,6 +83,7 @@ public class forecastDay {
 
   /** Climate Values for the local site */
   private int ClocalHighTemp = -99;
+
   private int ClocalLowTemp = -99;
   private int ClocalPrecCat = -99;
   private String ClocalPrecNum = "-99";
@@ -108,6 +112,7 @@ public class forecastDay {
 
   /**
    * Constructor for building forecast days
+   *
    * @param thisUser portfolioUser it must be
    * @param sqlDate which is the date of this forecastDay
    */
@@ -131,12 +136,9 @@ public class forecastDay {
     } catch (Exception ex) {
       plogger.report("Problem getting the forecast day base parameters.\n");
     }
-
   } // End of forecastDay
 
-  /**
-   * Method to extract the answers for a date
-   */
+  /** Method to extract the answers for a date */
   public boolean getValidation() {
     if (portfolio == null || sqlDate == null)
       return false;
@@ -175,9 +177,7 @@ public class forecastDay {
 
     return false;
   }
-  /**
-   * Method to extract the answers for a date
-   */
+  /** Method to extract the answers for a date */
   public boolean getClimo() {
     if (portfolio == null || sqlDate == null)
       return false;
@@ -216,6 +216,7 @@ public class forecastDay {
 
   /**
    * Method to print out the answers for this forecast
+   *
    * @return HTML formatted String
    */
   public String catAnswers() {
@@ -227,21 +228,17 @@ public class forecastDay {
         " </th></tr> \n"
         + "<TR><TD></TD><TD>" + localSite + "( " + localSiteID + " ) </TD>\n"
         + " <TD>" + floaterSite + "( " + floaterSiteID + " ) </TD></TR>\n"
-
         + " <TR><TH>High Temp:</TH><TD>" + String.valueOf(localHighTemp) +
         "</TD>\n"
         + " <TD>" + String.valueOf(VfloaterHighTemp) + "</TD></TR>\n"
-
         + " <TR><TH>Low Temp:</TH><TD>" + String.valueOf(VlocalLowTemp) +
         "</TD>\n"
         + " <TD>" + String.valueOf(VfloaterLowTemp) + "</TD></TR>\n"
-
         + " <TR><TH>Precip:</TH><TD>CAT: " + String.valueOf(VlocalPrecCat) +
         " "
         + " ( " + VlocalPrecNum + ") </TD>\n"
         + " <TD>CAT: " + String.valueOf(VfloaterPrecCat) + " "
         + " ( " + VfloaterPrecNum + ")</TD></TR>\n"
-
         + " <TR><TH>Snowfall:</TH><TD>CAT: " + String.valueOf(VlocalSnowCat) +
         " "
         + " ( " + VlocalSnowNum + ") </TD>\n"
@@ -252,9 +249,7 @@ public class forecastDay {
     return sbuf.toString();
   }
 
-  /**
-   * Method to retrieve the users forecast from the DB
-   */
+  /** Method to retrieve the users forecast from the DB */
   public boolean getForecast() {
     if (portfolio == null || sqlDate == null || userID == null)
       return false;
@@ -288,55 +283,84 @@ public class forecastDay {
   } // End of getForecast()
 
   public String getFloaterHighTemp() { return String.valueOf(floaterHighTemp); }
+
   public String getFloaterLowTemp() { return String.valueOf(floaterLowTemp); }
+
   public String getFloaterPrecCat() { return String.valueOf(floaterPrecCat); }
+
   public String getFloaterSnowCat() { return String.valueOf(floaterSnowCat); }
 
   public String getLocalHighTemp() { return String.valueOf(localHighTemp); }
+
   public String getLocalLowTemp() { return String.valueOf(localLowTemp); }
+
   public String getLocalPrecCat() { return String.valueOf(localPrecCat); }
+
   public String getLocalSnowCat() { return String.valueOf(localSnowCat); }
 
   public String getVFloaterHighTemp() {
     return String.valueOf(VfloaterHighTemp);
   }
+
   public String getVFloaterLowTemp() { return String.valueOf(VfloaterLowTemp); }
+
   public String getVFloaterPrecCat() { return String.valueOf(VfloaterPrecCat); }
+
   public String getVFloaterPrecNum() { return String.valueOf(VfloaterPrecNum); }
+
   public String getVFloaterSnowCat() { return String.valueOf(VfloaterSnowCat); }
+
   public String getVFloaterSnowNum() { return String.valueOf(VfloaterSnowNum); }
 
   public String getVLocalHighTemp() { return String.valueOf(VlocalHighTemp); }
+
   public String getVLocalLowTemp() { return String.valueOf(VlocalLowTemp); }
+
   public String getVLocalPrecCat() { return String.valueOf(VlocalPrecCat); }
+
   public String getVLocalPrecNum() { return String.valueOf(VlocalPrecNum); }
+
   public String getVLocalSnowCat() { return String.valueOf(VlocalSnowCat); }
+
   public String getVLocalSnowNum() { return String.valueOf(VlocalSnowNum); }
 
   public String getCFloaterHighTemp() {
     return String.valueOf(CfloaterHighTemp);
   }
+
   public String getCFloaterLowTemp() { return String.valueOf(CfloaterLowTemp); }
+
   public String getCFloaterPrecCat() { return String.valueOf(CfloaterPrecCat); }
+
   public String getCFloaterPrecNum() { return String.valueOf(CfloaterPrecNum); }
+
   public String getCFloaterSnowCat() { return String.valueOf(CfloaterSnowCat); }
+
   public String getCFloaterSnowNum() { return String.valueOf(CfloaterSnowNum); }
 
   public String getCLocalHighTemp() { return String.valueOf(ClocalHighTemp); }
+
   public String getCLocalLowTemp() { return String.valueOf(ClocalLowTemp); }
+
   public String getCLocalPrecCat() { return String.valueOf(ClocalPrecCat); }
+
   public String getCLocalPrecNum() { return String.valueOf(ClocalPrecNum); }
+
   public String getCLocalSnowCat() { return String.valueOf(ClocalSnowCat); }
+
   public String getCLocalSnowNum() { return String.valueOf(ClocalSnowNum); }
 
   public String getFloaterSite() { return floaterSite; }
+
   public String getFloaterSiteID() { return floaterSiteID; }
 
   public String getLocalSite() { return localSite; }
+
   public String getLocalSiteID() { return localSiteID; }
 
   public String getCaseGroup() { return caseGroup; }
 
   public String getConfidence() { return confidence; }
+
   public String getDiscussion() { return discussion; }
 } // End of class

@@ -1,31 +1,28 @@
 /**
- * Copyright 2001-2005 Iowa State University
- * jportfolio@collaborium.org
+ * Copyright 2001-2005 Iowa State University jportfolio@collaborium.org
  *
- * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation; either version 2.1 of the License, or (at
- * your option) any later version.
+ * <p>This library is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as published by the
+ * Free Software Foundation; either version 2.1 of the License, or (at your
+ * option) any later version.
  *
- * This library is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser
- * General Public License for more details.
+ * <p>This library is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License
+ * for more details.
  *
- * You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation,
- * Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * <p>You should have received a copy of the GNU Lesser General Public License
+ * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 package org.collaborium.portfolio;
 /**
- * This is my first attempt at creating a container that could be a student
- * We shall see how this works, hopefully well :)  It is works, we can have
- * generic applications create a "portfolioUser" reference and then they are all
- * set
+ * This is my first attempt at creating a container that could be a student We
+ * shall see how this works, hopefully well :) It is works, we can have generic
+ * applications create a "portfolioUser" reference and then they are all set
  *
  * @author Daryl Herzmann
  */
-
 import java.sql.*;
 import java.util.*;
 import javax.servlet.http.*;
@@ -66,8 +63,8 @@ public class portfolioUser implements HttpSessionBindingListener {
       Timestamp.valueOf("2001-01-01 01:00:00.000000000");
 
   /**
-   * Method to override HttpSessionBindingListener.valueBound
-   * it is called when the object is bound to the session
+   * Method to override HttpSessionBindingListener.valueBound it is called when
+   * the object is bound to the session
    */
   public void valueBound(HttpSessionBindingEvent event) {
 
@@ -81,10 +78,9 @@ public class portfolioUser implements HttpSessionBindingListener {
   }
 
   /**
-   * Method to override HttpSessionBindingListener.valueUnbound
-   * it is called when the object is unbound from the session
-   * When it is unbound, we then go into jlib and delete the user from
-   * the current users array
+   * Method to override HttpSessionBindingListener.valueUnbound it is called
+   * when the object is unbound from the session When it is unbound, we then go
+   * into jlib and delete the user from the current users array
    */
   public void valueUnbound(HttpSessionBindingEvent event) {
 
@@ -102,9 +98,10 @@ public class portfolioUser implements HttpSessionBindingListener {
   }
 
   /**
-   * Constructor for this class, this construct queries the users table
-   * for more information on the user, if an entry is found, the appropiate
-   * values are set
+   * Constructor for this class, this construct queries the users table for more
+   * information on the user, if an entry is found, the appropiate values are
+   * set
+   *
    * @param newUserID string value of the new user to init class with
    */
   public portfolioUser(String newUserID) {
@@ -142,8 +139,8 @@ public class portfolioUser implements HttpSessionBindingListener {
   }
 
   /**
-   * Method to check an idnum to see if the user allready
-   * submitted a smily/frowny face
+   * Method to check an idnum to see if the user allready submitted a
+   * smily/frowny face
    */
   public boolean checkDialogidnum(String idnum) {
     // notedPosts
@@ -158,8 +155,8 @@ public class portfolioUser implements HttpSessionBindingListener {
   } // End of checkDialogidnum()
 
   /**
-   * Method to check an idnum to see if the user allready
-   * submitted a smily/frowny face
+   * Method to check an idnum to see if the user allready submitted a
+   * smily/frowny face
    */
   public boolean checkDialogidnum_cat(String idnum) {
     // notedPosts
@@ -174,8 +171,8 @@ public class portfolioUser implements HttpSessionBindingListener {
   } // End of checkDialogidnum()
 
   /**
-   * Method to check an idnum to see if the user allready
-   * submitted a smily/frowny face
+   * Method to check an idnum to see if the user allready submitted a
+   * smily/frowny face
    */
   public boolean checkDialogidnum_learn(String idnum) {
     // notedPosts
@@ -189,47 +186,35 @@ public class portfolioUser implements HttpSessionBindingListener {
     return true;
   } // End of checkDialogidnum()
 
-  /**
-   * Blank constructor just to init the class.
-   *
-   */
+  /** Blank constructor just to init the class. */
   public portfolioUser() {}
 
   /**
    * Does this user forecast?
-   * @return Boolean value to if this user is allowed to forecast
    *
+   * @return Boolean value to if this user is allowed to forecast
    */
   public boolean doForecast() { return doesForecast.booleanValue(); }
 
-  /**
-   * SOme times it is needed to just set that this user doesn't forecast
-   */
+  /** SOme times it is needed to just set that this user doesn't forecast */
   public void dontForecast() { this.doesForecast = Boolean.FALSE; }
 
-  /**
-   * getThreadType()
-   *  returns the thread type set for this user
-   */
+  /** getThreadType() returns the thread type set for this user */
   public String getThreadType() { return this.threadType; }
 
-  /**
-   * setThreadType()
-   *  logic method to set threadType based on CGI post
-   */
+  /** setThreadType() logic method to set threadType based on CGI post */
   public void setThreadType(String posted) {
     if (posted != null) {
       this.threadType = posted;
     }
   } // End of setThreadType()
 
-  /**
-   *
-   */
+  /** */
   public Timestamp getLastLogin() { return this.lastLogin; }
 
   /**
    * Set isAdmin value to something
+   *
    * @param Boolean value for this user
    */
   public void setIsAdmin(Boolean newValue) {
@@ -239,18 +224,21 @@ public class portfolioUser implements HttpSessionBindingListener {
 
   /**
    * IS this user a authed portfolio User
+   *
    * @return boolean for this user
    */
   public boolean isPortfolioUser() { return isValidUser.booleanValue(); }
 
   /**
    * Return boolean to the admin status of this user
+   *
    * @return boolean for this user
    */
   public boolean isAdmin() { return isAdmin.booleanValue(); }
 
   /**
    * Return the value of the dialog Security
+   *
    * @return String value of dialogSecurity
    */
   public String getDialogSecurity() {
@@ -260,6 +248,7 @@ public class portfolioUser implements HttpSessionBindingListener {
 
   /**
    * Method to set dialogSecurity
+   *
    * @param String value to set to
    */
   public void setDialogSecurity(String newDialogSecurity) {
@@ -270,37 +259,40 @@ public class portfolioUser implements HttpSessionBindingListener {
 
   /**
    * Return the first Name of the user
+   *
    * @return fName of the user
    */
   public String getFirstName() { return fName; }
 
   /**
    * Return the last Name of the user
+   *
    * @return last of the user
    */
   public String getLastName() { return lName; }
 
-  /**
-   * Give me my credential setting
-   */
+  /** Give me my credential setting */
   public int getCred() { return myCred.getCred(); }
 
   /**
    * Return the value of the current portfolio
+   *
    * @return portfolio string value
    */
   public String getPortfolio() {
     //  	return portfolio;
     return myPortfolio.getID();
   }
+
   public String getPortfolioName() {
     // 	return portfolioName;
     return myPortfolio.getName();
   }
 
   /**
-   * Method to set the value of the current portfolio
-   * we must also reset the groupID as well
+   * Method to set the value of the current portfolio we must also reset the
+   * groupID as well
+   *
    * @param thisPortfolio string value of the new portfolio to be set
    */
   public void setPortfolio(String thisPortfolio) {
@@ -337,18 +329,21 @@ public class portfolioUser implements HttpSessionBindingListener {
 
   /**
    * Return the value of the current style
+   *
    * @return style string value of the current style
    */
   public String getStyle() { return style; }
 
   /**
    * Method to set the style for this user
+   *
    * @param newStyle string value of the new style
    */
   public void setStyle(String newStyle) { style = newStyle; }
 
   /**
    * Method to set the userID for this user
+   *
    * @param newUserID string value of the new user
    */
   public void setUserID(String newUserID) { userID = newUserID; }
@@ -357,53 +352,60 @@ public class portfolioUser implements HttpSessionBindingListener {
 
   /**
    * Method to get the current emailAddress
+   *
    * @return emailAddress for this user
    */
   public String getEmailAddress() { return emailAddress; }
 
   /**
    * Method to get the current userId for this user
+   *
    * @return userID of this user
    */
   public String getUserID() { return userID; }
 
   /**
    * Return the realName for this user
+   *
    * @return realName value of the realName for this user
    */
   public String getRealName() { return realName; }
 
   public void setFName(String newFName) { this.fName = newFName; }
+
   public void setLName(String newLName) { this.lName = newLName; }
 
   /**
    * Method to set the realName to a value
+   *
    * @param newRealName string value for the new Real Name
    */
   public void setRealName(String newRealName) { realName = newRealName; }
 
   /**
    * Return the value of the current groupID
+   *
    * @return groupID value of the current groupID
    */
   public String getGroupID() { return groupID; }
 
   /**
    * Method to set the groupID for this user
+   *
    * @param newGroupID string value of the new group ID
    */
   public void setGroupID(String newGroupID) { groupID = newGroupID; }
 
   /**
    * Method to return where this user should be right now
+   *
    * @return portHome
    */
   public String getHome() { return myPortfolio.getHome(); }
 
   /**
-   *  Method to return the base for this user, which is desperated needed
-   *  for the notification apps
+   * Method to return the base for this user, which is desperated needed for the
+   * notification apps
    */
   public String getBase() { return myPortfolio.getBase(); }
-
 } // End of portfolioUser
