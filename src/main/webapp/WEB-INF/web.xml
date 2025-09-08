@@ -10,14 +10,6 @@
     <description>
       JPortfolio.
     </description>
-
-    <!-- Set default time zone for this webapp -->
-    <listener>
-      <listener-class>org.collaborium.portfolio.TimeZoneInitializer</listener-class>
-    </listener>
-
-
-
     <!-- Define servlets that are included in the example application -->
       <servlet>
         <servlet-name>

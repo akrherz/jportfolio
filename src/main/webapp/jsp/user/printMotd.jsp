@@ -13,10 +13,10 @@ ResultSet myResultSet = null;
 <%= jlib.genHeader(thisUser, "Past Message of the Day", "ba") %>
 <%
 if (idnum == null) {
-  myResultSet = dbInterface.callDB("Select * from motd "
+  myResultSet = dbInterface.callDB("Select issue at time zone 'America/Chicago' as issue, body from motd "
 	+" where portfolio = '"+ thisUser.getPortfolio() +"' ");
 } else {
-  myResultSet = dbInterface.callDB("Select * from motd "
+  myResultSet = dbInterface.callDB("Select issue at time zone 'America/Chicago' as issue, body from motd "
 	+" where id ='"+idnum+"' and portfolio = '"+ thisUser.getPortfolio() +"' ");
 }
 %>
