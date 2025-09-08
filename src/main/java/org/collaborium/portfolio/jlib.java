@@ -20,7 +20,6 @@
 package org.collaborium.portfolio;
 
 // Import these for good use.
-import java.io.*;  // for the auth section
 import java.sql.*; // obviously for the database connections
 import java.util.*;
 import javax.servlet.http.*;   // for the auth section
@@ -515,12 +514,15 @@ public class jlib {
   public static String footer() {
     StringBuffer theBuffer = new StringBuffer();
 
+    TimeZone tz = TimeZone.getTimeZone("America/Chicago");
+    java.util.Calendar cal = java.util.Calendar.getInstance(tz);
+    String timeString = cal.getTime().toString();
+
     theBuffer.append(
         "<br clear=\"all\" /><div class=\"portfolio-footer\">Portfolio "
         + "Application Suite"
         + "<BR>&copy; 1995-2005 Iowa State University\n"
-        + "<BR>[ Local System time is " + new java.util.Date().toString() +
-        " ]\n"
+        + "<BR>[ Local System time is " + timeString + " ]\n"
         + "<br>Your session expires in 3 hours from page load.</div>\n");
     theBuffer.append("</body>\n</html>\n");
 
