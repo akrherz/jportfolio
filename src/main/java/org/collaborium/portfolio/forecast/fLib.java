@@ -24,6 +24,7 @@
 package org.collaborium.portfolio.forecast;
 
 import java.sql.*;
+import java.util.Arrays;
 import java.util.Calendar;
 import org.collaborium.portfolio.*;
 
@@ -104,10 +105,11 @@ public class fLib {
 
     StringBuffer sbuf = new StringBuffer();
 
-    ResultSet forecastDays = dbInterface.callDB(
+    ResultSet forecastDays = dbInterface.callDBWithParameters(
         "SELECT * from forecast_days "
-        + " WHERE portfolio = '" + portfolio + "' "
-        + " and day <= CURRENT_TIMESTAMP::date ORDER by day ASC ");
+            + " WHERE portfolio = ? "
+            + " and day <= CURRENT_TIMESTAMP::date ORDER by day ASC ",
+        Arrays.asList(portfolio));
 
     sbuf.append(
         "<FORM METHOD=\"GET\" ACTION=\"" + thisPageURL + "\" name=\"f\">\n"
@@ -161,10 +163,11 @@ public class fLib {
 
     /** If no date is specified, lets then see if the last answers works * */
     if (sqlDate == null) {
-      ResultSet availDates = dbInterface.callDB(
+      ResultSet availDates = dbInterface.callDBWithParameters(
           "SELECT day "
-          + "from forecast_answers  WHERE portfolio = '" + portfolio + "' "
-          + " ORDER by day DESC LIMIT 1");
+              + "from forecast_answers  WHERE portfolio = ? "
+              + " ORDER by day DESC LIMIT 1",
+          Arrays.asList(portfolio));
       if (availDates.next()) {
         sqlDate = availDates.getString("day");
       } else {
@@ -186,11 +189,12 @@ public class fLib {
     sbuf.append("<BR><LI>Table Sorted by: " + sortCol + "</LI>");
 
     /** Now we have a date, lets get how the kids forecasted * */
-    ResultSet forecasts = dbInterface.callDB(
+    ResultSet forecasts = dbInterface.callDBWithParameters(
         "SELECT "
-        + " getUserName(userid) as realname, * from forecast_grades "
-        + " WHERE portfolio = '" + portfolio + "' "
-        + " and day = '" + sqlDate + "' order by " + sortCol + " ");
+            + " getUserName(userid) as realname, * from forecast_grades "
+            + " WHERE portfolio = ? "
+            + " and day = ? order by " + sortCol + " ",
+        Arrays.asList(portfolio, sqlDate));
 
     sbuf.append(
         "<P><TABLE>\n"
@@ -274,12 +278,13 @@ public class fLib {
       sortCol = "final_tot";
 
     /** Now we have a date, lets get how the kids forecasted * */
-    ResultSet forecasts =
-        dbInterface.callDB("SELECT getUserName(userid) as realname, *, "
-                           + " (p0_total+ p1_total + p2_total + p3_total) AS "
-                           + "final_tot from forecast_totals "
-                           + " WHERE portfolio = '" + portfolio + "' "
-                           + " order by " + sortCol + " ");
+    ResultSet forecasts = dbInterface.callDBWithParameters(
+        "SELECT getUserName(userid) as realname, *, "
+            + " (p0_total+ p1_total + p2_total + p3_total) AS "
+            + "final_tot from forecast_totals "
+            + " WHERE portfolio = ? "
+            + " order by " + sortCol + " ",
+        Arrays.asList(portfolio));
 
     sbuf.append(
         "<TABLE>\n"
@@ -551,10 +556,11 @@ public class fLib {
                          "' "
                          + " GROUP by userid, portfolio ) ");
 
-    ResultSet students = dbInterface.callDB(
+    ResultSet students = dbInterface.callDBWithParameters(
         "SELECT getUserName( username) as realname, "
-        + " username from students "
-        + " WHERE portfolio = '" + portfolio + "' and nofx = 'n' ");
+            + " username from students "
+            + " WHERE portfolio = ? and nofx = 'n' ",
+        Arrays.asList(portfolio));
 
     while (students.next()) {
       String thisUserID = students.getString("username");
@@ -601,10 +607,11 @@ public class fLib {
                          + " day = '" + sqlDate + "' and portfolio = '" +
                          portfolio + "' ");
 
-    ResultSet students = dbInterface.callDB(
+    ResultSet students = dbInterface.callDBWithParameters(
         "SELECT "
-        + " getUserName( username) as realname, username from students "
-        + " WHERE portfolio = '" + portfolio + "' and nofx = 'n' ");
+            + " getUserName( username) as realname, username from students "
+            + " WHERE portfolio = ? and nofx = 'n' ",
+        Arrays.asList(portfolio));
 
     forecastDay thisDay = new forecastDay(portfolio, sqlDate);
     if (thisDay.getValidation()) {
@@ -641,11 +648,11 @@ public class fLib {
       while (students.next()) {
         String thisUserID = students.getString("username");
         String thisUserName = students.getString("realname");
-        ResultSet userForecast =
-            dbInterface.callDB("SELECT * from forecasts WHERE "
-                               + " day = '" + sqlDate + "' and portfolio = '" +
-                               portfolio + "' and "
-                               + " userid = '" + thisUserID + "' ");
+        ResultSet userForecast = dbInterface.callDBWithParameters(
+            "SELECT * from forecasts WHERE "
+                + " day = ? and portfolio = ? and "
+                + " userid = ? ",
+            Arrays.asList(sqlDate, portfolio, thisUserID));
         if (userForecast.next()) {
           u_local_high = userForecast.getString("local_high");
           u_local_low = userForecast.getString("local_low");

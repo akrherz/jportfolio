@@ -119,9 +119,10 @@ public class mTT {
    */
   public String printHistory() throws SQLException {
     StringBuffer sbuf = new StringBuffer();
-    ResultSet rs = dbInterface.callDB(
+    ResultSet rs = dbInterface.callDBWithParameters(
         "SELECT *, getUserName(author) as rname"
-        + " from tt_log WHERE tt_id = " + this.id + " ORDER by entered DESC");
+            + " from tt_log WHERE tt_id = ? ORDER by entered DESC",
+        Arrays.asList(this.id));
     sbuf.append("<p><table width=\"100%\" cellspacing=0 "
                 + " colspacing=0 cellpadding=2>\n");
     while (rs.next()) {

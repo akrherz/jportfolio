@@ -296,12 +296,12 @@ public class forecast extends HttpServlet {
         + "<TR><TH>High:</TH><TH>Low:</TH><TH>Prec:</TH><TH>Snow:</TH>\n"
         + "<TH>High:</TH><TH>Low:</TH><TH>Prec:</TH><TH>Snow:</TH></TR>\n");
     try {
-      ResultSet rs = dbInterface.callDB(
+      ResultSet rs = dbInterface.callDBWithParameters(
           "SELECT getUserName(userid) as rname, "
-          + " * from forecasts WHERE portfolio = '" + thisUser.getPortfolio() +
-          "' "
-          + " and day = '" + sqlDate + "' and "
-          + " CURRENT_TIMESTAMP::date >= '" + sqlDate + "' ");
+              + " * from forecasts WHERE portfolio = ? "
+              + " and day = ? and "
+              + " CURRENT_TIMESTAMP::date >= ? ",
+          Arrays.asList(thisUser.getPortfolio(), sqlDate, sqlDate));
       while (rs.next()) {
         sbuf.append("<TR>\n"
                     + "   <TD>" + rs.getString("rname") + "</TD>\n"
@@ -467,10 +467,11 @@ public class forecast extends HttpServlet {
       return false;
 
     try {
-      ResultSet rs = dbInterface.callDB(
+      ResultSet rs = dbInterface.callDBWithParameters(
           "SELECT day from forecast_days "
-          + " WHERE portfolio = '" + thisUser.getPortfolio() + "' "
-          + " and day = 'TODAY'::date + '1 day'::interval ");
+              + " WHERE portfolio = ? "
+              + " and day = 'TODAY'::date + '1 day'::interval ",
+          Arrays.asList(thisUser.getPortfolio()));
       if (rs.next()) {
         ResultSet rs2 = dbInterface.callDBWithParameters(
             "SELECT * from portfolios "
@@ -585,8 +586,10 @@ public class forecast extends HttpServlet {
     ResultSet rs = null;
     String thisVal = null;
     try {
-      rs = jlib.callDB("SELECT * from forecast_days WHERE "
-                       + " portfolio = '" + thisUser.getPortfolio() + "' ");
+      rs = dbInterface.callDBWithParameters(
+          "SELECT * from forecast_days WHERE "
+              + " portfolio = ? ",
+          Arrays.asList(thisUser.getPortfolio()));
       while (rs.next()) {
         thisVal = rs.getString("day");
         sbuf.append("<option value='" + thisVal + "' ");

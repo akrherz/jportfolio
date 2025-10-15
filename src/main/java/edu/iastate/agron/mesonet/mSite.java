@@ -1,6 +1,7 @@
 package edu.iastate.agron.mesonet;
 
 import java.sql.*;
+import java.util.Arrays;
 import org.collaborium.portfolio.*;
 
 public class mSite {
@@ -22,10 +23,10 @@ public class mSite {
   public mSite(String INportfolio, String idnum) {
     this.portfolio = INportfolio;
     try {
-      ResultSet rs =
-          dbInterface.callDB("SELECT * from iem_sites WHERE "
-                             + " s_mid = '" + idnum + "' and portfolio = '" +
-                             this.portfolio + "' ");
+      ResultSet rs = dbInterface.callDBWithParameters(
+          "SELECT * from iem_sites WHERE "
+              + " s_mid = ? and portfolio = ? ",
+          Arrays.asList(idnum, this.portfolio));
       while (rs.next()) {
         this.setName(rs.getString("s_name"));
         this.setID(rs.getString("id"));

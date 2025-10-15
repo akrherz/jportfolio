@@ -28,6 +28,7 @@ package org.collaborium.users;
 import java.io.*;
 import java.sql.*;
 import java.text.*;
+import java.util.Arrays;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import org.collaborium.portfolio.*;
@@ -63,7 +64,8 @@ public class users extends HttpServlet {
           "<P align=\"center\"><B>Welcome to my portfolio homepage!</B><HR>\n");
       out.println(printInfo(userName, writePerm));
     } else {
-      out.println("<FONT class=\"error\">This username '" + userName + "' "
+      out.println("<FONT class=\"error\">This username '" +
+                  escapeHtml(userName) + "' "
                   + " does not exist. Sorry!</FONT>\n");
     }
 
@@ -84,8 +86,8 @@ public class users extends HttpServlet {
         + "	<caption><B>My Picture:</B></caption>\n"
         + "	<TR bgcolor=\"ffefd5\"><TD>\n"
         + "	<BR>\n"
-        + "	<CENTER><img src=\"/jportfolio/FILES/" + requestedUser +
-        "/me.gif\"></CENTER>\n"
+        + "	<CENTER><img src=\"/jportfolio/FILES/" +
+        escapeHtml(requestedUser) + "/me.gif\"></CENTER>\n"
         + "	<BR>\n");
 
     if (writePerm.booleanValue())
@@ -135,14 +137,12 @@ public class users extends HttpServlet {
                     + "<TR><TD>Email Address:</TD><TD> " +
                     rs.getString("email") + "</TD></TR>\n");
         sbuf.append("</TABLE>\n");
-        //	  if ( writePerm.booleanValue() )
-        //	  	sbuf.append("	<a
-        // href=\"/jportfolio/jsp/user/customize/editInfo.jsp\">Edit</a>\n");
       }
 
       ResultSet rs2 =
-          dbInterface.callDB("SELECT body from biosketch WHERE "
-                             + " username = '" + requestedUser + "' ");
+          dbInterface.callDBWithParameters("SELECT body from biosketch WHERE "
+                                               + " username = ? ",
+                                           Arrays.asList(requestedUser));
       if (rs2.next())
         bioSketch = rs2.getString("body");
 
@@ -182,4 +182,22 @@ public class users extends HttpServlet {
 
     return userName;
   } // End of getUserFromURI
+
+  /**
+   * Escapes HTML special characters to prevent XSS attacks
+   *
+   * @param input String to escape
+   * @return HTML-escaped string
+   */
+  private String escapeHtml(String input) {
+    if (input == null) {
+      return null;
+    }
+    return input.replace("&", "&amp;")
+        .replace("<", "&lt;")
+        .replace(">", "&gt;")
+        .replace("\"", "&quot;")
+        .replace("'", "&#x27;")
+        .replace("/", "&#x2F;");
+  }
 } // End of users
