@@ -34,7 +34,7 @@ import javax.servlet.http.*;
 import org.collaborium.portfolio.*;
 import org.collaborium.util.*;
 
-public class users extends HttpServlet {
+public class Users extends HttpServlet {
 
   public void doGet(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {

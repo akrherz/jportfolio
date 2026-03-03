@@ -44,7 +44,7 @@
             users
         </servlet-name>
         <servlet-class>
-            org.collaborium.portfolio.users.users
+            org.collaborium.portfolio.users.Users
         </servlet-class>
     </servlet>
 
