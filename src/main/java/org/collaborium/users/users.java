@@ -90,11 +90,6 @@ public class users extends HttpServlet {
         escapeHtml(requestedUser) + "/me.gif\"></CENTER>\n"
         + "	<BR>\n");
 
-    if (writePerm.booleanValue())
-      sbuf.append(
-          "	<a "
-          + "href=\"/jportfolio/jsp/user/customize/editPict.jsp\">Edit</a>\n");
-
     sbuf.append("	</TD></TR></TABLE>\n");
     sbuf.append("<!-- End of My Picture -->\n");
 
