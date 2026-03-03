@@ -34,7 +34,7 @@ import javax.servlet.http.*;
 import org.collaborium.portfolio.*;
 import org.collaborium.util.*;
 
-public class users extends HttpServlet {
+public class Users extends HttpServlet {
 
   public void doGet(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
@@ -89,11 +89,6 @@ public class users extends HttpServlet {
         + "	<CENTER><img src=\"/jportfolio/FILES/" +
         escapeHtml(requestedUser) + "/me.gif\"></CENTER>\n"
         + "	<BR>\n");
-
-    if (writePerm.booleanValue())
-      sbuf.append(
-          "	<a "
-          + "href=\"/jportfolio/jsp/user/customize/editPict.jsp\">Edit</a>\n");
 
     sbuf.append("	</TD></TR></TABLE>\n");
     sbuf.append("<!-- End of My Picture -->\n");

@@ -9,9 +9,7 @@
 <%= jlib.basicHeader(thisUser, "Update Bio Sketch") %>
 
 <b>Personal Information Editor:</b> &nbsp; &nbsp;
-  <a class="commands" href="editBio.jsp">Bio Sketch</a>  &nbsp; <b>|</b> &nbsp;
-  <a class="commands" href="editPict.jsp">Picture</a>
-
+  <a class="commands" href="editBio.jsp">Bio Sketch</a>
 
 <p><font class="title">Biographical Sketch</font></p>
 
@@ -34,9 +32,6 @@
 
 <P>Your new bio-sketch is now updated on your 
  <a href="/jportfolio/users/<%= thisUser.getUserID() %>">portfolio homepage</a>.
-
-<p>Perhaps, you would like to <a class="commands" href="editPict.jsp">upload</a>
-your photo now...
 
 <P>Your updated bio-sketch:<br><hr>
 <%= stringUtils.toBR(newBioSketch) %>

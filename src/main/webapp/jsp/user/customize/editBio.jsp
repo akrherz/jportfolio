@@ -7,8 +7,7 @@
 <%= jlib.genHeader(thisUser, "Jportfolio | Edit Bio Sketch", "Ba") %>
 
 <b>Personal Information Editor:</b> &nbsp; &nbsp;
-  <font bgcolor="#EEEEEE">Bio Sketch</font>  &nbsp; <b>|</b> &nbsp;
-  <a class="commands" href="editPict.jsp">Picture</a>
+  <font bgcolor="#EEEEEE">Bio Sketch</font>  &nbsp;
 
 <h3>Biographical Sketch:</h3>
 

@@ -14,23 +14,6 @@
 
     <servlet>
         <servlet-name>
-            uploadServlet
-        </servlet-name>
-        <servlet-class>
-            org.collaborium.portfolio.uploadServlet
-        </servlet-class>
-        <init-param>
-            <param-name>
-                uploadDir
-            </param-name>
-            <param-value>
-                /home/tomcat/webapps/jportfolio/FILES
-            </param-value>
-        </init-param>
-    </servlet>
-
-    <servlet>
-        <servlet-name>
             forecast
         </servlet-name>
         <servlet-class>
@@ -61,7 +44,7 @@
             users
         </servlet-name>
         <servlet-class>
-            org.collaborium.portfolio.users.users
+            org.collaborium.portfolio.users.Users
         </servlet-class>
     </servlet>
 
