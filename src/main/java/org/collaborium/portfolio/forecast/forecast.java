@@ -474,13 +474,22 @@ public class forecast extends HttpServlet {
           Arrays.asList(thisUser.getPortfolio()));
       if (rs.next()) {
         ResultSet rs2 = dbInterface.callDBWithParameters(
-            "SELECT * from portfolios "
-                + " WHERE portfolio = ? and "
-                + " fxtime > extract(hour from now() at time zone "
-                + "'America/Chicago') ",
+            "SELECT fxtime from portfolios WHERE portfolio = ?",
             Arrays.asList(thisUser.getPortfolio()));
-        if (rs2.next())
-          return true;
+        if (rs2.next()) {
+          int fxtime = rs2.getInt("fxtime");
+          // Get current hour in America/Chicago
+          java.util.TimeZone tz =
+              java.util.TimeZone.getTimeZone("America/Chicago");
+          java.util.Calendar cal = java.util.Calendar.getInstance(tz);
+          int currentHour = cal.get(java.util.Calendar.HOUR_OF_DAY);
+          // Add debugging for now.
+          plogger.report("Current Hour: " + currentHour +
+                         " Forecast Time: " + fxtime);
+          if (fxtime > currentHour) {
+            return true;
+          }
+        }
       }
     } catch (Exception ex) {
       plogger.report("Problem Getting Active Days " + ex);
