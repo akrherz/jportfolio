@@ -109,7 +109,7 @@ public class forecast extends HttpServlet {
   /**
    * Method to handle method GET to the server
    *
-   * @param HttpServletRequest request
+   * @param HttpServletRequest  request
    * @param HttpServletResponse response
    */
   public void doGet(HttpServletRequest request, HttpServletResponse response)
