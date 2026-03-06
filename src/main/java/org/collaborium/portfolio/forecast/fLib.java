@@ -189,12 +189,22 @@ public class fLib {
     sbuf.append("<BR><LI>Table Sorted by: " + sortCol + "</LI>");
 
     /** Now we have a date, lets get how the kids forecasted * */
+    // Convert sqlDate String to java.sql.Date for DB query
+    java.sql.Date sqlDateObj = null;
+    try {
+      sqlDateObj = java.sql.Date.valueOf(sqlDate);
+    } catch (IllegalArgumentException e) {
+      throw new SQLException("Invalid date format for sqlDate: " + sqlDate +
+                                 ". Expected yyyy-MM-dd.",
+                             e);
+    }
+
     ResultSet forecasts = dbInterface.callDBWithParameters(
         "SELECT "
             + " getUserName(userid) as realname, * from forecast_grades "
             + " WHERE portfolio = ? "
             + " and day = ? order by " + sortCol + " ",
-        Arrays.asList(portfolio, sqlDate));
+        Arrays.asList(portfolio, sqlDateObj));
 
     sbuf.append(
         "<P><TABLE>\n"
@@ -648,11 +658,20 @@ public class fLib {
       while (students.next()) {
         String thisUserID = students.getString("username");
         String thisUserName = students.getString("realname");
+        // Convert sqlDate String to java.sql.Date for DB query
+        java.sql.Date sqlDateObj = null;
+        try {
+          sqlDateObj = java.sql.Date.valueOf(sqlDate);
+        } catch (IllegalArgumentException e) {
+          throw new SQLException("Invalid date format for sqlDate: " + sqlDate +
+                                     ". Expected yyyy-MM-dd.",
+                                 e);
+        }
         ResultSet userForecast = dbInterface.callDBWithParameters(
             "SELECT * from forecasts WHERE "
                 + " day = ? and portfolio = ? and "
                 + " userid = ? ",
-            Arrays.asList(sqlDate, portfolio, thisUserID));
+            Arrays.asList(sqlDateObj, portfolio, thisUserID));
         if (userForecast.next()) {
           u_local_high = userForecast.getString("local_high");
           u_local_low = userForecast.getString("local_low");
