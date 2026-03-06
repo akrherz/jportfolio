@@ -296,12 +296,21 @@ public class forecast extends HttpServlet {
         + "<TR><TH>High:</TH><TH>Low:</TH><TH>Prec:</TH><TH>Snow:</TH>\n"
         + "<TH>High:</TH><TH>Low:</TH><TH>Prec:</TH><TH>Snow:</TH></TR>\n");
     try {
+      // Convert sqlDate String to java.sql.Date for DB query
+      java.sql.Date sqlDateObj = null;
+      try {
+        sqlDateObj = java.sql.Date.valueOf(sqlDate);
+      } catch (IllegalArgumentException e) {
+        throw new SQLException("Invalid date format for sqlDate: " + sqlDate +
+                                   ". Expected yyyy-MM-dd.",
+                               e);
+      }
       ResultSet rs = dbInterface.callDBWithParameters(
           "SELECT getUserName(userid) as rname, "
               + " * from forecasts WHERE portfolio = ? "
               + " and day = ? and "
               + " CURRENT_TIMESTAMP::date >= ? ",
-          Arrays.asList(thisUser.getPortfolio(), sqlDate, sqlDate));
+          Arrays.asList(thisUser.getPortfolio(), sqlDateObj, sqlDateObj));
       while (rs.next()) {
         sbuf.append("<TR>\n"
                     + "   <TD>" + rs.getString("rname") + "</TD>\n"
