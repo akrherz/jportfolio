@@ -228,7 +228,7 @@ public class forecastDay {
         " </th></tr> \n"
         + "<TR><TD></TD><TD>" + localSite + "( " + localSiteID + " ) </TD>\n"
         + " <TD>" + floaterSite + "( " + floaterSiteID + " ) </TD></TR>\n"
-        + " <TR><TH>High Temp:</TH><TD>" + String.valueOf(localHighTemp) +
+        + " <TR><TH>High Temp:</TH><TD>" + String.valueOf(VlocalHighTemp) +
         "</TD>\n"
         + " <TD>" + String.valueOf(VfloaterHighTemp) + "</TD></TR>\n"
         + " <TR><TH>Low Temp:</TH><TD>" + String.valueOf(VlocalLowTemp) +
