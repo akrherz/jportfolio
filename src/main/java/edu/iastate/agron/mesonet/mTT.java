@@ -24,11 +24,17 @@ public class mTT {
   public mTT() {}
 
   public mTT(String portfolio, String tt_id) throws SQLException {
+    int idInt;
+    try {
+      idInt = Integer.parseInt(tt_id);
+    } catch (NumberFormatException e) {
+      throw new SQLException("Invalid trouble ticket id: " + tt_id, e);
+    }
     ResultSet rs = dbInterface.callDBWithParameters(
         "SELECT *, getUsername(author) as rname "
             + " ,getSiteName(s_mid) as s_name from tt_base WHERE "
             + " portfolio = ? and id = ?",
-        Arrays.asList(portfolio, tt_id));
+        Arrays.asList(portfolio, idInt));
     if (rs != null && rs.next()) {
       this.doSQL(rs);
     } else {
@@ -119,10 +125,16 @@ public class mTT {
    */
   public String printHistory() throws SQLException {
     StringBuffer sbuf = new StringBuffer();
+    int idInt;
+    try {
+      idInt = Integer.parseInt(this.id);
+    } catch (NumberFormatException e) {
+      throw new SQLException("Invalid trouble ticket id: " + this.id, e);
+    }
     ResultSet rs = dbInterface.callDBWithParameters(
         "SELECT *, getUserName(author) as rname"
             + " from tt_log WHERE tt_id = ? ORDER by entered DESC",
-        Arrays.asList(this.id));
+        Arrays.asList(idInt));
     sbuf.append("<p><table width=\"100%\" cellspacing=0 "
                 + " colspacing=0 cellpadding=2>\n");
     while (rs.next()) {
