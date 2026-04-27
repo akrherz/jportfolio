@@ -387,10 +387,10 @@ public class forecastAdmin extends HttpServlet {
             + (" <TR><TD></TD><TD>High Temp:</TD><TD>Low Temp:</TD><TD>Precip "
                 + "Cat:</TD><TD>Snow Cat:</TD></TR>\n")
             + " <TR><TH>Local:</TH>\n"
-            + ("	<TD><input type='text' size='4' MAXLENGTH='3' " + "name='local_high' value='")
+            + ("	<TD><input type='text' size='4' MAXLENGTH='3' name='local_high' value='")
             + local_high
             + "'></TD>\n"
-            + ("	<TD><input type='text' size='4' MAXLENGTH='3' " + "name='local_low' value='")
+            + ("	<TD><input type='text' size='4' MAXLENGTH='3' name='local_low' value='")
             + local_low
             + "'></TD>\n"
             + "	<TD>"
@@ -401,10 +401,10 @@ public class forecastAdmin extends HttpServlet {
             + "</TD>\n"
             + "	</TR>\n"
             + " <TR><TH>Floater:</TH>\n"
-            + ("	<TD><input type='text' size='4' MAXLENGTH='3' " + "name='float_high' value='")
+            + ("	<TD><input type='text' size='4' MAXLENGTH='3' name='float_high' value='")
             + float_high
             + "'></TD>\n"
-            + ("	<TD><input type='text' size='4' MAXLENGTH='3' " + "name='float_low' value='")
+            + ("	<TD><input type='text' size='4' MAXLENGTH='3' name='float_low' value='")
             + float_low
             + "'></TD>\n"
             + "	<TD>"
@@ -708,10 +708,10 @@ public class forecastAdmin extends HttpServlet {
             + "	<TD>Prec Cat</TD><TD>Prec Text</TD>\n"
             + "	<TD>Snow Cat</TD><TD>Snow Text</TD></TR>\n"
             + " <TR><TH>Local:</TH>\n"
-            + ("	<TD><input type='text' size='4' MAXLENGTH='3' " + "name='local_high' value='")
+            + ("	<TD><input type='text' size='4' MAXLENGTH='3' name='local_high' value='")
             + thisDay.getVLocalHighTemp()
             + "'></TD>\n"
-            + ("	<TD><input type='text' size='4' MAXLENGTH='3' " + "name='local_low' value='")
+            + ("	<TD><input type='text' size='4' MAXLENGTH='3' name='local_low' value='")
             + thisDay.getVLocalLowTemp()
             + "'></TD>\n"
             + "	<TD>"
@@ -730,10 +730,10 @@ public class forecastAdmin extends HttpServlet {
             + " <TR><TH>"
             + thisDay.getFloaterSiteID()
             + ":</TH>\n"
-            + ("	<TD><input type='text' size='4' MAXLENGTH='3' " + "name='float_high' value='")
+            + ("	<TD><input type='text' size='4' MAXLENGTH='3' name='float_high' value='")
             + thisDay.getVFloaterHighTemp()
             + "'></TD>\n"
-            + ("	<TD><input type='text' size='4' MAXLENGTH='3' " + "name='float_low' value='")
+            + ("	<TD><input type='text' size='4' MAXLENGTH='3' name='float_low' value='")
             + thisDay.getVFloaterLowTemp()
             + "'></TD>\n"
             + "	<TD>"
@@ -750,44 +750,44 @@ public class forecastAdmin extends HttpServlet {
             + "\"></TD>\n"
             + "	</TR>\n"
             + " <TR><TH>Climo Local:</TH>\n"
-            + ("	<TD><input type='text' size='4' MAXLENGTH='3' " + "name='cl_local_high' value='")
+            + ("	<TD><input type='text' size='4' MAXLENGTH='3' name='cl_local_high' value='")
             + thisDay.getCLocalHighTemp()
             + "'></TD>\n"
-            + ("	<TD><input type='text' size='4' MAXLENGTH='3' " + "name='cl_local_low' value='")
+            + ("	<TD><input type='text' size='4' MAXLENGTH='3' name='cl_local_low' value='")
             + thisDay.getCLocalLowTemp()
             + "'></TD>\n"
             + "	<TD>"
             + fLib.rainSelect("cl_local_prec", thisDay.getCLocalPrecCat())
             + "</TD>\n"
-            + ("	<TD><input type=\"text\" size=\"10\" " + "name=\"cl_local_prec_txt\" value=\"")
+            + ("	<TD><input type=\"text\" size=\"10\" name=\"cl_local_prec_txt\" value=\"")
             + thisDay.getCLocalPrecNum()
             + "\"></TD>\n"
             + "	<TD>"
             + fLib.snowSelect("cl_local_snow", thisDay.getCLocalSnowCat())
             + "</TD>\n"
-            + ("	<TD><input type=\"text\" size=\"10\" " + "name=\"cl_local_snow_txt\" value=\"")
+            + ("	<TD><input type=\"text\" size=\"10\" name=\"cl_local_snow_txt\" value=\"")
             + thisDay.getCLocalSnowNum()
             + "\"></TD>\n"
             + "	</TR>\n"
             + " <TR><TH>Climo "
             + thisDay.getFloaterSiteID()
             + ":</TH>\n"
-            + ("	<TD><input type='text' size='4' MAXLENGTH='3' " + "name='cl_float_high' value='")
+            + ("	<TD><input type='text' size='4' MAXLENGTH='3' name='cl_float_high' value='")
             + thisDay.getCFloaterHighTemp()
             + "'></TD>\n"
-            + ("	<TD><input type='text' size='4' MAXLENGTH='3' " + "name='cl_float_low' value='")
+            + ("	<TD><input type='text' size='4' MAXLENGTH='3' name='cl_float_low' value='")
             + thisDay.getCFloaterLowTemp()
             + "'></TD>\n"
             + "	<TD>"
             + fLib.rainSelect("cl_float_prec", thisDay.getCFloaterPrecCat())
             + "</TD>\n"
-            + ("	<TD><input type=\"text\" size=\"10\" " + "name=\"cl_float_prec_txt\" value=\"")
+            + ("	<TD><input type=\"text\" size=\"10\" name=\"cl_float_prec_txt\" value=\"")
             + thisDay.getCFloaterPrecNum()
             + "\"></TD>\n"
             + "	<TD>"
             + fLib.snowSelect("cl_float_snow", thisDay.getCFloaterSnowCat())
             + "</TD>\n"
-            + ("	<TD><input type=\"text\" size=\"10\" " + "name=\"cl_float_snow_txt\" value=\"")
+            + ("	<TD><input type=\"text\" size=\"10\" name=\"cl_float_snow_txt\" value=\"")
             + thisDay.getCFloaterSnowNum()
             + "\"></TD>\n"
             + "	</TR>\n"

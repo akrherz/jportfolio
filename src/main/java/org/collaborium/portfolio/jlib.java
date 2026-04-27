@@ -273,7 +273,7 @@ public class jlib {
             + "<!--//BEGIN Script\n"
             + "function new_window(url) {\n"
             + "	link = \n"
-            + ("	window.open(url,\"Link\",\"toolbar=0,location=0,directories=" + "0,status=0")
+            + ("	window.open(url,\"Link\",\"toolbar=0,location=0,directories=0,status=0")
             + ",menubar=no,scrollbars=yes,resizable=yes,width=522,height=282\");\n"
             + "} \n"
             + "//END Script-->\n"

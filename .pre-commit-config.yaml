@@ -1,12 +1,11 @@
 ci:
   autoupdate_schedule: quarterly
 repos:
-  - repo: local
+  - repo: https://github.com/macisamuele/language-formatters-pre-commit-hooks
+    rev: v2.16.0
     hooks:
-      - id: spotless-apply
-        name: spotless-apply
-        entry: mvn -q spotless:apply
-        language: system
-        pass_filenames: false
-        files: \.java$
+      - id: pretty-format-java
+        args:
+          - --autofix
+          - --google-java-formatter-version=1.15.0
 

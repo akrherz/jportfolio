@@ -517,10 +517,10 @@ public class forecast extends HttpServlet {
             + " <TR><TH>"
             + thisDay.getFloaterSite()
             + ":</TH>\n"
-            + ("	<TD><input type='text' size='4' MAXLENGTH='3' " + "name='float_high' value='")
+            + ("	<TD><input type='text' size='4' MAXLENGTH='3' name='float_high' value='")
             + thisDay.getFloaterHighTemp()
             + "'></TD>\n"
-            + ("	<TD><input type='text' size='4' MAXLENGTH='3' " + "name='float_low' value='")
+            + ("	<TD><input type='text' size='4' MAXLENGTH='3' name='float_low' value='")
             + thisDay.getFloaterLowTemp()
             + "'></TD>\n"
             + "	<TD>"
