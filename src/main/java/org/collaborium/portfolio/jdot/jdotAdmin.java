@@ -1,19 +1,17 @@
 /**
  * Copyright 2001-2005 Iowa State University jportfolio@collaborium.org
  *
- * <p>This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Lesser General Public License as published by the
- * Free Software Foundation; either version 2.1 of the License, or (at your
- * option) any later version.
+ * <p>This library is free software; you can redistribute it and/or modify it under the terms of the
+ * GNU Lesser General Public License as published by the Free Software Foundation; either version
+ * 2.1 of the License, or (at your option) any later version.
  *
- * <p>This library is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License
- * for more details.
+ * <p>This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Lesser General Public License for more details.
  *
- * <p>You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation, Inc.,
- * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * <p>You should have received a copy of the GNU Lesser General Public License along with this
+ * library; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston,
+ * MA 02111-1307 USA
  */
 package org.collaborium.portfolio.jdot;
 
@@ -57,8 +55,8 @@ public class jdotAdmin extends HttpServlet {
     HttpSession session = request.getSession(true);
     // session ID
 
-    portfolioUser thisUser = (portfolioUser)session.getAttribute("User");
-    String callMethod = (String)request.getParameter("mode");
+    portfolioUser thisUser = (portfolioUser) session.getAttribute("User");
+    String callMethod = (String) request.getParameter("mode");
 
     if (thisUser == null || thisUser.getPortfolio() == null) {
       response.setHeader("Refresh", "0; URL=./jportfolio");
@@ -71,24 +69,24 @@ public class jdotAdmin extends HttpServlet {
     }
 
     switch (callMethod.charAt(0)) {
-      //
-      // e -> Post Group Level Assignment
-      // f -> Post Portfolio Assignment
-      // p -> Input User evaluation
-    case 'e':
-      pageContent.append(jlib.topBox("Post Results:"));
-      pageContent.append(postAssignedThread(thisUser, request));
-      pageContent.append(jlib.botBox());
-      break;
-    case 'p':
-      pageContent.append(jlib.topBox("Post Results:"));
-      pageContent.append(postEvaluation(thisUser, request));
-      pageContent.append(jlib.botBox());
-      break;
-    default:
-      pageContent.append("Invalid Post!\n");
+        //
+        // e -> Post Group Level Assignment
+        // f -> Post Portfolio Assignment
+        // p -> Input User evaluation
+      case 'e':
+        pageContent.append(jlib.topBox("Post Results:"));
+        pageContent.append(postAssignedThread(thisUser, request));
+        pageContent.append(jlib.botBox());
+        break;
+      case 'p':
+        pageContent.append(jlib.topBox("Post Results:"));
+        pageContent.append(postEvaluation(thisUser, request));
+        pageContent.append(jlib.botBox());
+        break;
+      default:
+        pageContent.append("Invalid Post!\n");
 
-      break;
+        break;
     }
     sideContent.append(adminSideBar(thisUser));
 
@@ -117,7 +115,7 @@ public class jdotAdmin extends HttpServlet {
     HttpSession session = request.getSession(true);
     // session ID
     String callMethod = request.getParameter("mode");
-    portfolioUser thisUser = (portfolioUser)session.getAttribute("User");
+    portfolioUser thisUser = (portfolioUser) session.getAttribute("User");
 
     if (thisUser == null || thisUser.getPortfolio() == null) {
       response.setHeader("Refresh", "0; URL=./jportfolio");
@@ -129,8 +127,7 @@ public class jdotAdmin extends HttpServlet {
       jlib.addUser(thisUser.getUserID(), "DialogAdmin");
     }
 
-    if (callMethod == null)
-      callMethod = "d";
+    if (callMethod == null) callMethod = "d";
 
     String selectedUserID = request.getParameter("selectedUserID");
 
@@ -141,36 +138,33 @@ public class jdotAdmin extends HttpServlet {
     // e -> Create Group Level Assignment
     // h -> Grade Ethical Question
     {
-    case 'e':
-      pageContent.append(createGroupDialogAssign(thisUser));
-      break;
-    case 'f':
-      pageContent.append(createPortfolioAssign(thisUser));
-      break;
-    case 'w':
-      pageContent.append(gradeDialog(selectedUserID, thisUser.getPortfolio()));
-      break;
-    case 'g':
-      if (selectedUserID == null)
-        pageContent.append(jlib.whichStudent(thisUser, "g", thisPageURL));
-      else
-        pageContent.append(
-            userOptions(thisUser.getPortfolio(), selectedUserID));
-      break;
-    case 't':
-      pageContent.append(statsOptions());
-      pageContent.append(dailyPosts(thisUser.getPortfolio()));
-      break;
-    case 's':
-      pageContent.append(statsOptions());
-      break;
-    case 'z':
-      pageContent.append(
-          "You must be authenticated as Admin in order to log in.");
-      break;
-    case 'd':
-      pageContent.append(printIntro());
-      break;
+      case 'e':
+        pageContent.append(createGroupDialogAssign(thisUser));
+        break;
+      case 'f':
+        pageContent.append(createPortfolioAssign(thisUser));
+        break;
+      case 'w':
+        pageContent.append(gradeDialog(selectedUserID, thisUser.getPortfolio()));
+        break;
+      case 'g':
+        if (selectedUserID == null)
+          pageContent.append(jlib.whichStudent(thisUser, "g", thisPageURL));
+        else pageContent.append(userOptions(thisUser.getPortfolio(), selectedUserID));
+        break;
+      case 't':
+        pageContent.append(statsOptions());
+        pageContent.append(dailyPosts(thisUser.getPortfolio()));
+        break;
+      case 's':
+        pageContent.append(statsOptions());
+        break;
+      case 'z':
+        pageContent.append("You must be authenticated as Admin in order to log in.");
+        break;
+      case 'd':
+        pageContent.append(printIntro());
+        break;
     } // End of switch()
 
     sideContent.append(adminSideBar(thisUser));
@@ -193,10 +187,11 @@ public class jdotAdmin extends HttpServlet {
 
     sbuf.append(jlib.topBox("Dialog Administrator:"));
 
-    sbuf.append("<P>This page allows you to administer various components of "
-                + "the Dialog.  You can view stats for the dialog \n"
-                + ", assign a dialog to a specific group or to the entire "
-                + "portfolio.  You can also grade a users dialog.\n");
+    sbuf.append(
+        "<P>This page allows you to administer various components of "
+            + "the Dialog.  You can view stats for the dialog \n"
+            + ", assign a dialog to a specific group or to the entire "
+            + "portfolio.  You can also grade a users dialog.\n");
 
     sbuf.append(jlib.botBox());
 
@@ -212,15 +207,14 @@ public class jdotAdmin extends HttpServlet {
    * @param realname String value for the realname of the admin
    * @return a String for the successfullness of the post.
    */
-  public String postAssignedThread(portfolioUser thisUser,
-                                   HttpServletRequest req) {
+  public String postAssignedThread(portfolioUser thisUser, HttpServletRequest req) {
 
     StringBuffer sbuf = new StringBuffer();
 
-    String bodyText = (String)req.getParameter("bodyText");
-    String groupID = (String)req.getParameter("groupID");
+    String bodyText = (String) req.getParameter("bodyText");
+    String groupID = (String) req.getParameter("groupID");
     //  String dateDue   = (String)req.getParameter("duedate");
-    String subject = (String)req.getParameter("subject");
+    String subject = (String) req.getParameter("subject");
     ResultSet students = null;
     String security = "group";
     String dateDue = "2001-01-01 12:00:00";
@@ -230,57 +224,95 @@ public class jdotAdmin extends HttpServlet {
 
     try {
       // Find me the new ThreadID to use
-      ResultSet maxth = dbInterface.callDB(
-          "select MAX (idnum)+1 as result "
-          + "from dialog WHERE idnum > 10000 and idnum < 20000");
+      ResultSet maxth =
+          dbInterface.callDB(
+              "select MAX (idnum)+1 as result "
+                  + "from dialog WHERE idnum > 10000 and idnum < 20000");
       String newSTRidnum = null;
       if (maxth != null && maxth.next()) {
         newSTRidnum = maxth.getString("result");
       }
-      if (newSTRidnum == null)
-        newSTRidnum = "10001";
+      if (newSTRidnum == null) newSTRidnum = "10001";
 
       // If this is a post that should go to all
       if (groupID.equalsIgnoreCase("all")) {
-        sbuf.append("<P>This is a post was assigned to all users in "
-                    + " the portfolio.\n");
-        students = dbInterface.callDB("SELECT username from students "
-                                      + " WHERE portfolio = '" +
-                                      thisUser.getPortfolio() + "' ");
+        sbuf.append("<P>This is a post was assigned to all users in " + " the portfolio.\n");
+        students =
+            dbInterface.callDB(
+                "SELECT username from students "
+                    + " WHERE portfolio = '"
+                    + thisUser.getPortfolio()
+                    + "' ");
         // Default security for a portfolio assignment
         security = "public";
         // Something bogus for a gid, it is needed so that all is not used
         groupID = "-99";
         jlib.updateDB(
             "INSERT into calendar(portfolio, description, URL) VALUES "
-            + " ('" + thisUser.getPortfolio() + "', 'Dialog Assigned', "
-            + " '" + portbase +
-            "?dialogType=public&mode=r&idnum=" + newSTRidnum + "' ) ");
+                + " ('"
+                + thisUser.getPortfolio()
+                + "', 'Dialog Assigned', "
+                + " '"
+                + portbase
+                + "?dialogType=public&mode=r&idnum="
+                + newSTRidnum
+                + "' ) ");
       } else // Otherwise just get a listing of students in the group
-        students = dbInterface.callDB(
-            "SELECT username from students WHERE portfolio = "
-            + " '" + thisUser.getPortfolio() + "' and gid = " + groupID + " ");
+      students =
+            dbInterface.callDB(
+                "SELECT username from students WHERE portfolio = "
+                    + " '"
+                    + thisUser.getPortfolio()
+                    + "' and gid = "
+                    + groupID
+                    + " ");
 
       // Put in the DB
       jlib.updateDB(
           "INSERT into dialog(username, name, subject, threadid, idnum, "
-          + " portfolio, security, gid, body, type, expires) values ('" +
-          thisUser.getUserID() + "', "
-          + " '" + thisUser.getRealName() + "', '" + subject + "' "
-          + " , '" + newSTRidnum + "', '" + newSTRidnum + "', '" +
-          thisUser.getPortfolio() + "', '" + security + "', '" + groupID + "' "
-          + " , '" + bodyText + "', 'Response Required', '" + dateDue + "')");
+              + " portfolio, security, gid, body, type, expires) values ('"
+              + thisUser.getUserID()
+              + "', "
+              + " '"
+              + thisUser.getRealName()
+              + "', '"
+              + subject
+              + "' "
+              + " , '"
+              + newSTRidnum
+              + "', '"
+              + newSTRidnum
+              + "', '"
+              + thisUser.getPortfolio()
+              + "', '"
+              + security
+              + "', '"
+              + groupID
+              + "' "
+              + " , '"
+              + bodyText
+              + "', 'Response Required', '"
+              + dateDue
+              + "')");
 
       // For each student create a notification
       while (students.next()) {
         String thisUserID = students.getString("username");
         jlib.updateDB(
             "INSERT into notify(username, portfolio, program, message) "
-            + " VALUES( '" + thisUserID + "', '" + thisUser.getPortfolio() +
-            "',"
-            + "'" + portbase + "?dialogType=" + security +
-            "&mode=r&idnum=" + newSTRidnum + "', "
-            + " 'Dialog Assigned:')");
+                + " VALUES( '"
+                + thisUserID
+                + "', '"
+                + thisUser.getPortfolio()
+                + "',"
+                + "'"
+                + portbase
+                + "?dialogType="
+                + security
+                + "&mode=r&idnum="
+                + newSTRidnum
+                + "', "
+                + " 'Dialog Assigned:')");
       }
 
     } catch (Exception ex) {
@@ -299,79 +331,120 @@ public class jdotAdmin extends HttpServlet {
    * @param portfolio which is the string value for the current portfolio
    * @return HTML string for how this method went
    */
-  public String postEvaluation(portfolioUser thisUser,
-                               HttpServletRequest request) {
+  public String postEvaluation(portfolioUser thisUser, HttpServletRequest request) {
     StringBuffer sbuf = new StringBuffer();
 
-    String selectedUserID = (String)request.getParameter("selectedUser");
-    String score1 = (String)request.getParameter("score1");
-    String blockID = (String)request.getParameter("blockID");
-    String body1 = jlib.cleanString((String)request.getParameter("body1"));
-    String score2 = (String)request.getParameter("score2");
-    String body2 = jlib.cleanString((String)request.getParameter("body2"));
+    String selectedUserID = (String) request.getParameter("selectedUser");
+    String score1 = (String) request.getParameter("score1");
+    String blockID = (String) request.getParameter("blockID");
+    String body1 = jlib.cleanString((String) request.getParameter("body1"));
+    String score2 = (String) request.getParameter("score2");
+    String body2 = jlib.cleanString((String) request.getParameter("body2"));
     String notifyBaseURL = "/jportfolio/servlet/jdot3";
 
     try {
       /* We need to get the porthome value for use in notifications */
-      ResultSet portHome = dbInterface.callDB(
-          "SELECT porthome from portfolios "
-          + " WHERE portfolio = '" + thisUser.getPortfolio() + "' and "
-          + " porthome != '/jportfolio/servlet/' ");
+      ResultSet portHome =
+          dbInterface.callDB(
+              "SELECT porthome from portfolios "
+                  + " WHERE portfolio = '"
+                  + thisUser.getPortfolio()
+                  + "' and "
+                  + " porthome != '/jportfolio/servlet/' ");
       if (portHome.next()) {
         notifyBaseURL = portHome.getString("porthome") + "/dialog/index.jsp";
       }
 
       ResultSet maxth =
-          dbInterface.callDB("select MAX (idnum)+1 as result1, "
-                             + " MAX (idnum)+2 as result2 from dialog "
-                             + " WHERE idnum > 10000 and idnum < 20000");
+          dbInterface.callDB(
+              "select MAX (idnum)+1 as result1, "
+                  + " MAX (idnum)+2 as result2 from dialog "
+                  + " WHERE idnum > 10000 and idnum < 20000");
       String newSTRidnum1 = null;
       String newSTRidnum2 = null;
       if (maxth != null && maxth.next()) {
         newSTRidnum1 = maxth.getString("result1");
         newSTRidnum2 = maxth.getString("result2");
       }
-      if (newSTRidnum1 == null)
-        newSTRidnum1 = "10001";
-      if (newSTRidnum2 == null)
-        newSTRidnum2 = "10002";
+      if (newSTRidnum1 == null) newSTRidnum1 = "10001";
+      if (newSTRidnum2 == null) newSTRidnum2 = "10002";
 
       if (score1 != null && score1.length() != 0) {
         jlib.updateDB(
             "INSERT into dialog(username, name, subject, threadid, idnum, "
-            + " portfolio, security, gid, body, type, touser) values "
-            + " ('" + thisUser.getUserID() + "', "
-            + " '" + thisUser.getRealName() + "', 'Dialog Evaluation' "
-            + " , '" + newSTRidnum1 + "', '" + newSTRidnum1 + "', "
-            + " '" + thisUser.getPortfolio() + "', 'private', '-99' "
-            + " , '" + body1 + "', 'evaluation', '" + selectedUserID + "')");
+                + " portfolio, security, gid, body, type, touser) values "
+                + " ('"
+                + thisUser.getUserID()
+                + "', "
+                + " '"
+                + thisUser.getRealName()
+                + "', 'Dialog Evaluation' "
+                + " , '"
+                + newSTRidnum1
+                + "', '"
+                + newSTRidnum1
+                + "', "
+                + " '"
+                + thisUser.getPortfolio()
+                + "', 'private', '-99' "
+                + " , '"
+                + body1
+                + "', 'evaluation', '"
+                + selectedUserID
+                + "')");
 
         jlib.updateDB(
             "INSERT into notify(username, portfolio, program, message) "
-            + " VALUES( '" + selectedUserID + "', '" + thisUser.getPortfolio() +
-            "',"
-            + " '" + notifyBaseURL +
-            "?dialogType=private&mode=r&idnum=" + newSTRidnum1 + "', "
-            + " 'Evaluation Made:')");
+                + " VALUES( '"
+                + selectedUserID
+                + "', '"
+                + thisUser.getPortfolio()
+                + "',"
+                + " '"
+                + notifyBaseURL
+                + "?dialogType=private&mode=r&idnum="
+                + newSTRidnum1
+                + "', "
+                + " 'Evaluation Made:')");
       }
 
       if (score2 != null && score2.length() != 0) {
         jlib.updateDB(
             "INSERT into dialog(username, name, subject, threadid, idnum, "
-            + " portfolio, security, gid, body, type, touser) values "
-            + " ('" + thisUser.getUserID() + "', "
-            + " '" + thisUser.getRealName() + "', 'Ethical Q Evaluation' "
-            + " , '" + newSTRidnum2 + "', '" + newSTRidnum2 + "', "
-            + " '" + thisUser.getPortfolio() + "', 'private', '-99' "
-            + " , '" + body2 + "', 'evaluation', '" + selectedUserID + "')");
+                + " portfolio, security, gid, body, type, touser) values "
+                + " ('"
+                + thisUser.getUserID()
+                + "', "
+                + " '"
+                + thisUser.getRealName()
+                + "', 'Ethical Q Evaluation' "
+                + " , '"
+                + newSTRidnum2
+                + "', '"
+                + newSTRidnum2
+                + "', "
+                + " '"
+                + thisUser.getPortfolio()
+                + "', 'private', '-99' "
+                + " , '"
+                + body2
+                + "', 'evaluation', '"
+                + selectedUserID
+                + "')");
 
         jlib.updateDB(
             "INSERT into notify(username, portfolio, program, message) "
-            + " VALUES( '" + selectedUserID + "', '" + thisUser.getPortfolio() +
-            "',"
-            + " '" + notifyBaseURL +
-            "?dialogType=private&mode=r&idnum=" + newSTRidnum2 + "', "
-            + " 'Ethical Q Eval:')");
+                + " VALUES( '"
+                + selectedUserID
+                + "', '"
+                + thisUser.getPortfolio()
+                + "',"
+                + " '"
+                + notifyBaseURL
+                + "?dialogType=private&mode=r&idnum="
+                + newSTRidnum2
+                + "', "
+                + " 'Ethical Q Eval:')");
       }
 
       portfolioUser selectedUser = new portfolioUser(selectedUserID);
@@ -405,31 +478,31 @@ public class jdotAdmin extends HttpServlet {
 
     sbuf.append(jlib.topBox("Create Group Dialog Assignment:"));
 
-    sbuf.append("<form method='POST' action='" + thisPageURL +
-                "' name='motd'>\n");
+    sbuf.append("<form method='POST' action='" + thisPageURL + "' name='motd'>\n");
     sbuf.append("<input type='hidden' name='mode' value='e'>\n");
-    sbuf.append("<P><blockquote><font class=\"instructions\">\n"
-                + " With this dialog you can create a group level dialog "
-                + "assignment.  Notification is then sent to all group\n"
-                + " members that a group level assignment has been posted.  "
-                + "Please be sure to fill in all the blanks.\n"
-                + " </font></blockquote>\n"
-                + "<P>Subject of this post:\n"
-                + "<BR><input type='text' name='subject' size='40'>\n"
-                + "<P>Enter the Initial Post for this thread:<BR>\n"
-                + "<textarea COLS='60' ROWS='10' name='bodyText' "
-                + "wrap='Virtual'></textarea>\n"
-                + "<P>Assign This Thread to a Group:<BR>\n"
-                + "<input type=\"text\" name=\"groupID\" size=\"4\">\n"
+    sbuf.append(
+        "<P><blockquote><font class=\"instructions\">\n"
+            + " With this dialog you can create a group level dialog "
+            + "assignment.  Notification is then sent to all group\n"
+            + " members that a group level assignment has been posted.  "
+            + "Please be sure to fill in all the blanks.\n"
+            + " </font></blockquote>\n"
+            + "<P>Subject of this post:\n"
+            + "<BR><input type='text' name='subject' size='40'>\n"
+            + "<P>Enter the Initial Post for this thread:<BR>\n"
+            + "<textarea COLS='60' ROWS='10' name='bodyText' "
+            + "wrap='Virtual'></textarea>\n"
+            + "<P>Assign This Thread to a Group:<BR>\n"
+            + "<input type=\"text\" name=\"groupID\" size=\"4\">\n"
 
-                //	+ "<P>When should this thread by answered by:\n"
-                //	+ "<BR>Ex) 2000-09-05 12:00\n"
-                //	+ "<BR><input type=\"text\" name=\"duedate\">\n"
+            //	+ "<P>When should this thread by answered by:\n"
+            //	+ "<BR>Ex) 2000-09-05 12:00\n"
+            //	+ "<BR><input type=\"text\" name=\"duedate\">\n"
 
-                + "<P>Submit Message:<BR>\n"
-                + "<input type='submit' value='Assign This Dialog'>\n"
-                + "<input type='reset'>\n"
-                + "</FORM>\n");
+            + "<P>Submit Message:<BR>\n"
+            + "<input type='submit' value='Assign This Dialog'>\n"
+            + "<input type='reset'>\n"
+            + "</FORM>\n");
 
     sbuf.append(jlib.botBox());
 
@@ -446,32 +519,31 @@ public class jdotAdmin extends HttpServlet {
     StringBuffer sbuf = new StringBuffer();
 
     sbuf.append(jlib.topBox("Create a Dialog Assignment:"));
-    sbuf.append("<form method='POST' action='" + thisPageURL +
-                "' name='motd'>\n");
+    sbuf.append("<form method='POST' action='" + thisPageURL + "' name='motd'>\n");
     sbuf.append("<input type='hidden' name='mode' value='e'>\n");
     sbuf.append(
         "<font class=\"instructions\">\n"
-        + " This form allows you to make a special top level thread in the "
-        + " public dialog.  This thread is denoted with 'Response Required', "
-        + " a portfolio message is sent to each student alerting them of this "
-        + " post, and a calendar entry is made.  Perhaps you would rather just "
-        + " make a top level post from the normal 'Dialog' interface?\n"
-        + " </font>\n"
-        + "<P>Subject of this post:\n"
-        + "<BR><input type='text' name='subject' size='40'>\n"
-        + "<P>Enter the Initial Post for this thread:<BR>\n"
-        + "<textarea COLS='60' ROWS='10' name='bodyText' "
-        + "wrap='Virtual'></textarea>\n"
-        + "<input type=\"hidden\" name=\"groupID\" value=\"all\">\n"
+            + " This form allows you to make a special top level thread in the "
+            + " public dialog.  This thread is denoted with 'Response Required', "
+            + " a portfolio message is sent to each student alerting them of this "
+            + " post, and a calendar entry is made.  Perhaps you would rather just "
+            + " make a top level post from the normal 'Dialog' interface?\n"
+            + " </font>\n"
+            + "<P>Subject of this post:\n"
+            + "<BR><input type='text' name='subject' size='40'>\n"
+            + "<P>Enter the Initial Post for this thread:<BR>\n"
+            + "<textarea COLS='60' ROWS='10' name='bodyText' "
+            + "wrap='Virtual'></textarea>\n"
+            + "<input type=\"hidden\" name=\"groupID\" value=\"all\">\n"
 
-        //	+ "<P>When should this thread by answered by:\n"
-        //	+ "<BR>Ex) 2000-09-05 12:00\n"
-        //	+ "<BR><input type=\"text\" name=\"duedate\">\n"
+            //	+ "<P>When should this thread by answered by:\n"
+            //	+ "<BR>Ex) 2000-09-05 12:00\n"
+            //	+ "<BR><input type=\"text\" name=\"duedate\">\n"
 
-        + "<P>Submit Message:<BR>\n"
-        + "<input type='submit' value='Assign This Dialog'>\n"
-        + "<input type='reset'>\n"
-        + "</FORM>\n");
+            + "<P>Submit Message:<BR>\n"
+            + "<input type='submit' value='Assign This Dialog'>\n"
+            + "<input type='reset'>\n"
+            + "</FORM>\n");
 
     sbuf.append(jlib.botBox());
 
@@ -500,35 +572,67 @@ public class jdotAdmin extends HttpServlet {
     String EDATE = "2007-03-26";
     try {
       // Stats on user posts
-      ResultSet rs = dbInterface.callDB(
-          "SELECT count(username) as count, "
-          + " round(avg(length(body)),1) as length "
-          + " from dialog WHERE username = '" + userID + "' "
-          + " and security = 'public'"
-          + " and portfolio = '" + portfolio + "' and threadid >= " + P01 +
-          " and threadid != " + ETHICAL + " and threadid <= " + P15 +
-          " and date(date) < '" + EDATE + "' ");
+      ResultSet rs =
+          dbInterface.callDB(
+              "SELECT count(username) as count, "
+                  + " round(avg(length(body)),1) as length "
+                  + " from dialog WHERE username = '"
+                  + userID
+                  + "' "
+                  + " and security = 'public'"
+                  + " and portfolio = '"
+                  + portfolio
+                  + "' and threadid >= "
+                  + P01
+                  + " and threadid != "
+                  + ETHICAL
+                  + " and threadid <= "
+                  + P15
+                  + " and date(date) < '"
+                  + EDATE
+                  + "' ");
 
       // Go get me a listing of all their posts.
-      ResultSet rs2 = dbInterface.callDB(
-          "SELECT idnum from dialog "
-          + " WHERE username = '" + userID + "' "
-          + " and security = 'public'"
-          + " and portfolio = '" + portfolio + "' and threadid >= " + P01 +
-          " and threadid != " + ETHICAL + " and threadid <= " + P15 +
-          " and date(date) < '" + EDATE + "' ");
+      ResultSet rs2 =
+          dbInterface.callDB(
+              "SELECT idnum from dialog "
+                  + " WHERE username = '"
+                  + userID
+                  + "' "
+                  + " and security = 'public'"
+                  + " and portfolio = '"
+                  + portfolio
+                  + "' and threadid >= "
+                  + P01
+                  + " and threadid != "
+                  + ETHICAL
+                  + " and threadid <= "
+                  + P15
+                  + " and date(date) < '"
+                  + EDATE
+                  + "' ");
 
       // Figure out how many responses they had
-      ResultSet rs4 = dbInterface.callDB(
-          "SELECT count(username) as count "
-          + " from dialog WHERE idnum > 1000000000000::numeric "
-          + " and username = '" + userID + "' "
-          + " and security = 'public'"
-          + " and portfolio = '" + portfolio + "' and threadid >= " + P01 +
-          " and threadid != " + ETHICAL + " and threadid <= " + P15 +
-          " and date(date) < '" + EDATE + "' ");
-      if (rs4.next())
-        responses = rs4.getString("count");
+      ResultSet rs4 =
+          dbInterface.callDB(
+              "SELECT count(username) as count "
+                  + " from dialog WHERE idnum > 1000000000000::numeric "
+                  + " and username = '"
+                  + userID
+                  + "' "
+                  + " and security = 'public'"
+                  + " and portfolio = '"
+                  + portfolio
+                  + "' and threadid >= "
+                  + P01
+                  + " and threadid != "
+                  + ETHICAL
+                  + " and threadid <= "
+                  + P15
+                  + " and date(date) < '"
+                  + EDATE
+                  + "' ");
+      if (rs4.next()) responses = rs4.getString("count");
 
       // Loop through the user's posts
       while (rs2.next()) {
@@ -538,27 +642,41 @@ public class jdotAdmin extends HttpServlet {
         BigInteger endID = new BigInteger(thisIDnum);
         BigInteger secondOne = endID.add(BigInteger.ONE);
 
-        ResultSet rs3 = dbInterface.callDB(
-            "SELECT " + totalCount + " + count(username) as count "
-            + "  from dialog WHERE username != '" + userID + "' "
-            + " and idnum > " + beginID.toString() + "0000::numeric "
-            + " and idnum < " + secondOne.toString() + "0000::numeric");
-        if (rs3.next())
-          totalCount = rs3.getString("count");
+        ResultSet rs3 =
+            dbInterface.callDB(
+                "SELECT "
+                    + totalCount
+                    + " + count(username) as count "
+                    + "  from dialog WHERE username != '"
+                    + userID
+                    + "' "
+                    + " and idnum > "
+                    + beginID.toString()
+                    + "0000::numeric "
+                    + " and idnum < "
+                    + secondOne.toString()
+                    + "0000::numeric");
+        if (rs3.next()) totalCount = rs3.getString("count");
       }
 
       if (rs.next()) {
-        sbuf.append("<table>\n"
-                    + "<tr><th>Total Posts</th> <td>" + rs.getString("count") +
-                    "</td></tr>\n"
-                    + "<tr><th>Average Post in Characters</th>"
-                    + "<td>" + rs.getString("length") + "</td></tr>\n");
+        sbuf.append(
+            "<table>\n"
+                + "<tr><th>Total Posts</th> <td>"
+                + rs.getString("count")
+                + "</td></tr>\n"
+                + "<tr><th>Average Post in Characters</th>"
+                + "<td>"
+                + rs.getString("length")
+                + "</td></tr>\n");
       }
 
-      sbuf.append("<tr><th>Total Responses by others</th>"
-                  + "<td>" + totalCount + "</td></tr>\n");
-      sbuf.append("<tr><th>Number of followups by student</th>"
-                  + "<td>" + responses + "</td></tr></table>\n");
+      sbuf.append("<tr><th>Total Responses by others</th>" + "<td>" + totalCount + "</td></tr>\n");
+      sbuf.append(
+          "<tr><th>Number of followups by student</th>"
+              + "<td>"
+              + responses
+              + "</td></tr></table>\n");
 
     } catch (Exception ex) {
       System.err.println("Hello");
@@ -567,37 +685,39 @@ public class jdotAdmin extends HttpServlet {
 
     sbuf.append(
         "<P><B>Post Your Evaluations:</B><BR>\n"
-        + "<blockquote>If you do not enter a score for either the dialog "
-        + "section\n "
-        + " or the ethical Q section, the evaluation for that section will "
-        + "not be\n"
-        +
-        " posted.  This means that you can just do one or the other or both.\n"
-        + "</blockquote>\n"
-        + "<FORM action=\"" + thisPageURL + "\" method=\"POST\">\n"
-        + "<input type=\"hidden\" value=\"p\" name=\"mode\">\n"
-        + "<input type=\"hidden\" value=\"" + userID +
-        "\" name=\"selectedUser\">\n"
-        + "<p>Select Block ID:<br>\n"
-        + "<select name='blockID'>\n"
-        + "  <option value=\"1\" SELECTED>Block 1\n"
-        + "  <option value=\"2\">Block 2\n"
-        + "  <option value=\"3\">Block 3\n"
-        + "</select>\n" +
-        ("<P>Assign a dialog score: (<i>Input 0 to not submit grade, only "
-         + "evaluation</i>)<BR>\n") +
-        "<input type=\"text\" name=\"score1\" size=\"4\">\n"
-        + "<P>Enter your dialog evaluation:<BR>\n" +
-        ("<TEXTAREA name=\"body1\" cols=\"60\" ROWS=\"10\" "
-         + "WRAP=\"Virtual\"></TEXTAREA>\n") +
-        ("<p>Assign a Ethical Q score: (<i>Input 0 to not submit grade, "
-         + "only evaluation</i>)<br>\n") +
-        "<input type=\"text\" name=\"score2\" size=\"4\">\n"
-        + "<p>Enter your Ethical Q evaluation:<br>\n" +
-        ("<TEXTAREA name=\"body2\" cols=\"60\" ROWS=\"10\" "
-         + "WRAP=\"Virtual\"></TEXTAREA>\n") +
-        "<P><input type=\"SUBMIT\" value=\"Grade\">\n"
-        + "</FORM>\n");
+            + "<blockquote>If you do not enter a score for either the dialog "
+            + "section\n "
+            + " or the ethical Q section, the evaluation for that section will "
+            + "not be\n"
+            + " posted.  This means that you can just do one or the other or both.\n"
+            + "</blockquote>\n"
+            + "<FORM action=\""
+            + thisPageURL
+            + "\" method=\"POST\">\n"
+            + "<input type=\"hidden\" value=\"p\" name=\"mode\">\n"
+            + "<input type=\"hidden\" value=\""
+            + userID
+            + "\" name=\"selectedUser\">\n"
+            + "<p>Select Block ID:<br>\n"
+            + "<select name='blockID'>\n"
+            + "  <option value=\"1\" SELECTED>Block 1\n"
+            + "  <option value=\"2\">Block 2\n"
+            + "  <option value=\"3\">Block 3\n"
+            + "</select>\n"
+            + ("<P>Assign a dialog score: (<i>Input 0 to not submit grade, only "
+                + "evaluation</i>)<BR>\n")
+            + "<input type=\"text\" name=\"score1\" size=\"4\">\n"
+            + "<P>Enter your dialog evaluation:<BR>\n"
+            + ("<TEXTAREA name=\"body1\" cols=\"60\" ROWS=\"10\" "
+                + "WRAP=\"Virtual\"></TEXTAREA>\n")
+            + ("<p>Assign a Ethical Q score: (<i>Input 0 to not submit grade, "
+                + "only evaluation</i>)<br>\n")
+            + "<input type=\"text\" name=\"score2\" size=\"4\">\n"
+            + "<p>Enter your Ethical Q evaluation:<br>\n"
+            + ("<TEXTAREA name=\"body2\" cols=\"60\" ROWS=\"10\" "
+                + "WRAP=\"Virtual\"></TEXTAREA>\n")
+            + "<P><input type=\"SUBMIT\" value=\"Grade\">\n"
+            + "</FORM>\n");
 
     sbuf.append(jlib.botBox());
     return sbuf.toString();
@@ -618,27 +738,33 @@ public class jdotAdmin extends HttpServlet {
 
     sbuf.append(jlib.topBox("Dialog Grader:"));
 
-    sbuf.append("<P>Evaluate a different <a href=\"" + thisPageURL +
-                "?mode=g\">user</a>.<BR>\n");
+    sbuf.append("<P>Evaluate a different <a href=\"" + thisPageURL + "?mode=g\">user</a>.<BR>\n");
 
     sbuf.append(
         "<font class=\"instructions\"><blockquote>This page allows you to "
-        + "view a certain users dialog\n"
-        + " and assign some sort of grade to the user.</blockquote></font>\n");
+            + "view a certain users dialog\n"
+            + " and assign some sort of grade to the user.</blockquote></font>\n");
 
     sbuf.append("<P>View All User Dialog:<BR>");
-    sbuf.append("<a href=\"" + jlib.httpBase +
-                "/jsp/admin/printDialog.jsp?blockID=1&selectedUser=" +
-                jlib.cleanGetString(selectedUserID) + "\" "
-                + " target=\"_new\">Block 1</a>\n"
-                + "<BR><a href=\"" + jlib.httpBase +
-                "/jsp/admin/printDialog.jsp?blockID=2&selectedUser=" +
-                jlib.cleanGetString(selectedUserID) + "\" "
-                + " target=\"_new\">Block 2</a>\n"
-                + "<BR><a href=\"" + jlib.httpBase +
-                "/jsp/admin/printDialog.jsp?blockID=3&selectedUser=" +
-                jlib.cleanGetString(selectedUserID) + "\" "
-                + " target=\"_new\">Block 3</a>\n");
+    sbuf.append(
+        "<a href=\""
+            + jlib.httpBase
+            + "/jsp/admin/printDialog.jsp?blockID=1&selectedUser="
+            + jlib.cleanGetString(selectedUserID)
+            + "\" "
+            + " target=\"_new\">Block 1</a>\n"
+            + "<BR><a href=\""
+            + jlib.httpBase
+            + "/jsp/admin/printDialog.jsp?blockID=2&selectedUser="
+            + jlib.cleanGetString(selectedUserID)
+            + "\" "
+            + " target=\"_new\">Block 2</a>\n"
+            + "<BR><a href=\""
+            + jlib.httpBase
+            + "/jsp/admin/printDialog.jsp?blockID=3&selectedUser="
+            + jlib.cleanGetString(selectedUserID)
+            + "\" "
+            + " target=\"_new\">Block 3</a>\n");
     sbuf.append(jlib.botBox());
 
     sbuf.append("<P>\n");
@@ -655,25 +781,27 @@ public class jdotAdmin extends HttpServlet {
 
     sbuf.append(
         "<blockquote><font color=\"green\">Here is a daily summary of total \n"
-        + " posts and average length of each post for that day.  The length "
-        + "is in terms of \n"
-        + " characters.</font></blockquote>\n");
+            + " posts and average length of each post for that day.  The length "
+            + "is in terms of \n"
+            + " characters.</font></blockquote>\n");
 
     sbuf.append("<TABLE width=\"100%\">\n");
-    sbuf.append(
-        "<TR><TH>Date:</TH><TH>Posts:</TH><TH>Ave(Len) per post:</TH></TR>\n");
+    sbuf.append("<TR><TH>Date:</TH><TH>Posts:</TH><TH>Ave(Len) per post:</TH></TR>\n");
 
     try {
-      ResultSet rs = dbInterface.callDB(
-          "SELECT count(username) as posts, date(date) , avg(length(body)) "
-          + "as len from dialog "
-          + " WHERE portfolio = '" + portfolio + "' GROUP by date(date)");
+      ResultSet rs =
+          dbInterface.callDB(
+              "SELECT count(username) as posts, date(date) , avg(length(body)) "
+                  + "as len from dialog "
+                  + " WHERE portfolio = '"
+                  + portfolio
+                  + "' GROUP by date(date)");
       while (rs.next()) {
         String posts = rs.getString("posts");
         String strDate = rs.getString("date");
         String len = rs.getString("len");
-        sbuf.append("  <TR><TD>" + strDate + "</TD><TD>" + posts + "</TD><TD>" +
-                    len + "</TD></TR>\n");
+        sbuf.append(
+            "  <TR><TD>" + strDate + "</TD><TD>" + posts + "</TD><TD>" + len + "</TD></TR>\n");
       }
 
     } catch (Exception ex) {
@@ -698,10 +826,12 @@ public class jdotAdmin extends HttpServlet {
 
     sbuf.append(jlib.topBox("Available Statistics:"));
 
-    sbuf.append("<UL>\n"
-                + "  <LI><a href=\"" + thisPageURL +
-                "?mode=t\">Daily Posts</a></LI>\n"
-                + "</UL>\n");
+    sbuf.append(
+        "<UL>\n"
+            + "  <LI><a href=\""
+            + thisPageURL
+            + "?mode=t\">Daily Posts</a></LI>\n"
+            + "</UL>\n");
 
     sbuf.append(jlib.botBox());
 
@@ -727,14 +857,19 @@ public class jdotAdmin extends HttpServlet {
 
     myBuffer.append(jlib.topBox("Admin Commands:"));
 
-    myBuffer.append("<ul><li><a class=\"commands\" href='" + thisPageURL +
-                    "?mode=s'>Stats</a></li>\n"
-                    + " <li><a class=\"commands\" href='" + thisPageURL +
-                    "?mode=e'>Assign A Group Dialog</a></li>\n"
-                    + " <li><a class=\"commands\" href='" + thisPageURL +
-                    "?mode=f'>Assign A Portfolio Dialog</a></li>\n"
-                    + " <li><a class=\"commands\" href='" + thisPageURL +
-                    "?mode=g'>Grade Dialog</a></li></ul>\n");
+    myBuffer.append(
+        "<ul><li><a class=\"commands\" href='"
+            + thisPageURL
+            + "?mode=s'>Stats</a></li>\n"
+            + " <li><a class=\"commands\" href='"
+            + thisPageURL
+            + "?mode=e'>Assign A Group Dialog</a></li>\n"
+            + " <li><a class=\"commands\" href='"
+            + thisPageURL
+            + "?mode=f'>Assign A Portfolio Dialog</a></li>\n"
+            + " <li><a class=\"commands\" href='"
+            + thisPageURL
+            + "?mode=g'>Grade Dialog</a></li></ul>\n");
 
     myBuffer.append(jlib.botBox());
 

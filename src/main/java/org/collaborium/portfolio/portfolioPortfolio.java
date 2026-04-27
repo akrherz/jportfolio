@@ -1,19 +1,17 @@
 /**
  * Copyright 2001-2005 Iowa State University jportfolio@collaborium.org
  *
- * <p>This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Lesser General Public License as published by the
- * Free Software Foundation; either version 2.1 of the License, or (at your
- * option) any later version.
+ * <p>This library is free software; you can redistribute it and/or modify it under the terms of the
+ * GNU Lesser General Public License as published by the Free Software Foundation; either version
+ * 2.1 of the License, or (at your option) any later version.
  *
- * <p>This library is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License
- * for more details.
+ * <p>This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Lesser General Public License for more details.
  *
- * <p>You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation, Inc.,
- * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * <p>You should have received a copy of the GNU Lesser General Public License along with this
+ * library; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston,
+ * MA 02111-1307 USA
  */
 package org.collaborium.portfolio;
 
@@ -52,8 +50,8 @@ public class portfolioPortfolio {
     this.admins = new ArrayList<>();
 
     try {
-      ResultSet rs = dbInterface.callDB("SELECT * from appregistry "
-                                        + " WHERE portfolio = '" + id + "'  ");
+      ResultSet rs =
+          dbInterface.callDB("SELECT * from appregistry " + " WHERE portfolio = '" + id + "'  ");
       if (rs.next()) {
         this.usesCalendar = rs.getBoolean("use_calendar");
         this.usesDialog = rs.getBoolean("use_dialog");
@@ -66,21 +64,23 @@ public class portfolioPortfolio {
         this.usesQuiz = true;
       }
 
-      rs = dbInterface.callDB("SELECT porthome, name, groupp from portfolios "
-                              + " WHERE portfolio = '" + id + "'  ");
+      rs =
+          dbInterface.callDB(
+              "SELECT porthome, name, groupp from portfolios "
+                  + " WHERE portfolio = '"
+                  + id
+                  + "'  ");
       if (rs.next()) {
-        this.home = (String)rs.getString("porthome");
+        this.home = (String) rs.getString("porthome");
         this.base = this.home;
-        this.name = (String)rs.getString("name");
+        this.name = (String) rs.getString("name");
         if (rs.getString("groupp") != null) {
-          this.groupp = (String)rs.getString("groupp");
+          this.groupp = (String) rs.getString("groupp");
           this.pList = "('" + newID + "','" + groupp + "')";
-        } else
-          this.groupp = "null";
+        } else this.groupp = "null";
       }
 
-      rs = dbInterface.callDB("SELECT admin from admins WHERE "
-                              + " portfolio = '" + id + "' ");
+      rs = dbInterface.callDB("SELECT admin from admins WHERE " + " portfolio = '" + id + "' ");
       while (rs.next()) {
         admins.add(rs.getString("admin"));
       }
@@ -90,24 +90,38 @@ public class portfolioPortfolio {
     }
   } // End of portfolioPortfolio
 
-  public String getPList() { return this.pList; }
+  public String getPList() {
+    return this.pList;
+  }
 
-  public String getID() { return this.id; }
+  public String getID() {
+    return this.id;
+  }
 
-  public String getName() { return this.name; }
+  public String getName() {
+    return this.name;
+  }
 
-  public String getHome() { return this.home; }
+  public String getHome() {
+    return this.home;
+  }
 
-  public String getBase() { return this.base; }
+  public String getBase() {
+    return this.base;
+  }
 
-  public List<String> getAdmins() { return this.admins; }
+  public List<String> getAdmins() {
+    return this.admins;
+  }
 
   /**
    * Return the value of the dialog Security
    *
    * @return String value of dialogSecurity
    */
-  public String getDialogSecurity() { return this.dialogSecurity; }
+  public String getDialogSecurity() {
+    return this.dialogSecurity;
+  }
 
   /**
    * Method to set dialogSecurity
@@ -116,8 +130,7 @@ public class portfolioPortfolio {
    */
   public void setDialogSecurity(String newDialogSecurity) {
     plogger.report("-----Setting DIALOG security" + newDialogSecurity);
-    if (newDialogSecurity != null)
-      this.dialogSecurity = newDialogSecurity;
+    if (newDialogSecurity != null) this.dialogSecurity = newDialogSecurity;
   }
 
   /**

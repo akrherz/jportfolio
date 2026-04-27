@@ -19,16 +19,15 @@ public class authBean {
    * @return string or perhaps null!
    */
   public String getCGI(HttpServletRequest request, String varname) {
-    String t = (String)request.getParameter(varname);
-    if (t != null && !t.equals(""))
-      return t;
+    String t = (String) request.getParameter(varname);
+    if (t != null && !t.equals("")) return t;
     return null;
   }
 
   /** Constructor for the authBean class */
   public authBean(HttpServletRequest request, HttpSession session) {
     /* Test pull from the session */
-    thisUser = (portfolioUser)session.getAttribute("User");
+    thisUser = (portfolioUser) session.getAttribute("User");
 
     /* Check for SSO authentication first */
     if (thisUser == null && SSOHelper.isSSO(request)) {
@@ -60,8 +59,7 @@ public class authBean {
     // }
 
     // Nothing to do
-    if (thisUser != null && thisUser.getPortfolio() != null)
-      return;
+    if (thisUser != null && thisUser.getPortfolio() != null) return;
 
     // Attempting to join a portfolio
     if (cgiPortPass != null && cgiPort != null) {
@@ -100,8 +98,7 @@ public class authBean {
 
     ResultSet rs = null;
     try {
-      rs = dbInterface.callDB("SELECT * from users "
-                              + " WHERE username = '" + reqUserID + "' ");
+      rs = dbInterface.callDB("SELECT * from users " + " WHERE username = '" + reqUserID + "' ");
       if (rs.next()) {
         return null;
       }
@@ -109,16 +106,26 @@ public class authBean {
       ex.printStackTrace();
     }
 
-    jlib.updateDB("INSERT into users(fname, lname, passwd, username, email) "
-                  + " values('" + reqfName + "', '" + reqlName + "', '" +
-                  password1 + "', "
-                  + " '" + reqUserID + "', '" + email + "') ");
+    jlib.updateDB(
+        "INSERT into users(fname, lname, passwd, username, email) "
+            + " values('"
+            + reqfName
+            + "', '"
+            + reqlName
+            + "', '"
+            + password1
+            + "', "
+            + " '"
+            + reqUserID
+            + "', '"
+            + email
+            + "') ");
 
     return new portfolioUser(reqUserID);
   }
 
-  public boolean requiredUserPort(HttpServletResponse response,
-                                  HttpSession session, String comebackURL) {
+  public boolean requiredUserPort(
+      HttpServletResponse response, HttpSession session, String comebackURL) {
     if (thisUser == null || thisUser.getPortfolio() == null) {
       session.setAttribute("comebackURL", comebackURL);
       response.setHeader("Refresh", "0; URL=/jportfolio/login.jsp");
@@ -132,9 +139,9 @@ public class authBean {
     ResultSet rs = null;
     String dbPass = null;
     try {
-      rs = dbInterface.callDBWithParameters("SELECT * from users "
-                                                + " WHERE username = ?",
-                                            Arrays.asList(username));
+      rs =
+          dbInterface.callDBWithParameters(
+              "SELECT * from users " + " WHERE username = ?", Arrays.asList(username));
       if (rs != null && rs.next()) {
         dbPass = rs.getString("passwd");
       } else {

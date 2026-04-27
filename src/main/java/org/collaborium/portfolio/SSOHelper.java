@@ -11,8 +11,7 @@ public class SSOHelper {
   }
 
   /**
-   * Get the authenticated user ID from SSO headers Extract username from email
-   * by splitting on '@'
+   * Get the authenticated user ID from SSO headers Extract username from email by splitting on '@'
    */
   public static String getSSOUserID(HttpServletRequest request) {
     String email = request.getHeader("X-Remote-User-Email");
@@ -61,8 +60,7 @@ public class SSOHelper {
   }
 
   /** Create a new user account from SSO information */
-  private static void createSSOUser(String userID, String email,
-                                    String fullName) {
+  private static void createSSOUser(String userID, String email, String fullName) {
     String firstName = "";
     String lastName = "";
 
@@ -89,10 +87,17 @@ public class SSOHelper {
     }
 
     try {
-      jlib.updateDB("INSERT into users(fname, lname, passwd, username, email) "
-                    + " values('" + jlib.cleanString(firstName) + "', '" +
-                    jlib.cleanString(lastName) + "', 'SSO_AUTH', '" + userID +
-                    "', '" + (email != null ? email : "") + "')");
+      jlib.updateDB(
+          "INSERT into users(fname, lname, passwd, username, email) "
+              + " values('"
+              + jlib.cleanString(firstName)
+              + "', '"
+              + jlib.cleanString(lastName)
+              + "', 'SSO_AUTH', '"
+              + userID
+              + "', '"
+              + (email != null ? email : "")
+              + "')");
     } catch (Exception e) {
       e.printStackTrace();
     }

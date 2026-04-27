@@ -1,19 +1,17 @@
 /**
  * Copyright 2001-2005 Iowa State University jportfolio@collaborium.org
  *
- * <p>This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Lesser General Public License as published by the
- * Free Software Foundation; either version 2.1 of the License, or (at your
- * option) any later version.
+ * <p>This library is free software; you can redistribute it and/or modify it under the terms of the
+ * GNU Lesser General Public License as published by the Free Software Foundation; either version
+ * 2.1 of the License, or (at your option) any later version.
  *
- * <p>This library is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License
- * for more details.
+ * <p>This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Lesser General Public License for more details.
  *
- * <p>You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation, Inc.,
- * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * <p>You should have received a copy of the GNU Lesser General Public License along with this
+ * library; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston,
+ * MA 02111-1307 USA
  */
 /**
  * Container Class for Portfolio Messages. It will dramatically clean up jdot*
@@ -67,10 +65,8 @@ public class portfolioMessage {
    * @param newUser which is the portfolioUser container
    * @return instance of portfolioMessage
    */
-  public portfolioMessage(portfolioUser newUser, ResultSet rs)
-      throws SQLException {
-    if (newUser != null)
-      this.thisUser = newUser;
+  public portfolioMessage(portfolioUser newUser, ResultSet rs) throws SQLException {
+    if (newUser != null) this.thisUser = newUser;
     getMessageRS(rs);
   }
 
@@ -110,8 +106,7 @@ public class portfolioMessage {
 
   private void getMessage() throws SQLException {
     ResultSet rs =
-        dbInterface.callDB("SELECT * from dialog "
-                           + " WHERE idnum = '" + idnum + "'::numeric ");
+        dbInterface.callDB("SELECT * from dialog " + " WHERE idnum = '" + idnum + "'::numeric ");
 
     if (rs.next()) {
       // Okay, now we begin assignments
@@ -126,10 +121,9 @@ public class portfolioMessage {
    * @param newUser which is the portfolioUser container
    * @return instance of portfolioMessage
    */
-  public portfolioMessage(portfolioUser newUser, String messageID,
-                          boolean retrieveDB) throws SQLException {
-    if (newUser != null)
-      this.thisUser = newUser;
+  public portfolioMessage(portfolioUser newUser, String messageID, boolean retrieveDB)
+      throws SQLException {
+    if (newUser != null) this.thisUser = newUser;
     setidnum(messageID);
     if (retrieveDB) {
       getMessage();
@@ -143,20 +137,14 @@ public class portfolioMessage {
    * @param newUser which is the portfolioUser container
    * @return instance of portfolioMessage
    */
-  public portfolioMessage(portfolioUser newUser, String messageID)
-      throws SQLException {
-    if (newUser != null)
-      this.thisUser = newUser;
+  public portfolioMessage(portfolioUser newUser, String messageID) throws SQLException {
+    if (newUser != null) this.thisUser = newUser;
     setidnum(messageID);
     getMessage();
   }
 
-  /**
-   * Create a quick reference to a portfolioMessage, just so that we can do DB
-   * IO for it
-   */
-  public portfolioMessage(String messageID, boolean retrieveDB)
-      throws SQLException {
+  /** Create a quick reference to a portfolioMessage, just so that we can do DB IO for it */
+  public portfolioMessage(String messageID, boolean retrieveDB) throws SQLException {
     setidnum(messageID);
     if (retrieveDB) {
       getMessage();
@@ -164,8 +152,8 @@ public class portfolioMessage {
   } // End of portfolioMessage
 
   /**
-   * If we are instanced with a messageID, then the message is in the DB.
-   * Horray. We pull the message and set up vars
+   * If we are instanced with a messageID, then the message is in the DB. Horray. We pull the
+   * message and set up vars
    */
   public portfolioMessage(String messageID) throws SQLException {
     setidnum(messageID);
@@ -180,18 +168,40 @@ public class portfolioMessage {
     //    plogger.report(authorName +"::"+ subject +"::"+ body );
     dbInterface.updateDB(
         "insert into dialog (username, name, "
-        + " subject, body, threadid, "
-        + " idnum, portfolio, type, security, gID, link, topicid)"
-        + " values('" + author + "', '" + stringUtils.cleanString(authorName) +
-        "', "
-        + " '" + stringUtils.cleanString(subject) + "',"
-        + " '" + stringUtils.cleanString(body) + "', "
-        + " '" + threadID + "',"
-        + " '" + idnum + "', '" + portfolio + "', "
-        + " '" + stringUtils.cleanString(classification) + "', "
-        + " '" + security + "', " + gid + " , '" +
-        stringUtils.cleanString(link) + "', "
-        + " '" + topicid + "')");
+            + " subject, body, threadid, "
+            + " idnum, portfolio, type, security, gID, link, topicid)"
+            + " values('"
+            + author
+            + "', '"
+            + stringUtils.cleanString(authorName)
+            + "', "
+            + " '"
+            + stringUtils.cleanString(subject)
+            + "',"
+            + " '"
+            + stringUtils.cleanString(body)
+            + "', "
+            + " '"
+            + threadID
+            + "',"
+            + " '"
+            + idnum
+            + "', '"
+            + portfolio
+            + "', "
+            + " '"
+            + stringUtils.cleanString(classification)
+            + "', "
+            + " '"
+            + security
+            + "', "
+            + gid
+            + " , '"
+            + stringUtils.cleanString(link)
+            + "', "
+            + " '"
+            + topicid
+            + "')");
   }
 
   /**
@@ -205,37 +215,49 @@ public class portfolioMessage {
     try {
       Timestamp tempstamp = thisUser.getLastLogin();
 
-      if (postTS == null)
-        postTS = tempstamp;
+      if (postTS == null) postTS = tempstamp;
 
       if (tempstamp.before(postTS)) {
-        newStr = "<img src=\"/jportfolio/images/new.gif\" alt=\"new\" "
-                 + "align=\"left\">\n";
+        newStr = "<img src=\"/jportfolio/images/new.gif\" alt=\"new\" " + "align=\"left\">\n";
       }
     } catch (Exception ex) {
       plogger.report("Line 217 in portfolioMessage, argh");
       ex.printStackTrace();
     }
 
-    sbuf.append("<div class=\"dialog-post-header\">\n" + newStr +
-                "<h4 class=\"" + classification + "\">" + subject + " (" +
-                classification + ")</h4>\n"
-                + " Posted by <a href=\"/jportfolio/users/" + author + "\">" +
-                authorName + "</a>");
+    sbuf.append(
+        "<div class=\"dialog-post-header\">\n"
+            + newStr
+            + "<h4 class=\""
+            + classification
+            + "\">"
+            + subject
+            + " ("
+            + classification
+            + ")</h4>\n"
+            + " Posted by <a href=\"/jportfolio/users/"
+            + author
+            + "\">"
+            + authorName
+            + "</a>");
     if (this.role != null) {
       sbuf.append(" (" + this.role + ") ");
     }
 
     if (postedDate != null) {
-      sbuf.append(" on"
-                  + " " + stringUtils.gmtDate(getDate()));
+      sbuf.append(" on" + " " + stringUtils.gmtDate(getDate()));
     }
     sbuf.append("</div>\n");
     sbuf.append("<p>" + stringUtils.toBR(body));
 
     if (link != null && link.length() > 0) {
-      sbuf.append("<div class=\"dialog-post-link\">Link: <a target=\"_new\" "
-                  + " href=\"" + link + "\">" + link + "</a></div>\n");
+      sbuf.append(
+          "<div class=\"dialog-post-link\">Link: <a target=\"_new\" "
+              + " href=\""
+              + link
+              + "\">"
+              + link
+              + "</a></div>\n");
     }
 
     return sbuf.toString();
@@ -293,23 +315,37 @@ public class portfolioMessage {
     // currently we only allow a 6 deep thread, so if the idnum is 6x5 chars in
     // length, we had better not allow them to reply to this post
     if (idnum.length() < 30)
-      sbuf.append("\n<a href='" + thisPageURL + "?mode=p&threadid=" + threadID +
-                  "&idnum=" + idnum + "'>"
-                  + "Post a follow up</a>\n");
+      sbuf.append(
+          "\n<a href='"
+              + thisPageURL
+              + "?mode=p&threadid="
+              + threadID
+              + "&idnum="
+              + idnum
+              + "'>"
+              + "Post a follow up</a>\n");
     else
-      sbuf.append("\n<i>Sorry, this post is too deep in the discussion to "
-                  + "respond to.</i>\n");
+      sbuf.append("\n<i>Sorry, this post is too deep in the discussion to " + "respond to.</i>\n");
 
     String numMessages = subPosts();
 
     if (!numMessages.equalsIgnoreCase("0")) {
 
-      sbuf.append("\n(Follow-Ups: " + numMessages + ") "
-                  + " <a href='" + thisPageURL + "?mode=r&idnum=" + idnum +
-                  "'>Read More</a>"
-                  + " &nbsp; | &nbsp; <a href='" + thisPageURL +
-                  "?mode=e&threadid=" + threadID + "'>Overview</a>"
-                  + "<br> ");
+      sbuf.append(
+          "\n(Follow-Ups: "
+              + numMessages
+              + ") "
+              + " <a href='"
+              + thisPageURL
+              + "?mode=r&idnum="
+              + idnum
+              + "'>Read More</a>"
+              + " &nbsp; | &nbsp; <a href='"
+              + thisPageURL
+              + "?mode=e&threadid="
+              + threadID
+              + "'>Overview</a>"
+              + "<br> ");
     }
     sbuf.append("</div>\n");
 
@@ -324,10 +360,15 @@ public class portfolioMessage {
     String numMessages = "0";
 
     try {
-      ResultSet rs2 = dbInterface.callDB(
-          "select count(name) as result "
-          + " from dialog where idnum > " + idnum + "0000::numeric "
-          + " and idnum < " + secondOne + "0000::numeric ");
+      ResultSet rs2 =
+          dbInterface.callDB(
+              "select count(name) as result "
+                  + " from dialog where idnum > "
+                  + idnum
+                  + "0000::numeric "
+                  + " and idnum < "
+                  + secondOne
+                  + "0000::numeric ");
       rs2.next();
       numMessages = rs2.getString("result");
     } catch (Exception ex) {
@@ -346,34 +387,56 @@ public class portfolioMessage {
     StringBuffer sbuf = new StringBuffer();
     String numMessages = subPosts();
     try {
-      sbuf.append("<P><i>subject:</i><font size=+1 "
-                  + "class=\"" + classification + "\"><b>" + subject + " (" +
-                  classification + ")</b></font>\n");
+      sbuf.append(
+          "<P><i>subject:</i><font size=+1 "
+              + "class=\""
+              + classification
+              + "\"><b>"
+              + subject
+              + " ("
+              + classification
+              + ")</b></font>\n");
     } catch (Exception ex) {
-      sbuf.append("<P><i>subject:</i><font size=+1><b>" + subject + " (" +
-                  classification + ")</b></font>\n");
+      sbuf.append(
+          "<P><i>subject:</i><font size=+1><b>"
+              + subject
+              + " ("
+              + classification
+              + ")</b></font>\n");
     }
 
     // More info
-    sbuf.append("\n<BR><i>author:</i>"
-                + "<a class='commands' href='/jportfolio/users/" + author +
-                "'>" + authorName + "</a> "
-                + "\n<BR><i>date:</i>" + stringUtils.gmtDate(getDate()) +
-                "\n<BR><i>posts:</i> Currently " + numMessages +
-                " responses\n");
+    sbuf.append(
+        "\n<BR><i>author:</i>"
+            + "<a class='commands' href='/jportfolio/users/"
+            + author
+            + "'>"
+            + authorName
+            + "</a> "
+            + "\n<BR><i>date:</i>"
+            + stringUtils.gmtDate(getDate())
+            + "\n<BR><i>posts:</i> Currently "
+            + numMessages
+            + " responses\n");
     sbuf.append("\n<BR><i>groupID:</i>" + gid);
 
     sbuf.append("<P>");
     sbuf.append(stringUtils.toBR(body));
 
     if (link != null && link != "")
-      sbuf.append("<BR><B>Link Ref:</B> <a target=\"_new\" "
-                  + " href=\"" + link + "\">" + link + "</a>\n");
+      sbuf.append(
+          "<BR><B>Link Ref:</B> <a target=\"_new\" " + " href=\"" + link + "\">" + link + "</a>\n");
 
     if (idnum.length() < 30)
-      sbuf.append("\n<BR><BR>| <a href='" + thisPageURL +
-                  "?mode=p&threadid=" + threadID + "&idnum=" + idnum + "'>"
-                  + "Post a follow up</a> |\n");
+      sbuf.append(
+          "\n<BR><BR>| <a href='"
+              + thisPageURL
+              + "?mode=p&threadid="
+              + threadID
+              + "&idnum="
+              + idnum
+              + "'>"
+              + "Post a follow up</a> |\n");
     return sbuf.toString();
   }
 
@@ -382,22 +445,33 @@ public class portfolioMessage {
 
     sbuf.append("<LI>");
     try {
-      sbuf.append("<font size=+1 class=\"" + security + "\"><b>" + subject +
-                  " (" + security + ")</b></font>\n");
+      sbuf.append(
+          "<font size=+1 class=\""
+              + security
+              + "\"><b>"
+              + subject
+              + " ("
+              + security
+              + ")</b></font>\n");
     } catch (Exception ex) {
-      sbuf.append("<font size=+1><b>" + subject + " (" + security +
-                  ")</b></font>\n");
+      sbuf.append("<font size=+1><b>" + subject + " (" + security + ")</b></font>\n");
     }
 
     sbuf.append("\n<BR><i>author:</i> " + authorName + " ");
 
     if (idnum.length() < 30)
-      sbuf.append("\n<BR>| <a href='" + thisPageURL +
-                  "?mode=p&threadid=" + threadID + "&idnum=" + idnum + "'>"
-                  + "Post a follow up</a>\n");
+      sbuf.append(
+          "\n<BR>| <a href='"
+              + thisPageURL
+              + "?mode=p&threadid="
+              + threadID
+              + "&idnum="
+              + idnum
+              + "'>"
+              + "Post a follow up</a>\n");
 
-    sbuf.append("\n | <a href='" + thisPageURL + "?mode=r&idnum=" + idnum + "'>"
-                + "Read More</a> |\n");
+    sbuf.append(
+        "\n | <a href='" + thisPageURL + "?mode=r&idnum=" + idnum + "'>" + "Read More</a> |\n");
 
     sbuf.append("</LI>\n");
 
@@ -409,7 +483,9 @@ public class portfolioMessage {
    *
    * @param newRole which is the new Role
    */
-  public void setRole(String newRole) { this.role = newRole; }
+  public void setRole(String newRole) {
+    this.role = newRole;
+  }
 
   /**
    * Method to return a nice formated Date String
@@ -429,30 +505,44 @@ public class portfolioMessage {
     return dateO;
   }
 
-  public void setUser(portfolioUser newUser) { this.thisUser = newUser; }
+  public void setUser(portfolioUser newUser) {
+    this.thisUser = newUser;
+  }
 
   /** Set cat_smiles from DB */
-  public void setCatSmiles(int thisSmiles) { this.cat_smiles = thisSmiles; }
+  public void setCatSmiles(int thisSmiles) {
+    this.cat_smiles = thisSmiles;
+  }
 
   /** Set learn_smiles from DB */
-  public void setLearnSmiles(int thisSmiles) { this.learn_smiles = thisSmiles; }
+  public void setLearnSmiles(int thisSmiles) {
+    this.learn_smiles = thisSmiles;
+  }
 
   /** Set smiles from DB */
-  public void setSmiles(int thisSmiles) { this.smiles = thisSmiles; }
+  public void setSmiles(int thisSmiles) {
+    this.smiles = thisSmiles;
+  }
 
   /** Set frowns from DB */
-  public void setFrowns(int thisFrowns) { this.frowns = thisFrowns; }
+  public void setFrowns(int thisFrowns) {
+    this.frowns = thisFrowns;
+  }
 
   /** Set cat_frowns from DB */
-  public void setCatFrowns(int thisFrowns) { this.cat_frowns = thisFrowns; }
+  public void setCatFrowns(int thisFrowns) {
+    this.cat_frowns = thisFrowns;
+  }
 
   /** Set learn_frowns from DB */
-  public void setLearnFrowns(int thisFrowns) { this.learn_frowns = thisFrowns; }
+  public void setLearnFrowns(int thisFrowns) {
+    this.learn_frowns = thisFrowns;
+  }
 
   public void addSmile() {
     try {
-      dbInterface.updateDB("UPDATE dialog SET smile = smile + 1 WHERE "
-                           + " idnum = " + idnum + " ");
+      dbInterface.updateDB(
+          "UPDATE dialog SET smile = smile + 1 WHERE " + " idnum = " + idnum + " ");
 
     } catch (Exception ex) {
       plogger.report("Error in trying to add a smile.");
@@ -462,8 +552,8 @@ public class portfolioMessage {
 
   public void addFrown() {
     try {
-      dbInterface.updateDB("UPDATE dialog SET frown = frown + 1 WHERE "
-                           + " idnum = " + idnum + " ");
+      dbInterface.updateDB(
+          "UPDATE dialog SET frown = frown + 1 WHERE " + " idnum = " + idnum + " ");
 
     } catch (Exception ex) {
       plogger.report("Error in trying to add a frown.");
@@ -473,8 +563,8 @@ public class portfolioMessage {
 
   public void addCatFrown() {
     try {
-      dbInterface.updateDB("UPDATE dialog SET cat_frown = cat_frown + 1 WHERE "
-                           + " idnum = " + idnum + " ");
+      dbInterface.updateDB(
+          "UPDATE dialog SET cat_frown = cat_frown + 1 WHERE " + " idnum = " + idnum + " ");
 
     } catch (Exception ex) {
       plogger.report("Error in trying to add a frown.");
@@ -485,8 +575,7 @@ public class portfolioMessage {
   public void addLearnFrown() {
     try {
       dbInterface.updateDB(
-          "UPDATE dialog SET learn_frown = learn_frown + 1 WHERE "
-          + " idnum = " + idnum + " ");
+          "UPDATE dialog SET learn_frown = learn_frown + 1 WHERE " + " idnum = " + idnum + " ");
 
     } catch (Exception ex) {
       plogger.report("Error in trying to add a frown.");
@@ -496,8 +585,8 @@ public class portfolioMessage {
 
   public void addCatSmile() {
     try {
-      dbInterface.updateDB("UPDATE dialog SET cat_smile = cat_smile + 1 WHERE "
-                           + " idnum = " + idnum + " ");
+      dbInterface.updateDB(
+          "UPDATE dialog SET cat_smile = cat_smile + 1 WHERE " + " idnum = " + idnum + " ");
 
     } catch (Exception ex) {
       plogger.report("Error in trying to add a smile.");
@@ -508,8 +597,7 @@ public class portfolioMessage {
   public void addLearnSmile() {
     try {
       dbInterface.updateDB(
-          "UPDATE dialog SET learn_smile = learn_smile + 1 WHERE "
-          + " idnum = " + idnum + " ");
+          "UPDATE dialog SET learn_smile = learn_smile + 1 WHERE " + " idnum = " + idnum + " ");
 
     } catch (Exception ex) {
       plogger.report("Error in trying to add a smile.");
@@ -519,15 +607,14 @@ public class portfolioMessage {
 
   /** Set portfolio */
   public void setPortfolio(String newPortfolio) {
-    if (newPortfolio != null)
-      this.portfolio = newPortfolio;
+    if (newPortfolio != null) this.portfolio = newPortfolio;
   }
 
-  public String getPortfolio() { return this.portfolio; }
+  public String getPortfolio() {
+    return this.portfolio;
+  }
 
-  /**
-   * This method is needed to set classification if a user puts in their own!
-   */
+  /** This method is needed to set classification if a user puts in their own! */
   public void setClassification(String newCfc, String myCfc) {
     if (myCfc != null && !myCfc.equalsIgnoreCase("")) {
       plogger.report("My Classification:" + myCfc + ":\n");
@@ -540,104 +627,117 @@ public class portfolioMessage {
 
   /** Set classifciation */
   public void setClassification(String newClassification) {
-    if (newClassification != null)
-      this.classification = newClassification;
+    if (newClassification != null) this.classification = newClassification;
   }
 
-  public String getClassification() { return this.classification; }
+  public String getClassification() {
+    return this.classification;
+  }
 
   /** Set idnum */
   public void setidnum(String newidnum) {
-    if (newidnum != null)
-      this.idnum = newidnum;
+    if (newidnum != null) this.idnum = newidnum;
   }
 
-  public String getidnum() { return this.idnum; }
+  public String getidnum() {
+    return this.idnum;
+  }
   /** Set Author Name */
   public void setAuthorName(String newAuthorName) {
-    if (newAuthorName != null)
-      this.authorName = newAuthorName;
+    if (newAuthorName != null) this.authorName = newAuthorName;
   }
 
-  public String getAuthorName() { return this.authorName; }
+  public String getAuthorName() {
+    return this.authorName;
+  }
 
   /** Set topicid */
   public void setTopicid(String newTopicid) {
-    if (newTopicid != null)
-      this.topicid = newTopicid;
+    if (newTopicid != null) this.topicid = newTopicid;
   }
 
-  public String getTopicid() { return this.topicid; }
+  public String getTopicid() {
+    return this.topicid;
+  }
 
   /** Set Link of this message */
   public void setLink(String newLink) {
-    if (newLink != null)
-      this.link = newLink;
+    if (newLink != null) this.link = newLink;
   }
 
-  public String getLink() { return this.link; }
+  public String getLink() {
+    return this.link;
+  }
 
   /** Set GID of this message */
   public void setGID(String newGID) {
-    if (newGID != null)
-      this.gid = newGID;
+    if (newGID != null) this.gid = newGID;
   }
 
-  public String getGID() { return this.gid; }
+  public String getGID() {
+    return this.gid;
+  }
 
   /** Set security of this message */
   public void setSecurity(String newSecurity) {
-    if (newSecurity != null)
-      this.security = newSecurity;
+    if (newSecurity != null) this.security = newSecurity;
   }
 
-  public String getSecurity() { return this.security; }
+  public String getSecurity() {
+    return this.security;
+  }
 
   /** Set threadID of this message */
   public void setThreadID(String newThreadID) {
-    if (newThreadID != null)
-      this.threadID = newThreadID;
+    if (newThreadID != null) this.threadID = newThreadID;
   }
 
-  public String getThreadID() { return this.threadID; }
+  public String getThreadID() {
+    return this.threadID;
+  }
 
   /** Set postedDate of the message */
   public void setPostedDate(String newPostedDate) {
-    if (newPostedDate != null)
-      this.postedDate = newPostedDate;
+    if (newPostedDate != null) this.postedDate = newPostedDate;
   }
 
-  public String getPostedDate() { return this.postedDate; }
+  public String getPostedDate() {
+    return this.postedDate;
+  }
 
   /** Set replyAuthor of the message */
   public void setReplyAuthor(String newReplyAuthor) {
-    if (newReplyAuthor != null)
-      this.replyAuthor = newReplyAuthor;
+    if (newReplyAuthor != null) this.replyAuthor = newReplyAuthor;
   }
 
-  public String getReplyAuthor() { return this.replyAuthor; }
+  public String getReplyAuthor() {
+    return this.replyAuthor;
+  }
 
   /** Set body of the message */
   public void setBody(String newBody) {
-    if (newBody != null)
-      this.body = newBody;
+    if (newBody != null) this.body = newBody;
   }
 
-  public String getBody() { return this.body; }
+  public String getBody() {
+    return this.body;
+  }
 
   /** Set Subject of the message */
   public void setSubject(String newSubject) {
-    if (newSubject != null)
-      this.subject = newSubject;
+    if (newSubject != null) this.subject = newSubject;
   }
 
-  public String getSubject() { return this.subject; }
+  public String getSubject() {
+    return this.subject;
+  }
 
   /** Set Author Name of Post */
   public void setAuthor(String newAuthor) {
-    if (newAuthor != null)
-      this.author = newAuthor;
+    if (newAuthor != null) this.author = newAuthor;
   }
 
-  public String getAuthor() { return this.author; }
+  public String getAuthor() {
+    return this.author;
+  }
 } // End of portfolioUser

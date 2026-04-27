@@ -1,26 +1,23 @@
 /**
  * Copyright 2001-2005 Iowa State University jportfolio@collaborium.org
  *
- * <p>This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Lesser General Public License as published by the
- * Free Software Foundation; either version 2.1 of the License, or (at your
- * option) any later version.
+ * <p>This library is free software; you can redistribute it and/or modify it under the terms of the
+ * GNU Lesser General Public License as published by the Free Software Foundation; either version
+ * 2.1 of the License, or (at your option) any later version.
  *
- * <p>This library is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License
- * for more details.
+ * <p>This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Lesser General Public License for more details.
  *
- * <p>You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation, Inc.,
- * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * <p>You should have received a copy of the GNU Lesser General Public License along with this
+ * library; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston,
+ * MA 02111-1307 USA
  */
 package org.collaborium.portfolio;
 
 /**
- * This servlet is a template for the generic portfolio. Any portfolio can take
- * advantage of this servlet, but some portfolios will be automatically
- * forwarded out.
+ * This servlet is a template for the generic portfolio. Any portfolio can take advantage of this
+ * servlet, but some portfolios will be automatically forwarded out.
  *
  * @author Daryl Herzmann 4 July 2001
  */
@@ -51,7 +48,9 @@ public class jportfolio extends HttpServlet {
     super.init(config);
   }
 
-  public void destroy() { IMDatabase.storeMessages(); }
+  public void destroy() {
+    IMDatabase.storeMessages();
+  }
 
   /**
    * Standard method for servlet GET method
@@ -64,8 +63,7 @@ public class jportfolio extends HttpServlet {
 
     HttpSession session = request.getSession(true);
     authBean auth = new authBean(request, session);
-    if (auth.requiredUserPort(response, session,
-                              "/jportfolio/servlet/jportfolio")) {
+    if (auth.requiredUserPort(response, session, "/jportfolio/servlet/jportfolio")) {
       return;
     }
 
@@ -77,13 +75,12 @@ public class jportfolio extends HttpServlet {
     StringBuffer sideContent = new StringBuffer();
     StringBuffer pageContent = new StringBuffer();
 
-    portfolioUser thisUser = (portfolioUser)session.getAttribute("User");
+    portfolioUser thisUser = (portfolioUser) session.getAttribute("User");
     String callMethod = request.getParameter("mode");
 
     jlib.addUser(thisUser.getUserID(), "Manager");
 
-    if (callMethod == null)
-      callMethod = "d";
+    if (callMethod == null) callMethod = "d";
 
     switch (callMethod.charAt(0))
     // v -> list out user preferences
@@ -92,89 +89,76 @@ public class jportfolio extends HttpServlet {
     // p -> Sign up for portfolio dialog
     // o -> Print out all messsages
     {
-    case 'o':
-      /**
-       * If idnum is specified, they must be removing the message from the page
-       * which prints out all of the messages
-       */
-      String testIDnum = (String)request.getParameter("idnum");
-      if (testIDnum != null)
-        jlib.removeNotify(testIDnum);
-      pageContent.append(jlib.topBox("Portfolio Messages"));
-      pageContent.append(jlib.printAllMessages(thisUser));
-      pageContent.append(jlib.botBox());
-      break;
-    case 'v':
-      pageContent.append(preferencesDialog(thisUser, thisPageURL));
-      if (thisUser.isAdmin())
-        sideContent.append(adminSideBar(thisUser));
-      else
-        sideContent.append(sideBar(thisUser));
-      break;
-    case 'k':
-      jlib.removeNotify(request.getParameter("idnum"));
+      case 'o':
+        /**
+         * If idnum is specified, they must be removing the message from the page which prints out
+         * all of the messages
+         */
+        String testIDnum = (String) request.getParameter("idnum");
+        if (testIDnum != null) jlib.removeNotify(testIDnum);
+        pageContent.append(jlib.topBox("Portfolio Messages"));
+        pageContent.append(jlib.printAllMessages(thisUser));
+        pageContent.append(jlib.botBox());
+        break;
+      case 'v':
+        pageContent.append(preferencesDialog(thisUser, thisPageURL));
+        if (thisUser.isAdmin()) sideContent.append(adminSideBar(thisUser));
+        else sideContent.append(sideBar(thisUser));
+        break;
+      case 'k':
+        jlib.removeNotify(request.getParameter("idnum"));
 
-      pageContent.append(portfolioMain(thisUser));
-
-      if (thisUser.isAdmin())
-        sideContent.append(adminSideBar(thisUser));
-      else
-        sideContent.append(sideBar(thisUser));
-
-      break;
-    case 'b':
-      pageContent.append(badIntro());
-
-      break;
-    case 'u':
-      pageContent.append(createPortfolio());
-      if (thisUser.isAdmin())
-        sideContent.append(adminSideBar(thisUser));
-      else
-        sideContent.append(sideBar(thisUser));
-      break;
-    case 'n':
-      pageContent.append(listAllMotd(thisUser));
-
-      if (thisUser.isAdmin())
-        sideContent.append(adminSideBar(thisUser));
-      else
-        sideContent.append(sideBar(thisUser));
-
-      break;
-    case 'g': // List out group members
-      pageContent.append(jlib.printGroupMembers(thisUser));
-      if (thisUser.isAdmin())
-        sideContent.append(adminSideBar(thisUser));
-      else
-        sideContent.append(sideBar(thisUser));
-      break;
-    case 'h': // List out portfolio mates!
-      pageContent.append(jlib.printPmates(thisUser));
-      if (thisUser.isAdmin())
-        sideContent.append(adminSideBar(thisUser));
-      else
-        sideContent.append(sideBar(thisUser));
-      break;
-    default:
-      if (thisUser.getPortfolio() == null) {
-        sideContent.append(sideBar(thisUser));
-      } else if (!(thisUser.getPortfolio() == null)) {
         pageContent.append(portfolioMain(thisUser));
 
-        if (thisUser.isAdmin()) {
+        if (thisUser.isAdmin()) sideContent.append(adminSideBar(thisUser));
+        else sideContent.append(sideBar(thisUser));
 
-          sideContent.append(adminSideBar(thisUser));
+        break;
+      case 'b':
+        pageContent.append(badIntro());
+
+        break;
+      case 'u':
+        pageContent.append(createPortfolio());
+        if (thisUser.isAdmin()) sideContent.append(adminSideBar(thisUser));
+        else sideContent.append(sideBar(thisUser));
+        break;
+      case 'n':
+        pageContent.append(listAllMotd(thisUser));
+
+        if (thisUser.isAdmin()) sideContent.append(adminSideBar(thisUser));
+        else sideContent.append(sideBar(thisUser));
+
+        break;
+      case 'g': // List out group members
+        pageContent.append(jlib.printGroupMembers(thisUser));
+        if (thisUser.isAdmin()) sideContent.append(adminSideBar(thisUser));
+        else sideContent.append(sideBar(thisUser));
+        break;
+      case 'h': // List out portfolio mates!
+        pageContent.append(jlib.printPmates(thisUser));
+        if (thisUser.isAdmin()) sideContent.append(adminSideBar(thisUser));
+        else sideContent.append(sideBar(thisUser));
+        break;
+      default:
+        if (thisUser.getPortfolio() == null) {
+          sideContent.append(sideBar(thisUser));
+        } else if (!(thisUser.getPortfolio() == null)) {
+          pageContent.append(portfolioMain(thisUser));
+
+          if (thisUser.isAdmin()) {
+
+            sideContent.append(adminSideBar(thisUser));
+          } else {
+
+            sideContent.append(sideBar(thisUser));
+          }
+
         } else {
-
           sideContent.append(sideBar(thisUser));
         }
 
-      } else {
-        sideContent.append(sideBar(thisUser));
-      }
-
-      break;
+        break;
     } // End of Case
 
     out.println(jlib.header(thisUser, TITLE, "Manager"));
@@ -196,8 +180,7 @@ public class jportfolio extends HttpServlet {
     /* Authentification */
     HttpSession session = request.getSession(true);
     authBean auth = new authBean(request, session);
-    if (auth.requiredUserPort(response, session,
-                              "/jportfolio/servlet/jportfolio")) {
+    if (auth.requiredUserPort(response, session, "/jportfolio/servlet/jportfolio")) {
       return;
     }
 
@@ -207,43 +190,42 @@ public class jportfolio extends HttpServlet {
     response.setContentType("text/html");
     PrintWriter out = response.getWriter();
 
-    portfolioUser thisUser = (portfolioUser)session.getAttribute("User");
+    portfolioUser thisUser = (portfolioUser) session.getAttribute("User");
 
     jlib.addUser(thisUser.getUserID(), "jportfolio");
 
     // get the mode in which we are called
     String callMethod = request.getParameter("mode");
-    if (callMethod == null)
-      callMethod = "x";
+    if (callMethod == null) callMethod = "x";
 
     plogger.report(callMethod + "\n");
 
     String f = null;
 
     switch (callMethod.charAt(0)) {
-      // u == create portfolio
-      // v == switch the style of the page
-    case 'v':
-      String style = request.getParameter("style");
-      String postedEmail = request.getParameter("email");
-      String lName = request.getParameter("lName");
-      String fName = request.getParameter("fName");
+        // u == create portfolio
+        // v == switch the style of the page
+      case 'v':
+        String style = request.getParameter("style");
+        String postedEmail = request.getParameter("email");
+        String lName = request.getParameter("lName");
+        String fName = request.getParameter("fName");
 
-      jlib.userUpdate(thisUser, "fname", fName);
-      jlib.userUpdate(thisUser, "lname", lName);
-      jlib.userUpdate(thisUser, "color", style); // Update DB
-      jlib.userUpdate(thisUser, "email", postedEmail);
+        jlib.userUpdate(thisUser, "fname", fName);
+        jlib.userUpdate(thisUser, "lname", lName);
+        jlib.userUpdate(thisUser, "color", style); // Update DB
+        jlib.userUpdate(thisUser, "email", postedEmail);
 
-      thisUser.setStyle(style); // Update portfolioUser Object
-      thisUser.setEmailAddress(postedEmail);
-      thisUser.setRealName(fName + " " + lName);
-      thisUser.setFName(fName);
-      thisUser.setLName(lName);
-      f = jlib.servletHttpBase + "/jportfolio?mode=v";
-      break;
-    case 'u':
-      pageContent.append(postPortfolio(thisUser, request));
-      break;
+        thisUser.setStyle(style); // Update portfolioUser Object
+        thisUser.setEmailAddress(postedEmail);
+        thisUser.setRealName(fName + " " + lName);
+        thisUser.setFName(fName);
+        thisUser.setLName(lName);
+        f = jlib.servletHttpBase + "/jportfolio?mode=v";
+        break;
+      case 'u':
+        pageContent.append(postPortfolio(thisUser, request));
+        break;
     } // End of switch
 
     if (f != null) {
@@ -271,41 +253,53 @@ public class jportfolio extends HttpServlet {
 
     sbuf.append(jlib.topBox("User Preferences:"));
 
-    sbuf.append("<font color=\"green\"><blockquote>This page modifies your "
-                + "user preferences.</blockquote></font>\n");
+    sbuf.append(
+        "<font color=\"green\"><blockquote>This page modifies your "
+            + "user preferences.</blockquote></font>\n");
 
-    sbuf.append("<P><B>Current Settings:</B><BR>\n"
-                + "<TABLE>\n"
-                + "<TR><TD bgcolor=\"#EEEEEE\">Style:</TD><TD>" +
-                thisUser.getStyle() + "</TD></TR>\n"
-                + "<TR><TD bgcolor=\"#EEEEEE\">Email Address:</TD><TD>" +
-                thisUser.getEmailAddress() + "</TD></TR>\n"
-                + "<TR><TD bgcolor=\"#EEEEEE\">First Name:</TD><TD>" +
-                thisUser.getFirstName() + "</TD></TR>\n"
-                + "<TR><TD bgcolor=\"#EEEEEE\">Last Name:</TD><TD>" +
-                thisUser.getLastName() + "</TD></TR>\n"
-                + "</TABLE>\n");
+    sbuf.append(
+        "<P><B>Current Settings:</B><BR>\n"
+            + "<TABLE>\n"
+            + "<TR><TD bgcolor=\"#EEEEEE\">Style:</TD><TD>"
+            + thisUser.getStyle()
+            + "</TD></TR>\n"
+            + "<TR><TD bgcolor=\"#EEEEEE\">Email Address:</TD><TD>"
+            + thisUser.getEmailAddress()
+            + "</TD></TR>\n"
+            + "<TR><TD bgcolor=\"#EEEEEE\">First Name:</TD><TD>"
+            + thisUser.getFirstName()
+            + "</TD></TR>\n"
+            + "<TR><TD bgcolor=\"#EEEEEE\">Last Name:</TD><TD>"
+            + thisUser.getLastName()
+            + "</TD></TR>\n"
+            + "</TABLE>\n");
 
-    sbuf.append("<P><B>Change Settings:</B><BR>\n"
-                + " <FORM ACTION=\"" + thisPageURL + "\" METHOD=\"POST\">\n"
-                + "	<input type=\"hidden\" name=\"mode\" value=\"v\">\n"
-                + "<TABLE>\n"
-                + "<TR><TH>Email Address:</TH>\n"
-                + "<TD><input type=\"text\" name=\"email\" value=\"" +
-                thisUser.getEmailAddress() + "\"></TD></TR>\n"
-                + "<TR><TH>First Name:</TH>\n"
-                + "<TD><input type=\"text\" name=\"fName\" value=\"" +
-                thisUser.getFirstName() + "\"></TD></TR>\n"
-                + "<TR><TH>Last Name:</TH>\n"
-                + "<TD><input type=\"text\" name=\"lName\" value=\"" +
-                thisUser.getLastName() + "\"></TD></TR>\n"
-                + "<TR><TH>Style:</TH>\n"
-                + "<TD><SELECT name=\"style\">\n"
-                + "	<option value=\"basic\">Default Theme (basic)\n"
-                + "	<option value=\"plain\">Plain Theme (plain)\n"
-                + "	<option value=\"slashdot\">Slashdot (slashdot)\n"
-                + "</SELECT></TD></TR></TABLE>\n"
-                + "<BR><input type=\"SUBMIT\" value=\"Submit Changes\">\n");
+    sbuf.append(
+        "<P><B>Change Settings:</B><BR>\n"
+            + " <FORM ACTION=\""
+            + thisPageURL
+            + "\" METHOD=\"POST\">\n"
+            + "	<input type=\"hidden\" name=\"mode\" value=\"v\">\n"
+            + "<TABLE>\n"
+            + "<TR><TH>Email Address:</TH>\n"
+            + "<TD><input type=\"text\" name=\"email\" value=\""
+            + thisUser.getEmailAddress()
+            + "\"></TD></TR>\n"
+            + "<TR><TH>First Name:</TH>\n"
+            + "<TD><input type=\"text\" name=\"fName\" value=\""
+            + thisUser.getFirstName()
+            + "\"></TD></TR>\n"
+            + "<TR><TH>Last Name:</TH>\n"
+            + "<TD><input type=\"text\" name=\"lName\" value=\""
+            + thisUser.getLastName()
+            + "\"></TD></TR>\n"
+            + "<TR><TH>Style:</TH>\n"
+            + "<TD><SELECT name=\"style\">\n"
+            + "	<option value=\"basic\">Default Theme (basic)\n"
+            + "	<option value=\"plain\">Plain Theme (plain)\n"
+            + "	<option value=\"slashdot\">Slashdot (slashdot)\n"
+            + "</SELECT></TD></TR></TABLE>\n"
+            + "<BR><input type=\"SUBMIT\" value=\"Submit Changes\">\n");
 
     sbuf.append(jlib.botBox());
 
@@ -336,28 +330,47 @@ public class jportfolio extends HttpServlet {
       // Create Entry in portfolios DB
       jlib.updateDB(
           "INSERT into portfolios(portfolio, name, about, instructor, passwd) "
-          + " VALUES( '" + portfolioID + "', '" + portfolioName + "', '" +
-          about + "', '" + instructor + "', '" + passwd + "') ");
+              + " VALUES( '"
+              + portfolioID
+              + "', '"
+              + portfolioName
+              + "', '"
+              + about
+              + "', '"
+              + instructor
+              + "', '"
+              + passwd
+              + "') ");
 
       // Create entry in motds, just as a place holder till it gets replaced
-      jlib.updateDB("INSERT into motd(portfolio, body) VALUES('" + portfolioID +
-                    "', 'Welcome Users.') ");
+      jlib.updateDB(
+          "INSERT into motd(portfolio, body) VALUES('" + portfolioID + "', 'Welcome Users.') ");
 
       // Create an administrative entry for this user
-      jlib.updateDB("INSERT into admins(portfolio, admin) VALUES ('" +
-                    portfolioID + "', '" + thisUser.getUserID() + "')");
+      jlib.updateDB(
+          "INSERT into admins(portfolio, admin) VALUES ('"
+              + portfolioID
+              + "', '"
+              + thisUser.getUserID()
+              + "')");
 
       // Create a student user account
-      jlib.updateDB("INSERT into students(username, portfolio) VALUES('" +
-                    thisUser.getUserID() + "', '" + portfolioID + "') ");
+      jlib.updateDB(
+          "INSERT into students(username, portfolio) VALUES('"
+              + thisUser.getUserID()
+              + "', '"
+              + portfolioID
+              + "') ");
 
-      sbuf.append("Your Portfolio has been created sucessfully!\n"
-                  + " You can now <a href=\"/jportfolio/login.jsp?portfolio=" +
-                  portfolioID + "\">log in</a> \n"
-                  + " to your portfolio and configure it.\n");
+      sbuf.append(
+          "Your Portfolio has been created sucessfully!\n"
+              + " You can now <a href=\"/jportfolio/login.jsp?portfolio="
+              + portfolioID
+              + "\">log in</a> \n"
+              + " to your portfolio and configure it.\n");
     } else {
-      sbuf.append("Incorrect system password, email "
-                  + "support@iitap.iastate.edu if you need assistance");
+      sbuf.append(
+          "Incorrect system password, email " + "support@iitap.iastate.edu if you need assistance");
     }
 
     sbuf.append(jlib.botBox());
@@ -373,36 +386,35 @@ public class jportfolio extends HttpServlet {
   public String createPortfolio() {
     StringBuffer sbuf = new StringBuffer();
 
-    sbuf.append("<form method='POST' action='" + thisPageURL +
-                "' name='motd'>\n");
+    sbuf.append("<form method='POST' action='" + thisPageURL + "' name='motd'>\n");
     sbuf.append("<input type='hidden' name='mode' value='u'>\n");
     sbuf.append(jlib.topBox("Create a new Portfolio:"));
 
     sbuf.append(
         "<font class=\"instructions\"><blockquote>This page is intended for "
-        + "instructors to create class portfolios.  In order\n"
-        + " to register a portfolio, a system administration password needs "
-        + "to be known.\n</blockquote></font>");
+            + "instructors to create class portfolios.  In order\n"
+            + " to register a portfolio, a system administration password needs "
+            + "to be known.\n</blockquote></font>");
 
     sbuf.append(
-        "<BR><FORM method='POST' name='create' action='" + thisPageURL + "'>\n"
-        + " <input type='hidden' name='mode' value='u'>\n"
-        +
-        " <P>System access password: (Contact akrherz@iastate.edu for)<BR>\n"
-        + "  <input type='text' name='sysPass' size='10'>\n"
-        + " <P>Enter a Portfolio Name:<BR>\n"
-        + " <input type='text' name='portfolioName' size='40'>\n" +
-        (" <P>Enter a Portfolio Abreviation (no spaces) (Include year) Ex) "
-         + "gcp2001:<BR>\n") +
-        " <input type='text' name='portfolioID' size='20'>\n" +
-        (" <P>Enter Portfolio Description: (appears on Portfolio "
-         + "homepage)<BR>\n") +
-        " <textarea name='about' cols='50' rows='10'></textarea>\n"
-        + " <P>Portfolio challenge password:<BR>\n"
-        + " <input name='passwd' type='text' size='40'>\n"
-        + " <P>Enter your formal name: (appears on Portfolio homepage)<BR>\n"
-        + " <input type='text' name='instructor' size='40'>\n"
-        + " <P><input type=\"submit\" value=\"Create Portfolio\"></form>\n");
+        "<BR><FORM method='POST' name='create' action='"
+            + thisPageURL
+            + "'>\n"
+            + " <input type='hidden' name='mode' value='u'>\n"
+            + " <P>System access password: (Contact akrherz@iastate.edu for)<BR>\n"
+            + "  <input type='text' name='sysPass' size='10'>\n"
+            + " <P>Enter a Portfolio Name:<BR>\n"
+            + " <input type='text' name='portfolioName' size='40'>\n"
+            + (" <P>Enter a Portfolio Abreviation (no spaces) (Include year) Ex) "
+                + "gcp2001:<BR>\n")
+            + " <input type='text' name='portfolioID' size='20'>\n"
+            + (" <P>Enter Portfolio Description: (appears on Portfolio " + "homepage)<BR>\n")
+            + " <textarea name='about' cols='50' rows='10'></textarea>\n"
+            + " <P>Portfolio challenge password:<BR>\n"
+            + " <input name='passwd' type='text' size='40'>\n"
+            + " <P>Enter your formal name: (appears on Portfolio homepage)<BR>\n"
+            + " <input type='text' name='instructor' size='40'>\n"
+            + " <P><input type=\"submit\" value=\"Create Portfolio\"></form>\n");
 
     sbuf.append("</TD></TR></TABLE>\n");
 
@@ -419,30 +431,39 @@ public class jportfolio extends HttpServlet {
     StringBuffer sbuf = new StringBuffer();
 
     sbuf.append(jlib.topBox("Commands:"));
-    sbuf.append("<ul>\n"
-                + " <li><a class=\"commands\" "
-                + "href='/jportfolio/login.jsp?logoutPortfolio=yes'>Switch "
-                + "Portfolios</a></li>\n"
-                + "    <LI><a class=\"commands\" href='" + thisPageURL +
-                "?mode=u'>Create Portfolio</a></LI>\n" +
-                ("    <LI><a class=\"commands\" "
-                 + "href='/jportfolio/login.jsp?logoutPortfolio=yes'>Register "
-                 + "for Portfolio</a></LI>\n"));
+    sbuf.append(
+        "<ul>\n"
+            + " <li><a class=\"commands\" "
+            + "href='/jportfolio/login.jsp?logoutPortfolio=yes'>Switch "
+            + "Portfolios</a></li>\n"
+            + "    <LI><a class=\"commands\" href='"
+            + thisPageURL
+            + "?mode=u'>Create Portfolio</a></LI>\n"
+            + ("    <LI><a class=\"commands\" "
+                + "href='/jportfolio/login.jsp?logoutPortfolio=yes'>Register "
+                + "for Portfolio</a></LI>\n"));
 
     if (portfolio != null) {
-      sbuf.append("    <LI><a class=\"commands\" "
-                  + " href='" + thisPageURL +
-                  "?mode=g'>List group members</a></LI>\n");
-      sbuf.append("    <LI><a class=\"commands\" "
-                  + " href='" + thisPageURL +
-                  "?mode=h'>List portfolio colleagues</a></LI>\n");
-      sbuf.append(" <LI><a class=\"commands\" "
-                  + " href='" + jlib.httpBase + "/jsp/user/myGrades.jsp' "
-                  + " target=\"_new\">Show my grades</a></LI>\n");
+      sbuf.append(
+          "    <LI><a class=\"commands\" "
+              + " href='"
+              + thisPageURL
+              + "?mode=g'>List group members</a></LI>\n");
+      sbuf.append(
+          "    <LI><a class=\"commands\" "
+              + " href='"
+              + thisPageURL
+              + "?mode=h'>List portfolio colleagues</a></LI>\n");
+      sbuf.append(
+          " <LI><a class=\"commands\" "
+              + " href='"
+              + jlib.httpBase
+              + "/jsp/user/myGrades.jsp' "
+              + " target=\"_new\">Show my grades</a></LI>\n");
     } // End of if
 
-    sbuf.append(" <LI><a class=\"commands\" href='" + thisPageURL +
-                "?mode=v'>Set preferences</a></LI>\n");
+    sbuf.append(
+        " <LI><a class=\"commands\" href='" + thisPageURL + "?mode=v'>Set preferences</a></LI>\n");
     sbuf.append("</ul>\n");
     sbuf.append(jlib.botBox());
 
@@ -459,26 +480,24 @@ public class jportfolio extends HttpServlet {
 
     myBuffer.append(jlib.topBox("Welcome!"));
 
-    myBuffer.append(
-        "<FONT class=\"warn\">Incorrect Login, please try again.</FONT>\n");
+    myBuffer.append("<FONT class=\"warn\">Incorrect Login, please try again.</FONT>\n");
 
     myBuffer.append(
         "<H3 align=\"CENTER\">Welcome to the Portfolio Manager.</H3>\n"
-        + "<blockquote>In order to use this system, you must have an "
-        + "account.  Once you have an account, you can use the log-in\n"
-        + "box in the upper-right hand corner.</blockquote>\n"
-        + "<HR width=\"450\"><BR><BR><H3><font color=\"red\">Attention New "
-        + "Users:</font></H3>\n"
-        +
-        "<blockquote>If you are new to the system, you will probably want to \n"
-        + " <a href='" + thisPageURL +
-        "?mode=i'>Create a New User Account.</blockquote><br>\n"
-        + "<H3><font color=\"red\">Help:</font></H3>\n" +
-        ("<blockquote>If you have any questions about this system, please "
-         + "send\n") +
-        ("an email to <a "
-         + "href=\"mailto:systems@iitap.iastate.edu\">systems@iitap.iastate."
-         + "edu</a> </blockquote><br>\n"));
+            + "<blockquote>In order to use this system, you must have an "
+            + "account.  Once you have an account, you can use the log-in\n"
+            + "box in the upper-right hand corner.</blockquote>\n"
+            + "<HR width=\"450\"><BR><BR><H3><font color=\"red\">Attention New "
+            + "Users:</font></H3>\n"
+            + "<blockquote>If you are new to the system, you will probably want to \n"
+            + " <a href='"
+            + thisPageURL
+            + "?mode=i'>Create a New User Account.</blockquote><br>\n"
+            + "<H3><font color=\"red\">Help:</font></H3>\n"
+            + ("<blockquote>If you have any questions about this system, please " + "send\n")
+            + ("an email to <a "
+                + "href=\"mailto:systems@iitap.iastate.edu\">systems@iitap.iastate."
+                + "edu</a> </blockquote><br>\n"));
 
     myBuffer.append(jlib.botBox());
 
@@ -503,14 +522,17 @@ public class jportfolio extends HttpServlet {
     String homepage = null;
     String porthome = null;
     try {
-      rs = dbInterface.callDB(
-          "SELECT m.body, "
-          + " to_char(m.issue, 'DD Month YYYY HH12:MI AM') as issued ,"
-          + " m.issue as issue , p.instructor,"
-          + " p.about, p.name, p.homepage, p.porthome from portfolios p, "
-          + " motd m WHERE p.portfolio = m.portfolio AND"
-          + " p.portfolio = '" + thisUser.getPortfolio() + "' "
-          + " ORDER by issue DESC LIMIT 1");
+      rs =
+          dbInterface.callDB(
+              "SELECT m.body, "
+                  + " to_char(m.issue, 'DD Month YYYY HH12:MI AM') as issued ,"
+                  + " m.issue as issue , p.instructor,"
+                  + " p.about, p.name, p.homepage, p.porthome from portfolios p, "
+                  + " motd m WHERE p.portfolio = m.portfolio AND"
+                  + " p.portfolio = '"
+                  + thisUser.getPortfolio()
+                  + "' "
+                  + " ORDER by issue DESC LIMIT 1");
 
       if (rs.next()) {
         motd = rs.getString("body");
@@ -534,40 +556,51 @@ public class jportfolio extends HttpServlet {
     sbuf.append(about + "\n");
 
     if (porthome != null && !porthome.equalsIgnoreCase("/jportfolio/servlet/"))
-      sbuf.append(jlib.alertBox(
-          "Portfolio Message",
-          "You are currently accessing the <i>generic portfolio interface.</i>"
-              + " The " + className +
-              " portfolio has a custom interface which can be "
-              + " <a href=\"" + porthome + "\">found here.</a>\n" +
-              ("<br /><strong>Note:</strong>  You can still use this page, "
-               + "but specialized") +
-              " content will be missing.\n"));
+      sbuf.append(
+          jlib.alertBox(
+              "Portfolio Message",
+              "You are currently accessing the <i>generic portfolio interface.</i>"
+                  + " The "
+                  + className
+                  + " portfolio has a custom interface which can be "
+                  + " <a href=\""
+                  + porthome
+                  + "\">found here.</a>\n"
+                  + ("<br /><strong>Note:</strong>  You can still use this page, "
+                      + "but specialized")
+                  + " content will be missing.\n"));
 
-    sbuf.append("<P><B><I>Message of the Day (MOTD):</I></b>\n"
-                + "<blockquote>\n"
-                + "[ <font color=\"red\">" + issue + "</font> ] &nbsp; &nbsp; "
-                + "| <a href=\"" + thisPageURL +
-                "?mode=n\">List all MOTDs</a> |<BR>\n"
-                + "<BR>" + motd + "<BR>"
-                + "</blockquote>\n");
+    sbuf.append(
+        "<P><B><I>Message of the Day (MOTD):</I></b>\n"
+            + "<blockquote>\n"
+            + "[ <font color=\"red\">"
+            + issue
+            + "</font> ] &nbsp; &nbsp; "
+            + "| <a href=\""
+            + thisPageURL
+            + "?mode=n\">List all MOTDs</a> |<BR>\n"
+            + "<BR>"
+            + motd
+            + "<BR>"
+            + "</blockquote>\n");
 
-    sbuf.append("<P><B><I>Information:</I></b>\n"
-                + "<blockquote>\n"
-                + "<B>Portfolio Administrator:</B> &nbsp; &nbsp; " +
-                instructor + "\n");
+    sbuf.append(
+        "<P><B><I>Information:</I></b>\n"
+            + "<blockquote>\n"
+            + "<B>Portfolio Administrator:</B> &nbsp; &nbsp; "
+            + instructor
+            + "\n");
 
     if (homepage != null)
-      sbuf.append("<BR><B>Course Website:</B> &nbsp; &nbsp; "
-                  + " <a href=\"" + homepage + "\">Here</a>\n");
+      sbuf.append(
+          "<BR><B>Course Website:</B> &nbsp; &nbsp; " + " <a href=\"" + homepage + "\">Here</a>\n");
 
     sbuf.append("</blockquote>\n");
 
     sbuf.append("<P><B><I>Available Assignments:</I></B>\n");
     sbuf.append("<blockquote>\n");
     if (jlib.hasQuizToTake(thisUser)) {
-      sbuf.append("<a href=\"" + jlib.servletHttpBase +
-                  "/jquiz\">Available Quiz!</a>\n");
+      sbuf.append("<a href=\"" + jlib.servletHttpBase + "/jquiz\">Available Quiz!</a>\n");
     } else {
       sbuf.append("None\n");
     }
@@ -629,17 +662,22 @@ public class jportfolio extends HttpServlet {
     sbuf.append(jlib.topBox("Listing of all MOTDs:"));
 
     try {
-      rs = dbInterface.callDBWithParameters(
-          "SELECT body, to_char(issue, 'DD Month YYYY HH12:MI AM') "
-              + " as issued, issue "
-              + " from motd WHERE portfolio = ? "
-              + " ORDER by issue DESC",
-          Arrays.asList(thisUser.getPortfolio()));
+      rs =
+          dbInterface.callDBWithParameters(
+              "SELECT body, to_char(issue, 'DD Month YYYY HH12:MI AM') "
+                  + " as issued, issue "
+                  + " from motd WHERE portfolio = ? "
+                  + " ORDER by issue DESC",
+              Arrays.asList(thisUser.getPortfolio()));
 
       while (rs.next()) {
-        sbuf.append("<BR><B>Issued On:</B> " + rs.getString("issued") + " "
-                    + "<BR><blockquote>" + rs.getString("body") +
-                    "</blockquote><HR>");
+        sbuf.append(
+            "<BR><B>Issued On:</B> "
+                + rs.getString("issued")
+                + " "
+                + "<BR><blockquote>"
+                + rs.getString("body")
+                + "</blockquote><HR>");
       }
     } catch (Exception ex) {
       plogger.report("Problem Listing MOTDs\n");

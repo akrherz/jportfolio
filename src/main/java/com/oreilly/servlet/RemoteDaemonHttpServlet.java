@@ -5,7 +5,11 @@ import java.net.Socket;
 import javax.servlet.http.HttpServlet;
 
 public class RemoteDaemonHttpServlet extends HttpServlet {
-  protected int getSocketPort() { return 2428; }
+  protected int getSocketPort() {
+    return 2428;
+  }
 
-  public void handleClient(Socket s) throws IOException { s.close(); }
+  public void handleClient(Socket s) throws IOException {
+    s.close();
+  }
 }

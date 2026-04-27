@@ -1,19 +1,17 @@
 /**
  * Copyright 2001 Iowa State University jportfolio@collaborium.org
  *
- * <p>This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Lesser General Public License as published by the
- * Free Software Foundation; either version 2.1 of the License, or (at your
- * option) any later version.
+ * <p>This library is free software; you can redistribute it and/or modify it under the terms of the
+ * GNU Lesser General Public License as published by the Free Software Foundation; either version
+ * 2.1 of the License, or (at your option) any later version.
  *
- * <p>This library is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License
- * for more details.
+ * <p>This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Lesser General Public License for more details.
  *
- * <p>You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation, Inc.,
- * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * <p>You should have received a copy of the GNU Lesser General Public License along with this
+ * library; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston,
+ * MA 02111-1307 USA
  */
 package org.collaborium.portfolio;
 /**
@@ -39,8 +37,8 @@ public class portfolioQuestion {
   /** Contructor for a portfolio Question */
   public portfolioQuestion(String thisQuestionID) {
 
-    ResultSet rs = dbInterface.callDB("SELECT * from questions "
-                                      + " WHERE qid = " + thisQuestionID + " ");
+    ResultSet rs =
+        dbInterface.callDB("SELECT * from questions " + " WHERE qid = " + thisQuestionID + " ");
     try {
       if (rs.next()) {
 
@@ -62,9 +60,13 @@ public class portfolioQuestion {
   } // End of portfolioQuestion()
 
   /** Method to return the question text */
-  public String getQuestion() { return this.question; }
+  public String getQuestion() {
+    return this.question;
+  }
 
-  public String getAnswer() { return this.answer; }
+  public String getAnswer() {
+    return this.answer;
+  }
   /** Method to print out the answer select Box */
   public String checkBoxen(String questionSeq) {
     StringBuffer sbuf = new StringBuffer();
@@ -82,14 +84,20 @@ public class portfolioQuestion {
   } // End of selectBox()
 
   /** Method to make an option for the quiz creatation */
-  public String mkOption(String num, String formName, String formVal,
-                         String formSeen) {
+  public String mkOption(String num, String formName, String formVal, String formSeen) {
     StringBuffer sbuf = new StringBuffer();
     //	System.err.println(formSeen.length() );
     if (!formSeen.equalsIgnoreCase("")) {
-      sbuf.append("<BR>" + num + ". <input type='radio' name='question" +
-                  formName + "ans' value='" + formVal + "'> " + formSeen +
-                  "\n");
+      sbuf.append(
+          "<BR>"
+              + num
+              + ". <input type='radio' name='question"
+              + formName
+              + "ans' value='"
+              + formVal
+              + "'> "
+              + formSeen
+              + "\n");
     }
 
     return sbuf.toString();
@@ -101,14 +109,12 @@ public class portfolioQuestion {
     // myAnswer -> "+myAnswerID+" \n");
     if (textVal != null && !textVal.equalsIgnoreCase("")) {
       sbuf.append("<BR><font ");
-      if (answer.equalsIgnoreCase(qNum))
-        sbuf.append("color=\"red\" ");
+      if (answer.equalsIgnoreCase(qNum)) sbuf.append("color=\"red\" ");
       sbuf.append("> ");
       if (myAnswerID.equalsIgnoreCase(qNum))
         sbuf.append("**<blink>" + qNum + "</blink>**." + textVal + "</font>\n");
       // sbuf.append(""+qNum+"."+ textVal +"</font>\n");
-      else
-        sbuf.append(qNum + "." + textVal + "</font>\n");
+      else sbuf.append(qNum + "." + textVal + "</font>\n");
     }
     return sbuf.toString();
   }

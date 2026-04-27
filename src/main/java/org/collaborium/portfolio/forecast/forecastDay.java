@@ -1,19 +1,17 @@
 /**
  * Copyright 2001,2003 Iowa State University jportfolio@collaborium.org
  *
- * <p>This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Lesser General Public License as published by the
- * Free Software Foundation; either version 2.1 of the License, or (at your
- * option) any later version.
+ * <p>This library is free software; you can redistribute it and/or modify it under the terms of the
+ * GNU Lesser General Public License as published by the Free Software Foundation; either version
+ * 2.1 of the License, or (at your option) any later version.
  *
- * <p>This library is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License
- * for more details.
+ * <p>This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Lesser General Public License for more details.
  *
- * <p>You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation, Inc.,
- * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * <p>You should have received a copy of the GNU Lesser General Public License along with this
+ * library; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston,
+ * MA 02111-1307 USA
  */
 package org.collaborium.portfolio.forecast;
 /**
@@ -96,9 +94,14 @@ public class forecastDay {
 
     try {
       ResultSet rs =
-          dbInterface.callDB("SELECT * from forecast_days "
-                             + " WHERE portfolio = '" + portfolio + "' and "
-                             + " day = '" + sqlDate + "' ");
+          dbInterface.callDB(
+              "SELECT * from forecast_days "
+                  + " WHERE portfolio = '"
+                  + portfolio
+                  + "' and "
+                  + " day = '"
+                  + sqlDate
+                  + "' ");
       if (rs.next()) {
         this.floaterSite = rs.getString("floater_city");
         this.floaterSiteID = rs.getString("floater_abv");
@@ -124,9 +127,14 @@ public class forecastDay {
 
     try {
       ResultSet rs =
-          dbInterface.callDB("SELECT * from forecast_days "
-                             + " WHERE portfolio = '" + portfolio + "' and "
-                             + " day = '" + sqlDate + "' ");
+          dbInterface.callDB(
+              "SELECT * from forecast_days "
+                  + " WHERE portfolio = '"
+                  + portfolio
+                  + "' and "
+                  + " day = '"
+                  + sqlDate
+                  + "' ");
       if (rs.next()) {
         this.floaterSite = rs.getString("floater_city");
         this.floaterSiteID = rs.getString("floater_abv");
@@ -140,15 +148,19 @@ public class forecastDay {
 
   /** Method to extract the answers for a date */
   public boolean getValidation() {
-    if (portfolio == null || sqlDate == null)
-      return false;
+    if (portfolio == null || sqlDate == null) return false;
 
     try {
 
       ResultSet rs =
-          dbInterface.callDB("SELECT * from forecast_answers "
-                             + " WHERE portfolio = '" + portfolio + "' "
-                             + " and day = '" + sqlDate + "' ");
+          dbInterface.callDB(
+              "SELECT * from forecast_answers "
+                  + " WHERE portfolio = '"
+                  + portfolio
+                  + "' "
+                  + " and day = '"
+                  + sqlDate
+                  + "' ");
       if (rs.next()) {
         this.VfloaterHighTemp = rs.getInt("float_high");
         this.VfloaterLowTemp = rs.getInt("float_low");
@@ -179,15 +191,19 @@ public class forecastDay {
   }
   /** Method to extract the answers for a date */
   public boolean getClimo() {
-    if (portfolio == null || sqlDate == null)
-      return false;
+    if (portfolio == null || sqlDate == null) return false;
 
     try {
 
       ResultSet rs =
-          dbInterface.callDB("SELECT * from forecast_climo "
-                             + " WHERE portfolio = '" + portfolio + "' "
-                             + " and day = '" + sqlDate + "' ");
+          dbInterface.callDB(
+              "SELECT * from forecast_climo "
+                  + " WHERE portfolio = '"
+                  + portfolio
+                  + "' "
+                  + " and day = '"
+                  + sqlDate
+                  + "' ");
       if (rs.next()) {
         this.CfloaterHighTemp = rs.getInt("float_high");
         this.CfloaterLowTemp = rs.getInt("float_low");
@@ -224,41 +240,76 @@ public class forecastDay {
 
     sbuf.append(
         "<P><TABLE border=1>\n"
-        + "<tr><th colspan=3>Forecast Verification for: " + sqlDate +
-        " </th></tr> \n"
-        + "<TR><TD></TD><TD>" + localSite + "( " + localSiteID + " ) </TD>\n"
-        + " <TD>" + floaterSite + "( " + floaterSiteID + " ) </TD></TR>\n"
-        + " <TR><TH>High Temp:</TH><TD>" + String.valueOf(VlocalHighTemp) +
-        "</TD>\n"
-        + " <TD>" + String.valueOf(VfloaterHighTemp) + "</TD></TR>\n"
-        + " <TR><TH>Low Temp:</TH><TD>" + String.valueOf(VlocalLowTemp) +
-        "</TD>\n"
-        + " <TD>" + String.valueOf(VfloaterLowTemp) + "</TD></TR>\n"
-        + " <TR><TH>Precip:</TH><TD>CAT: " + String.valueOf(VlocalPrecCat) +
-        " "
-        + " ( " + VlocalPrecNum + ") </TD>\n"
-        + " <TD>CAT: " + String.valueOf(VfloaterPrecCat) + " "
-        + " ( " + VfloaterPrecNum + ")</TD></TR>\n"
-        + " <TR><TH>Snowfall:</TH><TD>CAT: " + String.valueOf(VlocalSnowCat) +
-        " "
-        + " ( " + VlocalSnowNum + ") </TD>\n"
-        + " <TD>CAT: " + String.valueOf(VfloaterSnowCat) + " "
-        + " ( " + VfloaterSnowNum + ")</TD></TR>\n"
-        + "</TABLE>\n");
+            + "<tr><th colspan=3>Forecast Verification for: "
+            + sqlDate
+            + " </th></tr> \n"
+            + "<TR><TD></TD><TD>"
+            + localSite
+            + "( "
+            + localSiteID
+            + " ) </TD>\n"
+            + " <TD>"
+            + floaterSite
+            + "( "
+            + floaterSiteID
+            + " ) </TD></TR>\n"
+            + " <TR><TH>High Temp:</TH><TD>"
+            + String.valueOf(VlocalHighTemp)
+            + "</TD>\n"
+            + " <TD>"
+            + String.valueOf(VfloaterHighTemp)
+            + "</TD></TR>\n"
+            + " <TR><TH>Low Temp:</TH><TD>"
+            + String.valueOf(VlocalLowTemp)
+            + "</TD>\n"
+            + " <TD>"
+            + String.valueOf(VfloaterLowTemp)
+            + "</TD></TR>\n"
+            + " <TR><TH>Precip:</TH><TD>CAT: "
+            + String.valueOf(VlocalPrecCat)
+            + " "
+            + " ( "
+            + VlocalPrecNum
+            + ") </TD>\n"
+            + " <TD>CAT: "
+            + String.valueOf(VfloaterPrecCat)
+            + " "
+            + " ( "
+            + VfloaterPrecNum
+            + ")</TD></TR>\n"
+            + " <TR><TH>Snowfall:</TH><TD>CAT: "
+            + String.valueOf(VlocalSnowCat)
+            + " "
+            + " ( "
+            + VlocalSnowNum
+            + ") </TD>\n"
+            + " <TD>CAT: "
+            + String.valueOf(VfloaterSnowCat)
+            + " "
+            + " ( "
+            + VfloaterSnowNum
+            + ")</TD></TR>\n"
+            + "</TABLE>\n");
 
     return sbuf.toString();
   }
 
   /** Method to retrieve the users forecast from the DB */
   public boolean getForecast() {
-    if (portfolio == null || sqlDate == null || userID == null)
-      return false;
+    if (portfolio == null || sqlDate == null || userID == null) return false;
 
     try {
-      ResultSet rs = dbInterface.callDB(
-          "SELECT * from forecasts "
-          + " WHERE userid = '" + userID + "' and portfolio = "
-          + " '" + portfolio + "' and day = '" + sqlDate + "' ");
+      ResultSet rs =
+          dbInterface.callDB(
+              "SELECT * from forecasts "
+                  + " WHERE userid = '"
+                  + userID
+                  + "' and portfolio = "
+                  + " '"
+                  + portfolio
+                  + "' and day = '"
+                  + sqlDate
+                  + "' ");
       if (rs.next()) {
         this.floaterHighTemp = rs.getInt("float_high");
         this.floaterLowTemp = rs.getInt("float_low");
@@ -282,85 +333,159 @@ public class forecastDay {
     return false;
   } // End of getForecast()
 
-  public String getFloaterHighTemp() { return String.valueOf(floaterHighTemp); }
+  public String getFloaterHighTemp() {
+    return String.valueOf(floaterHighTemp);
+  }
 
-  public String getFloaterLowTemp() { return String.valueOf(floaterLowTemp); }
+  public String getFloaterLowTemp() {
+    return String.valueOf(floaterLowTemp);
+  }
 
-  public String getFloaterPrecCat() { return String.valueOf(floaterPrecCat); }
+  public String getFloaterPrecCat() {
+    return String.valueOf(floaterPrecCat);
+  }
 
-  public String getFloaterSnowCat() { return String.valueOf(floaterSnowCat); }
+  public String getFloaterSnowCat() {
+    return String.valueOf(floaterSnowCat);
+  }
 
-  public String getLocalHighTemp() { return String.valueOf(localHighTemp); }
+  public String getLocalHighTemp() {
+    return String.valueOf(localHighTemp);
+  }
 
-  public String getLocalLowTemp() { return String.valueOf(localLowTemp); }
+  public String getLocalLowTemp() {
+    return String.valueOf(localLowTemp);
+  }
 
-  public String getLocalPrecCat() { return String.valueOf(localPrecCat); }
+  public String getLocalPrecCat() {
+    return String.valueOf(localPrecCat);
+  }
 
-  public String getLocalSnowCat() { return String.valueOf(localSnowCat); }
+  public String getLocalSnowCat() {
+    return String.valueOf(localSnowCat);
+  }
 
   public String getVFloaterHighTemp() {
     return String.valueOf(VfloaterHighTemp);
   }
 
-  public String getVFloaterLowTemp() { return String.valueOf(VfloaterLowTemp); }
+  public String getVFloaterLowTemp() {
+    return String.valueOf(VfloaterLowTemp);
+  }
 
-  public String getVFloaterPrecCat() { return String.valueOf(VfloaterPrecCat); }
+  public String getVFloaterPrecCat() {
+    return String.valueOf(VfloaterPrecCat);
+  }
 
-  public String getVFloaterPrecNum() { return String.valueOf(VfloaterPrecNum); }
+  public String getVFloaterPrecNum() {
+    return String.valueOf(VfloaterPrecNum);
+  }
 
-  public String getVFloaterSnowCat() { return String.valueOf(VfloaterSnowCat); }
+  public String getVFloaterSnowCat() {
+    return String.valueOf(VfloaterSnowCat);
+  }
 
-  public String getVFloaterSnowNum() { return String.valueOf(VfloaterSnowNum); }
+  public String getVFloaterSnowNum() {
+    return String.valueOf(VfloaterSnowNum);
+  }
 
-  public String getVLocalHighTemp() { return String.valueOf(VlocalHighTemp); }
+  public String getVLocalHighTemp() {
+    return String.valueOf(VlocalHighTemp);
+  }
 
-  public String getVLocalLowTemp() { return String.valueOf(VlocalLowTemp); }
+  public String getVLocalLowTemp() {
+    return String.valueOf(VlocalLowTemp);
+  }
 
-  public String getVLocalPrecCat() { return String.valueOf(VlocalPrecCat); }
+  public String getVLocalPrecCat() {
+    return String.valueOf(VlocalPrecCat);
+  }
 
-  public String getVLocalPrecNum() { return String.valueOf(VlocalPrecNum); }
+  public String getVLocalPrecNum() {
+    return String.valueOf(VlocalPrecNum);
+  }
 
-  public String getVLocalSnowCat() { return String.valueOf(VlocalSnowCat); }
+  public String getVLocalSnowCat() {
+    return String.valueOf(VlocalSnowCat);
+  }
 
-  public String getVLocalSnowNum() { return String.valueOf(VlocalSnowNum); }
+  public String getVLocalSnowNum() {
+    return String.valueOf(VlocalSnowNum);
+  }
 
   public String getCFloaterHighTemp() {
     return String.valueOf(CfloaterHighTemp);
   }
 
-  public String getCFloaterLowTemp() { return String.valueOf(CfloaterLowTemp); }
+  public String getCFloaterLowTemp() {
+    return String.valueOf(CfloaterLowTemp);
+  }
 
-  public String getCFloaterPrecCat() { return String.valueOf(CfloaterPrecCat); }
+  public String getCFloaterPrecCat() {
+    return String.valueOf(CfloaterPrecCat);
+  }
 
-  public String getCFloaterPrecNum() { return String.valueOf(CfloaterPrecNum); }
+  public String getCFloaterPrecNum() {
+    return String.valueOf(CfloaterPrecNum);
+  }
 
-  public String getCFloaterSnowCat() { return String.valueOf(CfloaterSnowCat); }
+  public String getCFloaterSnowCat() {
+    return String.valueOf(CfloaterSnowCat);
+  }
 
-  public String getCFloaterSnowNum() { return String.valueOf(CfloaterSnowNum); }
+  public String getCFloaterSnowNum() {
+    return String.valueOf(CfloaterSnowNum);
+  }
 
-  public String getCLocalHighTemp() { return String.valueOf(ClocalHighTemp); }
+  public String getCLocalHighTemp() {
+    return String.valueOf(ClocalHighTemp);
+  }
 
-  public String getCLocalLowTemp() { return String.valueOf(ClocalLowTemp); }
+  public String getCLocalLowTemp() {
+    return String.valueOf(ClocalLowTemp);
+  }
 
-  public String getCLocalPrecCat() { return String.valueOf(ClocalPrecCat); }
+  public String getCLocalPrecCat() {
+    return String.valueOf(ClocalPrecCat);
+  }
 
-  public String getCLocalPrecNum() { return String.valueOf(ClocalPrecNum); }
+  public String getCLocalPrecNum() {
+    return String.valueOf(ClocalPrecNum);
+  }
 
-  public String getCLocalSnowCat() { return String.valueOf(ClocalSnowCat); }
+  public String getCLocalSnowCat() {
+    return String.valueOf(ClocalSnowCat);
+  }
 
-  public String getCLocalSnowNum() { return String.valueOf(ClocalSnowNum); }
+  public String getCLocalSnowNum() {
+    return String.valueOf(ClocalSnowNum);
+  }
 
-  public String getFloaterSite() { return floaterSite; }
+  public String getFloaterSite() {
+    return floaterSite;
+  }
 
-  public String getFloaterSiteID() { return floaterSiteID; }
+  public String getFloaterSiteID() {
+    return floaterSiteID;
+  }
 
-  public String getLocalSite() { return localSite; }
+  public String getLocalSite() {
+    return localSite;
+  }
 
-  public String getLocalSiteID() { return localSiteID; }
+  public String getLocalSiteID() {
+    return localSiteID;
+  }
 
-  public String getCaseGroup() { return caseGroup; }
+  public String getCaseGroup() {
+    return caseGroup;
+  }
 
-  public String getConfidence() { return confidence; }
+  public String getConfidence() {
+    return confidence;
+  }
 
-  public String getDiscussion() { return discussion; }
+  public String getDiscussion() {
+    return discussion;
+  }
 } // End of class

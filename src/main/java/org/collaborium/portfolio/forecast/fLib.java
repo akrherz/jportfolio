@@ -1,19 +1,17 @@
 /**
  * Copyright 2001-2005 Iowa State University jportfolio@collaborium.org
  *
- * <p>This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Lesser General Public License as published by the
- * Free Software Foundation; either version 2.1 of the License, or (at your
- * option) any later version.
+ * <p>This library is free software; you can redistribute it and/or modify it under the terms of the
+ * GNU Lesser General Public License as published by the Free Software Foundation; either version
+ * 2.1 of the License, or (at your option) any later version.
  *
- * <p>This library is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License
- * for more details.
+ * <p>This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Lesser General Public License for more details.
  *
- * <p>You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation, Inc.,
- * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * <p>You should have received a copy of the GNU Lesser General Public License along with this
+ * library; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston,
+ * MA 02111-1307 USA
  */
 
 /**
@@ -54,8 +52,14 @@ public class fLib {
       if (thisyear == year) {
         extra = " SELECTED";
       }
-      sbuf.append("<option value=\"" + String.valueOf(thisyear) + "\"" + extra +
-                  ">" + String.valueOf(thisyear) + "</option>");
+      sbuf.append(
+          "<option value=\""
+              + String.valueOf(thisyear)
+              + "\""
+              + extra
+              + ">"
+              + String.valueOf(thisyear)
+              + "</option>");
       thisyear++;
     }
     sbuf.append("</select>\n");
@@ -67,27 +71,28 @@ public class fLib {
   public static String monthSelect() {
     StringBuffer sbuf = new StringBuffer();
 
-    sbuf.append("	<SELECT name=\"month\">\n"
-                + "	<option value=\"1\">January\n"
-                + "	<option value=\"2\">Feburary\n"
-                + "	<option value=\"3\">March\n"
-                + "	<option value=\"4\">April\n"
-                + "	<option value=\"5\">May\n"
-                + "	<option value=\"6\">June\n"
-                + "	<option value=\"7\">July\n"
-                + "	<option value=\"8\">August\n"
-                + "	<option value=\"9\">September\n"
-                + "	<option value=\"10\">October\n"
-                + "	<option value=\"11\">November\n"
-                + "	<option value=\"12\">December\n"
-                + "	</SELECT>\n");
+    sbuf.append(
+        "	<SELECT name=\"month\">\n"
+            + "	<option value=\"1\">January\n"
+            + "	<option value=\"2\">Feburary\n"
+            + "	<option value=\"3\">March\n"
+            + "	<option value=\"4\">April\n"
+            + "	<option value=\"5\">May\n"
+            + "	<option value=\"6\">June\n"
+            + "	<option value=\"7\">July\n"
+            + "	<option value=\"8\">August\n"
+            + "	<option value=\"9\">September\n"
+            + "	<option value=\"10\">October\n"
+            + "	<option value=\"11\">November\n"
+            + "	<option value=\"12\">December\n"
+            + "	</SELECT>\n");
 
     return sbuf.toString();
   } // End of monthSelect()
 
   /** Protoype to whichDay() */
-  public static String whichDay(String portfolio, String callMode,
-                                String thisPageURL) throws SQLException {
+  public static String whichDay(String portfolio, String callMode, String thisPageURL)
+      throws SQLException {
     return whichDay(portfolio, callMode, thisPageURL, "1970-01-01");
   }
 
@@ -99,36 +104,42 @@ public class fLib {
    * @param thisPageURL value of the page to reference in the form
    * @return HTMLformated string
    */
-  public static String whichDay(String portfolio, String callMode,
-                                String thisPageURL, String selectedDate)
+  public static String whichDay(
+      String portfolio, String callMode, String thisPageURL, String selectedDate)
       throws SQLException {
 
     StringBuffer sbuf = new StringBuffer();
 
-    ResultSet forecastDays = dbInterface.callDBWithParameters(
-        "SELECT * from forecast_days "
-            + " WHERE portfolio = ? "
-            + " and day <= CURRENT_TIMESTAMP::date ORDER by day ASC ",
-        Arrays.asList(portfolio));
+    ResultSet forecastDays =
+        dbInterface.callDBWithParameters(
+            "SELECT * from forecast_days "
+                + " WHERE portfolio = ? "
+                + " and day <= CURRENT_TIMESTAMP::date ORDER by day ASC ",
+            Arrays.asList(portfolio));
 
     sbuf.append(
-        "<FORM METHOD=\"GET\" ACTION=\"" + thisPageURL + "\" name=\"f\">\n"
-        + "<input type=\"hidden\" name=\"mode\" value=\"" + callMode + "\">\n"
-        + "<input type=\"hidden\" name=\"portfolio\" value=\"" + portfolio +
-        "\">\n"
-        + "<table border=0><tr><th>Forecast Date:</th>\n"
-        + "<td><SELECT NAME=\"sqlDate\">\n");
+        "<FORM METHOD=\"GET\" ACTION=\""
+            + thisPageURL
+            + "\" name=\"f\">\n"
+            + "<input type=\"hidden\" name=\"mode\" value=\""
+            + callMode
+            + "\">\n"
+            + "<input type=\"hidden\" name=\"portfolio\" value=\""
+            + portfolio
+            + "\">\n"
+            + "<table border=0><tr><th>Forecast Date:</th>\n"
+            + "<td><SELECT NAME=\"sqlDate\">\n");
     while (forecastDays.next()) {
       String thisDate = forecastDays.getString("day");
       sbuf.append("<OPTION VALUE=\"" + thisDate + "\" ");
-      if (thisDate.equals(selectedDate))
-        sbuf.append("SELECTED");
+      if (thisDate.equals(selectedDate)) sbuf.append("SELECTED");
       sbuf.append(">" + thisDate + "\n");
     }
-    sbuf.append("</SELECT></td><td>\n"
-                + "<INPUT TYPE=\"SUBMIT\" VALUE=\"Select Fx Date\">\n"
-                + "</td></tr></table>"
-                + "</FORM>\n");
+    sbuf.append(
+        "</SELECT></td><td>\n"
+            + "<INPUT TYPE=\"SUBMIT\" VALUE=\"Select Fx Date\">\n"
+            + "</td></tr></table>"
+            + "</FORM>\n");
 
     return sbuf.toString();
   }
@@ -138,8 +149,7 @@ public class fLib {
     StringBuffer sbuf = new StringBuffer();
 
     sbuf.append("	<SELECT name=\"day\">\n");
-    for (int i = 1; i < 32; i++)
-      sbuf.append("	<option value=" + i + ">" + i + "\n");
+    for (int i = 1; i < 32; i++) sbuf.append("	<option value=" + i + ">" + i + "\n");
 
     sbuf.append("	</SELECT>\n");
 
@@ -154,8 +164,8 @@ public class fLib {
    * @param sortCol self-explainatory
    * @param thisPageURL value of the current pageURL
    */
-  public static String forecastResults(String portfolio, String sqlDate,
-                                       String sortCol, String thisPageURL)
+  public static String forecastResults(
+      String portfolio, String sqlDate, String sortCol, String thisPageURL)
       throws myException, SQLException {
 
     StringBuffer sbuf = new StringBuffer();
@@ -163,11 +173,12 @@ public class fLib {
 
     /** If no date is specified, lets then see if the last answers works * */
     if (sqlDate == null) {
-      ResultSet availDates = dbInterface.callDBWithParameters(
-          "SELECT day "
-              + "from forecast_answers  WHERE portfolio = ? "
-              + " ORDER by day DESC LIMIT 1",
-          Arrays.asList(portfolio));
+      ResultSet availDates =
+          dbInterface.callDBWithParameters(
+              "SELECT day "
+                  + "from forecast_answers  WHERE portfolio = ? "
+                  + " ORDER by day DESC LIMIT 1",
+              Arrays.asList(portfolio));
       if (availDates.next()) {
         sqlDate = availDates.getString("day");
       } else {
@@ -194,73 +205,153 @@ public class fLib {
     try {
       sqlDateObj = java.sql.Date.valueOf(sqlDate);
     } catch (IllegalArgumentException e) {
-      throw new SQLException("Invalid date format for sqlDate: " + sqlDate +
-                                 ". Expected yyyy-MM-dd.",
-                             e);
+      throw new SQLException(
+          "Invalid date format for sqlDate: " + sqlDate + ". Expected yyyy-MM-dd.", e);
     }
 
-    ResultSet forecasts = dbInterface.callDBWithParameters(
-        "SELECT "
-            + " getUserName(userid) as realname, * from forecast_grades "
-            + " WHERE portfolio = ? "
-            + " and day = ? order by " + sortCol + " ",
-        Arrays.asList(portfolio, sqlDateObj));
+    ResultSet forecasts =
+        dbInterface.callDBWithParameters(
+            "SELECT "
+                + " getUserName(userid) as realname, * from forecast_grades "
+                + " WHERE portfolio = ? "
+                + " and day = ? order by "
+                + sortCol
+                + " ",
+            Arrays.asList(portfolio, sqlDateObj));
 
     sbuf.append(
         "<P><TABLE>\n"
-        + "<TR>\n"
-        + "	<TH rowspan=\"2\">Forecaster:</TH>\n"
-        + "	<TH colspan=\"5\">Local Site:</TH>\n"
-        + "	<TD rowspan=\"2\"></TD>\n"
-        + "	<TH colspan=\"5\">Floater Site:</TH>\n"
-        + "	<TH colspan=\"2\" rowspan=\"2\">\n"
-        + "      <a href=\"" + thisPageURL + "?portfolio=" + portfolio +
-        "&mode=l&sqlDate=" + sqlDate + "&sort=total_err\">Total:</a></TH>\n"
-        + "</TR>\n"
-        + "<TR>\n"
-        + "<TH><a href=\"" + thisPageURL + "?portfolio=" + portfolio +
-        "&mode=l&sqlDate=" + sqlDate + "&sort=local_high\">High:</a></TH>\n"
-        + "<TH><a href=\"" + thisPageURL + "?portfolio=" + portfolio +
-        "&mode=l&sqlDate=" + sqlDate + "&sort=local_low\">Low:</a></TH>\n"
-        + "<TH><a href=\"" + thisPageURL + "?portfolio=" + portfolio +
-        "&mode=l&sqlDate=" + sqlDate + "&sort=local_prec\">Prec:</a></TH>\n"
-        + "<TH><a href=\"" + thisPageURL + "?portfolio=" + portfolio +
-        "&mode=l&sqlDate=" + sqlDate + "&sort=local_snow\">Snow:</a></TH>\n"
-        + "<TH><a href=\"" + thisPageURL + "?portfolio=" + portfolio +
-        "&mode=l&sqlDate=" + sqlDate + "&sort=local_err\">Tot:</a></TH>\n"
-        + "<TH><a href=\"" + thisPageURL + "?portfolio=" + portfolio +
-        "&mode=l&sqlDate=" + sqlDate + "&sort=float_high\">High:</a></TH>\n"
-        + "<TH><a href=\"" + thisPageURL + "?portfolio=" + portfolio +
-        "&mode=l&sqlDate=" + sqlDate + "&sort=float_low\">Low:</a></TH>\n"
-        + "<TH><a href=\"" + thisPageURL + "?portfolio=" + portfolio +
-        "&mode=l&sqlDate=" + sqlDate + "&sort=float_prec\">Prec:</a></TH>\n"
-        + "<TH><a href=\"" + thisPageURL + "?portfolio=" + portfolio +
-        "&mode=l&sqlDate=" + sqlDate + "&sort=float_snow\">Snow:</a></TH>\n"
-        + "<TH><a href=\"" + thisPageURL + "?portfolio=" + portfolio +
-        "&mode=l&sqlDate=" + sqlDate + "&sort=float_err\">Tot:</a></TH>\n"
-        + "</TR>\n");
+            + "<TR>\n"
+            + "	<TH rowspan=\"2\">Forecaster:</TH>\n"
+            + "	<TH colspan=\"5\">Local Site:</TH>\n"
+            + "	<TD rowspan=\"2\"></TD>\n"
+            + "	<TH colspan=\"5\">Floater Site:</TH>\n"
+            + "	<TH colspan=\"2\" rowspan=\"2\">\n"
+            + "      <a href=\""
+            + thisPageURL
+            + "?portfolio="
+            + portfolio
+            + "&mode=l&sqlDate="
+            + sqlDate
+            + "&sort=total_err\">Total:</a></TH>\n"
+            + "</TR>\n"
+            + "<TR>\n"
+            + "<TH><a href=\""
+            + thisPageURL
+            + "?portfolio="
+            + portfolio
+            + "&mode=l&sqlDate="
+            + sqlDate
+            + "&sort=local_high\">High:</a></TH>\n"
+            + "<TH><a href=\""
+            + thisPageURL
+            + "?portfolio="
+            + portfolio
+            + "&mode=l&sqlDate="
+            + sqlDate
+            + "&sort=local_low\">Low:</a></TH>\n"
+            + "<TH><a href=\""
+            + thisPageURL
+            + "?portfolio="
+            + portfolio
+            + "&mode=l&sqlDate="
+            + sqlDate
+            + "&sort=local_prec\">Prec:</a></TH>\n"
+            + "<TH><a href=\""
+            + thisPageURL
+            + "?portfolio="
+            + portfolio
+            + "&mode=l&sqlDate="
+            + sqlDate
+            + "&sort=local_snow\">Snow:</a></TH>\n"
+            + "<TH><a href=\""
+            + thisPageURL
+            + "?portfolio="
+            + portfolio
+            + "&mode=l&sqlDate="
+            + sqlDate
+            + "&sort=local_err\">Tot:</a></TH>\n"
+            + "<TH><a href=\""
+            + thisPageURL
+            + "?portfolio="
+            + portfolio
+            + "&mode=l&sqlDate="
+            + sqlDate
+            + "&sort=float_high\">High:</a></TH>\n"
+            + "<TH><a href=\""
+            + thisPageURL
+            + "?portfolio="
+            + portfolio
+            + "&mode=l&sqlDate="
+            + sqlDate
+            + "&sort=float_low\">Low:</a></TH>\n"
+            + "<TH><a href=\""
+            + thisPageURL
+            + "?portfolio="
+            + portfolio
+            + "&mode=l&sqlDate="
+            + sqlDate
+            + "&sort=float_prec\">Prec:</a></TH>\n"
+            + "<TH><a href=\""
+            + thisPageURL
+            + "?portfolio="
+            + portfolio
+            + "&mode=l&sqlDate="
+            + sqlDate
+            + "&sort=float_snow\">Snow:</a></TH>\n"
+            + "<TH><a href=\""
+            + thisPageURL
+            + "?portfolio="
+            + portfolio
+            + "&mode=l&sqlDate="
+            + sqlDate
+            + "&sort=float_err\">Tot:</a></TH>\n"
+            + "</TR>\n");
 
     int i = 0;
     while (forecasts.next()) {
-      if (i % 2 == 0)
-        sbuf.append("<TR bgcolor=\"#EEEEEE\">\n");
-      else
-        sbuf.append("<TR>\n");
+      if (i % 2 == 0) sbuf.append("<TR bgcolor=\"#EEEEEE\">\n");
+      else sbuf.append("<TR>\n");
 
-      sbuf.append("<TD>" + forecasts.getString("realname") + "</TD>\n"
-                  + "<TD>" + forecasts.getString("local_high") + "</TD>\n"
-                  + "<TD>" + forecasts.getString("local_low") + "</TD>\n"
-                  + "<TD>" + forecasts.getString("local_prec") + "</TD>\n"
-                  + "<TD>" + forecasts.getString("local_snow") + "</TD>\n"
-                  + "<TD>" + forecasts.getString("local_err") + "</TD>\n"
-                  + "<TD></TD>\n"
-                  + "<TD>" + forecasts.getString("float_high") + "</TD>\n"
-                  + "<TD>" + forecasts.getString("float_low") + "</TD>\n"
-                  + "<TD>" + forecasts.getString("float_prec") + "</TD>\n"
-                  + "<TD>" + forecasts.getString("float_snow") + "</TD>\n"
-                  + "<TD>" + forecasts.getString("float_err") + "</TD>\n"
-                  + "<TD></TD>\n"
-                  + "<TD>" + forecasts.getString("total_err") + "</TD>\n");
+      sbuf.append(
+          "<TD>"
+              + forecasts.getString("realname")
+              + "</TD>\n"
+              + "<TD>"
+              + forecasts.getString("local_high")
+              + "</TD>\n"
+              + "<TD>"
+              + forecasts.getString("local_low")
+              + "</TD>\n"
+              + "<TD>"
+              + forecasts.getString("local_prec")
+              + "</TD>\n"
+              + "<TD>"
+              + forecasts.getString("local_snow")
+              + "</TD>\n"
+              + "<TD>"
+              + forecasts.getString("local_err")
+              + "</TD>\n"
+              + "<TD></TD>\n"
+              + "<TD>"
+              + forecasts.getString("float_high")
+              + "</TD>\n"
+              + "<TD>"
+              + forecasts.getString("float_low")
+              + "</TD>\n"
+              + "<TD>"
+              + forecasts.getString("float_prec")
+              + "</TD>\n"
+              + "<TD>"
+              + forecasts.getString("float_snow")
+              + "</TD>\n"
+              + "<TD>"
+              + forecasts.getString("float_err")
+              + "</TD>\n"
+              + "<TD></TD>\n"
+              + "<TD>"
+              + forecasts.getString("total_err")
+              + "</TD>\n");
 
       sbuf.append("</TR>\n");
       i = i + 1;
@@ -279,90 +370,167 @@ public class fLib {
    * @param sortCol self-explainatory
    * @param thisPageURL value of the current pageURL
    */
-  public static String cumulativeResults(String portfolio, String sortCol,
-                                         String thisPageURL)
+  public static String cumulativeResults(String portfolio, String sortCol, String thisPageURL)
       throws myException, SQLException {
     StringBuffer sbuf = new StringBuffer();
 
-    if (sortCol == null)
-      sortCol = "final_tot";
+    if (sortCol == null) sortCol = "final_tot";
 
     /** Now we have a date, lets get how the kids forecasted * */
-    ResultSet forecasts = dbInterface.callDBWithParameters(
-        "SELECT getUserName(userid) as realname, *, "
-            + " (p0_total+ p1_total + p2_total + p3_total) AS "
-            + "final_tot from forecast_totals "
-            + " WHERE portfolio = ? "
-            + " order by " + sortCol + " ",
-        Arrays.asList(portfolio));
+    ResultSet forecasts =
+        dbInterface.callDBWithParameters(
+            "SELECT getUserName(userid) as realname, *, "
+                + " (p0_total+ p1_total + p2_total + p3_total) AS "
+                + "final_tot from forecast_totals "
+                + " WHERE portfolio = ? "
+                + " order by "
+                + sortCol
+                + " ",
+            Arrays.asList(portfolio));
 
     sbuf.append(
         "<TABLE>\n"
-        + "<TR>\n"
-        + "	<TH rowspan=\"2\">Forecaster:</TH>\n"
-        + "	<TH colspan=\"5\">Local Site:</TH>\n"
-        + "	<TD rowspan=\"2\"></TD>\n"
-        + "	<TH colspan=\"5\">Floater Site:</TH>\n"
-        + "	<TD rowspan=\"2\"></TD>\n"
-        + "	<TH rowspan=\"2\"><a href=\"" + thisPageURL +
-        "?portfolio=" + portfolio + "&mode=c&sort=p0_total\">p0</a></TH>\n"
-        + "	<TH rowspan=\"2\"><a href=\"" + thisPageURL +
-        "?portfolio=" + portfolio + "&mode=c&sort=p1_total\">p1</a></TH>\n"
-        + "	<TH rowspan=\"2\"><a href=\"" + thisPageURL +
-        "?portfolio=" + portfolio + "&mode=c&sort=p2_total\">p2</a></TH>\n"
-        + "	<TH rowspan=\"2\"><a href=\"" + thisPageURL +
-        "?portfolio=" + portfolio + "&mode=c&sort=p3_total\">p3</a></TH>\n"
-        + "	<TH rowspan=\"2\"><a href=\"" + thisPageURL + "?portfolio=" +
-        portfolio + "&mode=c&sortfinal_total\">Cum Total</a></TH>\n"
-        + "</TR>\n"
-        + "<TR>\n"
-        + "<TH><a href=\"" + thisPageURL + "?portfolio=" + portfolio +
-        "&mode=c&sort=local_high\">High:</a></TH>\n"
-        + "<TH><a href=\"" + thisPageURL + "?portfolio=" + portfolio +
-        "&mode=c&sort=local_low\">Low:</a></TH>\n"
-        + "<TH><a href=\"" + thisPageURL + "?portfolio=" + portfolio +
-        "&mode=c&sort=local_prec\">Prec:</a></TH>\n"
-        + "<TH><a href=\"" + thisPageURL + "?portfolio=" + portfolio +
-        "&mode=c&sort=local_snow\">Snow:</a></TH>\n"
-        + "<TH><a href=\"" + thisPageURL + "?portfolio=" + portfolio +
-        "&mode=c&sort=local_err\">Tot:</a></TH>\n"
-        + "<TH><a href=\"" + thisPageURL + "?portfolio=" + portfolio +
-        "&mode=c&sort=float_high\">High:</a></TH>\n"
-        + "<TH><a href=\"" + thisPageURL + "?portfolio=" + portfolio +
-        "&mode=c&sort=float_low\">Low:</a></TH>\n"
-        + "<TH><a href=\"" + thisPageURL + "?portfolio=" + portfolio +
-        "&mode=c&sort=float_prec\">Prec:</a></TH>\n"
-        + "<TH><a href=\"" + thisPageURL + "?portfolio=" + portfolio +
-        "&mode=c&sort=float_snow\">Snow:</a></TH>\n"
-        + "<TH><a href=\"" + thisPageURL + "?portfolio=" + portfolio +
-        "&mode=c&sort=float_err\">Tot:</a></TH>\n"
-        + "</TR>\n");
+            + "<TR>\n"
+            + "	<TH rowspan=\"2\">Forecaster:</TH>\n"
+            + "	<TH colspan=\"5\">Local Site:</TH>\n"
+            + "	<TD rowspan=\"2\"></TD>\n"
+            + "	<TH colspan=\"5\">Floater Site:</TH>\n"
+            + "	<TD rowspan=\"2\"></TD>\n"
+            + "	<TH rowspan=\"2\"><a href=\""
+            + thisPageURL
+            + "?portfolio="
+            + portfolio
+            + "&mode=c&sort=p0_total\">p0</a></TH>\n"
+            + "	<TH rowspan=\"2\"><a href=\""
+            + thisPageURL
+            + "?portfolio="
+            + portfolio
+            + "&mode=c&sort=p1_total\">p1</a></TH>\n"
+            + "	<TH rowspan=\"2\"><a href=\""
+            + thisPageURL
+            + "?portfolio="
+            + portfolio
+            + "&mode=c&sort=p2_total\">p2</a></TH>\n"
+            + "	<TH rowspan=\"2\"><a href=\""
+            + thisPageURL
+            + "?portfolio="
+            + portfolio
+            + "&mode=c&sort=p3_total\">p3</a></TH>\n"
+            + "	<TH rowspan=\"2\"><a href=\""
+            + thisPageURL
+            + "?portfolio="
+            + portfolio
+            + "&mode=c&sortfinal_total\">Cum Total</a></TH>\n"
+            + "</TR>\n"
+            + "<TR>\n"
+            + "<TH><a href=\""
+            + thisPageURL
+            + "?portfolio="
+            + portfolio
+            + "&mode=c&sort=local_high\">High:</a></TH>\n"
+            + "<TH><a href=\""
+            + thisPageURL
+            + "?portfolio="
+            + portfolio
+            + "&mode=c&sort=local_low\">Low:</a></TH>\n"
+            + "<TH><a href=\""
+            + thisPageURL
+            + "?portfolio="
+            + portfolio
+            + "&mode=c&sort=local_prec\">Prec:</a></TH>\n"
+            + "<TH><a href=\""
+            + thisPageURL
+            + "?portfolio="
+            + portfolio
+            + "&mode=c&sort=local_snow\">Snow:</a></TH>\n"
+            + "<TH><a href=\""
+            + thisPageURL
+            + "?portfolio="
+            + portfolio
+            + "&mode=c&sort=local_err\">Tot:</a></TH>\n"
+            + "<TH><a href=\""
+            + thisPageURL
+            + "?portfolio="
+            + portfolio
+            + "&mode=c&sort=float_high\">High:</a></TH>\n"
+            + "<TH><a href=\""
+            + thisPageURL
+            + "?portfolio="
+            + portfolio
+            + "&mode=c&sort=float_low\">Low:</a></TH>\n"
+            + "<TH><a href=\""
+            + thisPageURL
+            + "?portfolio="
+            + portfolio
+            + "&mode=c&sort=float_prec\">Prec:</a></TH>\n"
+            + "<TH><a href=\""
+            + thisPageURL
+            + "?portfolio="
+            + portfolio
+            + "&mode=c&sort=float_snow\">Snow:</a></TH>\n"
+            + "<TH><a href=\""
+            + thisPageURL
+            + "?portfolio="
+            + portfolio
+            + "&mode=c&sort=float_err\">Tot:</a></TH>\n"
+            + "</TR>\n");
 
     int i = 0;
     while (forecasts.next()) {
-      if (i % 2 == 0)
-        sbuf.append("<TR bgcolor=\"#EEEEEE\">\n");
-      else
-        sbuf.append("<TR>\n");
+      if (i % 2 == 0) sbuf.append("<TR bgcolor=\"#EEEEEE\">\n");
+      else sbuf.append("<TR>\n");
 
-      sbuf.append("<TD>" + forecasts.getString("realname") + "</TD>\n"
-                  + "<TD>" + forecasts.getString("local_high") + "</TD>\n"
-                  + "<TD>" + forecasts.getString("local_low") + "</TD>\n"
-                  + "<TD>" + forecasts.getString("local_prec") + "</TD>\n"
-                  + "<TD>" + forecasts.getString("local_snow") + "</TD>\n"
-                  + "<TD>" + forecasts.getString("local_err") + "</TD>\n"
-                  + "<TD></TD>\n"
-                  + "<TD>" + forecasts.getString("float_high") + "</TD>\n"
-                  + "<TD>" + forecasts.getString("float_low") + "</TD>\n"
-                  + "<TD>" + forecasts.getString("float_prec") + "</TD>\n"
-                  + "<TD>" + forecasts.getString("float_snow") + "</TD>\n"
-                  + "<TD>" + forecasts.getString("float_err") + "</TD>\n"
-                  + "<TD></TD>\n"
-                  + "<TD>" + forecasts.getString("p0_total") + "</TD>\n"
-                  + "<TD>" + forecasts.getString("p1_total") + "</TD>\n"
-                  + "<TD>" + forecasts.getString("p2_total") + "</TD>\n"
-                  + "<TD>" + forecasts.getString("p3_total") + "</TD>\n"
-                  + "<TD>" + forecasts.getString("final_tot") + "</TD>\n");
+      sbuf.append(
+          "<TD>"
+              + forecasts.getString("realname")
+              + "</TD>\n"
+              + "<TD>"
+              + forecasts.getString("local_high")
+              + "</TD>\n"
+              + "<TD>"
+              + forecasts.getString("local_low")
+              + "</TD>\n"
+              + "<TD>"
+              + forecasts.getString("local_prec")
+              + "</TD>\n"
+              + "<TD>"
+              + forecasts.getString("local_snow")
+              + "</TD>\n"
+              + "<TD>"
+              + forecasts.getString("local_err")
+              + "</TD>\n"
+              + "<TD></TD>\n"
+              + "<TD>"
+              + forecasts.getString("float_high")
+              + "</TD>\n"
+              + "<TD>"
+              + forecasts.getString("float_low")
+              + "</TD>\n"
+              + "<TD>"
+              + forecasts.getString("float_prec")
+              + "</TD>\n"
+              + "<TD>"
+              + forecasts.getString("float_snow")
+              + "</TD>\n"
+              + "<TD>"
+              + forecasts.getString("float_err")
+              + "</TD>\n"
+              + "<TD></TD>\n"
+              + "<TD>"
+              + forecasts.getString("p0_total")
+              + "</TD>\n"
+              + "<TD>"
+              + forecasts.getString("p1_total")
+              + "</TD>\n"
+              + "<TD>"
+              + forecasts.getString("p2_total")
+              + "</TD>\n"
+              + "<TD>"
+              + forecasts.getString("p3_total")
+              + "</TD>\n"
+              + "<TD>"
+              + forecasts.getString("final_tot")
+              + "</TD>\n");
 
       sbuf.append("</TR>\n");
       i = i + 1;
@@ -379,38 +547,31 @@ public class fLib {
     sbuf.append("<SELECT name='" + selectName + "'>\n");
 
     sbuf.append("<option value='0' ");
-    if (selected.equalsIgnoreCase("0"))
-      sbuf.append("SELECTED");
+    if (selected.equalsIgnoreCase("0")) sbuf.append("SELECTED");
     sbuf.append(">CAT 0 &nbsp; | &nbsp; 0 - Trace\n");
 
     sbuf.append("<option value='9' ");
-    if (selected.equalsIgnoreCase("9"))
-      sbuf.append("SELECTED");
+    if (selected.equalsIgnoreCase("9")) sbuf.append("SELECTED");
     sbuf.append(">CAT 9 &nbsp; | &nbsp; Trace\n");
 
     sbuf.append("<option value='1' ");
-    if (selected.equalsIgnoreCase("1"))
-      sbuf.append("SELECTED");
+    if (selected.equalsIgnoreCase("1")) sbuf.append("SELECTED");
     sbuf.append(">CAT 1 &nbsp; | &nbsp; Trace - 0.05\n");
 
     sbuf.append("<option value='2' ");
-    if (selected.equalsIgnoreCase("2"))
-      sbuf.append("SELECTED");
+    if (selected.equalsIgnoreCase("2")) sbuf.append("SELECTED");
     sbuf.append(">CAT 2 &nbsp; | &nbsp; 0.06 - 0.25\n");
 
     sbuf.append("<option value='3' ");
-    if (selected.equalsIgnoreCase("3"))
-      sbuf.append("SELECTED");
+    if (selected.equalsIgnoreCase("3")) sbuf.append("SELECTED");
     sbuf.append(">CAT 3 &nbsp; | &nbsp; 0.26 - 0.50\n");
 
     sbuf.append("<option value='4' ");
-    if (selected.equalsIgnoreCase("4"))
-      sbuf.append("SELECTED");
+    if (selected.equalsIgnoreCase("4")) sbuf.append("SELECTED");
     sbuf.append(">CAT 4 &nbsp; | &nbsp; 0.51 - 1.00\n");
 
     sbuf.append("<option value='5' ");
-    if (selected.equalsIgnoreCase("5"))
-      sbuf.append("SELECTED");
+    if (selected.equalsIgnoreCase("5")) sbuf.append("SELECTED");
     sbuf.append(">CAT 5 &nbsp; | &nbsp; 1.01 +\n");
 
     sbuf.append("</SELECT>\n");
@@ -424,33 +585,27 @@ public class fLib {
     sbuf.append("<SELECT name='" + selectName + "'>\n");
 
     sbuf.append("<option value='0' ");
-    if (selected.equalsIgnoreCase("0"))
-      sbuf.append("SELECTED");
+    if (selected.equalsIgnoreCase("0")) sbuf.append("SELECTED");
     sbuf.append(">CAT 0 &nbsp; | &nbsp; 0 - Trace\n");
 
     sbuf.append("<option value='1' ");
-    if (selected.equalsIgnoreCase("1"))
-      sbuf.append("SELECTED");
+    if (selected.equalsIgnoreCase("1")) sbuf.append("SELECTED");
     sbuf.append(">CAT 1 &nbsp; | &nbsp; Trace - 0.05\n");
 
     sbuf.append("<option value='2' ");
-    if (selected.equalsIgnoreCase("2"))
-      sbuf.append("SELECTED");
+    if (selected.equalsIgnoreCase("2")) sbuf.append("SELECTED");
     sbuf.append(">CAT 2 &nbsp; | &nbsp; 0.06 - 0.25\n");
 
     sbuf.append("<option value='3' ");
-    if (selected.equalsIgnoreCase("3"))
-      sbuf.append("SELECTED");
+    if (selected.equalsIgnoreCase("3")) sbuf.append("SELECTED");
     sbuf.append(">CAT 3 &nbsp; | &nbsp; 0.26 - 0.50\n");
 
     sbuf.append("<option value='4' ");
-    if (selected.equalsIgnoreCase("4"))
-      sbuf.append("SELECTED");
+    if (selected.equalsIgnoreCase("4")) sbuf.append("SELECTED");
     sbuf.append(">CAT 4 &nbsp; | &nbsp; 0.51 - 1.00\n");
 
     sbuf.append("<option value='5' ");
-    if (selected.equalsIgnoreCase("5"))
-      sbuf.append("SELECTED");
+    if (selected.equalsIgnoreCase("5")) sbuf.append("SELECTED");
     sbuf.append(">CAT 5 &nbsp; | &nbsp; 1.01 +\n");
 
     sbuf.append("</SELECT>\n");
@@ -464,48 +619,39 @@ public class fLib {
     sbuf.append("<SELECT name='" + selectName + "'>\n");
 
     sbuf.append("<option value='0' ");
-    if (selected.equalsIgnoreCase("0"))
-      sbuf.append("SELECTED");
+    if (selected.equalsIgnoreCase("0")) sbuf.append("SELECTED");
     sbuf.append(">CAT 0 &nbsp; | &nbsp; 0 - Trace\n");
 
     sbuf.append("<option value='9' ");
-    if (selected.equalsIgnoreCase("9"))
-      sbuf.append("SELECTED");
+    if (selected.equalsIgnoreCase("9")) sbuf.append("SELECTED");
     sbuf.append(">CAT 9 &nbsp; | &nbsp; Trace\n");
 
     sbuf.append("<option value='1' ");
-    if (selected.equalsIgnoreCase("1"))
-      sbuf.append("SELECTED");
+    if (selected.equalsIgnoreCase("1")) sbuf.append("SELECTED");
     sbuf.append(">CAT 1 &nbsp; | &nbsp; Trace - 2\"\n");
 
     sbuf.append("<option value='8' ");
-    if (selected.equalsIgnoreCase("8"))
-      sbuf.append("SELECTED");
+    if (selected.equalsIgnoreCase("8")) sbuf.append("SELECTED");
     sbuf.append(">CAT 8 &nbsp; | &nbsp;  2\"\n");
 
     sbuf.append("<option value='2' ");
-    if (selected.equalsIgnoreCase("2"))
-      sbuf.append("SELECTED");
+    if (selected.equalsIgnoreCase("2")) sbuf.append("SELECTED");
     sbuf.append(">CAT 2 &nbsp; | &nbsp; 2\" - 4\"\n");
 
     sbuf.append("<option value='7' ");
-    if (selected.equalsIgnoreCase("7"))
-      sbuf.append("SELECTED");
+    if (selected.equalsIgnoreCase("7")) sbuf.append("SELECTED");
     sbuf.append(">CAT 7 &nbsp; | &nbsp;  4\"\n");
 
     sbuf.append("<option value='3' ");
-    if (selected.equalsIgnoreCase("3"))
-      sbuf.append("SELECTED");
+    if (selected.equalsIgnoreCase("3")) sbuf.append("SELECTED");
     sbuf.append(">CAT 3 &nbsp; | &nbsp; 4\"- 8\"\n");
 
     sbuf.append("<option value='6' ");
-    if (selected.equalsIgnoreCase("6"))
-      sbuf.append("SELECTED");
+    if (selected.equalsIgnoreCase("6")) sbuf.append("SELECTED");
     sbuf.append(">CAT 6 &nbsp; | &nbsp;  8\"\n");
 
     sbuf.append("<option value='4' ");
-    if (selected.equalsIgnoreCase("4"))
-      sbuf.append("SELECTED");
+    if (selected.equalsIgnoreCase("4")) sbuf.append("SELECTED");
     sbuf.append(">CAT 4 &nbsp; | &nbsp; 8\" + \n");
 
     sbuf.append("</SELECT>\n");
@@ -519,28 +665,23 @@ public class fLib {
     sbuf.append("<SELECT name='" + selectName + "'>\n");
 
     sbuf.append("<option value='0' ");
-    if (selected.equalsIgnoreCase("0"))
-      sbuf.append("SELECTED");
+    if (selected.equalsIgnoreCase("0")) sbuf.append("SELECTED");
     sbuf.append(">CAT 0 &nbsp; | &nbsp; 0 - Trace\n");
 
     sbuf.append("<option value='1' ");
-    if (selected.equalsIgnoreCase("1"))
-      sbuf.append("SELECTED");
+    if (selected.equalsIgnoreCase("1")) sbuf.append("SELECTED");
     sbuf.append(">CAT 1 &nbsp; | &nbsp; Trace - 2\"\n");
 
     sbuf.append("<option value='2' ");
-    if (selected.equalsIgnoreCase("2"))
-      sbuf.append("SELECTED");
+    if (selected.equalsIgnoreCase("2")) sbuf.append("SELECTED");
     sbuf.append(">CAT 2 &nbsp; | &nbsp; 2\" - 4\"\n");
 
     sbuf.append("<option value='3' ");
-    if (selected.equalsIgnoreCase("3"))
-      sbuf.append("SELECTED");
+    if (selected.equalsIgnoreCase("3")) sbuf.append("SELECTED");
     sbuf.append(">CAT 3 &nbsp; | &nbsp; 4\"- 8\"\n");
 
     sbuf.append("<option value='4' ");
-    if (selected.equalsIgnoreCase("4"))
-      sbuf.append("SELECTED");
+    if (selected.equalsIgnoreCase("4")) sbuf.append("SELECTED");
     sbuf.append(">CAT 4 &nbsp; | &nbsp; 8\" + \n");
 
     sbuf.append("</SELECT>\n");
@@ -548,55 +689,75 @@ public class fLib {
     return sbuf.toString();
   } // End of snowSelect()
 
-  public static String totalForecastErrors(String portfolio)
-      throws SQLException {
+  public static String totalForecastErrors(String portfolio) throws SQLException {
     StringBuffer sbuf = new StringBuffer();
 
-    dbInterface.updateDB("DELETE from forecast_totals WHERE portfolio = '" +
-                         portfolio + "' ");
+    dbInterface.updateDB("DELETE from forecast_totals WHERE portfolio = '" + portfolio + "' ");
 
     /** Total all forecasts first */
-    dbInterface.updateDB("INSERT into forecast_totals ( SELECT userid, "
-                         + "portfolio, sum(local_high), "
-                         + " sum(local_low), sum(local_prec), "
-                         + "sum(local_snow), sum(local_err), sum(float_high), "
-                         + " sum(float_low), sum(float_prec), "
-                         + "sum(float_snow), sum(float_err) from "
-                         + " forecast_grades WHERE portfolio = '" + portfolio +
-                         "' "
-                         + " GROUP by userid, portfolio ) ");
+    dbInterface.updateDB(
+        "INSERT into forecast_totals ( SELECT userid, "
+            + "portfolio, sum(local_high), "
+            + " sum(local_low), sum(local_prec), "
+            + "sum(local_snow), sum(local_err), sum(float_high), "
+            + " sum(float_low), sum(float_prec), "
+            + "sum(float_snow), sum(float_err) from "
+            + " forecast_grades WHERE portfolio = '"
+            + portfolio
+            + "' "
+            + " GROUP by userid, portfolio ) ");
 
-    ResultSet students = dbInterface.callDBWithParameters(
-        "SELECT getUserName( username) as realname, "
-            + " username from students "
-            + " WHERE portfolio = ? and nofx = 'n' ",
-        Arrays.asList(portfolio));
+    ResultSet students =
+        dbInterface.callDBWithParameters(
+            "SELECT getUserName( username) as realname, "
+                + " username from students "
+                + " WHERE portfolio = ? and nofx = 'n' ",
+            Arrays.asList(portfolio));
 
     while (students.next()) {
       String thisUserID = students.getString("username");
-      dbInterface.updateDB("UPDATE forecast_totals SET "
-                           + " p0_total = totalErrorByCase('" + thisUserID +
-                           "', '" + portfolio + "', 0) , "
-                           + " p1_total = totalErrorByCase('" + thisUserID +
-                           "', '" + portfolio + "', 1) , "
-                           + " p2_total = totalErrorByCase('" + thisUserID +
-                           "', '" + portfolio + "', 2), "
-                           + " p3_total = totalErrorByCase('" + thisUserID +
-                           "', '" + portfolio + "', 3) "
-                           + " WHERE userid = '" + thisUserID +
-                           "' and portfolio = '" + portfolio + "' ");
+      dbInterface.updateDB(
+          "UPDATE forecast_totals SET "
+              + " p0_total = totalErrorByCase('"
+              + thisUserID
+              + "', '"
+              + portfolio
+              + "', 0) , "
+              + " p1_total = totalErrorByCase('"
+              + thisUserID
+              + "', '"
+              + portfolio
+              + "', 1) , "
+              + " p2_total = totalErrorByCase('"
+              + thisUserID
+              + "', '"
+              + portfolio
+              + "', 2), "
+              + " p3_total = totalErrorByCase('"
+              + thisUserID
+              + "', '"
+              + portfolio
+              + "', 3) "
+              + " WHERE userid = '"
+              + thisUserID
+              + "' and portfolio = '"
+              + portfolio
+              + "' ");
     }
 
     /** Now we need to update Null values, hack! */
     dbInterface.updateDB(
-        "update forecast_totals SET p1_total = 0 WHERE portfolio = '" +
-        portfolio + "' and p1_total IS NULL");
+        "update forecast_totals SET p1_total = 0 WHERE portfolio = '"
+            + portfolio
+            + "' and p1_total IS NULL");
     dbInterface.updateDB(
-        "update forecast_totals SET p2_total = 0 WHERE portfolio = '" +
-        portfolio + "' and p2_total IS NULL");
+        "update forecast_totals SET p2_total = 0 WHERE portfolio = '"
+            + portfolio
+            + "' and p2_total IS NULL");
     dbInterface.updateDB(
-        "update forecast_totals SET p3_total = 0 WHERE portfolio = '" +
-        portfolio + "' and p3_total IS NULL");
+        "update forecast_totals SET p3_total = 0 WHERE portfolio = '"
+            + portfolio
+            + "' and p3_total IS NULL");
 
     sbuf.append("Done Totalling Forecasts!");
     return sbuf.toString();
@@ -609,19 +770,23 @@ public class fLib {
    * @param sqlDate which is the forecast Date we will be verifying
    * @return String data
    */
-  public static String gradeForecasts(String portfolio, String sqlDate)
-      throws SQLException {
+  public static String gradeForecasts(String portfolio, String sqlDate) throws SQLException {
     StringBuffer sbuf = new StringBuffer();
 
-    dbInterface.updateDB("DELETE from forecast_grades WHERE "
-                         + " day = '" + sqlDate + "' and portfolio = '" +
-                         portfolio + "' ");
+    dbInterface.updateDB(
+        "DELETE from forecast_grades WHERE "
+            + " day = '"
+            + sqlDate
+            + "' and portfolio = '"
+            + portfolio
+            + "' ");
 
-    ResultSet students = dbInterface.callDBWithParameters(
-        "SELECT "
-            + " getUserName( username) as realname, username from students "
-            + " WHERE portfolio = ? and nofx = 'n' ",
-        Arrays.asList(portfolio));
+    ResultSet students =
+        dbInterface.callDBWithParameters(
+            "SELECT "
+                + " getUserName( username) as realname, username from students "
+                + " WHERE portfolio = ? and nofx = 'n' ",
+            Arrays.asList(portfolio));
 
     forecastDay thisDay = new forecastDay(portfolio, sqlDate);
     if (thisDay.getValidation()) {
@@ -663,15 +828,15 @@ public class fLib {
         try {
           sqlDateObj = java.sql.Date.valueOf(sqlDate);
         } catch (IllegalArgumentException e) {
-          throw new SQLException("Invalid date format for sqlDate: " + sqlDate +
-                                     ". Expected yyyy-MM-dd.",
-                                 e);
+          throw new SQLException(
+              "Invalid date format for sqlDate: " + sqlDate + ". Expected yyyy-MM-dd.", e);
         }
-        ResultSet userForecast = dbInterface.callDBWithParameters(
-            "SELECT * from forecasts WHERE "
-                + " day = ? and portfolio = ? and "
-                + " userid = ? ",
-            Arrays.asList(sqlDateObj, portfolio, thisUserID));
+        ResultSet userForecast =
+            dbInterface.callDBWithParameters(
+                "SELECT * from forecasts WHERE "
+                    + " day = ? and portfolio = ? and "
+                    + " userid = ? ",
+                Arrays.asList(sqlDateObj, portfolio, thisUserID));
         if (userForecast.next()) {
           u_local_high = userForecast.getString("local_high");
           u_local_low = userForecast.getString("local_low");
@@ -684,16 +849,34 @@ public class fLib {
         } else {
           dbInterface.updateDB(
               "INSERT into forecasts (userid, portfolio, day, local_high, "
-              + " local_low, local_prec, local_snow, float_high, float_low, "
-              + "float_prec, "
-              + " float_snow, type) VALUES ('" + thisUserID + "', '" +
-              portfolio + "', "
-              + " '" + sqlDate + "', '" + cl_local_high + "', '" +
-              cl_local_low + "', "
-              + " '" + cl_local_prec + "', '" + cl_local_snow + "', '" +
-              cl_float_high + "' , "
-              + " '" + cl_float_low + "', '" + cl_float_prec + "', '" +
-              cl_float_snow + "', 'c' ) ");
+                  + " local_low, local_prec, local_snow, float_high, float_low, "
+                  + "float_prec, "
+                  + " float_snow, type) VALUES ('"
+                  + thisUserID
+                  + "', '"
+                  + portfolio
+                  + "', "
+                  + " '"
+                  + sqlDate
+                  + "', '"
+                  + cl_local_high
+                  + "', '"
+                  + cl_local_low
+                  + "', "
+                  + " '"
+                  + cl_local_prec
+                  + "', '"
+                  + cl_local_snow
+                  + "', '"
+                  + cl_float_high
+                  + "' , "
+                  + " '"
+                  + cl_float_low
+                  + "', '"
+                  + cl_float_prec
+                  + "', '"
+                  + cl_float_snow
+                  + "', 'c' ) ");
 
           u_local_high = cl_local_high;
           u_local_low = cl_local_low;
@@ -705,54 +888,80 @@ public class fLib {
           u_float_snow = cl_float_snow;
         }
 
-        Integer local_high_err =
-            Integer.parseInt(gradeTemp(local_high, u_local_high));
-        Integer local_low_err =
-            Integer.parseInt(gradeTemp(local_low, u_local_low));
-        Integer local_prec_err =
-            Integer.parseInt(gradePrec(local_prec, u_local_prec));
-        Integer local_snow_err =
-            Integer.parseInt(gradePrec(local_snow, u_local_snow));
+        Integer local_high_err = Integer.parseInt(gradeTemp(local_high, u_local_high));
+        Integer local_low_err = Integer.parseInt(gradeTemp(local_low, u_local_low));
+        Integer local_prec_err = Integer.parseInt(gradePrec(local_prec, u_local_prec));
+        Integer local_snow_err = Integer.parseInt(gradePrec(local_snow, u_local_snow));
 
-        Integer float_high_err =
-            Integer.parseInt(gradeTemp(float_high, u_float_high));
-        Integer float_low_err =
-            Integer.parseInt(gradeTemp(float_low, u_float_low));
-        Integer float_prec_err =
-            Integer.parseInt(gradePrec(float_prec, u_float_prec));
-        Integer float_snow_err =
-            Integer.parseInt(gradePrec(float_snow, u_float_snow));
+        Integer float_high_err = Integer.parseInt(gradeTemp(float_high, u_float_high));
+        Integer float_low_err = Integer.parseInt(gradeTemp(float_low, u_float_low));
+        Integer float_prec_err = Integer.parseInt(gradePrec(float_prec, u_float_prec));
+        Integer float_snow_err = Integer.parseInt(gradePrec(float_snow, u_float_snow));
 
         Integer local_err =
-            local_high_err.intValue() + local_low_err.intValue() +
-            local_prec_err.intValue() + local_snow_err.intValue();
+            local_high_err.intValue()
+                + local_low_err.intValue()
+                + local_prec_err.intValue()
+                + local_snow_err.intValue();
         Integer float_err =
-            float_high_err.intValue() + float_low_err.intValue() +
-            float_prec_err.intValue() + float_snow_err.intValue();
+            float_high_err.intValue()
+                + float_low_err.intValue()
+                + float_prec_err.intValue()
+                + float_snow_err.intValue();
         Integer total_err = local_err.intValue() + float_err.intValue();
 
-        dbInterface.updateDB("DELETE from forecast_grades WHERE "
-                             + " portfolio = '" + portfolio + "' and day = '" +
-                             sqlDate + "' "
-                             + " and userid = '" + thisUserID + "' ");
+        dbInterface.updateDB(
+            "DELETE from forecast_grades WHERE "
+                + " portfolio = '"
+                + portfolio
+                + "' and day = '"
+                + sqlDate
+                + "' "
+                + " and userid = '"
+                + thisUserID
+                + "' ");
 
         dbInterface.updateDB(
             "INSERT into forecast_grades ( userid, portfolio, day, local_high, "
-            + " local_low, local_prec, local_snow, local_err, float_high, "
-            + "float_low, float_prec, "
-            + " float_snow, float_err, total_err, case_group) VALUES ('" +
-            thisUserID + "', '" + portfolio + "', "
-            + " '" + sqlDate + "', '" + local_high_err.toString() + "', '" +
-            local_low_err.toString() + "', "
-            + " '" + local_prec_err.toString() + "', '" +
-            local_snow_err.toString() + "', "
-            + " " + local_err.toString() + ", '" + float_high_err.toString() +
-            "' , "
-            + " " + float_low_err.toString() + ", '" +
-            float_prec_err.toString() + "', "
-            + " " + float_snow_err.toString() + ", " + float_err.toString() +
-            ", "
-            + " " + total_err.toString() + ", " + caseGroup + " ) ");
+                + " local_low, local_prec, local_snow, local_err, float_high, "
+                + "float_low, float_prec, "
+                + " float_snow, float_err, total_err, case_group) VALUES ('"
+                + thisUserID
+                + "', '"
+                + portfolio
+                + "', "
+                + " '"
+                + sqlDate
+                + "', '"
+                + local_high_err.toString()
+                + "', '"
+                + local_low_err.toString()
+                + "', "
+                + " '"
+                + local_prec_err.toString()
+                + "', '"
+                + local_snow_err.toString()
+                + "', "
+                + " "
+                + local_err.toString()
+                + ", '"
+                + float_high_err.toString()
+                + "' , "
+                + " "
+                + float_low_err.toString()
+                + ", '"
+                + float_prec_err.toString()
+                + "', "
+                + " "
+                + float_snow_err.toString()
+                + ", "
+                + float_err.toString()
+                + ", "
+                + " "
+                + total_err.toString()
+                + ", "
+                + caseGroup
+                + " ) ");
 
         sbuf.append("<BR>Done grading user: " + thisUserName + "\n");
       }
@@ -765,41 +974,27 @@ public class fLib {
 
   public static String gradePrec(String answer, String guess) {
 
-    if (answer.equals("9") && (guess.equals("0") || guess.equals("1")))
-      return "0";
-    if (answer.equals("8") && (guess.equals("1") || guess.equals("2")))
-      return "0";
-    if (answer.equals("7") && (guess.equals("2") || guess.equals("3")))
-      return "0";
-    if (answer.equals("6") && (guess.equals("3") || guess.equals("4")))
-      return "0";
+    if (answer.equals("9") && (guess.equals("0") || guess.equals("1"))) return "0";
+    if (answer.equals("8") && (guess.equals("1") || guess.equals("2"))) return "0";
+    if (answer.equals("7") && (guess.equals("2") || guess.equals("3"))) return "0";
+    if (answer.equals("6") && (guess.equals("3") || guess.equals("4"))) return "0";
 
-    if (answer.equals(guess))
-      return "0";
+    if (answer.equals(guess)) return "0";
 
-    if (answer.equals("7") && (guess.equals("0") || guess.equals("1")))
-      answer = "2";
-    else if (answer.equals("6") && (guess.equals("5")))
-      answer = "4";
-    else if (answer.equals("6") &&
-             (guess.equals("0") || guess.equals("1") || guess.equals("2")))
+    if (answer.equals("7") && (guess.equals("0") || guess.equals("1"))) answer = "2";
+    else if (answer.equals("6") && (guess.equals("5"))) answer = "4";
+    else if (answer.equals("6") && (guess.equals("0") || guess.equals("1") || guess.equals("2")))
       answer = "3";
-    else if (answer.equals("7") && (guess.equals("4") || guess.equals("5")))
-      answer = "3";
-    else if (answer.equals("8") && (guess.equals("0")))
-      answer = "1";
-    else if (answer.equals("8") &&
-             (guess.equals("3") || guess.equals("4") || guess.equals("5")))
+    else if (answer.equals("7") && (guess.equals("4") || guess.equals("5"))) answer = "3";
+    else if (answer.equals("8") && (guess.equals("0"))) answer = "1";
+    else if (answer.equals("8") && (guess.equals("3") || guess.equals("4") || guess.equals("5")))
       answer = "2";
-    else if (answer.equals("9"))
-      answer = "1";
+    else if (answer.equals("9")) answer = "1";
 
     Integer answerInt = Integer.valueOf(answer);
     Integer guessInt = Integer.valueOf(guess);
 
-    return Integer
-        .valueOf(4 * Math.abs(answerInt.intValue() - guessInt.intValue()))
-        .toString();
+    return Integer.valueOf(4 * Math.abs(answerInt.intValue() - guessInt.intValue())).toString();
   } // End of gradePrec()
 
   public static String gradeTemp(String answer, String guess) {

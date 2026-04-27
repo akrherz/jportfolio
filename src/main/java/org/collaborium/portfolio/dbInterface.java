@@ -1,24 +1,22 @@
 /**
  * Copyright 2001-2005 Iowa State University jportfolio@collaborium.org
  *
- * <p>This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Lesser General Public License as published by the
- * Free Software Foundation; either version 2.1 of the License, or (at your
- * option) any later version.
+ * <p>This library is free software; you can redistribute it and/or modify it under the terms of the
+ * GNU Lesser General Public License as published by the Free Software Foundation; either version
+ * 2.1 of the License, or (at your option) any later version.
  *
- * <p>This library is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License
- * for more details.
+ * <p>This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Lesser General Public License for more details.
  *
- * <p>You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation, Inc.,
- * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * <p>You should have received a copy of the GNU Lesser General Public License along with this
+ * library; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston,
+ * MA 02111-1307 USA
  */
 /**
- * Class to handle the database connections. Since this interface is only called
- * once, the servlet engine should share one database connection. It was a
- * problem that many database connections where getting spawned.
+ * Class to handle the database connections. Since this interface is only called once, the servlet
+ * engine should share one database connection. It was a problem that many database connections
+ * where getting spawned.
  *
  * @author Daryl Herzmann
  */
@@ -52,16 +50,14 @@ public class dbInterface {
   } // End of dbInterfaceInit
 
   /** Method to call the database with a list of parameters */
-  public static ResultSet callDBWithParameters(String query,
-                                               List<Object> params) {
-    if (db == null)
-      dbInterfaceInit();
+  public static ResultSet callDBWithParameters(String query, List<Object> params) {
+    if (db == null) dbInterfaceInit();
 
     ResultSet rs = null;
     try {
       plogger.report(query + ";");
-      PreparedStatement pst = db.prepareStatement(
-          query, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+      PreparedStatement pst =
+          db.prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
       for (int i = 0; i < params.size(); i++) {
         pst.setObject(i + 1, params.get(i));
       }
@@ -80,14 +76,13 @@ public class dbInterface {
    * @param String value for the query wanted.
    */
   public static ResultSet callDB(String querry) {
-    if (db == null)
-      dbInterfaceInit();
+    if (db == null) dbInterfaceInit();
 
     ResultSet rs = null;
     try {
       plogger.report(querry + ";");
-      Statement st = db.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
-                                        ResultSet.CONCUR_READ_ONLY);
+      Statement st =
+          db.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
       rs = st.executeQuery(querry);
     } catch (Exception ex) {
       plogger.report("Exception caught in callDB().\n" + ex);

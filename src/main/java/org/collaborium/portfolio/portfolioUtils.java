@@ -1,23 +1,21 @@
 /**
  * Copyright 2001 Iowa State University jportfolio@collaborium.org
  *
- * <p>This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Lesser General Public License as published by the
- * Free Software Foundation; either version 2.1 of the License, or (at your
- * option) any later version.
+ * <p>This library is free software; you can redistribute it and/or modify it under the terms of the
+ * GNU Lesser General Public License as published by the Free Software Foundation; either version
+ * 2.1 of the License, or (at your option) any later version.
  *
- * <p>This library is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License
- * for more details.
+ * <p>This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Lesser General Public License for more details.
  *
- * <p>You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation, Inc.,
- * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * <p>You should have received a copy of the GNU Lesser General Public License along with this
+ * library; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston,
+ * MA 02111-1307 USA
  */
 /**
- * A set of methods that are needed to various portfolio apps They are not
- * necessarily unique to a portfolio App
+ * A set of methods that are needed to various portfolio apps They are not necessarily unique to a
+ * portfolio App
  *
  * @author Daryl Herzmann
  */
@@ -36,8 +34,7 @@ public class portfolioUtils {
    * @param message which is the string value of the message to be sent out
    * @return string for the status of this method...
    */
-  public static String emailPortfolio(String message, String subject,
-                                      portfolioUser thisUser) {
+  public static String emailPortfolio(String message, String subject, portfolioUser thisUser) {
     StringBuffer sbuf = new StringBuffer();
     String mailhost = "localhost"; // or another mail host
     String from = thisUser.getEmailAddress();
@@ -58,10 +55,12 @@ public class portfolioUtils {
         msg.setSubject("[" + portfolio + "] " + subject);
         msg.cc(from);
 
-        ResultSet rs = dbInterface.callDB(
-            "SELECT s.username, u.email from students s, users u "
-            + " WHERE s.portfolio = '" + portfolio +
-            "' and s.username = u.username ");
+        ResultSet rs =
+            dbInterface.callDB(
+                "SELECT s.username, u.email from students s, users u "
+                    + " WHERE s.portfolio = '"
+                    + portfolio
+                    + "' and s.username = u.username ");
         while (rs.next()) {
           String email = rs.getString("email");
           if (email != null) {
@@ -72,11 +71,13 @@ public class portfolioUtils {
         sbuf.append("</blockquote>\n");
 
         PrintStream out = msg.getPrintStream();
-        out.println("\n"
-                    + "# This email was generated from the Portfolio Website \n"
-                    + "# You have received this email \n"
-                    + "#  because you are a member of the " + portfolio +
-                    " portfolio \n");
+        out.println(
+            "\n"
+                + "# This email was generated from the Portfolio Website \n"
+                + "# You have received this email \n"
+                + "#  because you are a member of the "
+                + portfolio
+                + " portfolio \n");
 
         out.println(message);
         msg.sendAndClose();
@@ -85,8 +86,7 @@ public class portfolioUtils {
         System.err.println("Problem sending email");
         ex.printStackTrace();
       }
-      sbuf.append("<P>Posted Message:\n<blockquote>\n" + message +
-                  "</blockquote>\n");
+      sbuf.append("<P>Posted Message:\n<blockquote>\n" + message + "</blockquote>\n");
 
       sbuf.append("<P>Message processing completed.");
     }

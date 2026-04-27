@@ -1,25 +1,23 @@
 /**
  * Copyright 2001-2005 Iowa State University jportfolio@collaborium.org
  *
- * <p>This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Lesser General Public License as published by the
- * Free Software Foundation; either version 2.1 of the License, or (at your
- * option) any later version.
+ * <p>This library is free software; you can redistribute it and/or modify it under the terms of the
+ * GNU Lesser General Public License as published by the Free Software Foundation; either version
+ * 2.1 of the License, or (at your option) any later version.
  *
- * <p>This library is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License
- * for more details.
+ * <p>This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Lesser General Public License for more details.
  *
- * <p>You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation, Inc.,
- * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * <p>You should have received a copy of the GNU Lesser General Public License along with this
+ * library; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston,
+ * MA 02111-1307 USA
  */
 
 /**
- * Servlet that will handle the user side of portfolio activities Some of the
- * neat features planned for this application is o Upload Pictures of themselves
- * o Display information about the person o Able to link their homepage in
+ * Servlet that will handle the user side of portfolio activities Some of the neat features planned
+ * for this application is o Upload Pictures of themselves o Display information about the person o
+ * Able to link their homepage in
  *
  * @author Daryl Herzmann
  */
@@ -49,24 +47,23 @@ public class Users extends HttpServlet {
     String location = request.getRequestURI();
     HttpSession session = request.getSession(true);
     Boolean writePerm = Boolean.FALSE;
-    portfolioUser thisUser = (portfolioUser)session.getAttribute("User");
+    portfolioUser thisUser = (portfolioUser) session.getAttribute("User");
     String userName = getUserFromURI(location);
 
-    if (thisUser == null)
-      writePerm = Boolean.FALSE;
-    else if (thisUser.getUserID().equals(userName))
-      writePerm = Boolean.TRUE;
+    if (thisUser == null) writePerm = Boolean.FALSE;
+    else if (thisUser.getUserID().equals(userName)) writePerm = Boolean.TRUE;
 
     out.println(jlib.basicHeader(thisUser, "User Homepage"));
 
     if (jlib.isUser(userName) && userName.length() > 0) {
-      out.println(
-          "<P align=\"center\"><B>Welcome to my portfolio homepage!</B><HR>\n");
+      out.println("<P align=\"center\"><B>Welcome to my portfolio homepage!</B><HR>\n");
       out.println(printInfo(userName, writePerm));
     } else {
-      out.println("<FONT class=\"error\">This username '" +
-                  escapeHtml(userName) + "' "
-                  + " does not exist. Sorry!</FONT>\n");
+      out.println(
+          "<FONT class=\"error\">This username '"
+              + escapeHtml(userName)
+              + "' "
+              + " does not exist. Sorry!</FONT>\n");
     }
 
     out.println(jlib.basicFooter());
@@ -83,12 +80,13 @@ public class Users extends HttpServlet {
     sbuf.append("<!-- My Picture -->\n");
     sbuf.append(
         "	<table cellpadding=0 cellspacing=0 border=1 width=200>\n"
-        + "	<caption><B>My Picture:</B></caption>\n"
-        + "	<TR bgcolor=\"ffefd5\"><TD>\n"
-        + "	<BR>\n"
-        + "	<CENTER><img src=\"/jportfolio/FILES/" +
-        escapeHtml(requestedUser) + "/me.gif\"></CENTER>\n"
-        + "	<BR>\n");
+            + "	<caption><B>My Picture:</B></caption>\n"
+            + "	<TR bgcolor=\"ffefd5\"><TD>\n"
+            + "	<BR>\n"
+            + "	<CENTER><img src=\"/jportfolio/FILES/"
+            + escapeHtml(requestedUser)
+            + "/me.gif\"></CENTER>\n"
+            + "	<BR>\n");
 
     sbuf.append("	</TD></TR></TABLE>\n");
     sbuf.append("<!-- End of My Picture -->\n");
@@ -97,17 +95,22 @@ public class Users extends HttpServlet {
 
     sbuf.append(jlib.topBox("My Portfolios"));
     try {
-      ResultSet rs = dbInterface.callDB(
-          "select s.portfolio, p.name, "
-          + " p.porthome from students s, portfolios p WHERE "
-          + " s.username = '" + requestedUser + "' and "
-          + " p.portfolio = s.portfolio");
+      ResultSet rs =
+          dbInterface.callDBWithParameters(
+              "select s.portfolio, p.name, "
+                  + " p.porthome from students s, portfolios p WHERE "
+                  + " s.username = $1 and "
+                  + " p.portfolio = s.portfolio",
+              Arrays.asList(requestedUser));
 
       while (rs.next()) {
-        sbuf.append("<li><a "
-                    + " href=\"/jportfolio/servlet/jportfolio?portfolio=" +
-                    rs.getString("portfolio") + "\">" + rs.getString("name") +
-                    "</a></li>\n");
+        sbuf.append(
+            "<li><a "
+                + " href=\"/jportfolio/servlet/jportfolio?portfolio="
+                + rs.getString("portfolio")
+                + "\">"
+                + rs.getString("name")
+                + "</a></li>\n");
       }
 
     } catch (Exception ex) {
@@ -121,25 +124,29 @@ public class Users extends HttpServlet {
 
     String bioSketch = null;
     try {
-      ResultSet rs = dbInterface.callDB(
-          "SELECT getUserName(username) as realn, * from users"
-          + " WHERE username = '" + requestedUser + "' ");
+      ResultSet rs =
+          dbInterface.callDB(
+              "SELECT getUserName(username) as realn, * from users"
+                  + " WHERE username = '"
+                  + requestedUser
+                  + "' ");
 
       if (rs.next()) {
         sbuf.append("<TABLE>\n");
-        sbuf.append("<TR><TD>Real Name:</TD><TD> " + rs.getString("realn") +
-                    "</TD></TR>\n"
-                    + "<TR><TD>Email Address:</TD><TD> " +
-                    rs.getString("email") + "</TD></TR>\n");
+        sbuf.append(
+            "<TR><TD>Real Name:</TD><TD> "
+                + rs.getString("realn")
+                + "</TD></TR>\n"
+                + "<TR><TD>Email Address:</TD><TD> "
+                + rs.getString("email")
+                + "</TD></TR>\n");
         sbuf.append("</TABLE>\n");
       }
 
       ResultSet rs2 =
-          dbInterface.callDBWithParameters("SELECT body from biosketch WHERE "
-                                               + " username = ? ",
-                                           Arrays.asList(requestedUser));
-      if (rs2.next())
-        bioSketch = rs2.getString("body");
+          dbInterface.callDBWithParameters(
+              "SELECT body from biosketch WHERE " + " username = ? ", Arrays.asList(requestedUser));
+      if (rs2.next()) bioSketch = rs2.getString("body");
 
     } catch (Exception ex) {
       plogger.report("Problem in printInfo()");
@@ -148,15 +155,12 @@ public class Users extends HttpServlet {
     Timestamp lastLogin = jlib.lastLogin(requestedUser);
     SimpleDateFormat sdf = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss Z");
     sdf.setTimeZone(java.util.TimeZone.getTimeZone("GMT"));
-    if (lastLogin != null)
-      sbuf.append("<P><B>Last Login at:</B>" + sdf.format(lastLogin));
+    if (lastLogin != null) sbuf.append("<P><B>Last Login at:</B>" + sdf.format(lastLogin));
 
     sbuf.append("<P><B>Bio Sketch:</B><BR>\n");
-    if (bioSketch != null)
-      sbuf.append(stringUtils.toBR(bioSketch) + "\n");
+    if (bioSketch != null) sbuf.append(stringUtils.toBR(bioSketch) + "\n");
     if (writePerm.booleanValue())
-      sbuf.append(
-          " <a href=\"/jportfolio/jsp/user/customize/editBio.jsp\">Edit</a>\n");
+      sbuf.append(" <a href=\"/jportfolio/jsp/user/customize/editBio.jsp\">Edit</a>\n");
 
     sbuf.append("</TD></TR></TABLE>\n");
 
@@ -188,7 +192,8 @@ public class Users extends HttpServlet {
     if (input == null) {
       return null;
     }
-    return input.replace("&", "&amp;")
+    return input
+        .replace("&", "&amp;")
         .replace("<", "&lt;")
         .replace(">", "&gt;")
         .replace("\"", "&quot;")

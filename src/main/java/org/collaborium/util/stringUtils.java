@@ -1,24 +1,22 @@
 /**
  * Copyright 2001,2003 Iowa State University jportfolio@collaborium.org
  *
- * <p>This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Lesser General Public License as published by the
- * Free Software Foundation; either version 2.1 of the License, or (at your
- * option) any later version.
+ * <p>This library is free software; you can redistribute it and/or modify it under the terms of the
+ * GNU Lesser General Public License as published by the Free Software Foundation; either version
+ * 2.1 of the License, or (at your option) any later version.
  *
- * <p>This library is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License
- * for more details.
+ * <p>This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Lesser General Public License for more details.
  *
- * <p>You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation, Inc.,
- * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * <p>You should have received a copy of the GNU Lesser General Public License along with this
+ * library; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston,
+ * MA 02111-1307 USA
  */
 
 /**
- * This is a java code to handle miscellaneous String operations that the
- * portfolio code needs to do.
+ * This is a java code to handle miscellaneous String operations that the portfolio code needs to
+ * do.
  *
  * @author Daryl Herzmann
  */
@@ -38,8 +36,7 @@ public class stringUtils {
    * @return fixed String marked up with BR tags....
    */
   public static String toBR(String source) {
-    if (source == null)
-      return "";
+    if (source == null) return "";
     StringTokenizer myTokens = new StringTokenizer(source, "\r", true);
     StringBuffer myBuffer = new StringBuffer();
 
@@ -53,8 +50,7 @@ public class stringUtils {
         }
       } while (myTokens.hasMoreTokens());
     } else {
-      myBuffer.append(
-          "Error in getting Buffer.  Could not split or source was null");
+      myBuffer.append("Error in getting Buffer.  Could not split or source was null");
     }
     return myBuffer.toString();
   } // End of toBR()
@@ -66,8 +62,7 @@ public class stringUtils {
    * @return the same string with the necessary changes
    */
   public static String cleanString(String source) {
-    if (source == null)
-      return "";
+    if (source == null) return "";
     char[] myCharArray = source.toCharArray();
     StringBuffer myBuffer = new StringBuffer();
 
@@ -83,8 +78,7 @@ public class stringUtils {
   } // End of cleanString()
 
   /**
-   * Method that parses what the database spits out as a date and converts it
-   * into a date format
+   * Method that parses what the database spits out as a date and converts it into a date format
    *
    * @param String dbDate
    * @return Date
