@@ -30,6 +30,4 @@ public class settings {
   public static final String DBpwd = "NULL";
 
   public static String httpBase = "/jportfolio/";
-
-  public static String systemPassword = "iitap";
 } // End of settings
