@@ -25,11 +25,9 @@ public class settings {
 
   public static final String servletHttpBase = "/jportfolio/servlet";
 
-  public static final String DBurl = "jdbc:postgresql://iemdb.local:5432/portfolio";
+  public static final String DBurl = "jdbc:postgresql://iemdb-jportfolio.local:5432/portfolio";
   public static final String DBusr = "nobody";
   public static final String DBpwd = "NULL";
 
   public static String httpBase = "/jportfolio/";
-
-  public static String systemPassword = "iitap";
 } // End of settings

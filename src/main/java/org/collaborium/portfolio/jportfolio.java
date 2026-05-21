@@ -203,7 +203,6 @@ public class jportfolio extends HttpServlet {
     String f = null;
 
     switch (callMethod.charAt(0)) {
-        // u == create portfolio
         // v == switch the style of the page
       case 'v':
         String style = request.getParameter("style");
@@ -222,9 +221,6 @@ public class jportfolio extends HttpServlet {
         thisUser.setFName(fName);
         thisUser.setLName(lName);
         f = jlib.servletHttpBase + "/jportfolio?mode=v";
-        break;
-      case 'u':
-        pageContent.append(postPortfolio(thisUser, request));
         break;
     } // End of switch
 
@@ -305,78 +301,6 @@ public class jportfolio extends HttpServlet {
 
     return sbuf.toString();
   }
-
-  /**
-   * Method to enter new portfolio values into the DB
-   *
-   * @param req HTTP servlet request
-   * @param user current User ID
-   * @return returns a HTML string
-   */
-  public String postPortfolio(portfolioUser thisUser, HttpServletRequest req) {
-    StringBuffer sbuf = new StringBuffer();
-
-    String portfolioName = jlib.cleanString(req.getParameter("portfolioName"));
-    String portfolioID = req.getParameter("portfolioID");
-    String about = jlib.cleanString(req.getParameter("about"));
-    String instructor = req.getParameter("instructor");
-    String passwd = req.getParameter("passwd");
-    String sysPass = req.getParameter("sysPass");
-
-    sbuf.append(jlib.topBox("Create Portfolio Results:"));
-
-    if (sysPass.equalsIgnoreCase(settings.systemPassword)) {
-
-      // Create Entry in portfolios DB
-      jlib.updateDB(
-          "INSERT into portfolios(portfolio, name, about, instructor, passwd) "
-              + " VALUES( '"
-              + portfolioID
-              + "', '"
-              + portfolioName
-              + "', '"
-              + about
-              + "', '"
-              + instructor
-              + "', '"
-              + passwd
-              + "') ");
-
-      // Create entry in motds, just as a place holder till it gets replaced
-      jlib.updateDB(
-          "INSERT into motd(portfolio, body) VALUES('" + portfolioID + "', 'Welcome Users.') ");
-
-      // Create an administrative entry for this user
-      jlib.updateDB(
-          "INSERT into admins(portfolio, admin) VALUES ('"
-              + portfolioID
-              + "', '"
-              + thisUser.getUserID()
-              + "')");
-
-      // Create a student user account
-      jlib.updateDB(
-          "INSERT into students(username, portfolio) VALUES('"
-              + thisUser.getUserID()
-              + "', '"
-              + portfolioID
-              + "') ");
-
-      sbuf.append(
-          "Your Portfolio has been created sucessfully!\n"
-              + " You can now <a href=\"/jportfolio/login.jsp?portfolio="
-              + portfolioID
-              + "\">log in</a> \n"
-              + " to your portfolio and configure it.\n");
-    } else {
-      sbuf.append(
-          "Incorrect system password, email " + "support@iitap.iastate.edu if you need assistance");
-    }
-
-    sbuf.append(jlib.botBox());
-
-    return sbuf.toString();
-  } // End of postPortfolio()
 
   /**
    * Method to print out a form to create a Portfolio
