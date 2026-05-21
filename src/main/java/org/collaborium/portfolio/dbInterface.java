@@ -42,7 +42,13 @@ public class dbInterface {
       ex.printStackTrace();
     }
     try {
-      db = DriverManager.getConnection(url, usr, pwd);
+      // If password is omitted, let the JDBC driver use its password lookup flow
+      // (for example passfile/.pgpass support where configured).
+      if (pwd == null || pwd.trim().isEmpty() || "NULL".equalsIgnoreCase(pwd.trim())) {
+        db = DriverManager.getConnection(url, usr, null);
+      } else {
+        db = DriverManager.getConnection(url, usr, pwd);
+      }
     } catch (Exception ex) {
       plogger.report("Exception caught opening db and st.\n" + ex);
       ex.printStackTrace();

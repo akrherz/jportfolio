@@ -27,7 +27,7 @@ public class settings {
 
   public static final String DBurl = "jdbc:postgresql://iemdb-portfolio.local:5432/portfolio";
   public static final String DBusr = "nobody";
-  public static final String DBpwd = "NULL";
+  public static final String DBpwd = System.getenv("JPORTFOLIO_DBPWD");
 
   public static String httpBase = "/jportfolio/";
 } // End of settings
