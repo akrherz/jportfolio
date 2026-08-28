@@ -85,8 +85,8 @@ body>#portfolio-header { position:fixed;}
 
 #mainNavOuter {
   position: absolute;
-  margin-top: -25px; 
-  margin-left: 5px; 
+  margin-top: -25px;
+  margin-left: 5px;
   z-index: 3;
   width: 780px;
     /*    background-position: bottom right;
@@ -115,7 +115,7 @@ body>#mainNavOuter { position:fixed;}
     visibility: hidden;
     }
 /* Holly Hack Targets IE Win only \*/
-* html .mainNavOuter {height: 1%;} 
+* html .mainNavOuter {height: 1%;}
 /* End Holly Hack */
 
 

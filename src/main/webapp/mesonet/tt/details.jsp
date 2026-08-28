@@ -27,7 +27,7 @@
     dbInterface.updateDB("INSERT into tt_log(portfolio, s_mid, author, "
      +" status_c, comments, tt_id) VALUES ('"+ thisUser.getPortfolio() +"', "
      +" '"+ s_mid +"', '"+ thisUser.getUserID() +"', '"+ status +"', "
-     +" '"+ stringUtils.cleanString( comments ) +"', "+ tt_id +")"); 
+     +" '"+ stringUtils.cleanString( comments ) +"', "+ tt_id +")");
     /** Change status of tt and update timestamp */
     dbInterface.updateDB("UPDATE tt_base SET last = 'NOW'::timestamp "
      +", sensor = '"+ tt_sensor +"' WHERE id = "+ tt_id );

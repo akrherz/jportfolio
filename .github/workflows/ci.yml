@@ -30,6 +30,6 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-java${{ matrix.java }}-maven-
             ${{ runner.os }}-
-  
+
       - name: Build with Maven
         run:  mvn -B package

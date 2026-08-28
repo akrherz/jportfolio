@@ -46,7 +46,7 @@ function P7_autoLayers() { //v1.2 by PVII
 <body LINK="blue" VLINK="green" BGCOLOR=#FFFFFF ONLOAD="preloadImages();MM_preloadImages('/gccourse/include/third_05-over.jpg','/gccourse/include/third_06-over.jpg','/gccourse/include/third_07-over.jpg','/gccourse/include/third_08-over.jpg','/gccourse/include/third_09-over.jpg','/gccourse/include/third_03-over.jpg')" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
 
 <table WIDTH=801 BORDER=0 CELLPADDING=0 CELLSPACING=0>
-  <tr> 
+  <tr>
     <td width="36" height="1"> <img SRC="/gccourse/include//gccourse/include/spacer.gif" WIDTH=36 HEIGHT=1></td>
     <td width="61"> <img SRC="/gccourse/include/spacer.gif" WIDTH=61 HEIGHT=1></td>
     <td width="91"> <img SRC="/gccourse/include/spacer.gif" WIDTH=91 HEIGHT=1></td>
@@ -59,12 +59,12 @@ function P7_autoLayers() { //v1.2 by PVII
     <td colspan="2"> <img SRC="/gccourse/include/spacer.gif" WIDTH=174 HEIGHT=1></td>
   </tr>
 
-  <tr> 
+  <tr>
     <td COLSPAN=4 height="33"> <img SRC="/gccourse/include/third_01.jpg" WIDTH=224 HEIGHT=33></td>
     <td COLSPAN=4> <img SRC="/gccourse/include/oncampusstudents3.jpg" WIDTH=402 HEIGHT=33></td>
     <td ROWSPAN=2 colspan="2"> <a href="http://www.iastate.edu" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('Image26','','/gccourse/include/third_03-over.jpg',1)"><img name="Image26" border="0" src="/gccourse/include/third_03.jpg" width="174" height="67"></a></td>
   </tr>
-  <tr> 
+  <tr>
     <td height="34"> <img SRC="/gccourse/include/third_04.jpg" WIDTH=36 HEIGHT=34></td>
     <td> <a href="/gccourse" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('Image21','','/gccourse/include/third_05-over.jpg',1)"><img name="Image21" border="0" src="/gccourse/include/third_05.jpg" width="61" height="34"></a></td>
 
@@ -75,7 +75,7 @@ function P7_autoLayers() { //v1.2 by PVII
     <td> <img SRC="/gccourse/include/third_10.jpg" WIDTH=162 HEIGHT=34></td>
   </tr>
 
-  <tr> 
+  <tr>
     <td COLSPAN=10 height="6"> <img SRC="/gccourse/include/third_11.jpg" WIDTH=800 HEIGHT=6></td>
   </tr>
 

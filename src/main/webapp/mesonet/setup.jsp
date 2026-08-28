@@ -2,7 +2,7 @@
 <head>
   <TITLE>JPortfolio | IEM Data</TITLE>
   <link rel=stylesheet type=text/css href=/jportfolio/mesonet/css/main.css>
-  
+
   <%@ page import="org.collaborium.portfolio.*" %>
   <%@ page import="org.collaborium.util.*" %>
   <%@ page import="org.collaborium.portfolio.jdot.*" %>
@@ -41,6 +41,6 @@
     response.setHeader("Refresh", "0; URL=/jportfolio/mesonet/index.jsp");
     return;
   }
-%>  
+%>
 </head>
 <body>

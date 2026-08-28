@@ -15,15 +15,15 @@
 	}
 
 	if (callMethod == null) callMethod = "x";
-	
+
 %>
 
 <%@include file='actions.jsp' %>
 
 <TABLE>
-<TR><TD width="25%" valign="TOP"> 
+<TR><TD width="25%" valign="TOP">
 <div id="portfolio-side">
- 
+
 	<%@include file='sideBar.jsp' %>
 
 </div>

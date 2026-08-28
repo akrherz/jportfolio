@@ -21,7 +21,7 @@
 
 <div align="center">
 <h3>Portfolio Dialog</h3>
-</div> 
+</div>
 
 <%
 portfolioUser thisUser = (portfolioUser)session.getAttribute("User");
@@ -29,15 +29,15 @@ String block_id = (String)request.getParameter("block_id");
 String year = (String)request.getParameter("year");
 
 StringBuffer sbuf = new StringBuffer();
-	
+
 
 ResultSet threads  = null;
 
-String SQL =  "SELECT * from dialog_"+year+" WHERE block_id = '"+block_id+"'" 
+String SQL =  "SELECT * from dialog_"+year+" WHERE block_id = '"+block_id+"'"
 	+" and portfolio = 'gcp"+year+"' and category = 'public' order by thedate ASC";
 
 //out.println(SQL);
-// Lets make the query and figure out 
+// Lets make the query and figure out
 threads = dbInterface.callDB(SQL);
 
 
@@ -54,16 +54,15 @@ while( threads.next() ) {
     + "<br><b>posted on:</b> "+ threads.getString("thedate") +"</td></tr>\n"
     + "<tr><td colspan=\"7\" class=\"postBottom\">\n"
     + stringUtils.toBR( threads.getString("body") ) +"</td></tr>\n");
-	
+
 
 
 } //End of while1()
 threads.close();
-	    
+
 }
 
 sbuf.append("</table>");
 out.println( sbuf.toString() );
-    
-%>
 
+%>

@@ -1,7 +1,7 @@
 
 <font class="bluet">Remove Sensor from site</font>
 
-<p>This form allows you to remove a sensor from a site.  This 
+<p>This form allows you to remove a sensor from a site.  This
 change will be denoted in the sensor's history.</p>
 
 <%
@@ -21,4 +21,3 @@ change will be denoted in the sensor's history.</p>
 <br><input type="submit" value="Remove Sensor">
 
 </form>
-

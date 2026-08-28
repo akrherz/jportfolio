@@ -17,7 +17,7 @@
 <li><a href="<%= thisPageURL %>?mode=e">Discussion Quick-view</a></li>
 <li><a href="<%= thisPageURL %>?mode=i">Help!</a></li>
 <li><a target="_new" href="/jportfolio/jsp/user/myDialog.jsp">View All My Posts</a></li>
-<%= jlib.botBox() %> 
+<%= jlib.botBox() %>
 
 
 <%= jlib.currentUsers( thisUser.getPortfolio(), thisUser.getUserID() ) %>

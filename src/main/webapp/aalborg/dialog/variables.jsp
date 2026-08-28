@@ -26,7 +26,7 @@ myMessage.setBody( request.getParameter("body") );
 myMessage.setThreadID( request.getParameter("threadid") );
 myMessage.setidnum( request.getParameter("idnum") );
 myMessage.setReplyAuthor( request.getParameter("replyAuthor") );
-if (thisUser.getDialogSecurity() != null) 
+if (thisUser.getDialogSecurity() != null)
 {
   myMessage.setSecurity(thisUser.getDialogSecurity());
 }

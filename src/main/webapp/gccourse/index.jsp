@@ -39,7 +39,7 @@ if ( thisUser == null || thisUser.getPortfolio() == null ) {
         <input type="SUBMIT" value="Log IN">
         <input type="reset" value="Reset">
         </form>
-	
+
 
 	<p><B>First time users should:</b> <a href="createAccount.jsp">Create Account</a>
 	<br /><b>HELP!</b>  I <a href="/jportfolio/jsp/user/mailPass.jsp?forward=/jportfolio/gccourse">forgot</a> my
@@ -47,9 +47,9 @@ if ( thisUser == null || thisUser.getPortfolio() == null ) {
 
 <%= jlib.botBox() %>
 
-<%  } else { 
+<%  } else {
 
-  jlib.addUser( thisUser.getUserID(), "GC Portfolio"); 
+  jlib.addUser( thisUser.getUserID(), "GC Portfolio");
   session.setMaxInactiveInterval( 10000 );
 %>
 <%@include file='mainPage.jsp'%>

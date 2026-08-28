@@ -69,6 +69,3 @@ You should specify the install date of the sensor if possible.</p>
     out.println("<p>No sensors are defined for this site.\n");
   }
 %>
-
-
-

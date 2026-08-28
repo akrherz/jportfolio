@@ -14,7 +14,7 @@
 
  </HEAD>
  <BODY class="main">
-		
+
  <!-- Begin Table to space entire document -->
  <TABLE width='100%' cellpadding=0 rowspacing=0 border=0 cellspacing=0>
    <TR class="headerBar">
@@ -23,7 +23,7 @@
         <TD align="right">
 <%
   if (thisUser != null){
-    out.println("<b>Welcome:</b> "+ thisUser.getRealName() 
+    out.println("<b>Welcome:</b> "+ thisUser.getRealName()
      +"<br><b>Portfolio:</b> "+ thisUser.getPortfolio() );
 
   } else {

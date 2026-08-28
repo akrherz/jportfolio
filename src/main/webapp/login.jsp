@@ -7,7 +7,7 @@
  authBean auth = new authBean(request, session);
  portfolioUser thisUser = (portfolioUser)session.getAttribute("User");
 
- if (thisUser != null && thisUser.getPortfolio() != null) 
+ if (thisUser != null && thisUser.getPortfolio() != null)
  {
    response.setHeader("Refresh", "0; URL="+comebackURL);
    return;
@@ -47,14 +47,14 @@ If you don't already have a Portfolio account, you will need to <a href="javascr
 </div>
 </form>
 
-<% } else { 
+<% } else {
 // session.removeAttribute("comebackURL");
 %>
 <form method="POST" action="login.jsp" name="q">
 <div id="loginPortfolio">
 <h3>Log into your Portfolio</h3>
 <p>
-Below are the Portfolios you have previously registered for.  If you 
+Below are the Portfolios you have previously registered for.  If you
 are accessing a new Portfolio for the first time, you will need to <a href="javascript: setLayerDisplay('registerPortfolio');">register</a> for it.
 </p>
 <p><strong>Select Portfolio:</strong>
@@ -86,13 +86,13 @@ are accessing a new Portfolio for the first time, you will need to <a href="java
 		<TD><input type='text' name='fName' size='20'></TD>
 		<TD><input type='text' name='lName' size='40'></TD>
 		</TR></TABLE>
-		
+
 		<P>Enter your primary email address:<BR>
 		<input type='text' name='email' size='30'>
-		
+
 		<P>Request an userID:<BR>
 		<input type='text' name='username' size='20'>
-		
+
 		<TABLE><TR>
 		<TD>Choose a password:</TD>
 		<TD>Verify password:</TD>
@@ -100,9 +100,9 @@ are accessing a new Portfolio for the first time, you will need to <a href="java
 		<TD><input type='password' name='password1' size='15'></TD>
 		<TD><input type='password' name='password2' size='15'></TD>
 		</TR></TABLE>
-		
+
 <p><input type="submit" value="Create Account!">
-	
+
 <%= jlib.botBox() %>
 </div>
 </form>

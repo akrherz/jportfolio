@@ -1,7 +1,7 @@
 <HTML>
 <HEAD>
 	<TITLE>Portfolio IM Post</TITLE>
-	
+
 </HEAD>
 <BODY bgcolor="white">
 
@@ -35,7 +35,7 @@ You are posting a message to: <B><%= userID %></B>
 </FORM>
 
 
-<BR><blockquote><font color="green">With this page, you can send another user an almost instant message. 
+<BR><blockquote><font color="green">With this page, you can send another user an almost instant message.
 If your friend has their message window open, or are actively using the system, they will see the message.
 Your friend may not instantly recieve this message, so it may take a bit to respond.
 </font></blockquote>

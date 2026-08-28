@@ -23,9 +23,9 @@
         <TH>Quizzes:</TH>
         <TD>
 	<script type="text/javascript">
-	
+
 	function changeD(qid){
-	
+
 		//
 		startDates = new Array();
 		endDates = new Array();
@@ -38,7 +38,7 @@
 	+" to_char(stopdate,'Dy Mon DD HH12:MI AM') as stopdate from quizes "
 	+" where portfolio = '"+ thisUser.getPortfolio() +"' and topicid IN "
 	+" (SELECT name from units WHERE blockid = 1) ");
-      
+
    while (rs.next() ){
   	out.println("startDates["+ rs.getString("quiznum") +"] = \""+ rs.getString("startdate") +"\";\n");
 	out.println("endDates["+ rs.getString("quiznum") +"] = \""+ rs.getString("stopdate") +"\";\n");
@@ -49,7 +49,7 @@
     ex.printStackTrace();
   }
 %>
-	
+
 		document.quizdate.start.value = startDates[qid];
 		document.quizdate.end.value = endDates[qid];
 		return true;
@@ -60,15 +60,15 @@
 	Opens: <input type="text" size="25" name="start" value="Select Quiz">
 	<br>Closes: <input type="text" size="25" name="end" value="Select Quiz">
 	</TD>
-        <TD> 
-	<SELECT name="qid" 
+        <TD>
+	<SELECT name="qid"
 	  onChange="changeD(this.form.qid.options[this.form.qid.selectedIndex].value)">
 	 <%= quizListing %>
-	
+
 	</SELECT>
-	
+
 	<br><input type="SUBMIT" value="View/Take Quiz">
-	
+
 	</form>
 	</TD>
 </TR>
@@ -86,16 +86,16 @@
      ResultSet rs = dbInterface.callDB("SELECT subject,idnum,date from dialog WHERE"
        +"  portfolio = '"+ thisUser.getPortfolio() +"' and topicid IN (SELECT "
        +" name from units WHERE blockid = 1) ORDER by date");
-       
+
      while (rs.next() ){
        out.println("  <option value=\"/jportfolio/gccourse/dialog/index.jsp?mode=o&idnum="
          +rs.getString("idnum") +"\">"+ rs.getString("subject") +"<br>\n");
      }
-   
+
    } catch(Exception ex){
      plogger.report("Problem in JSPland");
    }
-%> 
+%>
    </select>
    </form>
    </TD>
@@ -127,4 +127,3 @@
 
 </TABLE>
 <!-- End layout -->
-

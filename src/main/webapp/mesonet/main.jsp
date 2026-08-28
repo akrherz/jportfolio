@@ -1,7 +1,7 @@
 <%@include file='setup.jsp'%>
 <%@include file='include/header.jsp'%>
 
-<table width=100%> 
+<table width=100%>
   <tr><td width=150 valign="top">
 
 <table>
@@ -69,7 +69,7 @@
 
 <div class="ptitle"><%= thisUser.myPortfolio.getName() %> Network</div>
 
-<p class="story">Welcome!  You have successfully logged in and are ready to 
+<p class="story">Welcome!  You have successfully logged in and are ready to
 begin work on your network.  Listed on the side are options available.  Listed
 at the top are links to various sections in this application.</p>
 

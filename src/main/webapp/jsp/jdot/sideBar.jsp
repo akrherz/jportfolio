@@ -7,7 +7,7 @@
 <tr><td class="botBox">
 <select name="dialogType" onChange="location=this.form.dialogType.options[this.form.dialogType.selectedIndex].value">
 
-<% 
+<%
    if (dialogType == null) dialogType = "public";
    if (dialogType.equalsIgnoreCase("public") ) {%>
 	<option value="jdot.jsp?dialogType=public" SELECTED>Public
@@ -74,4 +74,3 @@ Search On:<br>
 <br><input type='submit' value='Search'>
 </form>
 </td></tr></table>
-

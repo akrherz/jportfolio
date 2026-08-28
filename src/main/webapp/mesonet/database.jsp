@@ -43,7 +43,7 @@
        /** Retreive back the ID of this insert */
        rs = dbInterface.callDB("SELECT last_value from iem_sensor_id_seq");
        rs.next();
-       String sensorID = (String)rs.getString("last_value");  
+       String sensorID = (String)rs.getString("last_value");
        rs.close();
        out.println("<br>DEBUG: Created new sensor\n");
 
@@ -115,7 +115,7 @@
 //     myMessage.setLink( req.getParameter("link") );
      myMessage.setTopicid("site"+siteID);
 
-     myMessage.commitMessage(); 
+     myMessage.commitMessage();
      out.println("<br>DEBUG: created discussion for site");
 
      out.println("<p>Input was successful.  What do you want to do now?\n"
@@ -127,7 +127,7 @@
      out.println("<p>There was an error processing this request.");
 
    }
-    
+
     break;
 //--------------------------------------------------------------------------
     case 'c':

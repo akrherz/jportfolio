@@ -15,15 +15,15 @@
 	}
 
 	if (callMethod == null) callMethod = "x";
-	
+
 %>
 
 <%@include file='actions.jsp' %>
 
 <TABLE>
-<TR><TD width="25%" valign="TOP" class="botBox"> 
+<TR><TD width="25%" valign="TOP" class="botBox">
 
- 
+
 	<%@include file='sideBar.jsp' %>
 
 </TD><TD width="100%" VALIGN="TOP">

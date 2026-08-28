@@ -45,16 +45,16 @@
 <tr><td colspan=2>Daryl Herzmann</td>
 </tr>
 <tr>
-  <td>Email:</td> 
-  <td><A class="commands" 
+  <td>Email:</td>
+  <td><A class="commands"
     HREF="mailto:akrherz@iastate.edu">akrherz@iastate.edu</A></td>
 </tr>
 <tr>
-  <td>Office:</td> 
+  <td>Office:</td>
   <td>3015 Agronomy</td>
 </tr>
 <tr>
-  <td>Hours:</td> 
+  <td>Hours:</td>
   <td>Just stop by.</td>
 </tr>
 </table>

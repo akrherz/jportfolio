@@ -10,10 +10,10 @@
 <%
   portfolioUser thisUser = (portfolioUser)session.getAttribute("User");
   String message = (String)request.getParameter("errorMessage");
-  String sname = ""; 
+  String sname = "";
   String s_mid = null;
-  if (thisUser == null){ 
-  
+  if (thisUser == null){
+
 %>
 
 <%@ include file='include/header.jsp' %>

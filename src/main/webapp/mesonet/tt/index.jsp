@@ -10,7 +10,7 @@
 
 <h3>Network Trouble Tickets</h3>
 
-<p class="story">The IEM trouble ticket system organizes and tracks trouble 
+<p class="story">The IEM trouble ticket system organizes and tracks trouble
 tickets for participating networks. Current functionality of this system includes:</p>
 
 <p><a href="list.jsp">List Trouble Tickets</a>

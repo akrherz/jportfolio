@@ -16,22 +16,22 @@
 
 <hr>
   <h4><a name="#1">1</a>. What is Portfolio?</h4>
-  
+
   <blockquote>Good question!  Portfolio is an on-line workspace
   for interactive collaboration among students, faculty, scientists
   and others.  The free-form nature of the system allows Portfolio to
   be adapted to a particular need for different groups.<br>
   In the GCP setting, Portfolio is used to proctor quizes, manage on-line
-  discussion, manage user information and other things.  So the collection 
+  discussion, manage user information and other things.  So the collection
   of Portfolio applications can be thought of as comprising one Portfolio.
   </blockquote>
-  
+
 <hr>
   <h4><a name="#2">2</a>. How do I create an account with Portfolio?</h4>
-  
+
   <blockquote>The Portfolio system must be able to identify who you are, so
   you need to create an account.  You can create an account by accessing the
-  following URL with most web browser, 
+  following URL with most web browser,
   <a href="http://www.meteor.iastate.edu/jportfolio">http://www.meteor.iastate.edu/jportfolio</a>.
   This is the main page for the Portfolio system.  If you follow the link that says
   "Create Account", you will be presented with a page in which you can enter information.
@@ -39,6 +39,6 @@
   the system.  Remember that this process only created you an account with Portfolio
   Manager, you will still need to register for th GCP Portfolio.
   </blockquote>
-  
+
 </body>
 </HTML>

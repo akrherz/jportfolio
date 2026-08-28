@@ -15,7 +15,7 @@
    if (request.getParameter("userid") != null){
      userID = request.getParameter("userid");
    }
- } 
+ }
  out.println("<p>Dialog Stats for userID: "+ userID );
 %>
 
@@ -54,7 +54,7 @@
   while (rs.next()) {
     String aRes = "No";
     String idnum = rs.getString("idnum");
-    if (idnum.length() > 9) {  
+    if (idnum.length() > 9) {
       authorResponses = authorResponses + 1;
       aRes = "Yes";
     }
@@ -93,7 +93,7 @@
   while (rs.next()) {
     String aRes = "No";
     String idnum = rs.getString("idnum");
-    if (idnum.length() > 9) {  
+    if (idnum.length() > 9) {
       authorResponses = authorResponses + 1;
       aRes = "Yes";
     }
@@ -132,7 +132,7 @@
   while (rs.next()) {
     String aRes = "No";
     String idnum = rs.getString("idnum");
-    if (idnum.length() > 9) {  
+    if (idnum.length() > 9) {
       authorResponses = authorResponses + 1;
       aRes = "Yes";
     }
@@ -151,4 +151,3 @@
   out.println("<tr><td></td><td></td><th align='CENTER'>"+ s.valueOf(otherResponses) +"</th><th align='CENTER'>"+ s.valueOf(authorResponses) +"</th></tr>\n");
 %>
 </table>
-

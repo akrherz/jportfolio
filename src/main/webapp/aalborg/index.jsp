@@ -1,13 +1,13 @@
   <%@include file='setup.jsp'%>
 <%= jlib.genHeader(thisUser, "Portfolio | ICT and Learning", "Manager") %>
 
-<%   
+<%
 
 if ( thisUser == null || thisUser.getPortfolio() == null ) {
  session.setAttribute("comebackURL", "/jportfolio/aalborg/index.jsp");
 %>
 
-<%= jlib.blackBoxTop("") %> 
+<%= jlib.blackBoxTop("") %>
 
 	<H3>Login to Portfolio:</H3>
         <FORM METHOD="POST" action="/jportfolio/login.jsp">
@@ -22,7 +22,7 @@ if ( thisUser == null || thisUser.getPortfolio() == null ) {
     <td><input type="text" size="20" name="username"></td>
   </tr>
   <tr>
-    <th>Password:</th> 
+    <th>Password:</th>
     <td><input type="password" size="20" name="password"></td>
   </tr>
   <tr>
@@ -40,7 +40,7 @@ if ( thisUser == null || thisUser.getPortfolio() == null ) {
         <input type="SUBMIT" value="Log IN">
         <input type="reset" value="Reset">
         </form>
-	
+
 	<B>First time users should:</b> <a class="commands"
           href="createAccount.jsp">Create Account</a>
 	<br><b>HELP!</b>  <a class="commands"
