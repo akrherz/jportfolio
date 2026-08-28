@@ -14,11 +14,11 @@
 // ----------------- Query out a listing of current TT
 String offset = request.getParameter("offset");
 String sessionOffset = (String)session.getAttribute("tt_offset");
-if (offset == null){  
+if (offset == null){
  if (sessionOffset != null){
   offset = sessionOffset;
  } else{
-  offset = "0"; 
+  offset = "0";
  }
 } else{
  session.setAttribute("tt_offset", offset);
@@ -27,11 +27,11 @@ if (offset == null){
 // ---------------------------------------------------------------------
 String filter = request.getParameter("filter");
 String sessionFilter = (String)session.getAttribute("tt_filter");
-if (filter == null){  
+if (filter == null){
  if (sessionFilter != null){
   filter = sessionFilter;
  } else{
-  filter = "0"; 
+  filter = "0";
  }
 } else{
  session.setAttribute("tt_filter", filter);
@@ -84,7 +84,7 @@ switch (filter.charAt(0) ){
 <%
 ResultSet tt = dbInterface.callDB("SELECT *, getUserName(author) as rname"
   +" ,getSiteName(s_mid) as s_name from tt_base WHERE "
-  +" portfolio = '"+ thisUser.getPortfolio() +"' "+ sqlFilter  
+  +" portfolio = '"+ thisUser.getPortfolio() +"' "+ sqlFilter
   +" ORDER by entered DESC "
   +" LIMIT 20 OFFSET "+ offset );
 StringBuffer tableContent = new StringBuffer();
@@ -102,7 +102,7 @@ if (tt != null) {
 %>
 
 <p align="right">
-<font size="-1">Paging: 
+<font size="-1">Paging:
 <%
  // Time for some logic to handle paging...
  Integer thisOffset = new Integer(offset);
@@ -119,7 +119,7 @@ if (tt != null) {
 %></font>
 
 
-<table width="100%" cellspacing=0 cellpadding=2 
+<table width="100%" cellspacing=0 cellpadding=2
   border=0 style="font-size: 10pt; font-family: arial;">
 <tr bgcolor="#eeeeee">
   <th align="left">ID</th>

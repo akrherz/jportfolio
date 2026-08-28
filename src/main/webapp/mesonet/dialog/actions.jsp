@@ -7,30 +7,30 @@ switch ( callMethod.charAt(0) ) {
 	break;
 	case 'e':
 		pageContent.append( jdot.treeMessages(thisUser, skipNum, threadID, thisPageURL) );
-	break;	
+	break;
 	case 'i':
 		pageContent.append( jdot.servletInfo() );
 	break;
 	case 'p':
 		pageContent.append( jdot.postMessage(threadID, STRidnum, thisPageURL) );
-	break;  
+	break;
 	case 'n':
 		pageContent.append( jdot.newThread(thisUser, thisPageURL) );
 	break;
-	
+
 	case 'r': // We are reading more of a thread
 		pageContent.append( jdot.readMore(thisUser, STRidnum, skipNum, thisUser.getDialogSecurity(), thisPageURL) );
 	break;
-	default:	
+	default:
 		pageContent.append("<p><font class=\"bodyText\"><b>Discussion Topics...</b></font><br>");
 		pageContent.append( jdot.bodyItems(thisUser, skipNum, thisPageURL) );
 //		System.err.println("AhoyBack!");
-	break; 
+	break;
 	case 's':
 		if (searchStr != null) {
 			pageContent.append("<H3>Search Results for "+searchStr+"<BR>\n");
 			pageContent.append( jdot.execSearch(thisUser, searchStr, searchCol, skipNum, thisPageURL) );
-		} else 
+		} else
 			pageContent.append("You need to specific something to search on.<BR>\n");
 	break;
         case 'q':
@@ -42,11 +42,11 @@ switch ( callMethod.charAt(0) ) {
         case 'f':
 		myMessage = (portfolioMessage)session.getAttribute("sMessage");
 	  	pageContent.append( jlib.topBox("Results of Your Posting:") );
-	
-		if (myMessage.getBody() != null && myMessage.getSubject() != null){    
-		try { 
+
+		if (myMessage.getBody() != null && myMessage.getSubject() != null){
+		try {
 			pageContent.append( jdot.inputPostFinal(myMessage, thisPageURL) );
-				
+
 		} catch(Exception ex) {
 			plogger.report("inputPost Exception caught.\n"+ex);
 			ex.printStackTrace();
@@ -56,7 +56,7 @@ switch ( callMethod.charAt(0) ) {
 		} else{
 			pageContent.append("<P>Post did not work, sorry.\n");
 		}
-		
+
 		pageContent.append("<H4><a href='"+thisPageURL+"?mode=d'>List Discussion Topics</a></H4></font>");
 		pageContent.append( jlib.botBox() );
 		session.removeAttribute("sMessage");

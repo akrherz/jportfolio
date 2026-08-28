@@ -5,15 +5,15 @@
 	String thisBlock = (String)request.getParameter("blockid");
 	if ( thisBlock == null ){
 		response.setHeader("Refresh", "0; URL=../index.jsp");
-	} else { 
+	} else {
 %>
 
 
-<div align='center'> 
+<div align='center'>
   <a href="/jportfolio/gccourse/">GCP Portfolio Home</a><br>
   <a href="index.jsp?blockid=1">Block 1</a> &nbsp; <b>|</b> &nbsp;
   <a href="index.jsp?blockid=2">Block 2</a> &nbsp; <b>|</b> &nbsp;
-  <a href="index.jsp?blockid=3">Block 3</a> 
+  <a href="index.jsp?blockid=3">Block 3</a>
 </div>
 
 <h3>Block <%= thisBlock %></h3>

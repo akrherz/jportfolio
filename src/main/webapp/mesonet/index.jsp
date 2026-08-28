@@ -23,7 +23,7 @@
   if (thisUser == null){
 %>
 
-<p>Welcome to the IEM Meta Database Interface.  This system utilizes 
+<p>Welcome to the IEM Meta Database Interface.  This system utilizes
 Portfolio for authentication and management.  Thus, if you have a Portfolio
 account, you do not need to register again.</p>
 
@@ -33,7 +33,7 @@ account, you do not need to register again.</p>
    {
 %>
   <p>Account generation was successful, please try to log in.
-<% } 
+<% }
 
   if (auth.authError != null)
      { %>
@@ -59,7 +59,7 @@ account, you do not need to register again.</p>
 
 <div class="ptitle">Register for Network</div>
 
-<p class="intro">Please select from the listing of networks below.  You will 
+<p class="intro">Please select from the listing of networks below.  You will
 also need to enter an access password in order to register for a network.</p>
 
 <form method="POST" action="/jportfolio/servlet/jportfolio">
@@ -84,29 +84,29 @@ also need to enter an access password in order to register for a network.</p>
 <%
   } else if (thisUser.getPortfolio() == null){
 %>
-  <p>You have successfully logged in!  You should now specify the 
+  <p>You have successfully logged in!  You should now specify the
   network of instruments you would like to work with.</p>
   <div id="login">
   <h3>Select Network:</h3>
   <form method="GET" action="index.jsp">
- 
+
   <p>Select from the following:</p>
-  
+
   <div style="padding-left: 20px">
   <select name='portfolio'>
   <%= jlib.userPortfolios( thisUser.getUserID() ) %>
   </select>
   </div>
-  
+
   <br>
   <input type="SUBMIT" value="Sign In">
-  
-  </form>
-  </div>  
 
-  <p>Perhaps your network is not listed above.  If so, you will want to 
+  </form>
+  </div>
+
+  <p>Perhaps your network is not listed above.  If so, you will want to
   <a href="index.jsp?register=yes">Register</a> for network access.</p>
-  
+
 <%
   } else {
   /** All systems are go... */
@@ -123,7 +123,7 @@ also need to enter an access password in order to register for a network.</p>
 
   response.setHeader("Refresh", "0; URL=main.jsp");
 
-  }  
+  }
 %>
 
 

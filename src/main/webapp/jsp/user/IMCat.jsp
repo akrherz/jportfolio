@@ -17,13 +17,13 @@
 	Vector messages = null;
 	if (thisUser == null) {
 		userID = "Anonymous Coward";
-	
+
 	} else {
 		userID = thisUser.getUserID();
 		messages = IMDatabase.getIDs( userID );
 	}
-	
-	
+
+
 %>
 
 <H3>Portfolio Messenger:</H3>
@@ -41,21 +41,21 @@ Current Messages for: <B><%= userID %></B>
 	if ( messages != null ) {
 		for (int i = 0; i < messages.size() ; i++ ) {
 			IMessage IMessage = IMDatabase.getMessage( messages.elementAt( i ).toString() );
-			
+
 			String author  	= IMessage.getAuthor();
 			String message 	= IMessage.getContent();
 			String idNum	= IMessage.getId();
-			
+
 			out.println("<P><TABLE bgcolor=\"#EEEEEE\" width=\"100%\"><TR><TD>\n");
 			out.println("<B>Posted By:</B> "+ author +"<BR>");
 			out.println( message );
 			out.println("<P><a href=\"IMPost.jsp?toUser="+author+"\">Reply</a> &nbsp; <B>|</B> &nbsp; <a href=\"IMCat.jsp?remove="+idNum+"\">Clear</a> ");
 			out.println("</TD></TR></TABLE>\n");
 		}
-	
+
 	} else if (userID.equalsIgnoreCase("Anonymous Coward") ){
 		out.println("<BR><BR>You must not be logged in.  Sorry.");
-	
+
 	} else {
 		out.println("You currently have no instant messages!");
 	}

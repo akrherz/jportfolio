@@ -3,7 +3,7 @@
 <%@ page import="org.collaborium.util.*" %>
 <%@ page import="org.collaborium.portfolio.*" %>
 
-<% 
+<%
 portfolioUser thisUser = (portfolioUser)session.getAttribute("User");
 String mode = (String)request.getParameter("mode");
 String idnum = (String)request.getParameter("idnum");
@@ -49,11 +49,11 @@ and then cleared on this page.</font></p>
 <TABLE>
 <%
   Timestamp ts = new Timestamp(1000000000);
-  while ( myResultSet.next() ) { 
+  while ( myResultSet.next() ) {
     try{
       ts = myResultSet.getTimestamp("entered");
     }catch(Exception ex){
-    } 
+    }
     String sts = stringUtils.gmtDate(ts);
 out.println("<tr>\n"
   +"<td>"+ myResultSet.getString("message") +" :</TD>\n"
@@ -63,7 +63,7 @@ out.println("<tr>\n"
   +"<td><font style=\"font-size: 12pt\">"+ sts +"</font></td>\n"
 	  +"</TR>\n");
 
-  } 
+  }
 
   if (! myResultSet.previous() ){
 	out.println("You have no notifications from the Portfolio system");

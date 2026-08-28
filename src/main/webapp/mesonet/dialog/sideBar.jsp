@@ -5,11 +5,11 @@
 
 <select name="dlevel" onChange="location=this.form.dlevel.options[this.form.dlevel.selectedIndex].value">
 
-<% 
+<%
    String dlevel = (String)request.getParameter("dlevel");
    if (dlevel != null)
      thisUser.myPortfolio.setDialogSecurity(dlevel);
-   else 
+   else
      dlevel = thisUser.myPortfolio.getDialogSecurity();
    if (dlevel == null) {
      dlevel = "public";
@@ -68,4 +68,3 @@ Search On:<br>
 <br><input type='submit' value='Search'>
 </form>
 </td></tr></table>
-

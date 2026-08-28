@@ -17,7 +17,7 @@
 
   portfolioUser thisUser = (portfolioUser)session.getAttribute("User");
   if (thisUser != null && portfolio == null) {
-    portfolio = thisUser.getPortfolio(); 
+    portfolio = thisUser.getPortfolio();
 
     if (portfolio == null)
       portfolio = (String)session.getAttribute("portfolio");

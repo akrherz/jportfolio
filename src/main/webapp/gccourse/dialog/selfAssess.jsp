@@ -1,11 +1,11 @@
 <%
 /**
- * selfAssess.jsp  
+ * selfAssess.jsp
  *  Program to allow students to edit their self assessments.
  */
 %>
 
-<%@ page import="org.collaborium.portfolio.*" %> 
+<%@ page import="org.collaborium.portfolio.*" %>
 <%@ page import="org.collaborium.portfolio.jdot.*" %>
 <%@ page import="java.sql.*" %>
 
@@ -52,7 +52,7 @@
    } catch(Exception ex){
       plogger.report("Problem in Self Assess");
       ex.printStackTrace();
-   } 
+   }
    myMessage = new portfolioMessage();
    myMessage.setSubject("Self Assessment: "+ thisUser.getRealName() );
    myMessage.setBody( request.getParameter("body") );
@@ -82,11 +82,11 @@
 
 <%= jlib.basicHeader(thisUser, "Self Assessment") %>
 
-<div align='center'> 
+<div align='center'>
   <a href="/jportfolio/gccourse/">GCP Portfolio Home</a><br>
   <a href="/jportfolio/gccourse/block/index.jsp?blockid=1">Block 1</a> &nbsp; <b>|</b> &nbsp;
   <a href="/jportfolio/gccourse/block/index.jsp?blockid=2">Block 2</a> &nbsp; <b>|</b> &nbsp;
-  <a href="/jportfolio/gccourse/block/index.jsp?blockid=3">Block 3</a> 
+  <a href="/jportfolio/gccourse/block/index.jsp?blockid=3">Block 3</a>
 </div>
 
 

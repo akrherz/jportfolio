@@ -4,7 +4,7 @@
 </head>
 
 <BODY text="black" BGCOLOR="#4682b4">
- 
+
 <CENTER>
 
 <img src="/jportfolio/images/portfoliow.gif">
@@ -15,7 +15,7 @@
 <TR><TD>
 	<TABLE bgcolor="#ffefd5" border="0" cellspacing="0" cellpadding="4">
 	<TR><TD>
-	Portfolio is a suite of java applications in support of distance science and education.  This 
+	Portfolio is a suite of java applications in support of distance science and education.  This
 	effort is a part of the S&T Collaborium.  See <a href="http://www.collaborium.org/virlab/portfolio">http://www.collaborium.org/virlab/portfolio</a>
 	for more details.
 

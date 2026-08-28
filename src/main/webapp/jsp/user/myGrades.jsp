@@ -8,7 +8,7 @@
 <%@ page import="org.collaborium.portfolio.*" %>
 
 
-<% 
+<%
 portfolioUser thisUser = (portfolioUser)session.getAttribute("User");
 
 ResultSet myResultSet = pgsql.doSQL("Select * from scores "
@@ -34,15 +34,15 @@ portfolio: <%= thisUser.getPortfolio() %>
 </TR>
 
 <%
-  while (myResultSet.next()) { 
+  while (myResultSet.next()) {
 %>
 	<TR>
 	  <TD><%= myResultSet.getString("assign") %></TD>
 	  <TD><%= myResultSet.getString("app") %></TD>
 	  <TD><%= myResultSet.getString("score") %></TD>
 	</TR>
-<% 
-  } 
+<%
+  }
 %>
 
 </TABLE>

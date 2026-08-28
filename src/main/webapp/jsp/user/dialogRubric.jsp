@@ -15,7 +15,7 @@
 <%@ page import="org.collaborium.portfolio.*" %>
 
 
-<% 
+<%
 portfolioUser thisUser = (portfolioUser)session.getAttribute("User");
 String notifyBaseURL = "/jportfolio/servlet/jdot3";
 
@@ -40,24 +40,24 @@ ResultSet rs = dbInterface.callDB("SELECT *, "
 Hashtable cat1 = new Hashtable();
 cat1.put("analysis", "");		cat1.put("articulating", "");
 cat1.put("brainstorming", "");		cat1.put("generalization", "");
-cat1.put("organization", "");		cat1.put("reacting", "");	
+cat1.put("organization", "");		cat1.put("reacting", "");
 cat1.put("social", "");			cat1.put("summary", "");
 Hashtable cat2 = new Hashtable();
 cat2.put("analysis", "");		cat2.put("articulating", "");
 cat2.put("brainstorming", "");		cat2.put("generalization", "");
-cat2.put("organization", "");		cat2.put("reacting", "");	
+cat2.put("organization", "");		cat2.put("reacting", "");
 cat2.put("social", "");			cat2.put("summary", "");
 Hashtable cat3 = new Hashtable();
 cat3.put("analysis", "");		cat3.put("articulating", "");
 cat3.put("brainstorming", "");		cat3.put("generalization", "");
-cat3.put("organization", "");		cat3.put("reacting", "");	
+cat3.put("organization", "");		cat3.put("reacting", "");
 cat3.put("social", "");			cat3.put("summary", "");
 
 
 while ( rs.next() ){
   String postCat = (String)rs.getString("type");
   String next = "<li><a href=\""+ notifyBaseURL +"?mode=r&idnum="+ rs.getString("idnum") +"\">"+ rs.getString("subject") +"</a></li>" ;
- 
+
  if (rs.getString("block").equalsIgnoreCase("1") ) {
     String prev = (String)cat1.get(postCat);
     if (prev == null) prev = "";

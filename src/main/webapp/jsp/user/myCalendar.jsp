@@ -30,7 +30,7 @@ String[] months = new String [] { "January", "February", "March",
                                         "April", "May", "June",
                                         "July", "August", "September",
                                         "October", "November", "December" };
-String[] days = new String[] {"Sunday", "Monday", "Tuesday", "Wednesday", 
+String[] days = new String[] {"Sunday", "Monday", "Tuesday", "Wednesday",
                                         "Thursday", "Friday", "Saturday"};
 
 out.println( jlib.header( thisUser, "Portfolio Calendar", "Calendar") );
@@ -38,7 +38,7 @@ out.println("<center><font size=+2>" + months[cal.get(cal.MONTH)] +" "+ cal.get(
 
 %>
 
-<P><B>Available Calendars:</B> 
+<P><B>Available Calendars:</B>
 <form method="GET" action="myCalendar.jsp">
 <table>
 <tr><th>Select Month:</th><th>Select Year:</th></tr>

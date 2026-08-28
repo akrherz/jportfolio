@@ -5,7 +5,7 @@
 <%
 	StringBuffer pageContent = new StringBuffer();
 	String thisPageURL = "/jportfolio/gccourse/dialog/index.jsp";
-	
+
 %>
 
 <%@include file='variables.jsp' %>
@@ -16,20 +16,20 @@
 	}
 
 	if (callMethod == null) callMethod = "x";
-	
+
 %>
 
 
 <TABLE>
-<TR><TD width="25%" valign="TOP" class="botBox"> 
+<TR><TD width="25%" valign="TOP" class="botBox">
 
- 
+
 	<%@include file='sideBar.jsp' %>
 
 </TD><TD width="100%" VALIGN="TOP">
 
 <%= jlib.topBox("Previous Discussions") %>
-<font class="instructions">Select the thread that you would like to 
+<font class="instructions">Select the thread that you would like to
 read from previous years' discussion</font>
 
 <p><b>GCP 2006 Portfolio:</b>
@@ -120,13 +120,13 @@ read from previous years' discussion</font>
   ResultSet rs = dbInterface.callDB("SELECT threadid, subject from dialog "
    +" WHERE portfolio = 'gcp2001' and security = 'public' and "
    +" idnum > 10000 and idnum < 100000 ORDER by threadid ASC");
-   
+
   while(rs.next() ){
 //    out.println("<li><a href=\""/j?threadID="+ rs.getString("threadid") +""+ rs.getString("subject") +"</a><br>");
       out.println("<li><a href=\"/jportfolio/jsp/user/"
        +"threadCat.jsp?threadID="+ rs.getString("threadid")+"\">"
        + rs.getString("subject") +"</a>");
-  } 
+  }
 %>
 </ul>
 

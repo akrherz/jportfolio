@@ -36,7 +36,7 @@
     wind14 = lastf.getString("wind14");
     ceil02 = lastf.getString("ceil02");
     vis02 = lastf.getString("vis02");
-  } 
+  }
   ResultSet rs = dbInterface.callDB("SELECT * from afc_days WHERE "
    +" day = 'TOMORROW'::date and portfolio = '"+ thisUser.getPortfolio() +"' ");
   if (rs.next()){
@@ -178,13 +178,13 @@
 
 <p><b>Lowest Reported Visibility (02-17z)</b>
 <br /><select name="vis02">
- <option value="1" <% if (vis02.equals("1")) out.print("SELECTED"); %>>CAT 1: < 0.5 miles 
- <option value="2" <% if (vis02.equals("2")) out.print("SELECTED"); %>>CAT 2: 0.5 < 0.9 miles 
- <option value="3" <% if (vis02.equals("3")) out.print("SELECTED"); %>>CAT 3: 1.0 < 1.9 miles 
- <option value="4" <% if (vis02.equals("4")) out.print("SELECTED"); %>>CAT 4: 2.0 < 2.9 miles 
- <option value="5" <% if (vis02.equals("5")) out.print("SELECTED"); %>>CAT 5: 3.0 < 5.4 miles 
- <option value="6" <% if (vis02.equals("6")) out.print("SELECTED"); %>>CAT 6: 5.5 < 6.4 miles 
- <option value="7" <% if (vis02.equals("7")) out.print("SELECTED"); %>>CAT 7: >= 6.5 miles 
+ <option value="1" <% if (vis02.equals("1")) out.print("SELECTED"); %>>CAT 1: < 0.5 miles
+ <option value="2" <% if (vis02.equals("2")) out.print("SELECTED"); %>>CAT 2: 0.5 < 0.9 miles
+ <option value="3" <% if (vis02.equals("3")) out.print("SELECTED"); %>>CAT 3: 1.0 < 1.9 miles
+ <option value="4" <% if (vis02.equals("4")) out.print("SELECTED"); %>>CAT 4: 2.0 < 2.9 miles
+ <option value="5" <% if (vis02.equals("5")) out.print("SELECTED"); %>>CAT 5: 3.0 < 5.4 miles
+ <option value="6" <% if (vis02.equals("6")) out.print("SELECTED"); %>>CAT 6: 5.5 < 6.4 miles
+ <option value="7" <% if (vis02.equals("7")) out.print("SELECTED"); %>>CAT 7: >= 6.5 miles
 </select>
 -->
 
@@ -193,6 +193,6 @@
 </form>
 <% } else { %>
  <p>Currently, there aren't any forecasts available
-<% } %> 
+<% } %>
 </body>
 </html>

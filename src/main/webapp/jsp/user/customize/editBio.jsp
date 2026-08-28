@@ -11,8 +11,8 @@
 
 <h3>Biographical Sketch:</h3>
 
-<p>Your biographical sketch is an important way for your classmates to 
-get to know you better in the virtual environment.  
+<p>Your biographical sketch is an important way for your classmates to
+get to know you better in the virtual environment.
 
 <p>Possible items to include:
 <li>Where you are from</li>

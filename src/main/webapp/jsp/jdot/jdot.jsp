@@ -2,7 +2,7 @@
 <%@ page import="edu.iastate.iitap.portfolio.portfolioUser" %>
 <%@ page import="edu.iastate.iitap.portfolio.jdot.*" %>
 <%
-	
+
 	StringBuffer pageContent = new StringBuffer();
 	jdot myJdot = jdot.getInstance();
 	String thisPageURL = "/jportfolio/jsp/jdot/jdot.jsp";
@@ -10,7 +10,7 @@
 
 <%@include file='variables.jsp' %>
 
-<%	
+<%
 	// Change the current dialog type if something was posted
 	String dialogType = (String)session.getAttribute("dialogType");;
 	if (postedDialogType != null ) {
@@ -18,7 +18,7 @@
 		session.setAttribute("dialogType", dialogType);
 	}
 	portfolioUser thisUser = null;
-	
+
 	try{
 		thisUser = (portfolioUser)session.getAttribute("User");
 	} catch(Exception ex) {
@@ -31,7 +31,7 @@
 	String userID = thisUser.getUserID();
 	String name = thisUser.getRealName();
 
-	
+
 	//String portfolio = (String)session.getValue("portfolio");
 	//String groupID = (String)session.getValue("groupID");
 	//String userID = (String)session.getValue("user");
@@ -49,9 +49,9 @@
 <%= jlib.header(myJdot.TITLE, name, portfolio, (String)session.getValue("style")) %>
 
 <TABLE>
-<TR><TD width="25%" valign="TOP" class="botBox"> 
+<TR><TD width="25%" valign="TOP" class="botBox">
 
- 
+
 	<%@include file='sideBar.jsp' %>
 
 </TD><TD width="100%" VALIGN="TOP">

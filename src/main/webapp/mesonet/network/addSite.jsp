@@ -33,12 +33,12 @@ fill out the following form and submit the values when finished.</p>
   <td><input type="text" name="s_hid" size="10">
   <br> <font class="ex">ex: KCCI42</font>
   </td>
-  
+
   <th>NWS ID:</th>
   <td><input type="text" name="s_nid" size=10">
   <br> <font class="ex">ex: WMTI4</font>
   </td>
-  
+
   <th>Mesonet ID:</th>
   <td><input type="text" name="s_mid" size="10">
   <br> <font class="ex">ex: RWIN</font>
@@ -142,7 +142,7 @@ fill out the following form and submit the values when finished.</p>
 
 </form>
 
-<p><b>Note:</b>  You can add/edit more information at a later time.  This 
+<p><b>Note:</b>  You can add/edit more information at a later time.  This
 form is meant to get something in the database to manipulate.
 
 <%= jlib.footer() %>

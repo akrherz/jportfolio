@@ -14,7 +14,7 @@
   ResultSet rs = null;
   String userName = null;
   while ( groupies.next() ){
-   out.println("<p><font class=\"user\">"+ groupies.getString("name") 
+   out.println("<p><font class=\"user\">"+ groupies.getString("name")
     +"( "+ groupies.getString("username") +" )</font>");
    rs = dbInterface.callDB("SELECT getUserName(b.username) as name, "
      +" b.username, b.body from biosketch b, students s "

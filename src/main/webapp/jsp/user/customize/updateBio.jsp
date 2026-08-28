@@ -30,7 +30,7 @@
   }
 %>
 
-<P>Your new bio-sketch is now updated on your 
+<P>Your new bio-sketch is now updated on your
  <a href="/jportfolio/users/<%= thisUser.getUserID() %>">portfolio homepage</a>.
 
 <P>Your updated bio-sketch:<br><hr>

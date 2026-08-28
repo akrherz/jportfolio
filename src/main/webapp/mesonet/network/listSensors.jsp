@@ -17,7 +17,7 @@
 
   if (rs != null) {
     while( rs.next() ){
-      out.println("<p>"+ rs.getString("r_name") 
+      out.println("<p>"+ rs.getString("r_name")
         +" || "+ rs.getString("o_serial") +"\n");
     } // End of while
   } // End of if

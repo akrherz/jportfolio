@@ -10,8 +10,8 @@
 
 <font class="bluet">Add Sensor Group</font>
 
-<p class="intro">This page adds a sensor group.  Think of this group 
-as a sensor brand that is used in the network.  You will then create 
+<p class="intro">This page adds a sensor group.  Think of this group
+as a sensor brand that is used in the network.  You will then create
 individual implementations of this sensor on your sites.  This entry will
 not contain hardware IDs.</p>
 

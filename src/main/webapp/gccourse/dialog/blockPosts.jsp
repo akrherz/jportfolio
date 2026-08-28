@@ -1,4 +1,4 @@
-<% 
+<%
  /**
   * blockPosts.jsp
   *   prints out a listing of block postings for a user
@@ -34,7 +34,7 @@
 
   try{
   ResultSet rs = dbInterface.callDB("select * from dialog WHERE "
-    + threadSpec 
+    + threadSpec
     +" and portfolio = '"+ thisUser.getPortfolio() +"' "
     +" and security = 'public' and username = '"+ thisUser.getUserID() +"' "
     +" ORDER by date ");

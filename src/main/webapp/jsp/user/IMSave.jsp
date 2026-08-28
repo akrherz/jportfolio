@@ -1,7 +1,7 @@
 <HTML>
 <HEAD>
 	<TITLE>Portfolio IM Save</TITLE>
-	
+
 </HEAD>
 <BODY bgcolor="white">
 
@@ -23,14 +23,14 @@
 		IMessage.setAuthor( thisUser.getUserID() );
 		IMessage.setContent( content );
 		IMessage.setTo( userID );
-	
-	
+
+
 		IMDatabase.postMessage( IMessage );
 	} catch(Exception ex) {
-		
+
 		ex.printStackTrace();
 	}
-	
+
 %>
 
 <TABLE bgcolor="#EEEEEE"><TR><TD>

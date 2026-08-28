@@ -7,7 +7,7 @@
 <%@ page import="java.sql.*" %>
 <%@ page import="org.collaborium.portfolio.*" %>
 
-<% 
+<%
 String selectedUser = request.getParameter("selectedUser");
 String blockID = request.getParameter("blockID");
 if (blockID == null)
@@ -105,7 +105,7 @@ block: <%= blockID %>
 <HR>
 
 <%
-  while (myResultSet.next()) { 
+  while (myResultSet.next()) {
 %>
 	  <P><B><FONT color="blue"><%= myResultSet.getString("subject") %> ( <%= myResultSet.getString("type") %> )</FONT></B><BR>
           Date posted: <%= myResultSet.getString("date") %><BR>
@@ -114,15 +114,15 @@ block: <%= blockID %>
 	<B>HTML Ref: </B> &#60;a href="<%= notifyBaseURL %>?mode=r&idnum=<%= myResultSet.getString("idnum") %>"&#62; here&#60;/a&#62;
 
 	   <CENTER><hr width="300"></CENTER>
-<% 
-  } 
+<%
+  }
 
 %>
 
 <HR>
 
 <%
-  while (quizResponses.next()) { 
+  while (quizResponses.next()) {
 %>
 	  <P><B><FONT color="blue"><%= quizResponses.getString("subject") %> ( <%= quizResponses.getString("type") %> )</FONT></B><BR>
           Date posted: <%= quizResponses.getString("date") %><BR>
@@ -131,8 +131,8 @@ block: <%= blockID %>
 	<B>HTML Ref: </B> &#60;a href="<%= notifyBaseURL %>?security=private&mode=r&idnum=<%= quizResponses.getString("idnum") %>"&#62; here&#60;/a&#62;
 
 	   <CENTER><hr width="300"></CENTER>
-<% 
-  } 
+<%
+  }
 
 %>
 </BODY>

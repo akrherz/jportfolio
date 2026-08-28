@@ -1,7 +1,7 @@
 <%@ page import="org.collaborium.portfolio.*" %>
 <%@ page import="java.util.*" %>
 <%@ page import="java.sql.*" %>
-<% 
+<%
 portfolioUser thisUser = (portfolioUser)session.getAttribute("User");
 if (thisUser == null || thisUser.getPortfolio() == null)
 {
@@ -33,14 +33,14 @@ if (idnum == null) {
 <HR>
 
 <%
-  while (myResultSet.next()) { 
+  while (myResultSet.next()) {
 %>
 	  <P><B>Posted At: <FONT color="blue"><%= myResultSet.getString("issue") %></FONT></B><BR>
 	<blockquote><%= jlib.toBR( myResultSet.getString("body") ) %></blockquote><BR>
 
 	   <CENTER><hr width="300"></CENTER>
-<% 
-  } 
+<%
+  }
 
 %>
 
