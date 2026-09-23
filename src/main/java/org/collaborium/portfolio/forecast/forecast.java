@@ -600,112 +600,91 @@ public class forecast extends HttpServlet {
   public String enterForecast(portfolioUser thisUser, HttpServletRequest req) throws myException {
     StringBuffer sbuf = new StringBuffer();
 
-    /** I had better figure out something better than this * */
-    // String sqlDate = req.getParameter("sqlDate");
+    if (thisUser == null) {
+      throw new myException("No logged in user, cannot enter forecast.");
+    }
+
     String sqlDate = "tomorrow";
 
-    String local_high = req.getParameter("local_high");
-    Integer Int_local_high = Integer.parseInt(local_high.trim());
-    String local_low = req.getParameter("local_low");
-    Integer Int_local_low = Integer.parseInt(local_low.trim());
-    String local_prec = req.getParameter("local_prec");
-    String local_snow = req.getParameter("local_snow");
+    int Int_local_high = parseRequiredInt(req, "local_high");
+    int Int_local_low = parseRequiredInt(req, "local_low");
+    int local_prec = parseCategory(req, "local_prec", 0, 5);
+    int local_snow = parseCategory(req, "local_snow", 0, 4);
 
-    String float_high = req.getParameter("float_high");
-    Integer Int_float_high = Integer.parseInt(float_high.trim());
-    String float_low = req.getParameter("float_low");
-    Integer Int_float_low = Integer.parseInt(float_low.trim());
-    String float_prec = req.getParameter("float_prec");
-    String float_snow = req.getParameter("float_snow");
+    int Int_float_high = parseRequiredInt(req, "float_high");
+    int Int_float_low = parseRequiredInt(req, "float_low");
+    int float_prec = parseCategory(req, "float_prec", 0, 5);
+    int float_snow = parseCategory(req, "float_snow", 0, 4);
 
-    String confidence = (String) req.getParameter("confidence");
-    String discussion = stringUtils.cleanString(req.getParameter("discussion"));
-    if (confidence.equals("")) {
-      confidence = "0";
-    } else {
+    String confidenceParam = req.getParameter("confidence");
+    int confidence = 0;
+    if (confidenceParam != null && !confidenceParam.trim().isEmpty()) {
       try {
-        Integer.parseInt(confidence);
+        confidence = Integer.parseInt(confidenceParam.trim());
       } catch (NumberFormatException e) {
-        confidence = "0";
+        confidence = 0;
       }
+      if (confidence < 0) confidence = 0;
+      if (confidence > 10) confidence = 10;
     }
+    String discussion = stringUtils.cleanString(req.getParameter("discussion"));
 
     if (!isForecastDay(thisUser)) {
       return "Forecast Period Expired.  Sorry!";
     }
 
-    if (Int_local_high.intValue() < Int_local_low.intValue()) {
-      local_high = Int_local_low.toString();
-      local_low = Int_local_high.toString();
+    if (Int_local_high < Int_local_low) {
+      int tmp = Int_local_high;
+      Int_local_high = Int_local_low;
+      Int_local_low = tmp;
       sbuf.append("<BR>....Values for Local High & Low have been switched!");
     }
 
-    if (Int_float_high.intValue() < Int_float_low.intValue()) {
-      float_high = Int_float_low.toString();
-      float_low = Int_float_high.toString();
+    if (Int_float_high < Int_float_low) {
+      int tmp = Int_float_high;
+      Int_float_high = Int_float_low;
+      Int_float_low = tmp;
       sbuf.append("<BR>....Values for Floater High & Low have been switched!");
     }
 
-    String colNames =
-        "(userID, portfolio, day, local_high, "
-            + " local_low, local_prec, local_snow, "
-            + " float_high, float_low, float_prec, "
-            + " float_snow, confidence, discussion )";
-    String colVals =
-        "('"
-            + thisUser.getUserID()
-            + "', "
-            + " '"
-            + thisUser.getPortfolio()
-            + "', '"
-            + sqlDate
-            + "', "
-            + local_high
-            + ", "
-            + local_low
-            + ", "
-            + local_prec
-            + ", "
-            + local_snow
-            + ", "
-            + float_high
-            + ", "
-            + float_low
-            + ", "
-            + float_prec
-            + ", "
-            + float_snow
-            + " "
-            + ", '"
-            + confidence
-            + "'::float::int, '"
-            + discussion
-            + "' )";
-
     try {
-      jlib.updateDB(
-          "DELETE from forecasts WHERE userID = '"
-              + thisUser.getUserID()
-              + "' "
-              + " and portfolio = '"
-              + thisUser.getPortfolio()
-              + "' and day = '"
-              + sqlDate
-              + "' ");
-      jlib.updateDB("INSERT into forecasts " + colNames + " VALUES " + colVals + " ");
+      jlib.updateDBWithParameters(
+          "DELETE from forecasts WHERE userID = ? and portfolio = ? and day = ?::date ",
+          Arrays.asList(thisUser.getUserID(), thisUser.getPortfolio(), sqlDate));
+      jlib.updateDBWithParameters(
+          "INSERT into forecasts "
+              + "(userID, portfolio, day, local_high, "
+              + " local_low, local_prec, local_snow, "
+              + " float_high, float_low, float_prec, "
+              + " float_snow, confidence, discussion ) "
+              + "VALUES (?, ?, ?::date, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+          Arrays.asList(
+              thisUser.getUserID(),
+              thisUser.getPortfolio(),
+              sqlDate,
+              Int_local_high,
+              Int_local_low,
+              local_prec,
+              local_snow,
+              Int_float_high,
+              Int_float_low,
+              float_prec,
+              float_snow,
+              confidence,
+              discussion));
     } catch (Exception ex) {
       plogger.report("Problem Entering Forecast " + ex);
-      throw new myException("Could Not Enter Forecast");
+      throw new myException("Could Not Enter Forecast: " + ex.getMessage(), ex);
     }
 
     sbuf.append("<P>Forecast Entered Successfully!\n");
     sbuf.append(
         "<P>You Forecasted:\n"
             + " <BR>Local Site High: "
-            + local_high
+            + Int_local_high
             + "\n"
             + " <BR>Local Site Low: "
-            + local_low
+            + Int_local_low
             + "\n"
             + " <BR>Local Precip Cat: "
             + local_prec
@@ -714,10 +693,10 @@ public class forecast extends HttpServlet {
             + local_snow
             + "\n"
             + "<P>Floater Site High: "
-            + float_high
+            + Int_float_high
             + "\n"
             + "<BR>Floater Site Low: "
-            + float_low
+            + Int_float_low
             + "\n"
             + "<BR>Floater Precip Cat: "
             + float_prec
@@ -728,6 +707,30 @@ public class forecast extends HttpServlet {
 
     return sbuf.toString();
   } // End of enterForecast()
+
+  /** Method to parse a required integer request parameter, failing with a clear message. */
+  private int parseRequiredInt(HttpServletRequest req, String paramName) throws myException {
+    String value = req.getParameter(paramName);
+    if (value == null || value.trim().isEmpty()) {
+      throw new myException("Missing required value for '" + paramName + "'.");
+    }
+    try {
+      return Integer.parseInt(value.trim());
+    } catch (NumberFormatException e) {
+      throw new myException("Invalid numeric value for '" + paramName + "': " + value, e);
+    }
+  } // End of parseRequiredInt()
+
+  /** Method to parse a required category request parameter and validate its range. */
+  private int parseCategory(HttpServletRequest req, String paramName, int min, int max)
+      throws myException {
+    int value = parseRequiredInt(req, paramName);
+    if (value < min || value > max) {
+      throw new myException(
+          "Value for '" + paramName + "' must be between " + min + " and " + max + ".");
+    }
+    return value;
+  } // End of parseCategory()
 
   public String selectForecastDays(portfolioUser thisUser, String selected) {
     StringBuffer sbuf = new StringBuffer();

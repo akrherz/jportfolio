@@ -115,4 +115,19 @@ public class dbInterface {
       dbInterfaceInit();
     }
   } // End of updateDB()
+
+  /**
+   * Method to run an INSERT/UPDATE/DELETE with bind parameters, avoiding SQL injection from
+   * concatenated user input.
+   */
+  public static void updateDBWithParameters(String query, List<Object> params) throws SQLException {
+    if (db == null) dbInterfaceInit();
+
+    plogger.report(query + ";");
+    PreparedStatement pst = db.prepareStatement(query);
+    for (int i = 0; i < params.size(); i++) {
+      pst.setObject(i + 1, params.get(i));
+    }
+    pst.executeUpdate();
+  } // End of updateDBWithParameters()
 } // End of dbInterface
