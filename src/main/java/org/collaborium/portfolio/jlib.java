@@ -840,6 +840,12 @@ public class jlib {
     dbInterface.updateDB(querry);
   } // End of callDB()
 
+  public static void updateDBWithParameters(String querry, java.util.List<Object> params)
+      throws java.sql.SQLException {
+
+    dbInterface.updateDBWithParameters(querry, params);
+  } // End of updateDBWithParameters()
+
   public static String selectPortfolios() {
     return selectPortfolios("HI EverYone");
   }

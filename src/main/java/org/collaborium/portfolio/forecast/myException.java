@@ -23,4 +23,8 @@ public class myException extends Exception {
   public myException(String s) {
     super(s);
   }
+
+  public myException(String s, Throwable cause) {
+    super(s, cause);
+  }
 }
