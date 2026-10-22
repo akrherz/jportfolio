@@ -162,25 +162,28 @@ public class portfolioMessage {
   /** Here we are instancing with no args, thus we have a new message */
   public portfolioMessage() {} // End of portfolioMessage
 
+  private static String nullToEmpty(String value) {
+    return value == null ? "" : value;
+  }
+
   /** Method to comit a Post to the Database */
   public void commitMessage() {
     //    plogger.report(authorName +"::"+ subject +"::"+ body );
     dbInterface.updateDB(
         "insert into dialog (username, name,  subject, body, threadid, "
             + " idnum, portfolio, type, security, gID, link, topicid)"
-            + " values(?, ?, ?, ?, ?::numeric, ?::numeric, ?, ?, ?, ?::int, ?, "
-            + " NULLIF(?, '')::int)",
+            + " values(?, ?, ?, ?, ?::numeric, ?::numeric, ?, ?, ?, ?::int, ?, ?)",
         author,
-        stringUtils.cleanString(authorName),
-        stringUtils.cleanString(subject),
-        stringUtils.cleanString(body),
+        nullToEmpty(authorName),
+        nullToEmpty(subject),
+        nullToEmpty(body),
         threadID,
         idnum,
         portfolio,
-        stringUtils.cleanString(classification),
+        nullToEmpty(classification),
         security,
         gid,
-        stringUtils.cleanString(link),
+        nullToEmpty(link),
         topicid);
   }
 

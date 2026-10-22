@@ -505,8 +505,7 @@ public class jportfolioAdmin extends HttpServlet {
       newMotd.next();
       String newValue = newMotd.getString("newmotd");
 
-      jlib.updateDB(
-          "INSERT into motd(portfolio, body) values(?, ?)", portfolio, jlib.cleanString(motd));
+      jlib.updateDB("INSERT into motd(portfolio, body) values(?, ?)", portfolio, motd);
 
       // Lets notify everybody in the portfolio that they have a MOTD to look
       // at.

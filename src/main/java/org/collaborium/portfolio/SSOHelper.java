@@ -90,8 +90,8 @@ public class SSOHelper {
       jlib.updateDB(
           "INSERT into users(fname, lname, passwd, username, email) "
               + " values(?, ?, 'SSO_AUTH', ?, ?)",
-          jlib.cleanString(firstName),
-          jlib.cleanString(lastName),
+          firstName,
+          lastName,
           userID,
           email != null ? email : "");
     } catch (Exception e) {

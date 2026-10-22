@@ -27,6 +27,11 @@
 portfolioUser thisUser = (portfolioUser)session.getAttribute("User");
 String threadID = (String)request.getParameter("threadID");
 
+if (threadID == null || !threadID.matches("\\d{1,18}")) {
+	out.println("<p>Invalid thread ID.</p></body></html>");
+	return;
+}
+
 StringBuffer sbuf = new StringBuffer();
 
 

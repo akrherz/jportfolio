@@ -23,9 +23,38 @@ package org.collaborium.portfolio.forecast;
 
 import java.sql.*;
 import java.util.Calendar;
+import java.util.Set;
 import org.collaborium.portfolio.*;
 
 public class fLib {
+  private static final Set<String> SCORE_COLUMNS =
+      Set.of(
+          "local_high",
+          "local_low",
+          "local_prec",
+          "local_snow",
+          "local_err",
+          "float_high",
+          "float_low",
+          "float_prec",
+          "float_snow",
+          "float_err");
+
+  private static final Set<String> FORECAST_SORT_COLUMNS = withExtras("total_err", "realname");
+
+  private static final Set<String> CUMULATIVE_SORT_COLUMNS =
+      withExtras("p0_total", "p1_total", "p2_total", "p3_total", "final_tot", "realname");
+
+  private static Set<String> withExtras(String... extras) {
+    java.util.Set<String> all = new java.util.HashSet<>(SCORE_COLUMNS);
+    all.addAll(java.util.Arrays.asList(extras));
+    return java.util.Collections.unmodifiableSet(all);
+  }
+
+  /** Return sortCol if it is an allowed ORDER BY column, otherwise the default. */
+  private static String safeSortColumn(String sortCol, Set<String> allowed, String fallback) {
+    return sortCol != null && allowed.contains(sortCol) ? sortCol : fallback;
+  }
 
   // remove cruft
   public static String cleanse(String s) {
@@ -188,9 +217,7 @@ public class fLib {
     thisDay.getValidation();
     thisDay.getClimo();
 
-    if (sortCol == null) {
-      sortCol = "total_err";
-    }
+    sortCol = safeSortColumn(sortCol, FORECAST_SORT_COLUMNS, "total_err");
 
     sbuf.append(thisDay.catAnswers());
     sbuf.append("<BR><LI>Table Sorted by: " + sortCol + "</LI>");
@@ -369,7 +396,7 @@ public class fLib {
       throws myException, SQLException {
     StringBuffer sbuf = new StringBuffer();
 
-    if (sortCol == null) sortCol = "final_tot";
+    sortCol = safeSortColumn(sortCol, CUMULATIVE_SORT_COLUMNS, "final_tot");
 
     /** Now we have a date, lets get how the kids forecasted * */
     ResultSet forecasts =
@@ -413,7 +440,7 @@ public class fLib {
             + thisPageURL
             + "?portfolio="
             + portfolio
-            + "&mode=c&sortfinal_total\">Cum Total</a></TH>\n"
+            + "&mode=c&sort=final_tot\">Cum Total</a></TH>\n"
             + "</TR>\n"
             + "<TR>\n"
             + "<TH><a href=\""

@@ -27,6 +27,10 @@ if ( blockID.equalsIgnoreCase("1") ){
 	subSelect = " threadid >= 14435 and threadid <= 14534 ";
         ethThread = "14545";
 }
+if (ethThread == null) {
+	response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid blockID");
+	return;
+}
 ResultSet myResultSet = dbInterface.callDB("Select * from dialog  where username = ? and threadid != ? and"
 	+" portfolio = ?  and security = 'public' and "+subSelect+" ORDER by date",
 	selectedUser, Integer.valueOf(ethThread), thisUser.getPortfolio());

@@ -84,8 +84,8 @@ public class authBean {
    */
   public portfolioUser createUser(HttpServletRequest request) {
     String reqUserID = request.getParameter("username");
-    String reqfName = jlib.cleanString(request.getParameter("fName"));
-    String reqlName = jlib.cleanString(request.getParameter("lName"));
+    String reqfName = java.util.Objects.toString(request.getParameter("fName"), "");
+    String reqlName = java.util.Objects.toString(request.getParameter("lName"), "");
     String email = request.getParameter("email");
     String password1 = request.getParameter("password1");
     String password2 = request.getParameter("password2");
