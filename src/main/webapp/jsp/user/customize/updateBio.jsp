@@ -18,9 +18,9 @@
   if (newBioSketch != null) {
 	newBioSketch = stringUtils.cleanString( newBioSketch );
   	try{
-	  dbInterface.updateDB("DELETE from biosketch WHERE username = '"+ thisUser.getUserID() +"' ");
-	  dbInterface.updateDB("INSERT into biosketch(username, body) VALUES ('"+ thisUser.getUserID() +"' "
-		+", '"+ newBioSketch +"' )");
+	  dbInterface.updateDB("DELETE from biosketch WHERE username = ? ", thisUser.getUserID());
+	  dbInterface.updateDB("INSERT into biosketch(username, body) VALUES (?, ?)",
+		thisUser.getUserID(), newBioSketch);
 
   	} catch(Exception ex){
 	  plogger.report("Problem in updateBio.jsp");

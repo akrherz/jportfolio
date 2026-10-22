@@ -42,11 +42,11 @@
 // Grab me all my posts For block 1
   rs = dbInterface.callDB("SELECT "
   +" trim(to_char(idnum, '999999999999999999999999999999999999')) as idnum, subject "
-  +" from dialog WHERE username = '"+ userID +"' "
+  +" from dialog WHERE username = ? "
   +" and portfolio = 'gcp2003' and security = 'public' "
-  +" and threadid >= "+ sID +" and threadid <= "+ lID +" and "
-  +" threadid != "+ eID +" "
-  +" and date(date) < '2003-02-21' ");
+  +" and threadid >= ? and threadid <= ? and  threadid != ? "
+  +" and date(date) < '2003-02-21' ",
+  userID, Integer.valueOf(sID), Integer.valueOf(lID), Integer.valueOf(eID));
 
   authorResponses = 0;
   otherResponses = 0;
@@ -60,9 +60,9 @@
     }
     rs2 = dbInterface.callDB("SELECT count(username) as count "
    +" from dialog WHERE security = 'public' and portfolio = 'gcp2003' "
-   +" and username != '"+ userID +"' "
-   +" and idnum BETWEEN ("+ idnum +"::numeric * 10000)::numeric "
-   +" AND ( ("+ idnum +"::numeric + 1)* 10000)::numeric ");
+   +" and username != ?  and idnum BETWEEN (?::numeric * 10000)::numeric "
+   +" AND ( (?::numeric + 1)* 10000)::numeric ",
+   userID, new java.math.BigDecimal(idnum), new java.math.BigDecimal(idnum));
     rs2.next();
     int a = new java.lang.Integer(rs2.getString("count")).intValue();
     otherResponses = otherResponses + a;
@@ -81,11 +81,11 @@
 // Grab me all my posts For block 2
   rs = dbInterface.callDB("SELECT "
   +" trim(to_char(idnum, '999999999999999999999999999999999999')) as idnum, subject "
-  +" from dialog WHERE username = '"+ userID +"' "
+  +" from dialog WHERE username = ? "
   +" and portfolio = 'gcp2003' and security = 'public' "
-  +" and threadid >= "+ sID +" and threadid <= "+ lID +" and "
-  +" threadid != "+ eID +" and threadid != 11775 "
-  +" and date(date) < '2003-04-04' ");
+  +" and threadid >= ? and threadid <= ? and  threadid != ? and threadid != 11775 "
+  +" and date(date) < '2003-04-04' ",
+  userID, Integer.valueOf(sID), Integer.valueOf(lID), Integer.valueOf(eID));
 
   authorResponses = 0;
   otherResponses = 0;
@@ -99,9 +99,9 @@
     }
     rs2 = dbInterface.callDB("SELECT count(username) as count "
    +" from dialog WHERE security = 'public' and portfolio = 'gcp2003' "
-   +" and username != '"+ userID +"' "
-   +" and idnum BETWEEN ("+ idnum +"::numeric * 10000)::numeric "
-   +" AND ( ("+ idnum +"::numeric + 1)* 10000)::numeric ");
+   +" and username != ?  and idnum BETWEEN (?::numeric * 10000)::numeric "
+   +" AND ( (?::numeric + 1)* 10000)::numeric ",
+   userID, new java.math.BigDecimal(idnum), new java.math.BigDecimal(idnum));
     rs2.next();
     int a = new java.lang.Integer(rs2.getString("count")).intValue();
     otherResponses = otherResponses + a;
@@ -120,11 +120,11 @@
 // Grab me all my posts For block 3
   rs = dbInterface.callDB("SELECT "
   +" trim(to_char(idnum, '999999999999999999999999999999999999')) as idnum, subject "
-  +" from dialog WHERE username = '"+ userID +"' "
+  +" from dialog WHERE username = ? "
   +" and portfolio = 'gcp2003' and security = 'public' "
-  +" and threadid >= "+ sID +" and threadid <= "+ lID +" and "
-  +" threadid != "+ eID +" "
-  +" and date(date) < '2003-05-04' ");
+  +" and threadid >= ? and threadid <= ? and  threadid != ? "
+  +" and date(date) < '2003-05-04' ",
+  userID, Integer.valueOf(sID), Integer.valueOf(lID), Integer.valueOf(eID));
 
   authorResponses = 0;
   otherResponses = 0;
@@ -138,9 +138,9 @@
     }
     rs2 = dbInterface.callDB("SELECT count(username) as count "
    +" from dialog WHERE security = 'public' and portfolio = 'gcp2003' "
-   +" and username != '"+ userID +"' "
-   +" and idnum BETWEEN ("+ idnum +"::numeric * 10000)::numeric "
-   +" AND ( ("+ idnum +"::numeric + 1)* 10000)::numeric ");
+   +" and username != ?  and idnum BETWEEN (?::numeric * 10000)::numeric "
+   +" AND ( (?::numeric + 1)* 10000)::numeric ",
+   userID, new java.math.BigDecimal(idnum), new java.math.BigDecimal(idnum));
     rs2.next();
     int a = new java.lang.Integer(rs2.getString("count")).intValue();
     otherResponses = otherResponses + a;

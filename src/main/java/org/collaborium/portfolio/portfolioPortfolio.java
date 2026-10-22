@@ -25,7 +25,7 @@ public class portfolioPortfolio {
   private String dialogSecurity = "public";
   private String home = "/jportfolio/servlet/jportfolio";
   private String base = "/jportfolio/servlet/";
-  private String pList = "('null')";
+  private List<String> pList = new ArrayList<>(List.of("null"));
   private String groupp = null;
   private List<String> admins = new ArrayList<>();
 
@@ -46,12 +46,11 @@ public class portfolioPortfolio {
     this.usesDialog = false;
     this.usesForecast = false;
     this.usesQuiz = false;
-    this.pList = "('" + newID + "')";
+    this.pList = new ArrayList<>(Arrays.asList(newID));
     this.admins = new ArrayList<>();
 
     try {
-      ResultSet rs =
-          dbInterface.callDB("SELECT * from appregistry " + " WHERE portfolio = '" + id + "'  ");
+      ResultSet rs = dbInterface.callDB("SELECT * from appregistry WHERE portfolio = ? ", id);
       if (rs.next()) {
         this.usesCalendar = rs.getBoolean("use_calendar");
         this.usesDialog = rs.getBoolean("use_dialog");
@@ -66,21 +65,18 @@ public class portfolioPortfolio {
 
       rs =
           dbInterface.callDB(
-              "SELECT porthome, name, groupp from portfolios "
-                  + " WHERE portfolio = '"
-                  + id
-                  + "'  ");
+              "SELECT porthome, name, groupp from portfolios WHERE portfolio = ? ", id);
       if (rs.next()) {
         this.home = (String) rs.getString("porthome");
         this.base = this.home;
         this.name = (String) rs.getString("name");
         if (rs.getString("groupp") != null) {
           this.groupp = (String) rs.getString("groupp");
-          this.pList = "('" + newID + "','" + groupp + "')";
+          this.pList = new ArrayList<>(Arrays.asList(newID, groupp));
         } else this.groupp = "null";
       }
 
-      rs = dbInterface.callDB("SELECT admin from admins WHERE " + " portfolio = '" + id + "' ");
+      rs = dbInterface.callDB("SELECT admin from admins WHERE portfolio = ? ", id);
       while (rs.next()) {
         admins.add(rs.getString("admin"));
       }
@@ -90,7 +86,8 @@ public class portfolioPortfolio {
     }
   } // End of portfolioPortfolio
 
-  public String getPList() {
+  /** The portfolio ids (this portfolio and its group, if any) used for IN (...) lookups. */
+  public List<String> getPList() {
     return this.pList;
   }
 

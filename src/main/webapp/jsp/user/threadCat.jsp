@@ -27,6 +27,11 @@
 portfolioUser thisUser = (portfolioUser)session.getAttribute("User");
 String threadID = (String)request.getParameter("threadID");
 
+if (threadID == null || !threadID.matches("\\d{1,18}")) {
+	out.println("<p>Invalid thread ID.</p></body></html>");
+	return;
+}
+
 StringBuffer sbuf = new StringBuffer();
 
 
@@ -40,18 +45,18 @@ ResultSet threads7 = null;
 
 String SQL  = null;
 String SQL2 = null;
-String threadSpec = "threadid = "+threadID+" and idnum < 100000 ";
+String threadSpec = "threadid = ? and idnum < 100000 ";
 String STRidnum = "";
 
 // We need to build the SQL strings, one is for the count and the other is
 // for the actual query.
 SQL =  "SELECT * from dialog WHERE "+ threadSpec
-	+" and security = '"+ thisUser.getDialogSecurity() +"' order by idnum ASC";
+	+" and security = ? order by idnum ASC";
 
 // Lets make the query and figure out
-threads = jlib.callDB(SQL);
+threads = jlib.callDB(SQL, Long.valueOf(threadID), thisUser.getDialogSecurity());
 
-String commonString = "security = '"+ thisUser.getDialogSecurity() +"' order by idnum";
+String commonString = "security = ? order by idnum";
 
 sbuf.append("<table width=600>");
 sbuf.append("<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>"
@@ -63,8 +68,9 @@ while( threads.next() ) {
 
   String startNum = STRidnum +"0000";
 
-  threads2 = jlib.callDB("SELECT * from dialog WHERE idnum > "+startNum+" ::numeric"
-	+" and idnum < ("+startNum+" +10000)::numeric and "+commonString );
+  threads2 = jlib.callDB("SELECT * from dialog WHERE idnum > ?::numeric "
+	+" and idnum < (?::numeric+10000)::numeric and "+commonString,
+	  new java.math.BigDecimal(startNum), new java.math.BigDecimal(startNum), thisUser.getDialogSecurity());
 
   while(threads2.next()) {
     STRidnum = threads2.getString("idnum");
@@ -72,8 +78,9 @@ while( threads.next() ) {
 
     startNum = STRidnum +"0000";
 
-    threads3 = jlib.callDB("SELECT * from dialog WHERE idnum > "+startNum+"::numeric "
-	+" and idnum < ("+startNum+"+10000)::numeric and "+commonString);
+    threads3 = jlib.callDB("SELECT * from dialog WHERE idnum > ?::numeric "
+	+" and idnum < (?::numeric+10000)::numeric and "+commonString,
+	  new java.math.BigDecimal(startNum), new java.math.BigDecimal(startNum), thisUser.getDialogSecurity());
 
 
     while( threads3.next() ) {
@@ -82,8 +89,9 @@ while( threads.next() ) {
 
       startNum = STRidnum +"0000";
 
-      threads4 = jlib.callDB("SELECT * from dialog WHERE idnum > "+startNum+"::numeric "
-	+" and idnum < ("+startNum+"+10000)::numeric and "+commonString );
+      threads4 = jlib.callDB("SELECT * from dialog WHERE idnum > ?::numeric "
+	+" and idnum < (?::numeric+10000)::numeric and "+commonString,
+	  new java.math.BigDecimal(startNum), new java.math.BigDecimal(startNum), thisUser.getDialogSecurity());
 
       while( threads4.next() ) {
 	STRidnum = threads4.getString("idnum"); // This shows how to get the value by name
@@ -91,8 +99,9 @@ while( threads.next() ) {
 
 	startNum = STRidnum +"0000";
 
-	threads5 = jlib.callDB("SELECT * from dialog WHERE idnum > "+startNum+"::numeric "
-		+" and idnum < ("+startNum+"+10000)::numeric and "+commonString );
+	threads5 = jlib.callDB("SELECT * from dialog WHERE idnum > ?::numeric "
+		+" and idnum < (?::numeric+10000)::numeric and "+commonString,
+	  new java.math.BigDecimal(startNum), new java.math.BigDecimal(startNum), thisUser.getDialogSecurity());
 
 	while( threads5.next() ) {
 	  STRidnum = threads5.getString("idnum"); // This shows how to get the value by name
@@ -100,16 +109,18 @@ while( threads.next() ) {
 
 	  startNum = STRidnum +"0000";
 
-	  threads6 = jlib.callDB("SELECT * from dialog WHERE idnum > "+startNum+"::numeric "
-		+" and idnum < ("+startNum+"+10000)::numeric and "+commonString );
+	  threads6 = jlib.callDB("SELECT * from dialog WHERE idnum > ?::numeric "
+		+" and idnum < (?::numeric+10000)::numeric and "+commonString,
+	  new java.math.BigDecimal(startNum), new java.math.BigDecimal(startNum), thisUser.getDialogSecurity());
 
 	  while( threads6.next() ) {
 	    STRidnum = threads6.getString("idnum"); // This shows how to get the value by name
 	    sbuf.append( jdot.anonPrint(thisUser, threads6, "6", "2") );
 
 	    startNum = STRidnum +"0000";
-            threads7 = jlib.callDB("SELECT * from dialog WHERE idnum > "+startNum+"::numeric "
-              +" and idnum < ("+startNum+"+10000)::numeric and "+commonString );
+            threads7 = jlib.callDB("SELECT * from dialog WHERE idnum > ?::numeric "
+              +" and idnum < (?::numeric+10000)::numeric and "+commonString,
+	  new java.math.BigDecimal(startNum), new java.math.BigDecimal(startNum), thisUser.getDialogSecurity());
             while( threads7.next() ){
               STRidnum = threads7.getString("idnum");
               sbuf.append( jdot.anonPrint(thisUser, threads7, "7", "1") );

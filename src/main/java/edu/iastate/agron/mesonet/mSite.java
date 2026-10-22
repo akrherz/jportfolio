@@ -1,7 +1,6 @@
 package edu.iastate.agron.mesonet;
 
 import java.sql.*;
-import java.util.Arrays;
 import org.collaborium.portfolio.*;
 
 public class mSite {
@@ -24,9 +23,8 @@ public class mSite {
     this.portfolio = INportfolio;
     try {
       ResultSet rs =
-          dbInterface.callDBWithParameters(
-              "SELECT * from iem_sites WHERE " + " s_mid = ? and portfolio = ? ",
-              Arrays.asList(idnum, this.portfolio));
+          dbInterface.callDB(
+              "SELECT * from iem_sites WHERE  s_mid = ? and portfolio = ? ", idnum, this.portfolio);
       while (rs.next()) {
         this.setName(rs.getString("s_name"));
         this.setID(rs.getString("id"));
@@ -146,27 +144,17 @@ public class mSite {
   /** Method that updates the database entry for this station */
   public void update() {
     dbInterface.updateDB(
-        "UPDATE iem_sites SET s_name = '"
-            + name
-            + "', "
-            + " s_hid = '"
-            + hid
-            + "', s_nid = '"
-            + nid
-            + "', s_mid = '"
-            + mid
-            + "', "
-            + " s_lat = "
-            + lat
-            + ", s_lon = "
-            + lon
-            + ", s_st = '"
-            + state
-            + "', "
-            + " s_elev = "
-            + elev
-            + " WHERE id = "
-            + id
-            + " ");
+        "UPDATE iem_sites SET s_name = ?, s_hid = ?, s_nid = ?, s_mid = ?, "
+            + "s_lat = ?::numeric, s_lon = ?::numeric, s_st = ?, s_elev = ?::numeric "
+            + "WHERE id = ?::int",
+        name,
+        hid,
+        nid,
+        mid,
+        lat,
+        lon,
+        state,
+        elev,
+        id);
   }
 } // End of class declaration

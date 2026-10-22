@@ -3,7 +3,6 @@
 package org.collaborium.portfolio;
 
 import java.sql.*;
-import java.util.Arrays;
 import javax.servlet.http.*;
 
 public class authBean {
@@ -85,8 +84,8 @@ public class authBean {
    */
   public portfolioUser createUser(HttpServletRequest request) {
     String reqUserID = request.getParameter("username");
-    String reqfName = jlib.cleanString(request.getParameter("fName"));
-    String reqlName = jlib.cleanString(request.getParameter("lName"));
+    String reqfName = java.util.Objects.toString(request.getParameter("fName"), "");
+    String reqlName = java.util.Objects.toString(request.getParameter("lName"), "");
     String email = request.getParameter("email");
     String password1 = request.getParameter("password1");
     String password2 = request.getParameter("password2");
@@ -98,7 +97,7 @@ public class authBean {
 
     ResultSet rs = null;
     try {
-      rs = dbInterface.callDB("SELECT * from users " + " WHERE username = '" + reqUserID + "' ");
+      rs = dbInterface.callDB("SELECT * from users WHERE username = ? ", reqUserID);
       if (rs.next()) {
         return null;
       }
@@ -107,19 +106,12 @@ public class authBean {
     }
 
     jlib.updateDB(
-        "INSERT into users(fname, lname, passwd, username, email) "
-            + " values('"
-            + reqfName
-            + "', '"
-            + reqlName
-            + "', '"
-            + password1
-            + "', "
-            + " '"
-            + reqUserID
-            + "', '"
-            + email
-            + "') ");
+        "INSERT into users(fname, lname, passwd, username, email) values(?, ?, ?, ?, ?) ",
+        reqfName,
+        reqlName,
+        password1,
+        reqUserID,
+        email);
 
     return new portfolioUser(reqUserID);
   }
@@ -139,9 +131,7 @@ public class authBean {
     ResultSet rs = null;
     String dbPass = null;
     try {
-      rs =
-          dbInterface.callDBWithParameters(
-              "SELECT * from users " + " WHERE username = ?", Arrays.asList(username));
+      rs = dbInterface.callDB("SELECT * from users WHERE username = ?", username);
       if (rs != null && rs.next()) {
         dbPass = rs.getString("passwd");
       } else {

@@ -50,11 +50,11 @@ switch (filter.charAt(0) ){
    filterTxt = "Ticket changed this week";
   break;
   case '3':
-   sqlFilter = " and s_mid = '"+ s_mid +"' ";
+   sqlFilter = " and s_mid = ? ";
    filterTxt = "Use Site Filter from above";
   break;
   case '4': /* Filter by Site, but no offline */
-   sqlFilter = " and s_mid = '"+ s_mid +"' and subject != 'Site Offline' ";
+   sqlFilter = " and s_mid = ? and subject != 'Site Offline' ";
    filterTxt = "Use Site Filter / No Offline Tickets";
   break;
   case '5': /*  no offline */
@@ -82,11 +82,14 @@ switch (filter.charAt(0) ){
 <input type="submit" value="Set Filter"></form>
 <p>
 <%
+Object[] queryParams = new Object[] {thisUser.getPortfolio(), Integer.valueOf(20), Integer.valueOf(offset)};
+if (filter.charAt(0) == '3' || filter.charAt(0) == '4') {
+  queryParams = new Object[] {thisUser.getPortfolio(), s_mid, Integer.valueOf(20), Integer.valueOf(offset)};
+}
 ResultSet tt = dbInterface.callDB("SELECT *, getUserName(author) as rname"
   +" ,getSiteName(s_mid) as s_name from tt_base WHERE "
-  +" portfolio = '"+ thisUser.getPortfolio() +"' "+ sqlFilter
-  +" ORDER by entered DESC "
-  +" LIMIT 20 OFFSET "+ offset );
+  +" portfolio = ? "+ sqlFilter
+  +" ORDER by entered DESC  LIMIT ? OFFSET ?", queryParams);
 StringBuffer tableContent = new StringBuffer();
 
 int tt_cnt = 0;

@@ -22,9 +22,8 @@
     try{
      dbInterface.updateDB("INSERT into iem_sites(portfolio, s_name, s_hid, "
       +" s_nid, s_mid, s_lat, s_lon, s_st, s_elev) VALUES "
-      +" ('"+thisUser.getPortfolio()+"', '"+s_name+"', '"+s_hid+"', "
-      +" '"+s_nid+"', '"+s_mid+"', "+s_lat+", "+s_lon+", '"+s_st+"', "
-      +" "+s_elev+" )");
+      +" (?, ?, ?, ?, ?, ?::numeric, ?::numeric, ?, ?::numeric)",
+      thisUser.getPortfolio(), s_name, s_hid, s_nid, s_mid, s_lat, s_lon, s_st, s_elev);
      out.println("<br>Site added to the database...\n");
 
      /** Time to retreive back the ID of this site */
@@ -36,9 +35,7 @@
      if (! s1_type.equalsIgnoreCase("null") ) {
        if (s1_id == null) s1_id = "0";
        if (s1_install == null) s1_install = "now";
-       dbInterface.updateDB("INSERT into iem_sensor(portfolio, r_id, "
-        +" o_serial) VALUES ('"+ thisUser.getPortfolio() +"', "+ s1_type +", "
-        +" '"+ s1_id +"' )");
+       dbInterface.updateDB("INSERT into iem_sensor(portfolio, r_id,  o_serial) VALUES (?, ?::int, ?)", thisUser.getPortfolio(), s1_type, s1_id);
 
        /** Retreive back the ID of this insert */
        rs = dbInterface.callDB("SELECT last_value from iem_sensor_id_seq");
@@ -48,17 +45,15 @@
        out.println("<br>DEBUG: Created new sensor\n");
 
        dbInterface.updateDB("INSERT into iem_sensor_history(portfolio, "
-        +" o_id, installed, s_id) VALUES ('"+ thisUser.getPortfolio() +"', "
-        +" "+sensorID+", '"+ s1_install +"', "+siteID+")");
+        +" o_id, installed, s_id) VALUES (?, ?::int, ?::timestamp, ?::int)",
+        thisUser.getPortfolio(), sensorID, s1_install, siteID);
        out.println("<br>DEBUG: Added sensor to site\n");
      }
 
      if (! s2_type.equalsIgnoreCase("null") ) {
        if (s2_id == null) s2_id = "0";
        if (s2_install == null) s2_install = "now";
-       dbInterface.updateDB("INSERT into iem_sensor(portfolio, r_id, "
-        +" o_serial) VALUES ('"+ thisUser.getPortfolio() +"', "+ s2_type +", "
-        +" '"+ s2_id +"' )");
+       dbInterface.updateDB("INSERT into iem_sensor(portfolio, r_id,  o_serial) VALUES (?, ?::int, ?)", thisUser.getPortfolio(), s2_type, s2_id);
 
        /** Retreive back the ID of this insert */
        rs = dbInterface.callDB("SELECT last_value from iem_sensor_id_seq");
@@ -68,17 +63,15 @@
        out.println("<br>DEBUG: Created new sensor\n");
 
        dbInterface.updateDB("INSERT into iem_sensor_history(portfolio, "
-        +" o_id, installed, s_id) VALUES ('"+ thisUser.getPortfolio() +"', "
-        +" "+sensor2ID+", '"+ s2_install +"', "+siteID+")");
+        +" o_id, installed, s_id) VALUES (?, ?::int, ?::timestamp, ?::int)",
+        thisUser.getPortfolio(), sensor2ID, s2_install, siteID);
        out.println("<br>DEBUG: Added sensor to site\n");
      }
 
      if (! s3_type.equalsIgnoreCase("null") ) {
        if (s3_id == null) s3_id = "0";
        if (s3_install == null) s3_install = "now";
-       dbInterface.updateDB("INSERT into iem_sensor(portfolio, r_id, "
-        +" o_serial) VALUES ('"+ thisUser.getPortfolio() +"', "+ s3_type +", "
-        +" '"+ s3_id +"' )");
+       dbInterface.updateDB("INSERT into iem_sensor(portfolio, r_id,  o_serial) VALUES (?, ?::int, ?)", thisUser.getPortfolio(), s3_type, s3_id);
 
        /** Retreive back the ID of this insert */
        rs = dbInterface.callDB("SELECT last_value from iem_sensor_id_seq");
@@ -88,13 +81,12 @@
        out.println("<br>DEBUG: Created new sensor\n");
 
        dbInterface.updateDB("INSERT into iem_sensor_history(portfolio, "
-        +" o_id, installed, s_id) VALUES ('"+ thisUser.getPortfolio() +"', "
-        +" "+sensor3ID+", '"+ s3_install +"', "+siteID+")");
+        +" o_id, installed, s_id) VALUES (?, ?::int, ?::timestamp, ?::int)",
+        thisUser.getPortfolio(), sensor3ID, s3_install, siteID);
        out.println("<br>DEBUG: Added sensor to site\n");
      }
 
-     ResultSet maxth = dbInterface.callDB("select MAX (idnum)+1 as result "
-      +" from dialog WHERE idnum > 10000 and idnum < 20000");
+     ResultSet maxth = dbInterface.callDB("select MAX (idnum)+1 as result  from dialog WHERE idnum > 10000 and idnum < 20000");
      maxth.next();
      String newthreadid = maxth.getString("result");
 
@@ -155,9 +147,8 @@
     case 'd':
     try{
       dbInterface.updateDB("INSERT into iem_sensors(portfolio, r_name, "
-       +" r_hid, r_type, r_model, r_vendor) VALUES ('"+thisUser.getPortfolio()+"', "
-       +" '"+r_name+"', '"+r_hid+"', '"+r_type+"', '"+r_model+"', "
-       +" '"+r_vendor+"' )");
+       +" r_hid, r_type, r_model, r_vendor) VALUES (?, ?, ?, ?, ?, ?)",
+       thisUser.getPortfolio(), r_name, r_hid, r_type, r_model, r_vendor);
       out.println("<p>Input of Sensor Group was successful.");
 
     } catch(Exception ex){
@@ -171,9 +162,7 @@
      if (s1_type != "null") {
        if (s1_id == null) s1_id = "0";
        if (s1_install == null) s1_install = "now";
-       dbInterface.updateDB("INSERT into iem_sensor(portfolio, r_id, "
-        +" o_serial) VALUES ('"+ thisUser.getPortfolio() +"', "+ s1_type +", "
-        +" '"+ s1_id +"' )");
+       dbInterface.updateDB("INSERT into iem_sensor(portfolio, r_id,  o_serial) VALUES (?, ?::int, ?)", thisUser.getPortfolio(), s1_type, s1_id);
        /** Retreive back the ID of this insert */
        rs = dbInterface.callDB("SELECT last_value from iem_sensor_id_seq");
        rs.next();
@@ -181,8 +170,8 @@
        rs.close();
 
        dbInterface.updateDB("INSERT into iem_sensor_history(portfolio, "
-        +" o_id, installed, s_id) VALUES ('"+ thisUser.getPortfolio() +"', "
-        +" "+sensorID+", '"+ s1_install +"', "+ id +")");
+        +" o_id, installed, s_id) VALUES (?, ?::int, ?::timestamp, ?::int)",
+        thisUser.getPortfolio(), sensorID, s1_install, id);
      }
 
 
@@ -194,9 +183,9 @@
     break;
 //----------------------------------------------------------------------------
     case 'f':
-      dbInterface.updateDB("UPDATE iem_sensor_history SET removed = "
-       +" '"+ removed +"' WHERE portfolio = '"+ thisUser.getPortfolio()+"' "
-       +" and s_id = "+id+" and o_id = "+o_id+" ");
+      dbInterface.updateDB("UPDATE iem_sensor_history SET removed = ?::timestamp "
+       +" WHERE portfolio = ? and s_id = ?::int and o_id = ?::int",
+       removed, thisUser.getPortfolio(), id, o_id);
       out.println("<p>Removed this sensor from the site.\n");
     break;
   } // End of switch

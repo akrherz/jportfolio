@@ -7,9 +7,8 @@
   String fxsitename = (String)request.getParameter("fxsitename");
   String period = (String)request.getParameter("period");
   if (day != null && fxsiteid != null & fxsitename != null){
-    dbInterface.updateDB("INSERT into afc_days( portfolio, day, fxsiteid, "
-     +" fxsitename, period) VALUES ('"+ thisUser.getPortfolio() +"', "
-     +" '"+ day +"', '"+ fxsiteid +"', '"+ fxsitename +"', '"+ period +"')");
+    dbInterface.updateDB("INSERT into afc_days( portfolio, day, fxsiteid,  fxsitename, period) VALUES (?, "
+     +" ?::date, ?, ?, ?)", thisUser.getPortfolio(), day, fxsiteid, fxsitename, period);
   out.println("<p>Forecast Date Created: "+ day );
   }
 %>
@@ -17,8 +16,7 @@
 <p><b>Previous Forecast Dates:</b><br>
 <table>
 <%
- ResultSet days = dbInterface.callDB("SELECT * from afc_days "
-  +"WHERE portfolio = '"+ thisUser.getPortfolio() +"' ORDER by day DESC");
+ ResultSet days = dbInterface.callDB("SELECT * from afc_days WHERE portfolio = ? ORDER by day DESC", thisUser.getPortfolio());
  if (days != null) {
   while (days.next()){
    out.println("<tr><td>"+ days.getString("day") +"</td><td>"+ days.getString("fxsitename") +"("+ days.getString("fxsiteid") +")</td></tr>");

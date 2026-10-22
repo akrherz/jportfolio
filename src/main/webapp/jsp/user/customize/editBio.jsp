@@ -30,8 +30,7 @@ get to know you better in the virtual environment.
 <%
   String prevBio = "";
   try{
-    ResultSet rs = dbInterface.callDB("SELECT body from biosketch WHERE "
-	+" username = '"+ thisUser.getUserID() +"' ");
+    ResultSet rs = dbInterface.callDB("SELECT body from biosketch WHERE  username = ? ", thisUser.getUserID());
     if (rs.next() )
       prevBio = rs.getString("body");
   } catch(Exception ex){

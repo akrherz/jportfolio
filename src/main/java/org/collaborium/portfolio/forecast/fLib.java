@@ -22,11 +22,39 @@
 package org.collaborium.portfolio.forecast;
 
 import java.sql.*;
-import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Set;
 import org.collaborium.portfolio.*;
 
 public class fLib {
+  private static final Set<String> SCORE_COLUMNS =
+      Set.of(
+          "local_high",
+          "local_low",
+          "local_prec",
+          "local_snow",
+          "local_err",
+          "float_high",
+          "float_low",
+          "float_prec",
+          "float_snow",
+          "float_err");
+
+  private static final Set<String> FORECAST_SORT_COLUMNS = withExtras("total_err", "realname");
+
+  private static final Set<String> CUMULATIVE_SORT_COLUMNS =
+      withExtras("p0_total", "p1_total", "p2_total", "p3_total", "final_tot", "realname");
+
+  private static Set<String> withExtras(String... extras) {
+    java.util.Set<String> all = new java.util.HashSet<>(SCORE_COLUMNS);
+    all.addAll(java.util.Arrays.asList(extras));
+    return java.util.Collections.unmodifiableSet(all);
+  }
+
+  /** Return sortCol if it is an allowed ORDER BY column, otherwise the default. */
+  private static String safeSortColumn(String sortCol, Set<String> allowed, String fallback) {
+    return sortCol != null && allowed.contains(sortCol) ? sortCol : fallback;
+  }
 
   // remove cruft
   public static String cleanse(String s) {
@@ -111,11 +139,10 @@ public class fLib {
     StringBuffer sbuf = new StringBuffer();
 
     ResultSet forecastDays =
-        dbInterface.callDBWithParameters(
-            "SELECT * from forecast_days "
-                + " WHERE portfolio = ? "
+        dbInterface.callDB(
+            "SELECT * from forecast_days  WHERE portfolio = ? "
                 + " and day <= CURRENT_TIMESTAMP::date ORDER by day ASC ",
-            Arrays.asList(portfolio));
+            portfolio);
 
     sbuf.append(
         "<FORM METHOD=\"GET\" ACTION=\""
@@ -174,11 +201,9 @@ public class fLib {
     /** If no date is specified, lets then see if the last answers works * */
     if (sqlDate == null) {
       ResultSet availDates =
-          dbInterface.callDBWithParameters(
-              "SELECT day "
-                  + "from forecast_answers  WHERE portfolio = ? "
-                  + " ORDER by day DESC LIMIT 1",
-              Arrays.asList(portfolio));
+          dbInterface.callDB(
+              "SELECT day from forecast_answers  WHERE portfolio = ?  ORDER by day DESC LIMIT 1",
+              portfolio);
       if (availDates.next()) {
         sqlDate = availDates.getString("day");
       } else {
@@ -192,9 +217,7 @@ public class fLib {
     thisDay.getValidation();
     thisDay.getClimo();
 
-    if (sortCol == null) {
-      sortCol = "total_err";
-    }
+    sortCol = safeSortColumn(sortCol, FORECAST_SORT_COLUMNS, "total_err");
 
     sbuf.append(thisDay.catAnswers());
     sbuf.append("<BR><LI>Table Sorted by: " + sortCol + "</LI>");
@@ -210,14 +233,13 @@ public class fLib {
     }
 
     ResultSet forecasts =
-        dbInterface.callDBWithParameters(
-            "SELECT "
-                + " getUserName(userid) as realname, * from forecast_grades "
-                + " WHERE portfolio = ? "
-                + " and day = ? order by "
+        dbInterface.callDB(
+            "SELECT  getUserName(userid) as realname, * from forecast_grades "
+                + " WHERE portfolio = ?  and day = ? order by "
                 + sortCol
                 + " ",
-            Arrays.asList(portfolio, sqlDateObj));
+            portfolio,
+            sqlDateObj);
 
     sbuf.append(
         "<P><TABLE>\n"
@@ -374,19 +396,17 @@ public class fLib {
       throws myException, SQLException {
     StringBuffer sbuf = new StringBuffer();
 
-    if (sortCol == null) sortCol = "final_tot";
+    sortCol = safeSortColumn(sortCol, CUMULATIVE_SORT_COLUMNS, "final_tot");
 
     /** Now we have a date, lets get how the kids forecasted * */
     ResultSet forecasts =
-        dbInterface.callDBWithParameters(
+        dbInterface.callDB(
             "SELECT getUserName(userid) as realname, *, "
                 + " (p0_total+ p1_total + p2_total + p3_total) AS "
-                + "final_tot from forecast_totals "
-                + " WHERE portfolio = ? "
-                + " order by "
+                + "final_tot from forecast_totals  WHERE portfolio = ?  order by "
                 + sortCol
                 + " ",
-            Arrays.asList(portfolio));
+            portfolio);
 
     sbuf.append(
         "<TABLE>\n"
@@ -420,7 +440,7 @@ public class fLib {
             + thisPageURL
             + "?portfolio="
             + portfolio
-            + "&mode=c&sortfinal_total\">Cum Total</a></TH>\n"
+            + "&mode=c&sort=final_tot\">Cum Total</a></TH>\n"
             + "</TR>\n"
             + "<TR>\n"
             + "<TH><a href=\""
@@ -692,72 +712,51 @@ public class fLib {
   public static String totalForecastErrors(String portfolio) throws SQLException {
     StringBuffer sbuf = new StringBuffer();
 
-    dbInterface.updateDB("DELETE from forecast_totals WHERE portfolio = '" + portfolio + "' ");
+    dbInterface.updateDB("DELETE from forecast_totals WHERE portfolio = ?", portfolio);
 
     /** Total all forecasts first */
     dbInterface.updateDB(
-        "INSERT into forecast_totals ( SELECT userid, "
-            + "portfolio, sum(local_high), "
+        "INSERT into forecast_totals ( SELECT userid, portfolio, sum(local_high), "
             + " sum(local_low), sum(local_prec), "
             + "sum(local_snow), sum(local_err), sum(float_high), "
-            + " sum(float_low), sum(float_prec), "
-            + "sum(float_snow), sum(float_err) from "
-            + " forecast_grades WHERE portfolio = '"
-            + portfolio
-            + "' "
-            + " GROUP by userid, portfolio ) ");
+            + " sum(float_low), sum(float_prec), sum(float_snow), sum(float_err) from "
+            + " forecast_grades WHERE portfolio = ?  GROUP by userid, portfolio ) ",
+        portfolio);
 
     ResultSet students =
-        dbInterface.callDBWithParameters(
-            "SELECT getUserName( username) as realname, "
-                + " username from students "
+        dbInterface.callDB(
+            "SELECT getUserName( username) as realname,  username from students "
                 + " WHERE portfolio = ? and nofx = 'n' ",
-            Arrays.asList(portfolio));
+            portfolio);
 
     while (students.next()) {
       String thisUserID = students.getString("username");
       dbInterface.updateDB(
-          "UPDATE forecast_totals SET "
-              + " p0_total = totalErrorByCase('"
-              + thisUserID
-              + "', '"
-              + portfolio
-              + "', 0) , "
-              + " p1_total = totalErrorByCase('"
-              + thisUserID
-              + "', '"
-              + portfolio
-              + "', 1) , "
-              + " p2_total = totalErrorByCase('"
-              + thisUserID
-              + "', '"
-              + portfolio
-              + "', 2), "
-              + " p3_total = totalErrorByCase('"
-              + thisUserID
-              + "', '"
-              + portfolio
-              + "', 3) "
-              + " WHERE userid = '"
-              + thisUserID
-              + "' and portfolio = '"
-              + portfolio
-              + "' ");
+          "UPDATE forecast_totals SET  p0_total = totalErrorByCase(?, ?, 0) , "
+              + " p1_total = totalErrorByCase(?, ?, 1) ,  p2_total = totalErrorByCase(?, ?, 2), "
+              + " p3_total = totalErrorByCase(?, ?, 3)  WHERE userid = ? and portfolio = ? ",
+          thisUserID,
+          portfolio,
+          thisUserID,
+          portfolio,
+          thisUserID,
+          portfolio,
+          thisUserID,
+          portfolio,
+          thisUserID,
+          portfolio);
     }
 
     /** Now we need to update Null values, hack! */
     dbInterface.updateDB(
-        "update forecast_totals SET p1_total = 0 WHERE portfolio = '"
-            + portfolio
-            + "' and p1_total IS NULL");
+        "update forecast_totals SET p1_total = 0 WHERE portfolio = ? and p1_total IS NULL",
+        portfolio);
     dbInterface.updateDB(
-        "update forecast_totals SET p2_total = 0 WHERE portfolio = '"
-            + portfolio
-            + "' and p2_total IS NULL");
+        "update forecast_totals SET p2_total = 0 WHERE portfolio = ? and p2_total IS NULL",
+        portfolio);
     dbInterface.updateDB(
-        "update forecast_totals SET p3_total = 0 WHERE portfolio = '"
-            + portfolio
-            + "' and p3_total IS NULL");
+        "update forecast_totals SET p3_total = 0 WHERE portfolio = ? and p3_total IS NULL",
+        portfolio);
 
     sbuf.append("Done Totalling Forecasts!");
     return sbuf.toString();
@@ -774,19 +773,13 @@ public class fLib {
     StringBuffer sbuf = new StringBuffer();
 
     dbInterface.updateDB(
-        "DELETE from forecast_grades WHERE "
-            + " day = '"
-            + sqlDate
-            + "' and portfolio = '"
-            + portfolio
-            + "' ");
+        "DELETE from forecast_grades WHERE day = ?::date and portfolio = ?", sqlDate, portfolio);
 
     ResultSet students =
-        dbInterface.callDBWithParameters(
-            "SELECT "
-                + " getUserName( username) as realname, username from students "
+        dbInterface.callDB(
+            "SELECT  getUserName( username) as realname, username from students "
                 + " WHERE portfolio = ? and nofx = 'n' ",
-            Arrays.asList(portfolio));
+            portfolio);
 
     forecastDay thisDay = new forecastDay(portfolio, sqlDate);
     if (thisDay.getValidation()) {
@@ -832,11 +825,11 @@ public class fLib {
               "Invalid date format for sqlDate: " + sqlDate + ". Expected yyyy-MM-dd.", e);
         }
         ResultSet userForecast =
-            dbInterface.callDBWithParameters(
-                "SELECT * from forecasts WHERE "
-                    + " day = ? and portfolio = ? and "
-                    + " userid = ? ",
-                Arrays.asList(sqlDateObj, portfolio, thisUserID));
+            dbInterface.callDB(
+                "SELECT * from forecasts WHERE  day = ? and portfolio = ? and  userid = ? ",
+                sqlDateObj,
+                portfolio,
+                thisUserID);
         if (userForecast.next()) {
           u_local_high = userForecast.getString("local_high");
           u_local_low = userForecast.getString("local_low");
@@ -851,32 +844,18 @@ public class fLib {
               "INSERT into forecasts (userid, portfolio, day, local_high, "
                   + " local_low, local_prec, local_snow, float_high, float_low, "
                   + "float_prec, "
-                  + " float_snow, type) VALUES ('"
-                  + thisUserID
-                  + "', '"
-                  + portfolio
-                  + "', "
-                  + " '"
-                  + sqlDate
-                  + "', '"
-                  + cl_local_high
-                  + "', '"
-                  + cl_local_low
-                  + "', "
-                  + " '"
-                  + cl_local_prec
-                  + "', '"
-                  + cl_local_snow
-                  + "', '"
-                  + cl_float_high
-                  + "' , "
-                  + " '"
-                  + cl_float_low
-                  + "', '"
-                  + cl_float_prec
-                  + "', '"
-                  + cl_float_snow
-                  + "', 'c' ) ");
+                  + " float_snow, type) VALUES (?, ?, ?::date, ?::int, ?::int, ?::int, ?::int, ?::int, ?::int, ?::int, ?::int, 'c' ) ",
+              thisUserID,
+              portfolio,
+              sqlDate,
+              cl_local_high,
+              cl_local_low,
+              cl_local_prec,
+              cl_local_snow,
+              cl_float_high,
+              cl_float_low,
+              cl_float_prec,
+              cl_float_snow);
 
           u_local_high = cl_local_high;
           u_local_low = cl_local_low;
@@ -911,57 +890,31 @@ public class fLib {
         Integer total_err = local_err.intValue() + float_err.intValue();
 
         dbInterface.updateDB(
-            "DELETE from forecast_grades WHERE "
-                + " portfolio = '"
-                + portfolio
-                + "' and day = '"
-                + sqlDate
-                + "' "
-                + " and userid = '"
-                + thisUserID
-                + "' ");
+            "DELETE from forecast_grades WHERE  portfolio = ? and day = ?::date and userid = ? ",
+            portfolio,
+            sqlDate,
+            thisUserID);
 
         dbInterface.updateDB(
             "INSERT into forecast_grades ( userid, portfolio, day, local_high, "
                 + " local_low, local_prec, local_snow, local_err, float_high, "
-                + "float_low, float_prec, "
-                + " float_snow, float_err, total_err, case_group) VALUES ('"
-                + thisUserID
-                + "', '"
-                + portfolio
-                + "', "
-                + " '"
-                + sqlDate
-                + "', '"
-                + local_high_err.toString()
-                + "', '"
-                + local_low_err.toString()
-                + "', "
-                + " '"
-                + local_prec_err.toString()
-                + "', '"
-                + local_snow_err.toString()
-                + "', "
-                + " "
-                + local_err.toString()
-                + ", '"
-                + float_high_err.toString()
-                + "' , "
-                + " "
-                + float_low_err.toString()
-                + ", '"
-                + float_prec_err.toString()
-                + "', "
-                + " "
-                + float_snow_err.toString()
-                + ", "
-                + float_err.toString()
-                + ", "
-                + " "
-                + total_err.toString()
-                + ", "
-                + caseGroup
-                + " ) ");
+                + "float_low, float_prec,  float_snow, float_err, total_err, case_group) VALUES "
+                + "(?, ?, ?::date, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?::int)",
+            thisUserID,
+            portfolio,
+            sqlDate,
+            local_high_err,
+            local_low_err,
+            local_prec_err,
+            local_snow_err,
+            local_err,
+            float_high_err,
+            float_low_err,
+            float_prec_err,
+            float_snow_err,
+            float_err,
+            total_err,
+            caseGroup);
 
         sbuf.append("<BR>Done grading user: " + thisUserName + "\n");
       }

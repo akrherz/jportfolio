@@ -42,8 +42,8 @@ not contain hardware IDs.</p>
 
 <%
 
-ResultSet sensors = dbInterface.callDB("SELECT * from iem_sensors WHERE "
- +" portfolio = '"+ thisUser.getPortfolio() +"' ");
+ResultSet sensors = dbInterface.callDB("SELECT * from iem_sensors WHERE portfolio = ?",
+ thisUser.getPortfolio());
 
 out.println("<p><font class='bluet'>Current Sensor Groups</font></p>");
 

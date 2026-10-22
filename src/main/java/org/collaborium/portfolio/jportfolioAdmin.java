@@ -229,23 +229,16 @@ public class jportfolioAdmin extends HttpServlet {
     String usesForecast = (String) request.getParameter("usesForecast");
     String usesQuiz = (String) request.getParameter("usesQuiz");
     try {
-      dbInterface.updateDB("INSERT into appregistry VALUES('" + thisUser.getPortfolio() + "') ");
+      dbInterface.updateDB("INSERT into appregistry VALUES(?) ", thisUser.getPortfolio());
       dbInterface.updateDB(
-          "UPDATE appregistry SET use_calendar = '"
-              + usesCalendar
-              + "' "
-              + " , use_dialog = '"
-              + usesDialog
-              + "' "
-              + " , use_forecast = '"
-              + usesForecast
-              + "' "
-              + " , use_quiz = '"
-              + usesQuiz
-              + "' "
-              + " WHERE portfolio = '"
-              + thisUser.getPortfolio()
-              + "' ");
+          "UPDATE appregistry SET use_calendar = ?  , use_dialog = ? "
+              + " , use_forecast = ?  , use_quiz = ? "
+              + " WHERE portfolio = ? ",
+          usesCalendar,
+          usesDialog,
+          usesForecast,
+          usesQuiz,
+          thisUser.getPortfolio());
     } catch (Exception ex) {
       plogger.report("Problem setting vals in appregistry");
     }
@@ -285,11 +278,9 @@ public class jportfolioAdmin extends HttpServlet {
     try {
       ResultSet rs =
           dbInterface.callDB(
-              "SELECT sum(score) as tot_score, getUserName(userid) as name from "
-                  + "scores s "
-                  + " WHERE s.portfolio = '"
-                  + portfolio
-                  + "' GROUP by s.userid");
+              "SELECT sum(score) as tot_score, getUserName(userid) as name from scores s "
+                  + " WHERE s.portfolio = ? GROUP by s.userid",
+              portfolio);
       while (rs.next()) {
         sbuf.append(
             "<TR><TD>"
@@ -323,14 +314,10 @@ public class jportfolioAdmin extends HttpServlet {
     try {
       ResultSet rs =
           dbInterface.callDB(
-              "SELECT app, score, "
-                  + " getUserName(userid) as name, assign from scores s "
-                  + " WHERE s.portfolio = '"
-                  + thisUser.getPortfolio()
-                  + "' "
-                  + " and s.userid = '"
-                  + selectedUserID
-                  + "' ");
+              "SELECT app, score,  getUserName(userid) as name, assign from scores s "
+                  + " WHERE s.portfolio = ?  and s.userid = ? ",
+              thisUser.getPortfolio(),
+              selectedUserID);
       while (rs.next()) {
         sbuf2.append(
             "<TR>\n"
@@ -377,8 +364,7 @@ public class jportfolioAdmin extends HttpServlet {
     sbuf.append("<H3>Current Admins:</H3>\n");
 
     try {
-      ResultSet rs =
-          dbInterface.callDB("SELECT * from admins WHERE portfolio = '" + portfolio + "' ");
+      ResultSet rs = dbInterface.callDB("SELECT * from admins WHERE portfolio = ? ", portfolio);
       while (rs.next()) {
         sbuf.append("\n<P> " + rs.getString("admin"));
       }
@@ -479,14 +465,8 @@ public class jportfolioAdmin extends HttpServlet {
             + portfolio
             + "</i>\n");
     try {
-      jlib.updateDB(
-          "DELETE from admins WHERE admin = '"
-              + newAdmin
-              + "' and portfolio = '"
-              + portfolio
-              + "' ");
-      jlib.updateDB(
-          "INSERT into admins(portfolio, admin) VALUES ('" + portfolio + "', '" + newAdmin + "') ");
+      jlib.updateDB("DELETE from admins WHERE admin = ? and portfolio = ? ", newAdmin, portfolio);
+      jlib.updateDB("INSERT into admins(portfolio, admin) VALUES (?, ?) ", portfolio, newAdmin);
     } catch (Exception ex) {
       System.err.println("Problem updating the admins database.");
       ex.printStackTrace();
@@ -525,48 +505,27 @@ public class jportfolioAdmin extends HttpServlet {
       newMotd.next();
       String newValue = newMotd.getString("newmotd");
 
-      jlib.updateDB(
-          "INSERT into motd(portfolio, body) "
-              + " values('"
-              + portfolio
-              + "', '"
-              + jlib.cleanString(motd)
-              + "')");
+      jlib.updateDB("INSERT into motd(portfolio, body) values(?, ?)", portfolio, motd);
 
       // Lets notify everybody in the portfolio that they have a MOTD to look
       // at.
       ResultSet students =
-          dbInterface.callDB(
-              "SELECT username from students WHERE portfolio = " + " '" + portfolio + "' ");
+          dbInterface.callDB("SELECT username from students WHERE portfolio = ? ", portfolio);
       while (students.next()) {
         String studentUserID = students.getString("username");
         jlib.updateDB(
-            "INSERT into notify(username, portfolio, program, message) "
-                + " VALUES( '"
-                + studentUserID
-                + "', '"
-                + portfolio
-                + "', "
-                + " '"
-                + jlib.httpBase
-                + "/jsp/user/printMotd.jsp?idnum="
-                + newValue
-                + "', "
-                + " 'MOTD Posted: "
-                + dateString
-                + " ')");
+            "INSERT into notify(username, portfolio, program, message)  VALUES( ?, ?, ?, ?)",
+            studentUserID,
+            portfolio,
+            jlib.httpBase + "/jsp/user/printMotd.jsp?idnum=" + newValue,
+            "MOTD Posted: " + dateString + " ");
       }
 
       // Now lets create the calendar posts needed
       jlib.updateDB(
-          "INSERT into calendar(portfolio, description, url) VALUES "
-              + " ('"
-              + portfolio
-              + "', 'MOTD Post', '"
-              + jlib.httpBase
-              + "/jsp/user/printMotd.jsp?idnum="
-              + newValue
-              + "')");
+          "INSERT into calendar(portfolio, description, url) VALUES (?, 'MOTD Post', ?)",
+          portfolio,
+          jlib.httpBase + "/jsp/user/printMotd.jsp?idnum=" + newValue);
 
       if (sendAsEmail != null) {
         System.err.println("I am sending the Portfolio An Email");
@@ -622,33 +581,24 @@ public class jportfolioAdmin extends HttpServlet {
     String description = stringUtils.cleanString(req.getParameter("description"));
     String validDate = (String) req.getParameter("validDate");
     String thisURL = (String) req.getParameter("URL");
-    String sqlString = "";
-    if (thisURL == null)
-      sqlString =
-          "INSERT into calendar(valid, description, portfolio) VALUES "
-              + " ('"
-              + validDate
-              + "', '"
-              + description
-              + "', '"
-              + portfolio
-              + "') ";
-    else
-      sqlString =
-          "INSERT into calendar(valid, description, portfolio, url) VALUES "
-              + " ('"
-              + validDate
-              + "', '"
-              + description
-              + "', '"
-              + portfolio
-              + "', '"
-              + thisURL
-              + "') ";
 
     sbuf.append(jlib.topBox("Update Calendar:"));
     try {
-      jlib.updateDB(sqlString);
+      if (thisURL == null) {
+        jlib.updateDB(
+            "INSERT into calendar(valid, description, portfolio) VALUES (?::date, ?, ?) ",
+            validDate,
+            description,
+            portfolio);
+      } else {
+        jlib.updateDB(
+            "INSERT into calendar(valid, description, portfolio, url) "
+                + "VALUES (?::date, ?, ?, ?) ",
+            validDate,
+            description,
+            portfolio,
+            thisURL);
+      }
       sbuf.append("WORKED!");
     } catch (Exception ex) {
       System.err.println("Problem here, Charly.");
@@ -671,9 +621,8 @@ public class jportfolioAdmin extends HttpServlet {
       rs =
           dbInterface.callDB(
               "SELECT u.fname, u.lname from students s, users u"
-                  + " WHERE s.portfolio = '"
-                  + portfolio
-                  + "' and s.username = u.username");
+                  + " WHERE s.portfolio = ? and s.username = u.username",
+              portfolio);
       while (rs.next()) {
         sbuf.append("<P>" + rs.getString("fname") + " " + rs.getString("lname") + " ");
       }
@@ -777,9 +726,8 @@ public class jportfolioAdmin extends HttpServlet {
       students =
           dbInterface.callDB(
               "SELECT *, getUserName(username) as realname from students "
-                  + " WHERE portfolio = '"
-                  + portfolio
-                  + "' and gid = -99 ");
+                  + " WHERE portfolio = ? and gid = -99 ",
+              portfolio);
       while (students.next()) {
         userID = students.getString("username");
         realname = students.getString("realname");
@@ -802,9 +750,8 @@ public class jportfolioAdmin extends HttpServlet {
       students =
           dbInterface.callDB(
               "SELECT *, getUserName(username) as realname from students "
-                  + " WHERE portfolio = '"
-                  + portfolio
-                  + "' and gid > -99 ");
+                  + " WHERE portfolio = ? and gid > -99 ",
+              portfolio);
       while (students.next()) {
         userID = students.getString("username");
         realname = students.getString("realname");
@@ -833,7 +780,7 @@ public class jportfolioAdmin extends HttpServlet {
     sbuf.append(jlib.topBox("Assign Portfolio Roles"));
 
     /* Print out a listing of roles */
-    ResultSet rs = dbInterface.callDB("SELECT * from roles " + " ORDER by id ASC");
+    ResultSet rs = dbInterface.callDB("SELECT * from roles  ORDER by id ASC");
     sbuf.append("<ul>\n");
     try {
       while (rs.next()) {
@@ -847,14 +794,10 @@ public class jportfolioAdmin extends HttpServlet {
     /* We get a listing of users and roles */
     rs =
         dbInterface.callDB(
-            "SELECT r.id as id, r.name as name, "
-                + " u.username as username, u.fname ||' '|| "
-                + "u.lname as realname from roles r, users u, "
-                + " students s WHERE r.id = s.role and "
-                + " s.portfolio = '"
-                + thisUser.getPortfolio()
-                + "' and "
-                + " u.username = s.username");
+            "SELECT r.id as id, r.name as name,  u.username as username, u.fname ||' '|| "
+                + "u.lname as realname from roles r, users u,  students s WHERE r.id = s.role and "
+                + " s.portfolio = ? and  u.username = s.username",
+            thisUser.getPortfolio());
 
     sbuf.append(
         "<form method=\"POST\" name=\"assign\" "
@@ -896,15 +839,10 @@ public class jportfolioAdmin extends HttpServlet {
       try {
         if (!userID.equalsIgnoreCase("mode")) {
           jlib.updateDB(
-              "UPDATE students SET role = '"
-                  + roleID
-                  + "' "
-                  + "WHERE username = '"
-                  + userID
-                  + "' and "
-                  + "portfolio = '"
-                  + thisUser.getPortfolio()
-                  + "'");
+              "UPDATE students SET role = ?::int WHERE username = ? and portfolio = ?",
+              roleID,
+              userID,
+              thisUser.getPortfolio());
           plogger.report("Updating user: " + userID + " role: " + roleID);
         }
       } catch (Exception ex) {
@@ -926,14 +864,10 @@ public class jportfolioAdmin extends HttpServlet {
       try {
         if (!userID.equalsIgnoreCase("mode") && !gID.equals("")) {
           jlib.updateDB(
-              "UPDATE students SET gid = '"
-                  + gID
-                  + "' "
-                  + "WHERE username = '"
-                  + userID
-                  + "' and portfolio = '"
-                  + portfolio
-                  + "'");
+              "UPDATE students SET gid = ?::int WHERE username = ? and portfolio = ?",
+              gID,
+              userID,
+              portfolio);
         }
       } catch (Exception ex) {
         System.err.println(ex);
@@ -992,10 +926,7 @@ public class jportfolioAdmin extends HttpServlet {
     try {
       rs =
           dbInterface.callDB(
-              "SELECT * from motd "
-                  + " WHERE portfolio = '"
-                  + portfolio
-                  + "' ORDER by issue DESC LIMIT 1");
+              "SELECT * from motd  WHERE portfolio = ? ORDER by issue DESC LIMIT 1", portfolio);
       if (rs.next()) motd = rs.getString("body");
     } catch (Exception ex) {
       System.err.println(ex);

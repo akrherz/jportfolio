@@ -23,7 +23,6 @@ package org.collaborium.portfolio.forecast;
 
 import java.io.*;
 import java.sql.*;
-import java.util.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import org.collaborium.portfolio.*;
@@ -360,12 +359,12 @@ public class forecast extends HttpServlet {
             "Invalid date format for sqlDate: " + sqlDate + ". Expected yyyy-MM-dd.", e);
       }
       ResultSet rs =
-          dbInterface.callDBWithParameters(
-              "SELECT getUserName(userid) as rname, "
-                  + " * from forecasts WHERE portfolio = ? "
-                  + " and day = ? and "
-                  + " CURRENT_TIMESTAMP::date >= ? ",
-              Arrays.asList(thisUser.getPortfolio(), sqlDateObj, sqlDateObj));
+          dbInterface.callDB(
+              "SELECT getUserName(userid) as rname,  * from forecasts WHERE portfolio = ? "
+                  + " and day = ? and  CURRENT_TIMESTAMP::date >= ? ",
+              thisUser.getPortfolio(),
+              sqlDateObj,
+              sqlDateObj);
       while (rs.next()) {
         sbuf.append(
             "<TR>\n"
@@ -593,16 +592,14 @@ public class forecast extends HttpServlet {
 
     try {
       ResultSet rs =
-          dbInterface.callDBWithParameters(
-              "SELECT day from forecast_days "
-                  + " WHERE portfolio = ? "
+          dbInterface.callDB(
+              "SELECT day from forecast_days  WHERE portfolio = ? "
                   + " and day = 'TODAY'::date + '1 day'::interval ",
-              Arrays.asList(thisUser.getPortfolio()));
+              thisUser.getPortfolio());
       if (rs.next()) {
         ResultSet rs2 =
-            dbInterface.callDBWithParameters(
-                "SELECT fxtime from portfolios WHERE portfolio = ?",
-                Arrays.asList(thisUser.getPortfolio()));
+            dbInterface.callDB(
+                "SELECT fxtime from portfolios WHERE portfolio = ?", thisUser.getPortfolio());
         if (rs2.next()) {
           int fxtime = rs2.getInt("fxtime");
           // Get current hour in America/Chicago
@@ -675,30 +672,29 @@ public class forecast extends HttpServlet {
     }
 
     try {
-      jlib.updateDBWithParameters(
+      jlib.updateDBOrThrow(
           "DELETE from forecasts WHERE userID = ? and portfolio = ? and day = ?::date ",
-          Arrays.asList(thisUser.getUserID(), thisUser.getPortfolio(), sqlDate));
-      jlib.updateDBWithParameters(
-          "INSERT into forecasts "
-              + "(userID, portfolio, day, local_high, "
-              + " local_low, local_prec, local_snow, "
-              + " float_high, float_low, float_prec, "
+          thisUser.getUserID(),
+          thisUser.getPortfolio(),
+          sqlDate);
+      jlib.updateDBOrThrow(
+          "INSERT into forecasts (userID, portfolio, day, local_high, "
+              + " local_low, local_prec, local_snow,  float_high, float_low, float_prec, "
               + " float_snow, confidence, discussion ) "
               + "VALUES (?, ?, ?::date, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-          Arrays.asList(
-              thisUser.getUserID(),
-              thisUser.getPortfolio(),
-              sqlDate,
-              Int_local_high,
-              Int_local_low,
-              local_prec,
-              local_snow,
-              Int_float_high,
-              Int_float_low,
-              float_prec,
-              float_snow,
-              confidence,
-              discussion));
+          thisUser.getUserID(),
+          thisUser.getPortfolio(),
+          sqlDate,
+          Int_local_high,
+          Int_local_low,
+          local_prec,
+          local_snow,
+          Int_float_high,
+          Int_float_low,
+          float_prec,
+          float_snow,
+          confidence,
+          discussion);
     } catch (Exception ex) {
       plogger.report("Problem Entering Forecast " + ex);
       throw new myException("Could Not Enter Forecast: " + ex.getMessage(), ex);
@@ -770,9 +766,8 @@ public class forecast extends HttpServlet {
     String thisVal = null;
     try {
       rs =
-          dbInterface.callDBWithParameters(
-              "SELECT * from forecast_days WHERE " + " portfolio = ? ",
-              Arrays.asList(thisUser.getPortfolio()));
+          dbInterface.callDB(
+              "SELECT * from forecast_days WHERE  portfolio = ? ", thisUser.getPortfolio());
       while (rs.next()) {
         thisVal = rs.getString("day");
         sbuf.append("<option value='" + thisVal + "' ");

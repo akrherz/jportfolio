@@ -53,9 +53,7 @@ public class jlib {
     ResultSet rs = null;
     String passwd2 = null;
     try {
-      rs =
-          dbInterface.callDB(
-              "SELECT passwd from portfolios WHERE portfolio = '" + portfolio + "' ");
+      rs = dbInterface.callDB("SELECT passwd from portfolios WHERE portfolio = ?", portfolio);
       rs.next();
       passwd2 = rs.getString("passwd");
       if (!passwd2.equals(passwd1)) {
@@ -68,18 +66,14 @@ public class jlib {
 
     try {
       updateDB(
-          "INSERT into students(username, portfolio) VALUES('"
-              + thisUser.getUserID()
-              + "', '"
-              + portfolio
-              + "')");
+          "INSERT into students(username, portfolio) VALUES(?, ?)",
+          thisUser.getUserID(),
+          portfolio);
       if (portfolio2 != null) {
         updateDB(
-            "INSERT into students(username, portfolio) VALUES('"
-                + thisUser.getUserID()
-                + "', '"
-                + portfolio2
-                + "')");
+            "INSERT into students(username, portfolio) VALUES(?, ?)",
+            thisUser.getUserID(),
+            portfolio2);
       }
     } catch (Exception ex) {
     }
@@ -167,12 +161,9 @@ public class jlib {
     try {
       rs =
           dbInterface.callDB(
-              "SELECT getUserName(s.username) as name, "
-                  + " s.username from students s, users u"
-                  + " WHERE s.portfolio = '"
-                  + thisUser.getPortfolio()
-                  + "' "
-                  + " and s.username = u.username ORDER by name");
+              "SELECT getUserName(s.username) as name,  s.username from students s, users u"
+                  + " WHERE s.portfolio = ? and s.username = u.username ORDER by name",
+              thisUser.getPortfolio());
       while (rs.next()) {
         sbuf.append(
             "<OPTION VALUE=\"" + rs.getString("username") + "\">" + rs.getString("name") + " \n");
@@ -488,8 +479,7 @@ public class jlib {
    */
   public static String getInstructor(String portfolio) {
     try {
-      ResultSet rs =
-          dbInterface.callDB("SELECT admin from admins WHERE portfolio = '" + portfolio + "' ");
+      ResultSet rs = dbInterface.callDB("SELECT admin from admins WHERE portfolio = ?", portfolio);
       rs.next();
       return rs.getString("admin");
     } catch (Exception ex) {
@@ -510,12 +500,7 @@ public class jlib {
     try {
       ResultSet rs =
           dbInterface.callDB(
-              "SELECT * from students "
-                  + " WHERE username = '"
-                  + username
-                  + "' and portfolio = '"
-                  + portfolio
-                  + "' ");
+              "SELECT * from students  WHERE username = ? and portfolio = ?", username, portfolio);
 
       if (rs.next()) return true;
       else return false;
@@ -538,7 +523,7 @@ public class jlib {
   public static boolean isUser(String username) {
     if (username == null || username == "") return false;
     try {
-      ResultSet rs = dbInterface.callDB("SELECT * from users WHERE username = '" + username + "' ");
+      ResultSet rs = dbInterface.callDB("SELECT * from users WHERE username = ?", username);
 
       if (rs.next()) return true;
       else return false;
@@ -633,10 +618,8 @@ public class jlib {
     try {
       ResultSet rs =
           dbInterface.callDB(
-              "SELECT login from sessions WHERE username "
-                  + " = '"
-                  + username
-                  + "' ORDER by login DESC limit 1");
+              "SELECT login from sessions WHERE username = ? ORDER by login DESC limit 1",
+              username);
       if (rs.next()) {
         lastTime = rs.getTimestamp("login");
       }
@@ -750,7 +733,7 @@ public class jlib {
     ResultSet rs = null;
 
     try {
-      rs = dbInterface.callDB("SELECT getUserName('" + userID + "') as name");
+      rs = dbInterface.callDB("SELECT getUserName(?) as name", userID);
       rs.next();
       name = rs.getString("name");
     } catch (Exception ex) {
@@ -771,7 +754,7 @@ public class jlib {
     String gID = "-99";
     ResultSet rs = null;
     try {
-      rs = dbInterface.callDB("SELECT getUserGID('" + portfolio + "', '" + username + "') as gid");
+      rs = dbInterface.callDB("SELECT getUserGID(?, ?) as gid", portfolio, username);
       if (rs.next()) {
         gID = rs.getString("gid");
       }
@@ -815,12 +798,9 @@ public class jlib {
     try {
       ResultSet rs =
           dbInterface.callDB(
-              "SELECT admin as admin1 from admins "
-                  + " WHERE portfolio = '"
-                  + portfolio
-                  + "' and admin = '"
-                  + user
-                  + "' ");
+              "SELECT admin as admin1 from admins  WHERE portfolio = ? and admin = ?",
+              portfolio,
+              user);
       if (rs.next()) return true;
       else return false;
     } catch (Exception ex) {
@@ -837,11 +817,9 @@ public class jlib {
     try {
       rs =
           dbInterface.callDB(
-              "SELECT quiznum, qname, attempts from quizes"
-                  + " WHERE portfolio = '"
-                  + thisUser.getPortfolio()
-                  + "' "
-                  + (" and startdate < CURRENT_TIMESTAMP and " + "stopdate > CURRENT_TIMESTAMP "));
+              "SELECT quiznum, qname, attempts from quizes WHERE portfolio = ?"
+                  + (" and startdate < CURRENT_TIMESTAMP and stopdate > CURRENT_TIMESTAMP "),
+              thisUser.getPortfolio());
       if (rs.next()) {
         returnVal = true;
       }
@@ -852,16 +830,13 @@ public class jlib {
     return returnVal;
   } // End of haveQuizToTake
 
-  public static void updateDB(String querry) {
+  public static void updateDB(String query, Object... params) {
+    dbInterface.updateDB(query, params);
+  } // End of updateDB()
 
-    dbInterface.updateDB(querry);
-  } // End of callDB()
-
-  public static void updateDBWithParameters(String querry, java.util.List<Object> params)
-      throws java.sql.SQLException {
-
-    dbInterface.updateDBWithParameters(querry, params);
-  } // End of updateDBWithParameters()
+  public static void updateDBOrThrow(String query, Object... params) throws java.sql.SQLException {
+    dbInterface.updateDBOrThrow(query, params);
+  } // End of updateDBOrThrow()
 
   public static String selectPortfolios() {
     return selectPortfolios("HI EverYone");
@@ -881,12 +856,9 @@ public class jlib {
     try {
       ResultSet rs =
           dbInterface.callDB(
-              "SELECT * from portfolios "
-                  + " WHERE portfolio NOT IN (SELECT portfolio "
-                  + "from students WHERE username = "
-                  + " '"
-                  + userID
-                  + "') and active");
+              "SELECT * from portfolios  WHERE portfolio NOT IN (SELECT portfolio "
+                  + "from students WHERE username = ?) and active",
+              userID);
 
       while (rs.next()) {
         myBuffer.append(
@@ -901,12 +873,9 @@ public class jlib {
     try {
       ResultSet rs =
           dbInterface.callDB(
-              "SELECT * from portfolios "
-                  + " WHERE portfolio NOT IN (SELECT portfolio "
-                  + "from students WHERE username = "
-                  + " '"
-                  + userID
-                  + "') and not active");
+              "SELECT * from portfolios  WHERE portfolio NOT IN (SELECT portfolio "
+                  + "from students WHERE username = ?) and not active",
+              userID);
 
       while (rs.next()) {
         myBuffer.append(
@@ -951,12 +920,9 @@ public class jlib {
           dbInterface.callDB(
               "SELECT getUserName(username) as realname, "
                   + " getEmail(username) as email, username from students "
-                  + " WHERE portfolio = '"
-                  + thisUser.getPortfolio()
-                  + "' and "
-                  + " gid = '"
-                  + thisUser.getGroupID()
-                  + "' ");
+                  + " WHERE portfolio = ? and gid = ?::numeric",
+              thisUser.getPortfolio(),
+              thisUser.getGroupID());
       while (rs.next()) {
         sbuf.append(
             "<TR><TD><a href=\"/jportfolio/users/"
@@ -990,9 +956,8 @@ public class jlib {
           dbInterface.callDB(
               "SELECT getUserName(username) as realname, "
                   + " getEmail(username) as email, username from students "
-                  + " WHERE portfolio = '"
-                  + thisUser.getPortfolio()
-                  + "' ");
+                  + " WHERE portfolio = ?",
+              thisUser.getPortfolio());
       while (rs.next()) {
         sbuf.append(
             "<TR><TD><a "
@@ -1055,16 +1020,17 @@ public class jlib {
    * @param value for the column
    */
   public static void userUpdate(portfolioUser thisUser, String column, String value) {
+    if (column == null
+        || !(column.equals("fname")
+            || column.equals("lname")
+            || column.equals("color")
+            || column.equals("email"))) {
+      System.err.println("Invalid user column");
+      return;
+    }
     try {
       updateDB(
-          "UPDATE users SET "
-              + column
-              + " = '"
-              + value
-              + "' "
-              + " WHERE username = '"
-              + thisUser.getUserID()
-              + "' ");
+          "UPDATE users SET " + column + " = ? WHERE username = ?", value, thisUser.getUserID());
 
     } catch (Exception ex) {
       System.err.println("Problem updating user Database");
@@ -1080,16 +1046,15 @@ public class jlib {
    * @param value for the column
    */
   public static void portfolioUpdate(portfolioUser thisUser, String column, String value) {
+    if (!"fxtime".equals(column)) {
+      System.err.println("Invalid portfolio column");
+      return;
+    }
     try {
       updateDB(
-          "UPDATE portfolios SET "
-              + column
-              + " = '"
-              + value
-              + "' "
-              + " WHERE portfolio = '"
-              + thisUser.getPortfolio()
-              + "' ");
+          "UPDATE portfolios SET " + column + " = ?::int WHERE portfolio = ?",
+          value,
+          thisUser.getPortfolio());
 
     } catch (Exception ex) {
       System.err.println("Problem updating portfolio Database");
@@ -1105,18 +1070,16 @@ public class jlib {
    * @param value for the column
    */
   public static void studentUpdate(String portfolio, String userID, String column, String value) {
+    if (!"nofx".equals(column)) {
+      System.err.println("Invalid student column");
+      return;
+    }
     try {
       updateDB(
-          "UPDATE students SET "
-              + column
-              + " = '"
-              + value
-              + "' "
-              + " WHERE username = '"
-              + userID
-              + "' and portfolio = '"
-              + portfolio
-              + "' ");
+          "UPDATE students SET " + column + " = ? WHERE username = ? and portfolio = ?",
+          value,
+          userID,
+          portfolio);
 
     } catch (Exception ex) {
       System.err.println("Problem updating user Database");
@@ -1131,7 +1094,7 @@ public class jlib {
    */
   public static void removeNotify(String idnum) {
     try {
-      updateDB("DELETE from notify WHERE idnum = " + idnum + " ");
+      updateDB("DELETE from notify WHERE idnum = ?::numeric", idnum);
 
     } catch (Exception ex) {
       System.err.println("Hello, can't delete notify from DB\n");
@@ -1140,8 +1103,8 @@ public class jlib {
   } // End of removeNotify
 
   /** Proxy to the dbInterface.callDB method */
-  public static ResultSet callDB(String query) {
-    return dbInterface.callDB(query);
+  public static ResultSet callDB(String query, Object... params) {
+    return dbInterface.callDB(query, params);
   }
 
   /**
@@ -1168,24 +1131,17 @@ public class jlib {
       ResultSet portHome =
           dbInterface.callDB(
               "SELECT porthome from portfolios "
-                  + " WHERE portfolio = '"
-                  + thisUser.getPortfolio()
-                  + "' and "
-                  + " porthome != '/jportfolio/servlet/' ");
+                  + " WHERE portfolio = ? and porthome != '/jportfolio/servlet/'",
+              thisUser.getPortfolio());
       if (portHome.next()) {
         notifyBaseURL = "/jportfolio/jsp/user/myNotify.jsp";
       }
       rs =
           dbInterface.callDB(
-              "select to_char(entered, 'Mon dd') as d, "
-                  + " message, program, idnum from notify "
-                  + " WHERE username = '"
-                  + thisUser.getUserID()
-                  + "' and "
-                  + " portfolio = '"
-                  + thisUser.getPortfolio()
-                  + "' "
-                  + " ORDER by entered DESC");
+              "select to_char(entered, 'Mon dd') as d,  message, program, idnum from notify "
+                  + " WHERE username = ? and portfolio = ? ORDER by entered DESC",
+              thisUser.getUserID(),
+              thisUser.getPortfolio());
 
       while (rs.next()) {
         message = rs.getString("message");
@@ -1249,25 +1205,18 @@ public class jlib {
       ResultSet portHome =
           dbInterface.callDB(
               "SELECT porthome from portfolios "
-                  + " WHERE portfolio = '"
-                  + thisUser.getPortfolio()
-                  + "' and "
-                  + " porthome != '/jportfolio/servlet/' ");
+                  + " WHERE portfolio = ? and porthome != '/jportfolio/servlet/'",
+              thisUser.getPortfolio());
       if (portHome.next()) {
         notifyBaseURL = "/jportfolio/jsp/user/myNotify.jsp";
       }
 
       rs =
           dbInterface.callDB(
-              "select to_char(entered, 'Mon dd') as d, "
-                  + " message, program, idnum from notify "
-                  + " WHERE username = '"
-                  + thisUser.getUserID()
-                  + "' and "
-                  + " portfolio = '"
-                  + thisUser.getPortfolio()
-                  + "' "
-                  + " ORDER by entered DESC LIMIT 5");
+              "select to_char(entered, 'Mon dd') as d,  message, program, idnum from notify "
+                  + " WHERE username = ? and portfolio = ? ORDER by entered DESC LIMIT 5",
+              thisUser.getUserID(),
+              thisUser.getPortfolio());
 
       if (rs.next()) {
         sbuf.append("<TABLE><tr><th>Date:</th><th>Message:</th><td></td></tr>\n");
@@ -1329,9 +1278,8 @@ public class jlib {
           dbInterface.callDB(
               "select name, blockid, unitid, "
                   + " blockid || '.' || unitid || ' ' || title as uname from units "
-                  + " WHERE portfolio = '"
-                  + thisUser.getPortfolio()
-                  + "' ORDER by blockid,unitid ASC");
+                  + " WHERE portfolio = ? ORDER by blockid,unitid ASC",
+              thisUser.getPortfolio());
 
       while (rs.next()) {
         sbuf.append(
@@ -1356,11 +1304,9 @@ public class jlib {
     try {
       ResultSet rs =
           dbInterface.callDB(
-              "SELECT id, body, to_char(issue, 'DD Month YYYY "
-                  + "HH12:MI AM') as issued, issue "
-                  + " from motd WHERE portfolio = '"
-                  + portfolio
-                  + "'  ORDER by issue DESC LIMIT 1");
+              "SELECT id, body, to_char(issue, 'DD Month YYYY HH12:MI AM') as issued, issue "
+                  + " from motd WHERE portfolio = ? ORDER by issue DESC LIMIT 1",
+              portfolio);
       rs.next();
       sbuf.append("<P>Posted on: " + rs.getString("issued") + "<BR />\n");
       String body = rs.getString("body");
@@ -1422,8 +1368,7 @@ public class jlib {
   public static Boolean userIDExists(String userID) {
     if (userID == null) return Boolean.TRUE;
     try {
-      ResultSet rs =
-          dbInterface.callDB("SELECT username from users WHERE username = '" + userID + "' ");
+      ResultSet rs = dbInterface.callDB("SELECT username from users WHERE username = ?", userID);
       if (rs.next()) return Boolean.TRUE;
       else return Boolean.FALSE;
     } catch (Exception ex) {
@@ -1461,12 +1406,10 @@ public class jlib {
     try {
       ResultSet rs =
           dbInterface.callDB(
-              "select s.portfolio, p.name as pname"
-                  + " from students s, portfolios p "
-                  + " WHERE s.username = '"
-                  + userID
-                  + "' "
-                  + " and p.portfolio = s.portfolio and p.active ORDER by pname ASC");
+              "select s.portfolio, p.name as pname from students s, portfolios p "
+                  + " WHERE s.username = ?"
+                  + " and p.portfolio = s.portfolio and p.active ORDER by pname ASC",
+              userID);
       while (rs.next()) {
         sbuf.append(
             "<option value='"
@@ -1483,12 +1426,10 @@ public class jlib {
     try {
       ResultSet rs =
           dbInterface.callDB(
-              "select s.portfolio, p.name as pname"
-                  + " from students s, portfolios p "
-                  + " WHERE s.username = '"
-                  + userID
-                  + "' "
-                  + (" and p.portfolio = s.portfolio and not " + "p.active ORDER by pname ASC"));
+              "select s.portfolio, p.name as pname from students s, portfolios p "
+                  + " WHERE s.username = ?"
+                  + (" and p.portfolio = s.portfolio and not p.active ORDER by pname ASC"),
+              userID);
       while (rs.next()) {
         sbuf.append(
             "<option value='"

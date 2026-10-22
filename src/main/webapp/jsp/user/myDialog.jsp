@@ -12,8 +12,7 @@
 <%
 portfolioUser thisUser = (portfolioUser)session.getAttribute("User");
 
-ResultSet myResultSet = pgsql.doSQL("Select * from dialog "
-	+" where username ='"+ thisUser.getUserID() +"' and portfolio = '"+ thisUser.getPortfolio() +"' ORDER by date");
+ResultSet myResultSet = jlib.callDB("Select * from dialog  where username = ? and portfolio = ? ORDER by date", thisUser.getUserID(), thisUser.getPortfolio());
 %>
 
 

@@ -95,13 +95,9 @@ public class forecastDay {
     try {
       ResultSet rs =
           dbInterface.callDB(
-              "SELECT * from forecast_days "
-                  + " WHERE portfolio = '"
-                  + portfolio
-                  + "' and "
-                  + " day = '"
-                  + sqlDate
-                  + "' ");
+              "SELECT * from forecast_days WHERE portfolio = ? and day = ?::date",
+              portfolio,
+              sqlDate);
       if (rs.next()) {
         this.floaterSite = rs.getString("floater_city");
         this.floaterSiteID = rs.getString("floater_abv");
@@ -128,13 +124,9 @@ public class forecastDay {
     try {
       ResultSet rs =
           dbInterface.callDB(
-              "SELECT * from forecast_days "
-                  + " WHERE portfolio = '"
-                  + portfolio
-                  + "' and "
-                  + " day = '"
-                  + sqlDate
-                  + "' ");
+              "SELECT * from forecast_days WHERE portfolio = ? and day = ?::date",
+              portfolio,
+              sqlDate);
       if (rs.next()) {
         this.floaterSite = rs.getString("floater_city");
         this.floaterSiteID = rs.getString("floater_abv");
@@ -154,13 +146,9 @@ public class forecastDay {
 
       ResultSet rs =
           dbInterface.callDB(
-              "SELECT * from forecast_answers "
-                  + " WHERE portfolio = '"
-                  + portfolio
-                  + "' "
-                  + " and day = '"
-                  + sqlDate
-                  + "' ");
+              "SELECT * from forecast_answers WHERE portfolio = ? and day = ?::date",
+              portfolio,
+              sqlDate);
       if (rs.next()) {
         this.VfloaterHighTemp = rs.getInt("float_high");
         this.VfloaterLowTemp = rs.getInt("float_low");
@@ -197,13 +185,9 @@ public class forecastDay {
 
       ResultSet rs =
           dbInterface.callDB(
-              "SELECT * from forecast_climo "
-                  + " WHERE portfolio = '"
-                  + portfolio
-                  + "' "
-                  + " and day = '"
-                  + sqlDate
-                  + "' ");
+              "SELECT * from forecast_climo WHERE portfolio = ? and day = ?::date",
+              portfolio,
+              sqlDate);
       if (rs.next()) {
         this.CfloaterHighTemp = rs.getInt("float_high");
         this.CfloaterLowTemp = rs.getInt("float_low");
@@ -300,9 +284,11 @@ public class forecastDay {
 
     try {
       ResultSet rs =
-          dbInterface.callDBWithParameters(
+          dbInterface.callDB(
               "SELECT * from forecasts WHERE userid = ? and portfolio = ? and day = ?::date",
-              java.util.Arrays.asList(userID, portfolio, sqlDate));
+              userID,
+              portfolio,
+              sqlDate);
       if (rs.next()) {
         this.floaterHighTemp = rs.getInt("float_high");
         this.floaterLowTemp = rs.getInt("float_low");

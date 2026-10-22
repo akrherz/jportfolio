@@ -22,6 +22,8 @@ package org.collaborium.portfolio.jdot;
  */
 import java.math.*;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 import org.collaborium.portfolio.*;
 import org.collaborium.util.*;
 
@@ -119,65 +121,30 @@ public class jdot {
     if (skipNum == null) skipNum = "0";
     int skipMessenges = Integer.parseInt(skipNum) * messageBlock;
 
-    String mySQL = null;
-    String s1 = "";
+    String security = thisUser.getDialogSecurity();
+    if (security.equalsIgnoreCase("group")) security = "group";
+    else if (security.equalsIgnoreCase("private")) security = "private";
+    String mySQL =
+        "select count(name) as result from dialog where idnum > 10000 "
+            + "and idnum < 200000 and portfolio = ? and security = ?";
+    List<Object> countParams = new ArrayList<>();
+    countParams.add(thisUser.getPortfolio());
+    countParams.add(security);
+    if (security.equalsIgnoreCase("group") && !thisUser.isAdmin()) {
+      mySQL += " and gid = ?::numeric";
+      countParams.add(thisUser.getGroupID());
+    } else if (security.equalsIgnoreCase("private") && !thisUser.isAdmin()) {
+      mySQL += " and (username = ? or touser = ?)";
+      countParams.add(thisUser.getUserID());
+      countParams.add(thisUser.getUserID());
+    }
     if (!threadType.equalsIgnoreCase("all")) {
-      s1 = " and type = '" + threadType + "' ";
+      mySQL += " and type = ?";
+      countParams.add(threadType);
     }
 
-    if (thisUser.getDialogSecurity().equalsIgnoreCase("group")) {
-      if (thisUser.isAdmin())
-        mySQL =
-            "select count(name) as result from dialog where idnum > 10000 "
-                + " and idnum < 200000 and portfolio = '"
-                + thisUser.getPortfolio()
-                + "' and security = 'group' "
-                + s1;
-      else
-        mySQL =
-            "select count(name) as result from dialog where idnum > 10000 "
-                + " and idnum < 200000 and portfolio = '"
-                + thisUser.getPortfolio()
-                + "' and security = 'group' "
-                + " and gid = '"
-                + thisUser.getGroupID()
-                + "' "
-                + s1;
-    } // End of group switch
-    else if (thisUser.getDialogSecurity().equalsIgnoreCase("private")) {
-      if (thisUser.isAdmin())
-        mySQL =
-            "select count(name) as result from dialog where idnum > 10000 "
-                + " and idnum < 200000 and portfolio = '"
-                + thisUser.getPortfolio()
-                + "' and security = 'private' "
-                + s1;
-      else
-        mySQL =
-            "select count(name) as result from dialog where idnum > 10000 "
-                + " and idnum < 200000 and portfolio = '"
-                + thisUser.getPortfolio()
-                + "' and security = 'private' "
-                + " and (username = '"
-                + thisUser.getUserID()
-                + "' or touser = '"
-                + thisUser.getUserID()
-                + "' ) "
-                + s1;
-    } // End of private switch
-    else {
-      mySQL =
-          "select count(name) as result from dialog where idnum > 10000 "
-              + " and idnum < 200000 and portfolio = '"
-              + thisUser.getPortfolio()
-              + "' and security = '"
-              + thisUser.getDialogSecurity()
-              + "' "
-              + s1;
-    } // End of everything else
-
     // Query the db to get the number of messages in this thread
-    ResultSet rs3 = dbInterface.callDB(mySQL);
+    ResultSet rs3 = dbInterface.callDB(mySQL, countParams.toArray());
 
     if (rs3.next()) {
       int numMessages2 = Integer.parseInt(rs3.getString("result"));
@@ -196,84 +163,30 @@ public class jdot {
     } // End of if
     rs3.close();
 
-    String mySQL2 = null;
-    if (thisUser.getDialogSecurity().equalsIgnoreCase("group"))
-      if (thisUser.isAdmin())
-        mySQL2 =
-            "select *, getRoleName(username, portfolio) as role from "
-                + "dialog where idnum > 10000 "
-                + " and idnum < 200000 and portfolio = '"
-                + thisUser.getPortfolio()
-                + "' and security = 'group' "
-                + s1
-                + " ORDER BY date DESC LIMIT "
-                + messageBlock
-                + " OFFSET "
-                + skipMessenges;
-      else
-        mySQL2 =
-            "select *, getRoleName(username, portfolio) as role from "
-                + "dialog where idnum > 10000 "
-                + " and idnum < 200000 and portfolio = '"
-                + thisUser.getPortfolio()
-                + "' and security = 'group' "
-                + s1
-                + " and gid = '"
-                + thisUser.getGroupID()
-                + "' "
-                + " ORDER BY date DESC LIMIT "
-                + messageBlock
-                + " OFFSET "
-                + skipMessenges;
-    else if (thisUser.getDialogSecurity().equalsIgnoreCase("private"))
-      if (thisUser.isAdmin())
-        mySQL2 =
-            "select *, getRoleName(username, portfolio) as role from "
-                + "dialog where idnum > 10000 "
-                + " and idnum < 200000 and portfolio = '"
-                + thisUser.getPortfolio()
-                + "' and security = 'private' "
-                + s1
-                + " ORDER BY date DESC LIMIT "
-                + messageBlock
-                + " OFFSET "
-                + skipMessenges;
-      else
-        mySQL2 =
-            "select *, getRoleName(username, portfolio) as role from "
-                + "dialog where idnum > 10000 "
-                + " and idnum < 200000 and portfolio = '"
-                + thisUser.getPortfolio()
-                + "' and security = 'private' "
-                + s1
-                + " and (username = '"
-                + thisUser.getUserID()
-                + "' or "
-                + " touser = '"
-                + thisUser.getUserID()
-                + "') "
-                + " ORDER BY date DESC LIMIT "
-                + messageBlock
-                + " OFFSET "
-                + skipMessenges;
-    else
-      mySQL2 =
-          "select *, getRoleName(username, portfolio) as role from "
-              + "dialog where idnum > 10000 "
-              + " and idnum < 200000 and portfolio = '"
-              + thisUser.getPortfolio()
-              + "' "
-              + " and security = '"
-              + thisUser.getDialogSecurity()
-              + "' "
-              + s1
-              + " ORDER BY date DESC LIMIT "
-              + messageBlock
-              + " OFFSET "
-              + skipMessenges;
+    String mySQL2 =
+        "select *, getRoleName(username, portfolio) as role from dialog "
+            + "where idnum > 10000 and idnum < 200000 and portfolio = ? and security = ?";
+    List<Object> messageParams = new ArrayList<>();
+    messageParams.add(thisUser.getPortfolio());
+    messageParams.add(security);
+    if (security.equalsIgnoreCase("group") && !thisUser.isAdmin()) {
+      mySQL2 += " and gid = ?::numeric";
+      messageParams.add(thisUser.getGroupID());
+    } else if (security.equalsIgnoreCase("private") && !thisUser.isAdmin()) {
+      mySQL2 += " and (username = ? or touser = ?)";
+      messageParams.add(thisUser.getUserID());
+      messageParams.add(thisUser.getUserID());
+    }
+    if (!threadType.equalsIgnoreCase("all")) {
+      mySQL2 += " and type = ?";
+      messageParams.add(threadType);
+    }
+    mySQL2 += " ORDER BY date DESC LIMIT ? OFFSET ?";
+    messageParams.add(messageBlock);
+    messageParams.add(skipMessenges);
 
     // Query the db
-    ResultSet qrs = dbInterface.callDB(mySQL2);
+    ResultSet qrs = dbInterface.callDB(mySQL2, messageParams.toArray());
     if (qrs != null) sbuf.append(displayMessages(thisUser, qrs, thisPageURL));
 
     return sbuf.toString();
@@ -596,7 +509,9 @@ public class jdot {
     String SQL = null;
     String SQL2 = null;
     String threadCount = " idnum > 10000 and idnum < 20000 ";
-    String threadSpec = "idnum = " + threadID;
+    String threadSpec = "idnum = ?::numeric";
+    Object[] sqlParams = null;
+    Object[] sql2Params = null;
 
     // We need to build the SQL strings, one is for the count and the other is
     // for the actual query.
@@ -606,108 +521,64 @@ public class jdot {
         SQL =
             "SELECT * from dialog WHERE "
                 + threadSpec
-                + " and "
-                + " portfolio = '"
-                + thisUser.getPortfolio()
-                + "' "
-                + " and security = 'group' "
-                + " order by idnum ASC";
+                + " and portfolio = ? and security = 'group' order by idnum ASC";
         SQL2 =
             "SELECT threadid, subject from dialog WHERE "
                 + threadCount
-                + " "
-                + " and portfolio = '"
-                + thisUser.getPortfolio()
-                + "' and security = 'group' ";
+                + " and portfolio = ? and security = 'group'";
+        sqlParams = new Object[] {threadID, thisUser.getPortfolio()};
+        sql2Params = new Object[] {thisUser.getPortfolio()};
       } else {
         SQL =
             "SELECT * from dialog WHERE "
                 + threadSpec
-                + " "
-                + " and portfolio = '"
-                + thisUser.getPortfolio()
-                + "' "
-                + " and gID = '"
-                + thisUser.getGroupID()
-                + "' "
-                + " and security = 'group' "
-                + " order by idnum ASC";
+                + " and portfolio = ? and gID = ?::numeric and security = 'group' order by idnum ASC";
         SQL2 =
             "SELECT threadid, subject from dialog WHERE "
                 + threadCount
-                + " "
-                + " and portfolio = '"
-                + thisUser.getPortfolio()
-                + "' "
-                + " and gID = '"
-                + thisUser.getGroupID()
-                + "' and security = 'group' ";
+                + " and portfolio = ? and gID = ?::numeric and security = 'group'";
+        sqlParams = new Object[] {threadID, thisUser.getPortfolio(), thisUser.getGroupID()};
+        sql2Params = new Object[] {thisUser.getPortfolio(), thisUser.getGroupID()};
       }
     } else if (thisUser.getDialogSecurity().equalsIgnoreCase("private")) {
       if (thisUser.isAdmin()) {
         SQL =
             "SELECT * from dialog WHERE "
                 + threadSpec
-                + " and "
-                + " portfolio = '"
-                + thisUser.getPortfolio()
-                + "' "
-                + " and security = 'private' order by idnum "
-                + " ASC";
+                + " and portfolio = ? and security = 'private' order by idnum ASC";
         SQL2 =
             "SELECT threadid, subject from dialog WHERE "
-                + " "
                 + threadCount
-                + " and portfolio = '"
-                + thisUser.getPortfolio()
-                + "' "
-                + " and security = 'private' ";
+                + " and portfolio = ? and security = 'private'";
+        sqlParams = new Object[] {threadID, thisUser.getPortfolio()};
+        sql2Params = new Object[] {thisUser.getPortfolio()};
       } else {
         SQL =
             "SELECT * from dialog WHERE "
                 + threadSpec
-                + " and portfolio = '"
-                + thisUser.getPortfolio()
-                + "' "
-                + " and username = '"
-                + thisUser.getUserID()
-                + "' "
-                + " and security = 'private' order by idnum ASC";
+                + " and portfolio = ? and username = ? and security = 'private' order by idnum ASC";
         SQL2 =
             "SELECT threadid, subject from dialog WHERE "
                 + threadCount
-                + " and portfolio = '"
-                + thisUser.getPortfolio()
-                + "' "
-                + " and username = '"
-                + thisUser.getUserID()
-                + "' "
-                + " and security = 'private' ";
+                + " and portfolio = ? and username = ? and security = 'private'";
+        sqlParams = new Object[] {threadID, thisUser.getPortfolio(), thisUser.getUserID()};
+        sql2Params = new Object[] {thisUser.getPortfolio(), thisUser.getUserID()};
       }
     } else {
       SQL =
           "SELECT * from dialog WHERE "
               + threadSpec
-              + " and "
-              + " portfolio = '"
-              + thisUser.getPortfolio()
-              + "' "
-              + " and security = '"
-              + thisUser.getDialogSecurity()
-              + "' order by idnum ASC";
+              + " and portfolio = ? and security = ? order by idnum ASC";
       SQL2 =
           "SELECT threadid, subject from dialog WHERE "
               + threadCount
-              + " and portfolio = '"
-              + thisUser.getPortfolio()
-              + "' "
-              + " and security = '"
-              + thisUser.getDialogSecurity()
-              + "' ";
+              + " and portfolio = ? and security = ?";
+      sqlParams = new Object[] {threadID, thisUser.getPortfolio(), thisUser.getDialogSecurity()};
+      sql2Params = new Object[] {thisUser.getPortfolio(), thisUser.getDialogSecurity()};
     }
 
     // Execute the count query
-    ResultSet rs3 = dbInterface.callDB(SQL2);
+    ResultSet rs3 = dbInterface.callDB(SQL2, sql2Params);
 
     sbuf.append(
         "<FORM METHOD=\"GET\" ACTION=\""
@@ -726,15 +597,9 @@ public class jdot {
     if (threadID != null) {
 
       // Lets make the query and figure out
-      threads = dbInterface.callDB(SQL);
+      threads = dbInterface.callDB(SQL, sqlParams);
 
-      String commonString =
-          "portfolio = '"
-              + thisUser.getPortfolio()
-              + "' "
-              + " and security = '"
-              + thisUser.getDialogSecurity()
-              + "' order by idnum";
+      String commonString = " and portfolio = ? and security = ? order by idnum";
 
       sbuf.append(
           "<p><a href=\"/jportfolio/jsp/user/threadCat.jsp?threadID="
@@ -758,13 +623,13 @@ public class jdot {
 
         threads2 =
             dbInterface.callDB(
-                "SELECT * from dialog WHERE idnum > "
-                    + startNum
-                    + " ::numeric"
-                    + " and idnum < ("
-                    + startNum
-                    + " +10000)::numeric and "
-                    + commonString);
+                "SELECT * from dialog WHERE idnum > ?::numeric "
+                    + "and idnum < (?::numeric + 10000)::numeric"
+                    + commonString,
+                startNum,
+                startNum,
+                thisUser.getPortfolio(),
+                thisUser.getDialogSecurity());
 
         sbuf.append("<ul class=\"dqv\">\n");
         while (threads2.next()) {
@@ -777,13 +642,13 @@ public class jdot {
 
           threads3 =
               dbInterface.callDB(
-                  "SELECT * from dialog WHERE idnum > "
-                      + startNum
-                      + "::numeric "
-                      + " and idnum < ("
-                      + startNum
-                      + "+10000)::numeric and "
-                      + commonString);
+                  "SELECT * from dialog WHERE idnum > ?::numeric "
+                      + "and idnum < (?::numeric + 10000)::numeric"
+                      + commonString,
+                  startNum,
+                  startNum,
+                  thisUser.getPortfolio(),
+                  thisUser.getDialogSecurity());
 
           sbuf.append("<ul class=\"dqv\">\n");
           while (threads3.next()) {
@@ -794,13 +659,13 @@ public class jdot {
 
             threads4 =
                 dbInterface.callDB(
-                    "SELECT * from dialog WHERE idnum > "
-                        + startNum
-                        + "::numeric "
-                        + " and idnum < ("
-                        + startNum
-                        + "+10000)::numeric and "
-                        + commonString);
+                    "SELECT * from dialog WHERE idnum > ?::numeric "
+                        + "and idnum < (?::numeric + 10000)::numeric"
+                        + commonString,
+                    startNum,
+                    startNum,
+                    thisUser.getPortfolio(),
+                    thisUser.getDialogSecurity());
 
             sbuf.append("<ul class=\"dqv\">\n");
             while (threads4.next()) {
@@ -811,13 +676,13 @@ public class jdot {
 
               threads5 =
                   dbInterface.callDB(
-                      "SELECT * from dialog WHERE idnum > "
-                          + startNum
-                          + "::numeric "
-                          + " and idnum < ("
-                          + startNum
-                          + "+10000)::numeric and "
-                          + commonString);
+                      "SELECT * from dialog WHERE idnum > ?::numeric "
+                          + "and idnum < (?::numeric + 10000)::numeric"
+                          + commonString,
+                      startNum,
+                      startNum,
+                      thisUser.getPortfolio(),
+                      thisUser.getDialogSecurity());
 
               sbuf.append("<ul class=\"dqv\">\n");
               while (threads5.next()) {
@@ -828,13 +693,13 @@ public class jdot {
 
                 threads6 =
                     dbInterface.callDB(
-                        "SELECT * from dialog WHERE idnum > "
-                            + startNum
-                            + "::numeric "
-                            + " and idnum < ("
-                            + startNum
-                            + "+10000)::numeric and "
-                            + commonString);
+                        "SELECT * from dialog WHERE idnum > ?::numeric "
+                            + "and idnum < (?::numeric + 10000)::numeric"
+                            + commonString,
+                        startNum,
+                        startNum,
+                        thisUser.getPortfolio(),
+                        thisUser.getDialogSecurity());
 
                 sbuf.append("<ul class=\"dqv\">\n");
                 while (threads6.next()) {
@@ -844,13 +709,13 @@ public class jdot {
                   startNum = STRidnum + "0000";
                   threads7 =
                       dbInterface.callDB(
-                          "SELECT * from dialog WHERE idnum > "
-                              + startNum
-                              + "::numeric "
-                              + " and idnum < ("
-                              + startNum
-                              + "+10000)::numeric and "
-                              + commonString);
+                          "SELECT * from dialog WHERE idnum > ?::numeric "
+                              + "and idnum < (?::numeric + 10000)::numeric"
+                              + commonString,
+                          startNum,
+                          startNum,
+                          thisUser.getPortfolio(),
+                          thisUser.getDialogSecurity());
                   sbuf.append("<ul class=\"dqv\">\n");
                   while (threads7.next()) {
                     STRidnum = threads7.getString("idnum");
@@ -1016,10 +881,8 @@ public class jdot {
     ResultSet portHome =
         dbInterface.callDB(
             "SELECT porthome from portfolios "
-                + " WHERE portfolio = '"
-                + myMessage.getPortfolio()
-                + "' and "
-                + " porthome != '/jportfolio/servlet/' ");
+                + " WHERE portfolio = ? and porthome != '/jportfolio/servlet/'",
+            myMessage.getPortfolio());
     if (portHome.next()) {
       notifyBaseURL = portHome.getString("porthome") + "/dialog/index.jsp";
     }
@@ -1027,8 +890,7 @@ public class jdot {
     if (myMessage.getThreadID().equalsIgnoreCase("new")) {
       ResultSet maxth =
           dbInterface.callDB(
-              "select MAX (idnum)+1 as result from dialog"
-                  + " WHERE idnum > 10000 and idnum < 20000");
+              "select MAX (idnum)+1 as result from dialog WHERE idnum > 10000 and idnum < 20000");
       maxth.next();
       newthreadid = maxth.getString("result");
       newSTRidnum = maxth.getString("result");
@@ -1043,32 +905,19 @@ public class jdot {
       if (myMessage.getSecurity().equalsIgnoreCase("group")) {
         ResultSet students =
             dbInterface.callDB(
-                "SELECT username from students WHERE portfolio = "
-                    + " '"
-                    + myMessage.getPortfolio()
-                    + "' and gid = "
-                    + myMessage.getGID()
-                    + " and "
-                    + " username != '"
-                    + myMessage.getAuthor()
-                    + "' ");
+                "SELECT username from students WHERE portfolio = ? and gid = ?::numeric "
+                    + "and username != ?",
+                myMessage.getPortfolio(),
+                myMessage.getGID(),
+                myMessage.getAuthor());
         while (students.next()) {
           String groupUserID = students.getString("username");
           jlib.updateDB(
-              "INSERT into notify(username, portfolio, program, message) "
-                  + " VALUES( '"
-                  + groupUserID
-                  + "', '"
-                  + myMessage.getPortfolio()
-                  + "', "
-                  + " '"
-                  + notifyBaseURL
-                  + "?dialogType=group&mode=r&idnum="
-                  + myMessage.getidnum()
-                  + "', "
-                  + " 'Group Discussion Topic Created: "
-                  + myMessage.getAuthorName()
-                  + " posted')");
+              "INSERT into notify(username, portfolio, program, message) VALUES(?, ?, ?, ?)",
+              groupUserID,
+              myMessage.getPortfolio(),
+              notifyBaseURL + "?dialogType=group&mode=r&idnum=" + myMessage.getidnum(),
+              "Group Discussion Topic Created: " + myMessage.getAuthorName() + " posted");
         }
       }
 
@@ -1080,17 +929,15 @@ public class jdot {
 
       ResultSet maxm =
           dbInterface.callDB(
-              "select MAX(idnum)+1 as result from dialog where idnum > "
-                  + " "
-                  + startNum
-                  + "::numeric and idnum < ("
-                  + startNum
-                  + "+10000)::numeric ");
+              "select MAX(idnum)+1 as result from dialog "
+                  + "where idnum > ?::numeric and idnum < (?::numeric + 10000)::numeric",
+              startNum,
+              startNum);
       maxm.next();
 
       ResultSet test2 =
           dbInterface.callDB(
-              "SELECT security from dialog " + " WHERE idnum = '" + myMessage.getThreadID() + "' ");
+              "SELECT security from dialog WHERE idnum = ?::numeric", myMessage.getThreadID());
       test2.next();
 
       newSTRidnum = maxm.getString("result");
@@ -1104,57 +951,33 @@ public class jdot {
       if (myMessage.getSecurity().equalsIgnoreCase("group")) {
         ResultSet students =
             dbInterface.callDB(
-                "SELECT username from students WHERE portfolio = "
-                    + " '"
-                    + myMessage.getPortfolio()
-                    + "' and gid = "
-                    + myMessage.getGID()
-                    + " and "
-                    + " username != '"
-                    + myMessage.getAuthor()
-                    + "' "
-                    + " and username != '"
-                    + myMessage.getReplyAuthor()
-                    + "' ");
+                "SELECT username from students WHERE portfolio = ? and gid = ?::numeric "
+                    + "and username != ? and username != ?",
+                myMessage.getPortfolio(),
+                myMessage.getGID(),
+                myMessage.getAuthor(),
+                myMessage.getReplyAuthor());
         while (students.next()) {
           String groupUserID = students.getString("username");
           jlib.updateDB(
-              "INSERT into notify(username, portfolio, program, message) "
-                  + " VALUES( '"
-                  + groupUserID
-                  + "', '"
-                  + myMessage.getPortfolio()
-                  + "', "
-                  + " '"
-                  + notifyBaseURL
-                  + "?dialogType=group&mode=r&idnum="
-                  + myMessage.getidnum()
-                  + "', "
-                  + " 'Group Discussion Updated: "
-                  + myMessage.getAuthorName()
-                  + " posted')");
+              "INSERT into notify(username, portfolio, program, message) VALUES(?, ?, ?, ?)",
+              groupUserID,
+              myMessage.getPortfolio(),
+              notifyBaseURL + "?dialogType=group&mode=r&idnum=" + myMessage.getidnum(),
+              "Group Discussion Updated: " + myMessage.getAuthorName() + " posted");
         }
       }
 
       jlib.updateDB(
-          "insert into notify values('"
-              + myMessage.getReplyAuthor()
-              + "', "
-              + " '"
-              + myMessage.getPortfolio()
-              + "',"
-              + " '"
-              + notifyBaseURL
+          "insert into notify values(?, ?, ?, ?)",
+          myMessage.getReplyAuthor(),
+          myMessage.getPortfolio(),
+          notifyBaseURL
               + "?mode=r&idnum="
               + myMessage.getidnum()
               + "&dialogType="
-              + myMessage.getSecurity()
-              + "', "
-              + " '"
-              + myMessage.getSecurity()
-              + " Dialog:  "
-              + myMessage.getAuthorName()
-              + " ')");
+              + myMessage.getSecurity(),
+          myMessage.getSecurity() + " Dialog:  " + myMessage.getAuthorName() + " ");
 
       myMessage.commitMessage();
     }
@@ -1261,8 +1084,7 @@ public class jdot {
    */
   public static void deleteMessage(String threadID, String idnum, String oidid)
       throws SQLException {
-    String queryStr = "DELETE from dialog WHERE threadid = '" + idnum + "' ";
-    jlib.updateDB(queryStr);
+    jlib.updateDB("DELETE from dialog WHERE threadid = ?::numeric", idnum);
   } // End of deleteMessage()
 
   /**
@@ -1292,11 +1114,9 @@ public class jdot {
     ResultSet rs2 =
         dbInterface.callDB(
             "select count(name) as result from dialog "
-                + "where idnum > "
-                + beginID
-                + "0000::numeric and idnum < "
-                + secondOne
-                + "0000::numeric ");
+                + "where idnum > ?::numeric and idnum < ?::numeric",
+            beginID + "0000",
+            secondOne + "0000");
     int numMessages = 0;
     if (rs2 != null && rs2.next()) {
       numMessages = Integer.parseInt(rs2.getString("result"));
@@ -1351,16 +1171,12 @@ public class jdot {
 
     ResultSet rs =
         dbInterface.callDB(
-            "select * from dialog where idnum > "
-                + beginID
-                + "0000::numeric "
-                + " and idnum < "
-                + secondOne
-                + "0000::numeric ORDER BY date DESC "
-                + " LIMIT "
-                + messageBlock
-                + " OFFSET "
-                + skipMessenges);
+            "select * from dialog where idnum > ?::numeric "
+                + "and idnum < ?::numeric ORDER BY date DESC LIMIT ? OFFSET ?",
+            beginID + "0000",
+            secondOne + "0000",
+            messageBlock,
+            skipMessenges);
 
     myBuffer.append(
         "<font class=\"bodyText\" size=\"+2\">Responses to " + "Active Post:</font><BR>\n");
@@ -1430,37 +1246,31 @@ public class jdot {
       return sbuf.toString();
     }
 
-    String queryStr = null;
-    if (thisUser.isAdmin())
+    if (!("body".equals(searchCol) || "name".equals(searchCol) || "subject".equals(searchCol))) {
+      sbuf.append(jlib.topBox("Search Results"));
+      sbuf.append("No Results Found...");
+      sbuf.append(jlib.botBox());
+      return sbuf.toString();
+    }
+
+    String queryStr;
+    Object[] queryParams;
+    if (thisUser.isAdmin()) {
       queryStr =
           "SELECT * from dialog WHERE "
               + searchCol
-              + " ~* '"
-              + stringUtils.cleanString(searchStr)
-              + "' "
-              + " and security = '"
-              + thisUser.getDialogSecurity()
-              + "' and portfolio = '"
-              + thisUser.getPortfolio()
-              + "' ORDER BY date DESC";
-    else
+              + " ~* ? and security = ? and portfolio = ? ORDER BY date DESC";
+      queryParams = new Object[] {searchStr, thisUser.getDialogSecurity(), thisUser.getPortfolio()};
+    } else {
       queryStr =
           "SELECT * from dialog WHERE "
               + searchCol
-              + " ~* "
-              + " '"
-              + stringUtils.cleanString(searchStr)
-              + "' "
-              + " and security = 'public' "
-              + " and portfolio = '"
-              + thisUser.getPortfolio()
-              + "' and gid = "
-              + thisUser.getGroupID()
-              + " ORDER BY date DESC";
+              + " ~* ? and security = 'public' and portfolio = ? and gid = ?::numeric "
+              + "ORDER BY date DESC";
+      queryParams = new Object[] {searchStr, thisUser.getPortfolio(), thisUser.getGroupID()};
+    }
 
-    ResultSet rs;
-
-    rs = dbInterface.callDB(queryStr);
+    ResultSet rs = dbInterface.callDB(queryStr, queryParams);
 
     sbuf.append(displayMessages(thisUser, rs, thisPageURL));
 

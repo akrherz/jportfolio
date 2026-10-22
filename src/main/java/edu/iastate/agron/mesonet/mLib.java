@@ -2,7 +2,6 @@ package edu.iastate.agron.mesonet;
 
 /** mLib , library for mesonet needs */
 import java.sql.*;
-import java.util.Arrays;
 import org.collaborium.portfolio.*;
 
 public class mLib {
@@ -17,9 +16,8 @@ public class mLib {
     StringBuffer sbuf = new StringBuffer();
 
     ResultSet rs =
-        dbInterface.callDBWithParameters(
-            "SELECT * from iem_sites WHERE " + " portfolio = ? ORDER by s_name ASC",
-            Arrays.asList(portfolio));
+        dbInterface.callDB(
+            "SELECT * from iem_sites WHERE portfolio = ? ORDER by s_name ASC", portfolio);
     sbuf.append("<select name=\"s_mid\">\n");
     while (rs.next()) {
       sbuf.append(
@@ -38,9 +36,7 @@ public class mLib {
   public static String stationSelectMulti(String portfolio) throws SQLException {
     StringBuffer sbuf = new StringBuffer();
 
-    ResultSet rs =
-        dbInterface.callDBWithParameters(
-            "SELECT * from iem_sites WHERE " + " portfolio = ? ", Arrays.asList(portfolio));
+    ResultSet rs = dbInterface.callDB("SELECT * from iem_sites WHERE portfolio = ? ", portfolio);
     sbuf.append("<select name=\"s_mid\" MULTIPLE>\n");
     while (rs.next()) {
       sbuf.append(
@@ -63,9 +59,8 @@ public class mLib {
         "<table width=\"100%\">\n"
             + "<tr><th>Name:</th><th>Phone</th>\n<th>Email</th>\n<td></td>\n");
     ResultSet rs =
-        dbInterface.callDBWithParameters(
-            "SELECT * from iem_site_contacts WHERE " + " s_mid = ? and portfolio = ? ",
-            Arrays.asList(mid, portfolio));
+        dbInterface.callDB(
+            "SELECT * from iem_site_contacts WHERE s_mid = ? and portfolio = ? ", mid, portfolio);
     if (rs == null) {
       sbuf.append("<tr><th colspan=\"3\">No Entries Found</th></tr>\n");
     } else {

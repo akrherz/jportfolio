@@ -24,9 +24,8 @@ if (thisUser == null){
   return;
 }
 
-ResultSet myResultSet = dbInterface.callDB("Select message, program, idnum, "
-  +" entered from notify WHERE username = '"+ thisUser.getUserID() +"' and "
-  +" portfolio = '"+ thisUser.getPortfolio() +"' ORDER by entered DESC");
+ResultSet myResultSet = dbInterface.callDB("Select message, program, idnum,  entered from notify WHERE username = ? and "
+  +" portfolio = ? ORDER by entered DESC", thisUser.getUserID(), thisUser.getPortfolio());
 
 String portHome = thisUser.getHome();
 if (portHome.equalsIgnoreCase("/jportfolio/servlet/") )

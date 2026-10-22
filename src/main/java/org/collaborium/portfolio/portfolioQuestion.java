@@ -38,7 +38,7 @@ public class portfolioQuestion {
   public portfolioQuestion(String thisQuestionID) {
 
     ResultSet rs =
-        dbInterface.callDB("SELECT * from questions " + " WHERE qid = " + thisQuestionID + " ");
+        dbInterface.callDB("SELECT * from questions WHERE qid = ?::int ", thisQuestionID);
     try {
       if (rs.next()) {
 

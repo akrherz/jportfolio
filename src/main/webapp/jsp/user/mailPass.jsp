@@ -45,8 +45,7 @@ if (userID == null) { %>
 
 <%
 } else {
-ResultSet rs = dbInterface.callDB("Select email, passwd from users "
-	+" where username ='"+ userID +"' ");
+ResultSet rs = dbInterface.callDB("Select email, passwd from users  where username = ? ", userID);
 %>
 
 <%

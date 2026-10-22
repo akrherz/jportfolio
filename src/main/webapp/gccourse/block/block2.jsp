@@ -26,11 +26,9 @@
   StringBuffer quizListing = new StringBuffer();
 
   try{
-    ResultSet rs = dbInterface.callDB("SELECT quiznum, qname, "
-	+" to_char(startdate,'Dy Mon DD HH12:MI AM') as startdate, "
+    ResultSet rs = dbInterface.callDB("SELECT quiznum, qname,  to_char(startdate,'Dy Mon DD HH12:MI AM') as startdate, "
 	+" to_char(stopdate,'Dy Mon DD HH12:MI AM') as stopdate from quizes "
-	+" where portfolio = '"+ thisUser.getPortfolio() +"' and topicid IN "
-	+" (SELECT name from units WHERE blockid = 2) ");
+	+" where portfolio = ? and topicid IN  (SELECT name from units WHERE blockid = 2) ", thisUser.getPortfolio());
 
    while (rs.next() ){
   	out.println("startDates["+ rs.getString("quiznum") +"] = \""+ rs.getString("startdate") +"\";\n");
@@ -76,9 +74,8 @@
    <option value="">Select Discussion Topic
 <%
    try{
-     ResultSet rs = dbInterface.callDB("SELECT subject,idnum,date from dialog WHERE"
-       +"  portfolio = '"+ thisUser.getPortfolio() +"' and topicid IN (SELECT "
-       +" name from units WHERE blockid = 2) ORDER by date");
+     ResultSet rs = dbInterface.callDB("SELECT subject,idnum,date from dialog WHERE  portfolio = ? and topicid IN (SELECT "
+       +" name from units WHERE blockid = 2) ORDER by date", thisUser.getPortfolio());
 
      while (rs.next() ){
        out.println("  <option value=\"/jportfolio/gccourse/dialog/index.jsp?mode=o&idnum="

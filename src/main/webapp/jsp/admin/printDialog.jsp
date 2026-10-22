@@ -27,29 +27,31 @@ if ( blockID.equalsIgnoreCase("1") ){
 	subSelect = " threadid >= 14435 and threadid <= 14534 ";
         ethThread = "14545";
 }
-ResultSet myResultSet = dbInterface.callDB("Select * from dialog "
-	+" where username ='"+selectedUser+"' and threadid != "+ethThread+" and"
-	+" portfolio = '"+ thisUser.getPortfolio() +"' "
-	+" and security = 'public' and "+subSelect+" ORDER by date");
+if (ethThread == null) {
+	response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid blockID");
+	return;
+}
+ResultSet myResultSet = dbInterface.callDB("Select * from dialog  where username = ? and threadid != ? and"
+	+" portfolio = ?  and security = 'public' and "+subSelect+" ORDER by date",
+	selectedUser, Integer.valueOf(ethThread), thisUser.getPortfolio());
 
-ResultSet myResultSet2 = dbInterface.callDB("Select * from dialog where type = 'self"+blockID+"' and "
-        +" username ='"+selectedUser+"' and portfolio = '"+ thisUser.getPortfolio() +"' and security = 'private' ");
+ResultSet myResultSet2 = dbInterface.callDB("Select * from dialog where type = ? and "
+        +" username = ? and portfolio = ? and security = 'private' ",
+        "self"+blockID, selectedUser, thisUser.getPortfolio());
 
-ResultSet quizResponses = dbInterface.callDB("select * from dialog WHERE "
-	+" security = 'private' and portfolio = '"+ thisUser.getPortfolio() +"' "
+ResultSet quizResponses = dbInterface.callDB("select * from dialog WHERE  security = 'private' and portfolio = ? "
 	+" and type != 'self1' and type != 'self2' and type != 'self3' and "
-	+" subject ~* '"+blockID+"-' and username ='"+selectedUser+"' ORDER by date");
+	+" subject ~* ? and username = ? ORDER by date",
+	thisUser.getPortfolio(), blockID+"-", selectedUser);
 
-ResultSet ethical = dbInterface.callDB("select * from dialog WHERE"
-  +" security = 'public' and threadid = '"+ethThread+"' "
-  +" and portfolio = '"+ thisUser.getPortfolio() +"' "
-  +" and username ='"+selectedUser+"' ORDER by date");
+ResultSet ethical = dbInterface.callDB("select * from dialog WHERE security = 'public' and threadid = ? "
+  +" and portfolio = ?  and username = ? ORDER by date",
+  Integer.valueOf(ethThread), thisUser.getPortfolio(), selectedUser);
 
 
 /* We need to get the porthome value for use in notifications */
-ResultSet portHome = dbInterface.callDB("SELECT porthome from portfolios "
- +" WHERE portfolio = '"+ thisUser.getPortfolio() +"' and "
-  +" porthome != '/jportfolio/servlet/' ");
+ResultSet portHome = dbInterface.callDB("SELECT porthome from portfolios  WHERE portfolio = ? and "
+  +" porthome != '/jportfolio/servlet/' ", thisUser.getPortfolio());
 if ( portHome.next() ) {
  notifyBaseURL = portHome.getString("porthome") +"/dialog/index.jsp";
 }

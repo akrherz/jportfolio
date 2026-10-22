@@ -3,7 +3,6 @@ package edu.iastate.agron.mesonet;
 /** Mesonet Trouble Ticket container I love java :) Daryl Herzmann 18 May 2002 */
 import java.sql.*;
 import java.text.*;
-import java.util.Arrays;
 import org.collaborium.portfolio.*;
 import org.collaborium.util.*;
 
@@ -29,11 +28,12 @@ public class mTT {
       throw new SQLException("Invalid trouble ticket id: " + tt_id, e);
     }
     ResultSet rs =
-        dbInterface.callDBWithParameters(
+        dbInterface.callDB(
             "SELECT *, getUsername(author) as rname "
                 + " ,getSiteName(s_mid) as s_name from tt_base WHERE "
                 + " portfolio = ? and id = ?",
-            Arrays.asList(portfolio, idInt));
+            portfolio,
+            idInt);
     if (rs != null && rs.next()) {
       this.doSQL(rs);
     } else {
@@ -154,10 +154,10 @@ public class mTT {
       throw new SQLException("Invalid trouble ticket id: " + this.id, e);
     }
     ResultSet rs =
-        dbInterface.callDBWithParameters(
+        dbInterface.callDB(
             "SELECT *, getUserName(author) as rname"
                 + " from tt_log WHERE tt_id = ? ORDER by entered DESC",
-            Arrays.asList(idInt));
+            idInt);
     sbuf.append("<p><table width=\"100%\" cellspacing=0 " + " colspacing=0 cellpadding=2>\n");
     while (rs.next()) {
       sbuf.append(
