@@ -262,3 +262,69 @@ ul.dqv {
   text-indent: 0px;
   list-style: none;
 }
+
+/* Forecast UI */
+.fx-status {
+  border: 2px solid;
+  border-radius: 6px;
+  padding: 8px 10px;
+  margin: 0 0 8px 0;
+}
+.fx-pending {
+  background: #fff3cd;
+  border-color: #d9534f;
+  color: #a94442;
+}
+.fx-done {
+  background: #dff0d8;
+  border-color: #3c763d;
+  color: #3c763d;
+}
+.fx-big {
+  font-size: 1.2em;
+  padding: 12px;
+}
+.fx-badge {
+  color: #fff;
+  background: #d9534f;
+  padding: 0 6px;
+  border-radius: 8px;
+  font-weight: bold;
+}
+table.fx-form {
+  border-collapse: collapse;
+  margin: 10px 0;
+}
+table.fx-form td, table.fx-form th {
+  padding: 6px 10px;
+  border-bottom: 1px solid #ddd;
+  text-align: left;
+}
+table.fx-form td.fx-head {
+  background: #455372;
+  color: #f0f0f0;
+  font-weight: bold;
+  border-bottom: 0;
+}
+table.fx-form input[type=text], table.fx-form select, table.fx-form textarea {
+  padding: 3px 4px;
+  border: 1px solid #aaa;
+  border-radius: 3px;
+}
+table.fx-form input[type=text]:focus, table.fx-form select:focus,
+table.fx-form textarea:focus {
+  outline: 2px solid #455372;
+  border-color: #455372;
+}
+.fx-submit {
+  background: #455372;
+  color: #fff;
+  border: 0;
+  border-radius: 4px;
+  padding: 7px 18px;
+  font-weight: bold;
+  cursor: pointer;
+}
+.fx-submit:hover {
+  background: #2f3b52;
+}

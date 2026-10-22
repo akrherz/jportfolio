@@ -300,16 +300,9 @@ public class forecastDay {
 
     try {
       ResultSet rs =
-          dbInterface.callDB(
-              "SELECT * from forecasts "
-                  + " WHERE userid = '"
-                  + userID
-                  + "' and portfolio = "
-                  + " '"
-                  + portfolio
-                  + "' and day = '"
-                  + sqlDate
-                  + "' ");
+          dbInterface.callDBWithParameters(
+              "SELECT * from forecasts WHERE userid = ? and portfolio = ? and day = ?::date",
+              java.util.Arrays.asList(userID, portfolio, sqlDate));
       if (rs.next()) {
         this.floaterHighTemp = rs.getInt("float_high");
         this.floaterLowTemp = rs.getInt("float_low");

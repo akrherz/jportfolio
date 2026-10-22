@@ -290,7 +290,7 @@ public class forecast extends HttpServlet {
             + stringUtils.toBR(thisDay.getDiscussion()));
 
     sbuf.append(
-        "<P><TABLE>\n"
+        "<P><TABLE class='fx-form'>\n"
             + "  <caption><B>Validation:</B></caption>\n"
             + "  <TR><TH>Forecast Site:</TH><TH>High:</TH>\n"
             + "	<TH>Low:</TH><TH>Prec Cat:</TH>\n"
@@ -340,7 +340,7 @@ public class forecast extends HttpServlet {
             + "</TABLE>\n");
 
     sbuf.append(
-        "<P><TABLE>\n"
+        "<P><TABLE class='fx-form'>\n"
             + " <caption><B>Your Classmates Forecasted:</B></caption>\n"
             + "<TR><TH rowspan=2>Forecaster</TH><TD colspan=4>"
             + thisDay.getLocalSite()
@@ -437,14 +437,31 @@ public class forecast extends HttpServlet {
     return sbuf.toString();
   }
 
+  /** True when a forecast is currently due and this user has not yet submitted it. */
+  public static boolean isForecastPending(portfolioUser thisUser) {
+    return isForecastDay(thisUser) && !new forecastDay(thisUser, "tomorrow").getForecast();
+  }
+
   public String classOptions(portfolioUser thisUser, String thisPageURL) {
     StringBuffer sbuf = new StringBuffer();
 
     sbuf.append(jlib.topBox("Forecast Options:"));
     sbuf.append("<ul>\n");
-    if (isForecastDay(thisUser))
-      sbuf.append("<LI><a href='" + thisPageURL + "?mode=f'>Make Forecast</a></LI>\n");
-    else sbuf.append("No Forecast for Today!");
+    if (isForecastDay(thisUser)) {
+      if (new forecastDay(thisUser, "tomorrow").getForecast()) {
+        sbuf.append(
+            "<LI><div class='fx-status fx-done'><b>&#10004; Forecast submitted</b><br>"
+                + "You're all set.<br><a href='"
+                + thisPageURL
+                + "?mode=f'>Change your forecast</a></div></LI>\n");
+      } else {
+        sbuf.append(
+            "<LI><div class='fx-status fx-pending'><b>&#9888; Forecast NOT yet submitted!</b>"
+                + "<br><a href='"
+                + thisPageURL
+                + "?mode=f'><b>Make Forecast now</b></a></div></LI>\n");
+      }
+    } else sbuf.append("No Forecast for Today!");
 
     sbuf.append(
         "<LI><a class=\"commands\" href='"
@@ -478,8 +495,16 @@ public class forecast extends HttpServlet {
     if (sqlDate == null) sqlDate = "tomorrow";
 
     forecastDay thisDay = new forecastDay(thisUser, sqlDate);
-    if (thisDay.getForecast()) sbuf.append("<P>It appears that you are ammending your forecast.\n");
-    else sbuf.append("<P>This is your first attempt at this forecast. Good luck.\n");
+    if (thisDay.getForecast())
+      sbuf.append(
+          "<div class='fx-status fx-done'>"
+              + "<b>&#10004; You have already submitted this forecast.</b> "
+              + "You may amend it below, otherwise you are done.</div>\n");
+    else
+      sbuf.append(
+          "<div class='fx-status fx-pending'>"
+              + "<b>&#9888; Your forecast has NOT been submitted yet.</b> "
+              + "Fill in the form below and press Make Forecast.</div>\n");
 
     sbuf.append(
         "<P>The floater site is "
@@ -494,10 +519,8 @@ public class forecast extends HttpServlet {
             + thisPageURL
             + "'>\n"
             + " <input type='hidden' name='mode' value='f'>\n"
-            + " <P><TABLE>\n"
-            + ("<tr><td colspan=5 bgcolor=\"#0000f0\"><font "
-                + "color=\"#f0f0f0\"><b>Enter your numeric "
-                + "forecast:</b></font></td></tr>\n")
+            + " <P><TABLE class='fx-form'>\n"
+            + ("<tr><td colspan=5 class=\"fx-head\">Enter your numeric " + "forecast:</td></tr>\n")
             + (" <TR><TD></TD><TD>High Temp:</TD><TD>Low Temp:</TD><TD>Precip "
                 + "Cat:</TD><TD>Snow Cat:</TD></TR>\n")
             + " <TR><TH>Local:</TH>\n"
@@ -530,9 +553,8 @@ public class forecast extends HttpServlet {
             + fLib.snowSelect("float_snow", thisDay.getFloaterSnowCat())
             + "</TD>\n"
             + "	</TR>"
-            + ("<tr><td colspan=5 bgcolor=\"#0000f0\"><font "
-                + "color=\"#f0f0f0\"><b>Justification:</b> "
-                + "(<i>Optional</i>)</font></td></tr>\n")
+            + ("<tr><td colspan=5 class=\"fx-head\">Justification: "
+                + "(<i>Optional</i>)</td></tr>\n")
             + "<tr><td colspan=5><b>Rate your confidence in this forecast?</b>"
             + " <br><i>1 (not confident) - 10 (confident)</i>"
             + " <input type=\"text\" name=\"confidence\" value=\""
@@ -546,7 +568,7 @@ public class forecast extends HttpServlet {
             + "</TABLE>\n");
 
     sbuf.append(
-        "<P><input type='submit' value='Make Forecast'>\n"
+        "<P><input type='submit' class='fx-submit' value='Make Forecast'>\n"
             + "<input type='reset'>\n"
             + "</form>\n");
 
@@ -559,7 +581,7 @@ public class forecast extends HttpServlet {
    * @param thisUser which is the user
    * @return boolean for it is is or not.
    */
-  public boolean isForecastDay(portfolioUser thisUser) {
+  public static boolean isForecastDay(portfolioUser thisUser) {
     if (thisUser == null) return false;
 
     if (!thisUser.doForecast()) return false;
@@ -677,7 +699,9 @@ public class forecast extends HttpServlet {
       throw new myException("Could Not Enter Forecast: " + ex.getMessage(), ex);
     }
 
-    sbuf.append("<P>Forecast Entered Successfully!\n");
+    sbuf.append(
+        "<div class='fx-status fx-done fx-big'><b>&#10004; Forecast submitted successfully!</b>"
+            + "<br>You are done. You may return to amend it until the deadline.</div>\n");
     sbuf.append(
         "<P>You Forecasted:\n"
             + " <BR>Local Site High: "
