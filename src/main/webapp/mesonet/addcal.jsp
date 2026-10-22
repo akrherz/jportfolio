@@ -10,7 +10,7 @@ if (sid != null){
   String comments = (String)request.getParameter("comments");
   if (comments == null) comments = "";
 
-  dbInterface.updateDB("INSERT into iem_calibration(station, portfolio, valid, parameter, adjustment, final, comments) values ('"+ sid +"', '"+ thisUser.getPortfolio() +"', '"+ valid +"','"+ para +"', "+ adjustment +", "+ val +", '"+ stringUtils.cleanString(comments) +"')");
+  dbInterface.updateDB("INSERT into iem_calibration(station, portfolio, valid, parameter, adjustment, final, comments) values (?, ?, ?::timestamp, ?, ?::numeric, ?::numeric, ?)", sid, thisUser.getPortfolio(), valid, para, adjustment, val, stringUtils.cleanString(comments));
 
 }
 
@@ -20,7 +20,7 @@ if (sid != null){
 <%
 if (s_mid != null)
 {
-  ResultSet r = dbInterface.callDB("SELECT * from iem_calibration WHERE portfolio = '"+ thisUser.getPortfolio() +"' and station = '"+ s_mid +"' ORDER by valid DESC");
+  ResultSet r = dbInterface.callDB("SELECT * from iem_calibration WHERE portfolio = ? and station = ? ORDER by valid DESC", thisUser.getPortfolio(), s_mid);
   out.println("<table>");
   while (r.next()){
     out.println("<tr><th>"+ r.getString("id") +"</th><td>"+ r.getString("station") +"</td><td>"+ r.getString("valid") +"</td><td>"+ r.getString("parameter") +"</td><td>"+ r.getString("adjustment") +"</td><td>"+ r.getString("final") +"</td></tr>");

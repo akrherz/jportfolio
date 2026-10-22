@@ -23,7 +23,6 @@
 package org.collaborium.portfolio;
 
 import java.sql.*;
-import java.util.List;
 
 public class dbInterface {
   static Connection db = null;
@@ -55,8 +54,15 @@ public class dbInterface {
     }
   } // End of dbInterfaceInit
 
-  /** Method to call the database with a list of parameters */
-  public static ResultSet callDBWithParameters(String query, List<Object> params) {
+  /**
+   * Run a SELECT using bind parameters. Values must never be concatenated into the query; pass them
+   * as params and use ? placeholders.
+   *
+   * @param query SQL with ? placeholders
+   * @param params values bound to the placeholders, in order
+   * @return the result set, or null on error
+   */
+  public static ResultSet callDB(String query, Object... params) {
     if (db == null) dbInterfaceInit();
 
     ResultSet rs = null;
@@ -64,32 +70,8 @@ public class dbInterface {
       plogger.report(query + ";");
       PreparedStatement pst =
           db.prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-      for (int i = 0; i < params.size(); i++) {
-        pst.setObject(i + 1, params.get(i));
-      }
+      bind(pst, params);
       rs = pst.executeQuery();
-    } catch (Exception ex) {
-      plogger.report("Exception caught in callDBWithParameters().\n" + ex);
-      ex.printStackTrace();
-      dbInterfaceInit();
-    }
-    return rs;
-  }
-
-  /**
-   * Method to return a result set for a query string
-   *
-   * @param String value for the query wanted.
-   */
-  public static ResultSet callDB(String querry) {
-    if (db == null) dbInterfaceInit();
-
-    ResultSet rs = null;
-    try {
-      plogger.report(querry + ";");
-      Statement st =
-          db.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-      rs = st.executeQuery(querry);
     } catch (Exception ex) {
       plogger.report("Exception caught in callDB().\n" + ex);
       ex.printStackTrace();
@@ -99,35 +81,35 @@ public class dbInterface {
   } // End of callDB()
 
   /**
-   * Method to return a result set for a query string
+   * Run an INSERT/UPDATE/DELETE using bind parameters, logging and swallowing any error.
    *
-   * @param String value for the query wanted.
+   * @param query SQL with ? placeholders
+   * @param params values bound to the placeholders, in order
    */
-  public static void updateDB(String querry) {
-
+  public static void updateDB(String query, Object... params) {
     try {
-      plogger.report(querry + ";");
-      Statement st = db.createStatement();
-      st.executeUpdate(querry);
+      updateDBOrThrow(query, params);
     } catch (Exception ex) {
-      plogger.report("Exception caught in callDB().\n" + ex);
+      plogger.report("Exception caught in updateDB().\n" + ex);
       ex.printStackTrace();
       dbInterfaceInit();
     }
   } // End of updateDB()
 
-  /**
-   * Method to run an INSERT/UPDATE/DELETE with bind parameters, avoiding SQL injection from
-   * concatenated user input.
-   */
-  public static void updateDBWithParameters(String query, List<Object> params) throws SQLException {
+  /** Like updateDB(), but lets the caller handle the SQLException. */
+  public static void updateDBOrThrow(String query, Object... params) throws SQLException {
     if (db == null) dbInterfaceInit();
 
     plogger.report(query + ";");
-    PreparedStatement pst = db.prepareStatement(query);
-    for (int i = 0; i < params.size(); i++) {
-      pst.setObject(i + 1, params.get(i));
+    try (PreparedStatement pst = db.prepareStatement(query)) {
+      bind(pst, params);
+      pst.executeUpdate();
     }
-    pst.executeUpdate();
-  } // End of updateDBWithParameters()
+  } // End of updateDBOrThrow()
+
+  private static void bind(PreparedStatement pst, Object[] params) throws SQLException {
+    for (int i = 0; i < params.length; i++) {
+      pst.setObject(i + 1, params[i]);
+    }
+  }
 } // End of dbInterface

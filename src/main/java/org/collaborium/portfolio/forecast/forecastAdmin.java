@@ -244,11 +244,9 @@ public class forecastAdmin extends HttpServlet {
       ResultSet rs =
           dbInterface.callDB(
               "SELECT *, getUserName(userid) as rname from forecasts WHERE"
-                  + " portfolio = '"
-                  + thisUser.getPortfolio()
-                  + "' and day = '"
-                  + sqlDate
-                  + "' ");
+                  + " portfolio = ? and day = ?::date",
+              thisUser.getPortfolio(),
+              sqlDate);
       while (rs.next()) {
         sbuf.append(
             "<TR><TD>"
@@ -307,10 +305,8 @@ public class forecastAdmin extends HttpServlet {
     try {
       ResultSet rs =
           dbInterface.callDB(
-              "SELECT fxtime from portfolios WHERE "
-                  + " portfolio = '"
-                  + thisUser.getPortfolio()
-                  + "' and fxtime IS NOT NULL");
+              "SELECT fxtime from portfolios WHERE  portfolio = ? and fxtime IS NOT NULL",
+              thisUser.getPortfolio());
       if (rs.next())
         sbuf.append(
             "<input type=\"text\" name=\"fxtime\" value "
@@ -343,20 +339,15 @@ public class forecastAdmin extends HttpServlet {
     String float_prec = "0";
     String float_snow = "0";
 
-    if (sqlDate == null) sqlDate = "'TODAY'::date + '1 day'::interval";
+    if (sqlDate == null) sqlDate = java.time.LocalDate.now().plusDays(1).toString();
 
     try {
       ResultSet rs =
           jlib.callDB(
-              "SELECT * from forecasts "
-                  + " WHERE day = '"
-                  + sqlDate
-                  + "' and userID = '"
-                  + selectedUserID
-                  + "' "
-                  + " and portfolio = '"
-                  + thisUser.getPortfolio()
-                  + "' ");
+              "SELECT * from forecasts  WHERE day = ?::date and userID = ? and portfolio = ? ",
+              sqlDate,
+              selectedUserID,
+              thisUser.getPortfolio());
       if (rs.next()) {
         local_high = rs.getString("local_high");
         local_low = rs.getString("local_low");
@@ -437,46 +428,28 @@ public class forecastAdmin extends HttpServlet {
     String float_prec = req.getParameter("float_prec");
     String float_snow = req.getParameter("float_snow");
 
-    String colNames =
-        "(userID, portfolio, day, local_high, local_low, "
-            + "local_prec, local_snow, "
-            + " float_high, float_low, float_prec, float_snow )";
-    String colVals =
-        "('"
-            + selectedUserID
-            + "', '"
-            + thisUser.getPortfolio()
-            + "', '"
-            + sqlDate
-            + "', "
-            + local_high
-            + ", "
-            + local_low
-            + ", "
-            + local_prec
-            + ", "
-            + local_snow
-            + ", "
-            + float_high
-            + ", "
-            + float_low
-            + ", "
-            + float_prec
-            + ", "
-            + float_snow
-            + " )";
-
     try {
       jlib.updateDB(
-          "DELETE from forecasts WHERE userID = '"
-              + selectedUserID
-              + "' "
-              + " and portfolio = '"
-              + thisUser.getPortfolio()
-              + "' and day = '"
-              + sqlDate
-              + "' ");
-      jlib.updateDB("INSERT into forecasts " + colNames + " VALUES " + colVals + " ");
+          "DELETE from forecasts WHERE userID = ? and portfolio = ? and day = ?::date ",
+          selectedUserID,
+          thisUser.getPortfolio(),
+          sqlDate);
+      jlib.updateDB(
+          "INSERT into forecasts (userID, portfolio, day, local_high, local_low, "
+              + "local_prec, local_snow, "
+              + " float_high, float_low, float_prec, float_snow ) VALUES "
+              + "(?, ?, ?::date, ?::int, ?::int, ?::int, ?::int, ?::int, ?::int, ?::int, ?::int)",
+          selectedUserID,
+          thisUser.getPortfolio(),
+          sqlDate,
+          local_high,
+          local_low,
+          local_prec,
+          local_snow,
+          float_high,
+          float_low,
+          float_prec,
+          float_snow);
     } catch (Exception ex) {
       plogger.report("Problem Entering Forecast " + ex);
       throw new myException("Could Not Enter Forecast");
@@ -531,12 +504,9 @@ public class forecastAdmin extends HttpServlet {
     try {
       ResultSet rs =
           dbInterface.callDB(
-              "SELECT getUserName(s.username) as name, s.username "
-                  + " from students s, users u"
-                  + " WHERE s.portfolio = '"
-                  + thisUser.getPortfolio()
-                  + "' and s.username = u.username "
-                  + " and s.nofx = 'n' ");
+              "SELECT getUserName(s.username) as name, s.username  from students s, users u"
+                  + " WHERE s.portfolio = ? and s.username = u.username  and s.nofx = 'n' ",
+              thisUser.getPortfolio());
       while (rs.next()) {
         sbuf.append(
             "<OPTION VALUE=\"" + rs.getString("username") + "\">" + rs.getString("name") + " \n");
@@ -552,10 +522,8 @@ public class forecastAdmin extends HttpServlet {
     try {
       ResultSet forecastDays =
           dbInterface.callDB(
-              "SELECT * from forecast_days WHERE "
-                  + " portfolio = '"
-                  + thisUser.getPortfolio()
-                  + "' ORDER by day ASC ");
+              "SELECT * from forecast_days WHERE  portfolio = ? ORDER by day ASC ",
+              thisUser.getPortfolio());
       while (forecastDays.next()) {
         String thisDate = forecastDays.getString("day");
         sbuf.append("<OPTION VALUE=\"" + thisDate + "\">" + thisDate + "\n");
@@ -587,10 +555,8 @@ public class forecastAdmin extends HttpServlet {
     try {
       ResultSet rs =
           dbInterface.callDB(
-              "SELECT getUsername(username) as uname, * from "
-                  + " students WHERE portfolio = '"
-                  + thisUser.getPortfolio()
-                  + "' ");
+              "SELECT getUsername(username) as uname, * from  students WHERE portfolio = ? ",
+              thisUser.getPortfolio());
       while (rs.next()) {
         String thisUserName = rs.getString("uname");
         String thisUserID = rs.getString("username");
@@ -832,100 +798,56 @@ public class forecastAdmin extends HttpServlet {
     String cl_float_snow = req.getParameter("cl_float_snow");
     String cl_float_snow_txt = req.getParameter("cl_float_snow_txt");
 
-    String colNames =
-        "(portfolio, local_high, local_low, local_prec, "
-            + " local_snow, float_high, float_low, float_prec, float_snow, day, "
-            + " local_prec_txt, local_snow_txt, float_prec_txt, float_snow_txt)";
-    String colVals =
-        "('"
-            + thisUser.getPortfolio()
-            + "' "
-            + ", "
-            + local_high
-            + ", "
-            + local_low
-            + ", "
-            + local_prec
-            + ", "
-            + local_snow
-            + ", "
-            + float_high
-            + ", "
-            + " "
-            + float_low
-            + ", "
-            + float_prec
-            + ", "
-            + float_snow
-            + ", '"
-            + sqlDate
-            + "', "
-            + " '"
-            + local_prec_txt
-            + "', '"
-            + local_snow_txt
-            + "', '"
-            + float_prec_txt
-            + "', '"
-            + float_snow_txt
-            + "')";
-
-    String colNames2 =
-        "(portfolio, local_high, local_low, local_prec, "
-            + " local_snow, float_high, float_low, float_prec, float_snow, day, "
-            + " local_prec_txt, local_snow_txt, float_prec_txt, float_snow_txt)";
-    String colVals2 =
-        "('"
-            + thisUser.getPortfolio()
-            + "' "
-            + ", "
-            + cl_local_high
-            + ", "
-            + cl_local_low
-            + ", "
-            + cl_local_prec
-            + ", "
-            + cl_local_snow
-            + ", "
-            + cl_float_high
-            + ", "
-            + " "
-            + cl_float_low
-            + ", "
-            + cl_float_prec
-            + ", "
-            + cl_float_snow
-            + ", '"
-            + sqlDate
-            + "', "
-            + " '"
-            + cl_local_prec_txt
-            + "', '"
-            + cl_local_snow_txt
-            + "', '"
-            + cl_float_prec_txt
-            + "', '"
-            + cl_float_snow_txt
-            + "')";
-
     try {
       dbInterface.updateDB(
-          "DELETE from forecast_answers WHERE "
-              + " portfolio = '"
-              + thisUser.getPortfolio()
-              + "' and day = '"
-              + sqlDate
-              + "' ");
-      dbInterface.updateDB("INSERT into forecast_answers " + colNames + " VALUES " + colVals + " ");
+          "DELETE from forecast_answers WHERE portfolio = ? and day = ?::date ",
+          thisUser.getPortfolio(),
+          sqlDate);
+      dbInterface.updateDB(
+          "INSERT into forecast_answers (portfolio, local_high, local_low, local_prec, "
+              + " local_snow, float_high, float_low, float_prec, float_snow, day, "
+              + " local_prec_txt, local_snow_txt, float_prec_txt, float_snow_txt) VALUES "
+              + "(?, ?::int, ?::int, ?::int, ?::int, ?::int, ?::int, ?::int, ?::int, ?::date, "
+              + "?, ?, ?, ?)",
+          thisUser.getPortfolio(),
+          local_high,
+          local_low,
+          local_prec,
+          local_snow,
+          float_high,
+          float_low,
+          float_prec,
+          float_snow,
+          sqlDate,
+          local_prec_txt,
+          local_snow_txt,
+          float_prec_txt,
+          float_snow_txt);
 
       dbInterface.updateDB(
-          "DELETE from forecast_climo WHERE  "
-              + " portfolio = '"
-              + thisUser.getPortfolio()
-              + "' and day = '"
-              + sqlDate
-              + "' ");
-      dbInterface.updateDB("INSERT into forecast_climo " + colNames2 + " VALUES " + colVals2 + " ");
+          "DELETE from forecast_climo WHERE portfolio = ? and day = ?::date ",
+          thisUser.getPortfolio(),
+          sqlDate);
+      dbInterface.updateDB(
+          "INSERT into forecast_climo (portfolio, local_high, local_low, local_prec, "
+              + " local_snow, float_high, float_low, float_prec, float_snow, day, "
+              + " local_prec_txt, local_snow_txt, float_prec_txt, float_snow_txt) VALUES "
+              + "(?, ?::int, ?::int, ?::int, ?::int, ?::int, ?::int, ?::int, ?::int, ?::date, "
+              + "?, ?, ?, ?)",
+          thisUser.getPortfolio(),
+          cl_local_high,
+          cl_local_low,
+          cl_local_prec,
+          cl_local_snow,
+          cl_float_high,
+          cl_float_low,
+          cl_float_prec,
+          cl_float_snow,
+          sqlDate,
+          cl_local_prec_txt,
+          cl_local_snow_txt,
+          cl_float_prec_txt,
+          cl_float_snow_txt);
 
     } catch (Exception ex) {
       plogger.report("PROBLEM in UPDATE DB");
@@ -957,37 +879,21 @@ public class forecastAdmin extends HttpServlet {
 
     try {
       dbInterface.updateDB(
-          "DELETE from forecast_days WHERE day = '"
-              + dateStr
-              + "' "
-              + " AND portfolio = '"
-              + portfolio
-              + "' ");
+          "DELETE from forecast_days WHERE day = ?::date AND portfolio = ? ", dateStr, portfolio);
       dbInterface.updateDB(
-          "INSERT into forecast_days VALUES('"
-              + portfolio
-              + "', "
-              + " '"
-              + dateStr
-              + "','"
-              + station
-              + "','"
-              + code
-              + "', "
-              + case_group
-              + ") ");
+          "INSERT into forecast_days VALUES(?, ?::date, ?, ?, ?::int) ",
+          portfolio,
+          dateStr,
+          station,
+          code,
+          case_group);
 
       dbInterface.updateDB(
           "INSERT into calendar(portfolio, description, URL, valid) VALUES "
-              + " ('"
-              + portfolio
-              + "', 'Forecast Due', "
-              + " '"
-              + jlib.servletHttpBase
-              + "/forecast', "
-              + " '"
-              + dateStr
-              + "' ) ");
+              + " (?, 'Forecast Due', ?, ?::date) ",
+          portfolio,
+          jlib.servletHttpBase + "/forecast",
+          dateStr);
 
     } catch (Exception ex) {
       plogger.report("Problem Creating Forecast Day!");

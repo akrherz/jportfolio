@@ -67,7 +67,7 @@ public class portfolioUser implements HttpSessionBindingListener {
 
     plogger.report("portfolioUser object created: " + realName);
     try {
-      dbInterface.updateDB("INSERT into sessions (username) VALUES " + " ( '" + userID + "' ) ");
+      dbInterface.updateDB("INSERT into sessions (username) VALUES ( ? ) ", userID);
     } catch (Exception ex) {
       plogger.report("Error in Creating Session DB Entry");
     }
@@ -86,9 +86,8 @@ public class portfolioUser implements HttpSessionBindingListener {
     try {
       dbInterface.updateDB(
           "UPDATE sessions SET logout = CURRENT_TIMESTAMP "
-              + " WHERE username = '"
-              + userID
-              + "' and logout IS NULL ");
+              + " WHERE username = ? and logout IS NULL ",
+          userID);
 
     } catch (Exception ex) {
       plogger.report("Error in Creating Session DB Entry");
@@ -107,13 +106,9 @@ public class portfolioUser implements HttpSessionBindingListener {
     try {
       ResultSet rs =
           dbInterface.callDB(
-              "SELECT "
-                  + " getUserName('"
-                  + userID
-                  + "') as longname, * from users "
-                  + " WHERE username = '"
-                  + newUserID
-                  + "' ");
+              "SELECT getUserName(?) as longname, * from users WHERE username = ? ",
+              userID,
+              newUserID);
       if (rs.next()) {
         this.emailAddress = rs.getString("email");
         this.realName = rs.getString("longname");
@@ -127,11 +122,9 @@ public class portfolioUser implements HttpSessionBindingListener {
 
       rs =
           dbInterface.callDB(
-              "SELECT logout from sessions "
-                  + " WHERE username = '"
-                  + newUserID
-                  + "' and logout IS NOT NULL "
-                  + " ORDER by logout DESC LIMIT 1");
+              "SELECT logout from sessions  WHERE username = ? and logout IS NOT NULL "
+                  + " ORDER by logout DESC LIMIT 1",
+              newUserID);
       if (rs.next()) {
         this.lastLogin = rs.getTimestamp("logout");
       }
@@ -321,13 +314,9 @@ public class portfolioUser implements HttpSessionBindingListener {
     try {
       ResultSet rs =
           dbInterface.callDB(
-              "SELECT * from students "
-                  + " WHERE username = '"
-                  + userID
-                  + "' and "
-                  + " portfolio = '"
-                  + thisPortfolio
-                  + "' ");
+              "SELECT * from students WHERE username = ? and portfolio = ? ",
+              userID,
+              thisPortfolio);
       if (rs != null && rs.next()) {
         myCred.setCred(rs.getInt("cred"));
         this.doesForecast = !rs.getBoolean("nofx");

@@ -9,10 +9,8 @@
 <h3>AMS Forecasting Contest</h3>
 <a href="index.jsp">AFC Home</a><br>
 <%
-  ResultSet lastf = dbInterface.callDB("SELECT * from afc_forecasts WHERE "
-   +" username = '"+ thisUser.getUserID() +"' and "
-   +" portfolio = '"+ thisUser.getPortfolio() +"' and "
-   +" day = 'TOMORROW'::date ");
+  ResultSet lastf = dbInterface.callDB("SELECT * from afc_forecasts WHERE  username = ? and "
+   +" portfolio = ? and  day = 'TOMORROW'::date ", thisUser.getUserID(), thisUser.getPortfolio());
   String lo_t = "";
   String hi_t = "";
   String pop00 = "0";
@@ -37,8 +35,7 @@
     ceil02 = lastf.getString("ceil02");
     vis02 = lastf.getString("vis02");
   }
-  ResultSet rs = dbInterface.callDB("SELECT * from afc_days WHERE "
-   +" day = 'TOMORROW'::date and portfolio = '"+ thisUser.getPortfolio() +"' ");
+  ResultSet rs = dbInterface.callDB("SELECT * from afc_days WHERE  day = 'TOMORROW'::date and portfolio = ? ", thisUser.getPortfolio());
   if (rs.next()){
 %>
 <form method="POST" action="post_forecast.jsp">

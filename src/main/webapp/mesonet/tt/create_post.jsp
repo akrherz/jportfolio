@@ -18,11 +18,9 @@
  String sensor = (String)request.getParameter("sensor");
 
  /** Insert TT */
- dbInterface.updateDB("INSERT into tt_base(portfolio, s_mid, subject, "
-  +" status, author, sensor)"
-  +" VALUES ('"+ thisUser.getPortfolio() +"', '"+ s_mid +"', '"
-  + stringUtils.cleanString(subject)+"', 'OPEN', '"+thisUser.getUserID()+"'"
-  +",'"+ sensor +"' ) ");
+ dbInterface.updateDB("INSERT into tt_base(portfolio, s_mid, subject,  status, author, sensor)"
+  +" VALUES (?, ?, ?, 'OPEN', ?, ?)", thisUser.getPortfolio(), s_mid,
+  stringUtils.cleanString(subject), thisUser.getUserID(), sensor);
 
  /** Call back the id of this TT */
  ResultSet ttt = dbInterface.callDB("SELECT last_value from tt_base_id_seq");
@@ -31,18 +29,16 @@
 
  /** Insert the first comment */
  dbInterface.updateDB("INSERT into tt_log(portfolio, s_mid, author, status_c "
-  +", comments, tt_id) VALUES ('"+ thisUser.getPortfolio() +"', "
-  +" '"+ s_mid +"', '"+ thisUser.getUserID() +"', 'OPEN', "
-  +" '"+ stringUtils.cleanString( comments ) +"', "+ tt_id +" )");
+  +", comments, tt_id) VALUES (?, ?, ?, 'OPEN', ?, ?::int)",
+  thisUser.getPortfolio(), s_mid, thisUser.getUserID(),
+  stringUtils.cleanString(comments), tt_id);
 
     String emailCheck = (String)request.getParameter("email");
    if (emailCheck.equalsIgnoreCase("yes") ){
-      ResultSet smeta = dbInterface.callDB("SELECT * from iem_sites WHERE "
-       +" portfolio = '"+ thisUser.getPortfolio() +"' and s_mid = '"+ s_mid +"' ");
+      ResultSet smeta = dbInterface.callDB("SELECT * from iem_sites WHERE  portfolio = ? and s_mid = ?", thisUser.getPortfolio(), s_mid);
       smeta.next();
       String siteName = smeta.getString("s_name");
-      ResultSet contacts = dbInterface.callDB("SELECT * from iem_site_contacts "
-       +" WHERE s_mid = '"+ s_mid +"' and email IS NOT NULL");
+      ResultSet contacts = dbInterface.callDB("SELECT * from iem_site_contacts  WHERE s_mid = ? and email IS NOT NULL", s_mid);
         while ( contacts.next() ) {
           String emailAddr = contacts.getString("email");
           String message = "\n"

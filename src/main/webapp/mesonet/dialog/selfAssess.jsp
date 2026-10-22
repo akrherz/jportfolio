@@ -36,15 +36,14 @@
 
   /** We are making a post eh? */
    try{
-      ResultSet maxth = dbInterface.callDB("select MAX (idnum)+1 as result "
-	+" from dialog WHERE idnum > 10000 and idnum < 20000");
+      ResultSet maxth = dbInterface.callDB("select MAX (idnum)+1 as result  from dialog WHERE idnum > 10000 and idnum < 20000");
       maxth.next();
       newThreadID = maxth.getString("result");
 
       tester = dbInterface.callDB("select * from dialog WHERE "
-       +" username = '"+ thisUser.getUserID() +"' and "
-       +" portfolio = '"+ thisUser.getPortfolio() +"' and security = 'private' and "
-       +" topicid = 'self"+ thisBlock+"' ");
+       +" username = ? and portfolio = ? and security = 'private' and "
+       +" topicid = ?", thisUser.getUserID(), thisUser.getPortfolio(),
+       "self" + thisBlock);
       if (tester.next() ){
         closed = true;
       }

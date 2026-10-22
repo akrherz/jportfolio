@@ -25,16 +25,14 @@
  if (hi_t != null && lo_t != null && qpf00 != null
    && qpf12 != null && pop00 != null && pop12 != null){
    out.println("<p>Entering Your Forecast:");
-   dbInterface.updateDB("DELETE from afc_forecasts WHERE "
-    +" username = '"+ thisUser.getUserID() +"'  and "
-    +" portfolio = '"+ thisUser.getPortfolio() +"' and "
-    +" day = 'TOMORROW'::date ");
+   dbInterface.updateDB("DELETE from afc_forecasts WHERE  username = ?  and "
+    +" portfolio = ? and  day = 'TOMORROW'::date ", thisUser.getUserID(), thisUser.getPortfolio());
    dbInterface.updateDB("INSERT into afc_forecasts(username, portfolio, "
     +" day, high, low, qpf00, qpf12, pop00, pop12, wind14, ceil02, vis02, qsf00, qsf12) VALUES "
-    +" ('"+ thisUser.getUserID()+"'"
-    +", '"+ thisUser.getPortfolio() +"', 'TOMORROW'::date,"+ hi_t +", "
-    +" "+ lo_t +", "
-    +" "+ qpf00 +", "+ qpf12 +", "+ pop00 +", "+ pop12 +", "+ wind14 +", "+ ceil02 +", "+ vis02 +", "+ qsf00 +", "+ qsf12 +" ) ");
+    +" (?, ?, 'TOMORROW'::date, ?::numeric, ?::numeric, ?::numeric, ?::numeric, ?::numeric, "
+    +" ?::numeric, ?::numeric, ?::numeric, ?::numeric, ?::numeric, ?::numeric) ",
+    thisUser.getUserID(), thisUser.getPortfolio(), hi_t, lo_t, qpf00, qpf12, pop00, pop12,
+    wind14, ceil02, vis02, qsf00, qsf12);
    out.println("<p>Done!");
  }
 %>

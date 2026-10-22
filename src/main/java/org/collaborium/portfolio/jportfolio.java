@@ -23,7 +23,6 @@ package org.collaborium.portfolio;
  */
 import java.io.*;
 import java.sql.*;
-import java.util.Arrays;
 import javax.servlet.*;
 import javax.servlet.http.*;
 
@@ -448,15 +447,12 @@ public class jportfolio extends HttpServlet {
     try {
       rs =
           dbInterface.callDB(
-              "SELECT m.body, "
-                  + " to_char(m.issue, 'DD Month YYYY HH12:MI AM') as issued ,"
+              "SELECT m.body,  to_char(m.issue, 'DD Month YYYY HH12:MI AM') as issued ,"
                   + " m.issue as issue , p.instructor,"
                   + " p.about, p.name, p.homepage, p.porthome from portfolios p, "
-                  + " motd m WHERE p.portfolio = m.portfolio AND"
-                  + " p.portfolio = '"
-                  + thisUser.getPortfolio()
-                  + "' "
-                  + " ORDER by issue DESC LIMIT 1");
+                  + " motd m WHERE p.portfolio = m.portfolio AND p.portfolio = ? "
+                  + " ORDER by issue DESC LIMIT 1",
+              thisUser.getPortfolio());
 
       if (rs.next()) {
         motd = rs.getString("body");
@@ -587,12 +583,10 @@ public class jportfolio extends HttpServlet {
 
     try {
       rs =
-          dbInterface.callDBWithParameters(
-              "SELECT body, to_char(issue, 'DD Month YYYY HH12:MI AM') "
-                  + " as issued, issue "
-                  + " from motd WHERE portfolio = ? "
-                  + " ORDER by issue DESC",
-              Arrays.asList(thisUser.getPortfolio()));
+          dbInterface.callDB(
+              "SELECT body, to_char(issue, 'DD Month YYYY HH12:MI AM')  as issued, issue "
+                  + " from motd WHERE portfolio = ?  ORDER by issue DESC",
+              thisUser.getPortfolio());
 
       while (rs.next()) {
         sbuf.append(

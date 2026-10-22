@@ -35,9 +35,7 @@
   try{
   ResultSet rs = dbInterface.callDB("select * from dialog WHERE "
     + threadSpec
-    +" and portfolio = '"+ thisUser.getPortfolio() +"' "
-    +" and security = 'public' and username = '"+ thisUser.getUserID() +"' "
-    +" ORDER by date ");
+    +" and portfolio = ?  and security = 'public' and username = ?  ORDER by date ", thisUser.getPortfolio(), thisUser.getUserID());
 
   out.println("<table>\n");
   while ( rs.next() ){

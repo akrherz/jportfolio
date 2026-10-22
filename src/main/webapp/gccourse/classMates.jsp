@@ -8,11 +8,9 @@
 <%
   ResultSet rs = dbInterface.callDB("SELECT getUserName(b.username) as name, "
    +" b.username, b.body from biosketch b, students s WHERE "
-   +" s.username = b.username and "
-   +" s.username NOT IN "
+   +" s.username = b.username and  s.username NOT IN "
        +" (select username from students WHERE portfolio = 'aal2005' and "
-       +" username != 'akrherz' and username != 'gstakle' )"
-   +" and s.portfolio = '"+ thisUser.getPortfolio() +"' ");
+       +" username != 'akrherz' and username != 'gstakle' ) and s.portfolio = ? ", thisUser.getPortfolio());
 
   while (rs.next() ){
      String userName = (String)rs.getString("username");

@@ -26,7 +26,6 @@ package org.collaborium.users;
 import java.io.*;
 import java.sql.*;
 import java.text.*;
-import java.util.Arrays;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import org.collaborium.portfolio.*;
@@ -96,12 +95,10 @@ public class Users extends HttpServlet {
     sbuf.append(jlib.topBox("My Portfolios"));
     try {
       ResultSet rs =
-          dbInterface.callDBWithParameters(
-              "select s.portfolio, p.name, "
-                  + " p.porthome from students s, portfolios p WHERE "
-                  + " s.username = $1 and "
-                  + " p.portfolio = s.portfolio",
-              Arrays.asList(requestedUser));
+          dbInterface.callDB(
+              "select s.portfolio, p.name,  p.porthome from students s, portfolios p WHERE "
+                  + " s.username = ? and  p.portfolio = s.portfolio",
+              requestedUser);
 
       while (rs.next()) {
         sbuf.append(
@@ -126,10 +123,8 @@ public class Users extends HttpServlet {
     try {
       ResultSet rs =
           dbInterface.callDB(
-              "SELECT getUserName(username) as realn, * from users"
-                  + " WHERE username = '"
-                  + requestedUser
-                  + "' ");
+              "SELECT getUserName(username) as realn, * from users WHERE username = ? ",
+              requestedUser);
 
       if (rs.next()) {
         sbuf.append("<TABLE>\n");
@@ -144,8 +139,7 @@ public class Users extends HttpServlet {
       }
 
       ResultSet rs2 =
-          dbInterface.callDBWithParameters(
-              "SELECT body from biosketch WHERE " + " username = ? ", Arrays.asList(requestedUser));
+          dbInterface.callDB("SELECT body from biosketch WHERE username = ? ", requestedUser);
       if (rs2.next()) bioSketch = rs2.getString("body");
 
     } catch (Exception ex) {

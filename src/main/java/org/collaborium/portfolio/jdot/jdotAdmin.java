@@ -226,8 +226,7 @@ public class jdotAdmin extends HttpServlet {
       // Find me the new ThreadID to use
       ResultSet maxth =
           dbInterface.callDB(
-              "select MAX (idnum)+1 as result "
-                  + "from dialog WHERE idnum > 10000 and idnum < 20000");
+              "select MAX (idnum)+1 as result from dialog WHERE idnum > 10000 and idnum < 20000");
       String newSTRidnum = null;
       if (maxth != null && maxth.next()) {
         newSTRidnum = maxth.getString("result");
@@ -239,80 +238,49 @@ public class jdotAdmin extends HttpServlet {
         sbuf.append("<P>This is a post was assigned to all users in " + " the portfolio.\n");
         students =
             dbInterface.callDB(
-                "SELECT username from students "
-                    + " WHERE portfolio = '"
-                    + thisUser.getPortfolio()
-                    + "' ");
+                "SELECT username from students WHERE portfolio = ?", thisUser.getPortfolio());
         // Default security for a portfolio assignment
         security = "public";
         // Something bogus for a gid, it is needed so that all is not used
         groupID = "-99";
         jlib.updateDB(
-            "INSERT into calendar(portfolio, description, URL) VALUES "
-                + " ('"
-                + thisUser.getPortfolio()
-                + "', 'Dialog Assigned', "
-                + " '"
-                + portbase
-                + "?dialogType=public&mode=r&idnum="
-                + newSTRidnum
-                + "' ) ");
+            "INSERT into calendar(portfolio, description, URL) VALUES (?, ?, ?)",
+            thisUser.getPortfolio(),
+            "Dialog Assigned",
+            portbase + "?dialogType=public&mode=r&idnum=" + newSTRidnum);
       } else // Otherwise just get a listing of students in the group
       students =
             dbInterface.callDB(
-                "SELECT username from students WHERE portfolio = "
-                    + " '"
-                    + thisUser.getPortfolio()
-                    + "' and gid = "
-                    + groupID
-                    + " ");
+                "SELECT username from students WHERE portfolio = ? and gid = ?::numeric",
+                thisUser.getPortfolio(),
+                groupID);
 
       // Put in the DB
       jlib.updateDB(
           "INSERT into dialog(username, name, subject, threadid, idnum, "
-              + " portfolio, security, gid, body, type, expires) values ('"
-              + thisUser.getUserID()
-              + "', "
-              + " '"
-              + thisUser.getRealName()
-              + "', '"
-              + subject
-              + "' "
-              + " , '"
-              + newSTRidnum
-              + "', '"
-              + newSTRidnum
-              + "', '"
-              + thisUser.getPortfolio()
-              + "', '"
-              + security
-              + "', '"
-              + groupID
-              + "' "
-              + " , '"
-              + bodyText
-              + "', 'Response Required', '"
-              + dateDue
-              + "')");
+              + "portfolio, security, gid, body, type, expires) "
+              + "values (?, ?, ?, ?::numeric, ?::numeric, ?, ?, ?::numeric, ?, ?, ?::timestamp)",
+          thisUser.getUserID(),
+          thisUser.getRealName(),
+          subject,
+          newSTRidnum,
+          newSTRidnum,
+          thisUser.getPortfolio(),
+          security,
+          groupID,
+          bodyText,
+          "Response Required",
+          dateDue);
 
       // For each student create a notification
       while (students.next()) {
         String thisUserID = students.getString("username");
         jlib.updateDB(
-            "INSERT into notify(username, portfolio, program, message) "
-                + " VALUES( '"
-                + thisUserID
-                + "', '"
-                + thisUser.getPortfolio()
-                + "',"
-                + "'"
-                + portbase
-                + "?dialogType="
-                + security
-                + "&mode=r&idnum="
-                + newSTRidnum
-                + "', "
-                + " 'Dialog Assigned:')");
+            "INSERT into notify(username, portfolio, program, message) VALUES (?, ?, ?, ?)",
+            thisUserID,
+            thisUser.getPortfolio(),
+            portbase + "?dialogType=" + security + "&mode=r&idnum=" + newSTRidnum,
+            "Dialog Assigned:");
       }
 
     } catch (Exception ex) {
@@ -337,9 +305,9 @@ public class jdotAdmin extends HttpServlet {
     String selectedUserID = (String) request.getParameter("selectedUser");
     String score1 = (String) request.getParameter("score1");
     String blockID = (String) request.getParameter("blockID");
-    String body1 = jlib.cleanString((String) request.getParameter("body1"));
+    String body1 = (String) request.getParameter("body1");
     String score2 = (String) request.getParameter("score2");
-    String body2 = jlib.cleanString((String) request.getParameter("body2"));
+    String body2 = (String) request.getParameter("body2");
     String notifyBaseURL = "/jportfolio/servlet/jdot3";
 
     try {
@@ -347,18 +315,15 @@ public class jdotAdmin extends HttpServlet {
       ResultSet portHome =
           dbInterface.callDB(
               "SELECT porthome from portfolios "
-                  + " WHERE portfolio = '"
-                  + thisUser.getPortfolio()
-                  + "' and "
-                  + " porthome != '/jportfolio/servlet/' ");
+                  + " WHERE portfolio = ? and porthome != '/jportfolio/servlet/'",
+              thisUser.getPortfolio());
       if (portHome.next()) {
         notifyBaseURL = portHome.getString("porthome") + "/dialog/index.jsp";
       }
 
       ResultSet maxth =
           dbInterface.callDB(
-              "select MAX (idnum)+1 as result1, "
-                  + " MAX (idnum)+2 as result2 from dialog "
+              "select MAX (idnum)+1 as result1,  MAX (idnum)+2 as result2 from dialog "
                   + " WHERE idnum > 10000 and idnum < 20000");
       String newSTRidnum1 = null;
       String newSTRidnum2 = null;
@@ -372,79 +337,45 @@ public class jdotAdmin extends HttpServlet {
       if (score1 != null && score1.length() != 0) {
         jlib.updateDB(
             "INSERT into dialog(username, name, subject, threadid, idnum, "
-                + " portfolio, security, gid, body, type, touser) values "
-                + " ('"
-                + thisUser.getUserID()
-                + "', "
-                + " '"
-                + thisUser.getRealName()
-                + "', 'Dialog Evaluation' "
-                + " , '"
-                + newSTRidnum1
-                + "', '"
-                + newSTRidnum1
-                + "', "
-                + " '"
-                + thisUser.getPortfolio()
-                + "', 'private', '-99' "
-                + " , '"
-                + body1
-                + "', 'evaluation', '"
-                + selectedUserID
-                + "')");
+                + "portfolio, security, gid, body, type, touser) "
+                + "values (?, ?, 'Dialog Evaluation', ?::numeric, ?::numeric, ?, "
+                + "'private', -99, ?, 'evaluation', ?)",
+            thisUser.getUserID(),
+            thisUser.getRealName(),
+            newSTRidnum1,
+            newSTRidnum1,
+            thisUser.getPortfolio(),
+            body1,
+            selectedUserID);
 
         jlib.updateDB(
-            "INSERT into notify(username, portfolio, program, message) "
-                + " VALUES( '"
-                + selectedUserID
-                + "', '"
-                + thisUser.getPortfolio()
-                + "',"
-                + " '"
-                + notifyBaseURL
-                + "?dialogType=private&mode=r&idnum="
-                + newSTRidnum1
-                + "', "
-                + " 'Evaluation Made:')");
+            "INSERT into notify(username, portfolio, program, message) VALUES (?, ?, ?, ?)",
+            selectedUserID,
+            thisUser.getPortfolio(),
+            notifyBaseURL + "?dialogType=private&mode=r&idnum=" + newSTRidnum1,
+            "Evaluation Made:");
       }
 
       if (score2 != null && score2.length() != 0) {
         jlib.updateDB(
             "INSERT into dialog(username, name, subject, threadid, idnum, "
-                + " portfolio, security, gid, body, type, touser) values "
-                + " ('"
-                + thisUser.getUserID()
-                + "', "
-                + " '"
-                + thisUser.getRealName()
-                + "', 'Ethical Q Evaluation' "
-                + " , '"
-                + newSTRidnum2
-                + "', '"
-                + newSTRidnum2
-                + "', "
-                + " '"
-                + thisUser.getPortfolio()
-                + "', 'private', '-99' "
-                + " , '"
-                + body2
-                + "', 'evaluation', '"
-                + selectedUserID
-                + "')");
+                + "portfolio, security, gid, body, type, touser) "
+                + "values (?, ?, 'Ethical Q Evaluation', ?::numeric, ?::numeric, ?, "
+                + "'private', -99, ?, 'evaluation', ?)",
+            thisUser.getUserID(),
+            thisUser.getRealName(),
+            newSTRidnum2,
+            newSTRidnum2,
+            thisUser.getPortfolio(),
+            body2,
+            selectedUserID);
 
         jlib.updateDB(
-            "INSERT into notify(username, portfolio, program, message) "
-                + " VALUES( '"
-                + selectedUserID
-                + "', '"
-                + thisUser.getPortfolio()
-                + "',"
-                + " '"
-                + notifyBaseURL
-                + "?dialogType=private&mode=r&idnum="
-                + newSTRidnum2
-                + "', "
-                + " 'Ethical Q Eval:')");
+            "INSERT into notify(username, portfolio, program, message) VALUES (?, ?, ?, ?)",
+            selectedUserID,
+            thisUser.getPortfolio(),
+            notifyBaseURL + "?dialogType=private&mode=r&idnum=" + newSTRidnum2,
+            "Ethical Q Eval:");
       }
 
       portfolioUser selectedUser = new portfolioUser(selectedUserID);
@@ -574,64 +505,43 @@ public class jdotAdmin extends HttpServlet {
       // Stats on user posts
       ResultSet rs =
           dbInterface.callDB(
-              "SELECT count(username) as count, "
-                  + " round(avg(length(body)),1) as length "
-                  + " from dialog WHERE username = '"
-                  + userID
-                  + "' "
-                  + " and security = 'public'"
-                  + " and portfolio = '"
-                  + portfolio
-                  + "' and threadid >= "
-                  + P01
-                  + " and threadid != "
-                  + ETHICAL
-                  + " and threadid <= "
-                  + P15
-                  + " and date(date) < '"
-                  + EDATE
-                  + "' ");
+              "SELECT count(username) as count, round(avg(length(body)),1) as length "
+                  + "from dialog WHERE username = ? and security = 'public' and portfolio = ? "
+                  + "and threadid >= ?::numeric and threadid != ?::numeric "
+                  + "and threadid <= ?::numeric and date(date) < ?::date",
+              userID,
+              portfolio,
+              Integer.parseInt(P01),
+              Integer.parseInt(ETHICAL),
+              Integer.parseInt(P15),
+              EDATE);
 
       // Go get me a listing of all their posts.
       ResultSet rs2 =
           dbInterface.callDB(
-              "SELECT idnum from dialog "
-                  + " WHERE username = '"
-                  + userID
-                  + "' "
-                  + " and security = 'public'"
-                  + " and portfolio = '"
-                  + portfolio
-                  + "' and threadid >= "
-                  + P01
-                  + " and threadid != "
-                  + ETHICAL
-                  + " and threadid <= "
-                  + P15
-                  + " and date(date) < '"
-                  + EDATE
-                  + "' ");
+              "SELECT idnum from dialog WHERE username = ? and security = 'public' "
+                  + "and portfolio = ? and threadid >= ?::numeric and threadid != ?::numeric "
+                  + "and threadid <= ?::numeric and date(date) < ?::date",
+              userID,
+              portfolio,
+              Integer.parseInt(P01),
+              Integer.parseInt(ETHICAL),
+              Integer.parseInt(P15),
+              EDATE);
 
       // Figure out how many responses they had
       ResultSet rs4 =
           dbInterface.callDB(
-              "SELECT count(username) as count "
-                  + " from dialog WHERE idnum > 1000000000000::numeric "
-                  + " and username = '"
-                  + userID
-                  + "' "
-                  + " and security = 'public'"
-                  + " and portfolio = '"
-                  + portfolio
-                  + "' and threadid >= "
-                  + P01
-                  + " and threadid != "
-                  + ETHICAL
-                  + " and threadid <= "
-                  + P15
-                  + " and date(date) < '"
-                  + EDATE
-                  + "' ");
+              "SELECT count(username) as count from dialog WHERE idnum > 1000000000000::numeric "
+                  + "and username = ? and security = 'public' and portfolio = ? "
+                  + "and threadid >= ?::numeric and threadid != ?::numeric "
+                  + "and threadid <= ?::numeric and date(date) < ?::date",
+              userID,
+              portfolio,
+              Integer.parseInt(P01),
+              Integer.parseInt(ETHICAL),
+              Integer.parseInt(P15),
+              EDATE);
       if (rs4.next()) responses = rs4.getString("count");
 
       // Loop through the user's posts
@@ -644,18 +554,12 @@ public class jdotAdmin extends HttpServlet {
 
         ResultSet rs3 =
             dbInterface.callDB(
-                "SELECT "
-                    + totalCount
-                    + " + count(username) as count "
-                    + "  from dialog WHERE username != '"
-                    + userID
-                    + "' "
-                    + " and idnum > "
-                    + beginID.toString()
-                    + "0000::numeric "
-                    + " and idnum < "
-                    + secondOne.toString()
-                    + "0000::numeric");
+                "SELECT ?::numeric + count(username) as count from dialog "
+                    + "WHERE username != ? and idnum > ?::numeric and idnum < ?::numeric",
+                totalCount,
+                userID,
+                beginID + "0000",
+                secondOne + "0000");
         if (rs3.next()) totalCount = rs3.getString("count");
       }
 
@@ -791,11 +695,9 @@ public class jdotAdmin extends HttpServlet {
     try {
       ResultSet rs =
           dbInterface.callDB(
-              "SELECT count(username) as posts, date(date) , avg(length(body)) "
-                  + "as len from dialog "
-                  + " WHERE portfolio = '"
-                  + portfolio
-                  + "' GROUP by date(date)");
+              "SELECT count(username) as posts, date(date), avg(length(body)) as len "
+                  + "from dialog WHERE portfolio = ? GROUP by date(date)",
+              portfolio);
       while (rs.next()) {
         String posts = rs.getString("posts");
         String strDate = rs.getString("date");

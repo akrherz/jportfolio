@@ -33,12 +33,22 @@ StringBuffer sbuf = new StringBuffer();
 
 ResultSet threads  = null;
 
-String SQL =  "SELECT * from dialog_"+year+" WHERE block_id = '"+block_id+"'"
-	+" and portfolio = 'gcp"+year+"' and category = 'public' order by thedate ASC";
+String[] validYears = {"1996", "1997", "1998", "1999", "2000", "2001"};
+boolean validYear = false;
+for (String validYearValue : validYears) {
+  if (validYearValue.equals(year)) {
+    validYear = true;
+    break;
+  }
+}
 
-//out.println(SQL);
-// Lets make the query and figure out
-threads = dbInterface.callDB(SQL);
+if (validYear) {
+  String SQL = "SELECT * from dialog_" + year + " WHERE block_id = ?"
+    + " and portfolio = ? and category = 'public' order by thedate ASC";
+  threads = dbInterface.callDB(SQL, block_id, "gcp" + year);
+} else {
+  out.println("Invalid year.");
+}
 
 
 sbuf.append("<table width=600>");

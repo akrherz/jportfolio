@@ -111,8 +111,8 @@ also need to enter an access password in order to register for a network.</p>
   } else {
   /** All systems are go... */
 //  // Load up a hashtable of Station Conversions
-//  ResultSet rs_st = dbInterface.callDB("SELECT * from iem_sites "
-//  +" WHERE portfolio = '"+ thisUser.getPortfolio() +"' ");
+//  ResultSet rs_st = dbInterface.callDB("SELECT * from iem_sites WHERE portfolio = ?",
+//      thisUser.getPortfolio());
 //  Hashtable stns = new Hashtable(100);
 //  while ( rs.next() ){
 //    stns.put( rs_st.getString("s_mid"), rs_st.getString("name") );

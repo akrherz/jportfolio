@@ -6,7 +6,7 @@
 <p>Here is a listing of students that have entered their Bio.</p>
 
 <%
-  ResultSet rs = dbInterface.callDB("SELECT getUserName(b.username) as name, b.username, b.body from biosketch b, students s WHERE s.username = b.username and s.portfolio = '"+ thisUser.getPortfolio() +"' ");
+  ResultSet rs = dbInterface.callDB("SELECT getUserName(b.username) as name, b.username, b.body from biosketch b, students s WHERE s.username = b.username and s.portfolio = ? ", thisUser.getPortfolio());
   String userName = null;
   while (rs.next() ){
 	userName = (String)rs.getString("username");

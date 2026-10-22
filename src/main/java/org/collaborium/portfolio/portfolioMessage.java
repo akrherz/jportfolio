@@ -105,8 +105,7 @@ public class portfolioMessage {
   }
 
   private void getMessage() throws SQLException {
-    ResultSet rs =
-        dbInterface.callDB("SELECT * from dialog " + " WHERE idnum = '" + idnum + "'::numeric ");
+    ResultSet rs = dbInterface.callDB("SELECT * from dialog WHERE idnum = ?::numeric ", idnum);
 
     if (rs.next()) {
       // Okay, now we begin assignments
@@ -167,41 +166,22 @@ public class portfolioMessage {
   public void commitMessage() {
     //    plogger.report(authorName +"::"+ subject +"::"+ body );
     dbInterface.updateDB(
-        "insert into dialog (username, name, "
-            + " subject, body, threadid, "
+        "insert into dialog (username, name,  subject, body, threadid, "
             + " idnum, portfolio, type, security, gID, link, topicid)"
-            + " values('"
-            + author
-            + "', '"
-            + stringUtils.cleanString(authorName)
-            + "', "
-            + " '"
-            + stringUtils.cleanString(subject)
-            + "',"
-            + " '"
-            + stringUtils.cleanString(body)
-            + "', "
-            + " '"
-            + threadID
-            + "',"
-            + " '"
-            + idnum
-            + "', '"
-            + portfolio
-            + "', "
-            + " '"
-            + stringUtils.cleanString(classification)
-            + "', "
-            + " '"
-            + security
-            + "', "
-            + gid
-            + " , '"
-            + stringUtils.cleanString(link)
-            + "', "
-            + " '"
-            + topicid
-            + "')");
+            + " values(?, ?, ?, ?, ?::numeric, ?::numeric, ?, ?, ?, ?::int, ?, "
+            + " NULLIF(?, '')::int)",
+        author,
+        stringUtils.cleanString(authorName),
+        stringUtils.cleanString(subject),
+        stringUtils.cleanString(body),
+        threadID,
+        idnum,
+        portfolio,
+        stringUtils.cleanString(classification),
+        security,
+        gid,
+        stringUtils.cleanString(link),
+        topicid);
   }
 
   /**
@@ -362,13 +342,10 @@ public class portfolioMessage {
     try {
       ResultSet rs2 =
           dbInterface.callDB(
-              "select count(name) as result "
-                  + " from dialog where idnum > "
-                  + idnum
-                  + "0000::numeric "
-                  + " and idnum < "
-                  + secondOne
-                  + "0000::numeric ");
+              "select count(name) as result  from dialog where idnum > ?::numeric "
+                  + " and idnum < ?::numeric ",
+              idnum + "0000",
+              secondOne + "0000");
       rs2.next();
       numMessages = rs2.getString("result");
     } catch (Exception ex) {
@@ -541,8 +518,7 @@ public class portfolioMessage {
 
   public void addSmile() {
     try {
-      dbInterface.updateDB(
-          "UPDATE dialog SET smile = smile + 1 WHERE " + " idnum = " + idnum + " ");
+      dbInterface.updateDB("UPDATE dialog SET smile = smile + 1 WHERE idnum = ?::numeric ", idnum);
 
     } catch (Exception ex) {
       plogger.report("Error in trying to add a smile.");
@@ -552,8 +528,7 @@ public class portfolioMessage {
 
   public void addFrown() {
     try {
-      dbInterface.updateDB(
-          "UPDATE dialog SET frown = frown + 1 WHERE " + " idnum = " + idnum + " ");
+      dbInterface.updateDB("UPDATE dialog SET frown = frown + 1 WHERE idnum = ?::numeric ", idnum);
 
     } catch (Exception ex) {
       plogger.report("Error in trying to add a frown.");
@@ -564,7 +539,7 @@ public class portfolioMessage {
   public void addCatFrown() {
     try {
       dbInterface.updateDB(
-          "UPDATE dialog SET cat_frown = cat_frown + 1 WHERE " + " idnum = " + idnum + " ");
+          "UPDATE dialog SET cat_frown = cat_frown + 1 WHERE idnum = ?::numeric ", idnum);
 
     } catch (Exception ex) {
       plogger.report("Error in trying to add a frown.");
@@ -575,7 +550,7 @@ public class portfolioMessage {
   public void addLearnFrown() {
     try {
       dbInterface.updateDB(
-          "UPDATE dialog SET learn_frown = learn_frown + 1 WHERE " + " idnum = " + idnum + " ");
+          "UPDATE dialog SET learn_frown = learn_frown + 1 WHERE idnum = ?::numeric ", idnum);
 
     } catch (Exception ex) {
       plogger.report("Error in trying to add a frown.");
@@ -586,7 +561,7 @@ public class portfolioMessage {
   public void addCatSmile() {
     try {
       dbInterface.updateDB(
-          "UPDATE dialog SET cat_smile = cat_smile + 1 WHERE " + " idnum = " + idnum + " ");
+          "UPDATE dialog SET cat_smile = cat_smile + 1 WHERE idnum = ?::numeric ", idnum);
 
     } catch (Exception ex) {
       plogger.report("Error in trying to add a smile.");
@@ -597,7 +572,7 @@ public class portfolioMessage {
   public void addLearnSmile() {
     try {
       dbInterface.updateDB(
-          "UPDATE dialog SET learn_smile = learn_smile + 1 WHERE " + " idnum = " + idnum + " ");
+          "UPDATE dialog SET learn_smile = learn_smile + 1 WHERE idnum = ?::numeric ", idnum);
 
     } catch (Exception ex) {
       plogger.report("Error in trying to add a smile.");

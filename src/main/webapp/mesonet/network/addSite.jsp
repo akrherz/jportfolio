@@ -83,8 +83,8 @@ fill out the following form and submit the values when finished.</p>
 </tr>
 
 <%
-  ResultSet rs = dbInterface.callDB("SELECT * from iem_sensors WHERE "
-   +" portfolio = '"+thisUser.getPortfolio() +"' ");
+  ResultSet rs = dbInterface.callDB("SELECT * from iem_sensors WHERE portfolio = ?",
+   thisUser.getPortfolio());
   StringBuffer sbuf = new StringBuffer();
   sbuf.append("<option value='null'>None\n");
   while ( rs.next() ){

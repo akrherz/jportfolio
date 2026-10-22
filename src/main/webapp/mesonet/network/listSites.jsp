@@ -16,8 +16,8 @@ on the name you can get a more detailed and editable listing of station
 attributes.</p>
 
 <%
-  ResultSet lsites = dbInterface.callDB("SELECT * from iem_sites WHERE "
-   +" portfolio = '"+thisUser.getPortfolio()+"' ");
+  ResultSet lsites = dbInterface.callDB("SELECT * from iem_sites WHERE portfolio = ?",
+   thisUser.getPortfolio());
   if ( lsites == null ){
     out.println("<p>Could not find any sites for this network.  Perhaps you "
      +" would like to <a href='/jportfolio/mesonet/network/addSite.jsp'>Add "

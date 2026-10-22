@@ -19,6 +19,8 @@ package org.collaborium.portfolio;
 
 import java.io.*;
 import java.sql.*;
+import java.util.Collections;
+import java.util.List;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import org.collaborium.util.*;
@@ -209,8 +211,7 @@ public class jquizAdmin extends HttpServlet {
 
     try {
       ResultSet rs =
-          jlib.callDB(
-              "SELECT * from quizes WHERE " + " portfolio = '" + thisUser.getPortfolio() + "' ");
+          jlib.callDB("SELECT * from quizes WHERE portfolio = ? ", thisUser.getPortfolio());
       while (rs.next()) {
         String qid = rs.getString("quiznum");
         String qname = rs.getString("qname");
@@ -250,22 +251,16 @@ public class jquizAdmin extends HttpServlet {
 
       ResultSet rs =
           jlib.callDB(
-              "SELECT score, getUserName(userid) as name from scores s "
-                  + " WHERE s.portfolio = '"
-                  + thisUser.getPortfolio()
-                  + "' "
-                  + " and s.assign = '"
-                  + quizName
-                  + "' ");
+              "SELECT score, getUserName(userid) as name from scores s  WHERE s.portfolio = ? "
+                  + " and s.assign = ? ",
+              thisUser.getPortfolio(),
+              quizName);
       ResultSet rs2 =
           jlib.callDB(
-              "SELECT AVG(score) as average_score from scores s "
-                  + " WHERE s.portfolio = '"
-                  + thisUser.getPortfolio()
-                  + "' "
-                  + " and s.assign = '"
-                  + quizName
-                  + "' ");
+              "SELECT AVG(score) as average_score from scores s  WHERE s.portfolio = ? "
+                  + " and s.assign = ? ",
+              thisUser.getPortfolio(),
+              quizName);
       rs2.next();
       sbuf.append("<P>Average Score: " + rs2.getString("average_score"));
       sbuf.append("<P><TABLE>\n");
@@ -328,12 +323,9 @@ public class jquizAdmin extends HttpServlet {
     try {
       ResultSet rs =
           jlib.callDB(
-              "SELECT * from questions "
-                  + " WHERE qid = '"
-                  + qid
-                  + "' and portfolio = '"
-                  + thisUser.getPortfolio()
-                  + "' ");
+              "SELECT * from questions  WHERE qid = ?::int and portfolio = ? ",
+              qid,
+              thisUser.getPortfolio());
 
       if (rs.next()) {
         String question = jlib.cleanString(rs.getString("question"));
@@ -425,70 +417,41 @@ public class jquizAdmin extends HttpServlet {
     if (qid != null) {
       try {
         jlib.updateDB(
-            "UPDATE questions SET question = '"
-                + question
-                + "', "
-                + " optiona = '"
-                + optiona
-                + "', "
-                + " optionb = '"
-                + optionb
-                + "', "
-                + " optionc = '"
-                + optionc
-                + "', "
-                + " optiond = '"
-                + optiond
-                + "', "
-                + " optione = '"
-                + optione
-                + "', "
-                + " optionf = '"
-                + optionf
-                + "', "
-                + " optiong = '"
-                + optiong
-                + "', "
-                + " optionh = '"
-                + optionh
-                + "', answer = '"
-                + answer
-                + "' WHERE qid = "
-                + qid
-                + " ");
+            "UPDATE questions SET question = ?, "
+                + " optiona = ?, optionb = ?, optionc = ?, optiond = ?, "
+                + " optione = ?, optionf = ?, optiong = ?, optionh = ?, "
+                + " answer = ? WHERE qid = ?::int ",
+            question,
+            optiona,
+            optionb,
+            optionc,
+            optiond,
+            optione,
+            optionf,
+            optiong,
+            optionh,
+            answer,
+            qid);
 
       } catch (Exception ex) {
       }
     } else {
       try {
         jlib.updateDB(
-            "INSERT into questions(portfolio, question, optiona, optionb, "
-                + "optionc, optiond,"
+            "INSERT into questions(portfolio, question, optiona, optionb, optionc, optiond,"
                 + " optione, optionf, optiong, optionh, answer)"
-                + " VALUES ('"
-                + thisUser.getPortfolio()
-                + "', '"
-                + question
-                + "', '"
-                + optiona
-                + "' , '"
-                + optionb
-                + "', '"
-                + optionc
-                + "', "
-                + " '"
-                + optiond
-                + "', '"
-                + optione
-                + "', '"
-                + optionf
-                + "', '"
-                + optiong
-                + "', '"
-                + optionh
-                + "', '"
-                + answer
-                + "') ");
+                + " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ",
+            thisUser.getPortfolio(),
+            question,
+            optiona,
+            optionb,
+            optionc,
+            optiond,
+            optione,
+            optionf,
+            optiong,
+            optionh,
+            answer);
 
       } catch (Exception ex) {
         System.err.println("Error caught trying to enter Q.");
@@ -535,11 +498,9 @@ public class jquizAdmin extends HttpServlet {
     try {
       ResultSet portHome =
           dbInterface.callDB(
-              "SELECT porthome from portfolios "
-                  + " WHERE portfolio = '"
-                  + thisUser.getPortfolio()
-                  + "' and "
-                  + " porthome != '/jportfolio/servlet/' ");
+              "SELECT porthome from portfolios  WHERE portfolio = ? and "
+                  + " porthome != '/jportfolio/servlet/' ",
+              thisUser.getPortfolio());
       if (portHome.next()) {
         // notifyBaseURL = portHome.getString("porthome") +"/quiz/index.jsp";
       }
@@ -552,74 +513,48 @@ public class jquizAdmin extends HttpServlet {
       // table.
       ResultSet tester =
           jlib.callDB(
-              "SELECT quiznum from quizes "
-                  + " WHERE qname = '"
-                  + qName
-                  + "' and portfolio = '"
-                  + thisUser.getPortfolio()
-                  + "'");
+              "SELECT quiznum from quizes WHERE qname = ? and portfolio = ?",
+              qName,
+              thisUser.getPortfolio());
       if (!tester.next()) {
 
         // Create Quiz Entry
         jlib.updateDB(
             "INSERT into quizes(qname, portfolio, question1, question2, "
                 + " question3, startDate, stopDate, attempts, topicid)"
-                + " VALUES ('"
-                + qName
-                + "', '"
-                + thisUser.getPortfolio()
-                + "', "
-                + question1
-                + ", '"
-                + question2
-                + "' ,"
-                + "  "
-                + question3
-                + ", '"
-                + startDate
-                + "', '"
-                + endDate
-                + "', "
-                + attempt
-                + ", '"
-                + topicid
-                + "') ");
+                + " VALUES (?, ?, ?::int, ?::int, ?::int, ?::timestamp, ?::timestamp, "
+                + " ?::int, ?::int) ",
+            qName,
+            thisUser.getPortfolio(),
+            question1,
+            question2,
+            question3,
+            startDate,
+            endDate,
+            attempt,
+            topicid);
         // Figure out what quiznum this quiz was assigned
         ResultSet test2 =
             jlib.callDB(
-                "SELECT quiznum from quizes WHERE "
-                    + " qname = '"
-                    + qName
-                    + "' and portfolio = '"
-                    + thisUser.getPortfolio()
-                    + "'");
+                "SELECT quiznum from quizes WHERE qname = ? and portfolio = ?",
+                qName,
+                thisUser.getPortfolio());
         test2.next();
         String thisQuizNum = test2.getString("quiznum");
 
         // Create Calendar Entries
         jlib.updateDB(
             "INSERT into calendar(valid, portfolio, description, url) VALUES "
-                + " ('"
-                + startDate
-                + "', '"
-                + thisUser.getPortfolio()
-                + "', 'Quiz "
-                + qName
-                + " Available', "
-                + " '"
-                + notifyBaseURL
-                + "?mode=t&qid="
-                + thisQuizNum
-                + "')");
+                + " (?::timestamp, ?, ?, ?)",
+            startDate,
+            thisUser.getPortfolio(),
+            "Quiz " + qName + " Available",
+            notifyBaseURL + "?mode=t&qid=" + thisQuizNum);
         jlib.updateDB(
-            "INSERT into calendar(valid, portfolio, description) VALUES "
-                + " ('"
-                + endDate
-                + "', '"
-                + thisUser.getPortfolio()
-                + "', 'Quiz "
-                + qName
-                + " Expires')");
+            "INSERT into calendar(valid, portfolio, description) VALUES  (?::timestamp, ?, ?)",
+            endDate,
+            thisUser.getPortfolio(),
+            "Quiz " + qName + " Expires");
 
         sbuf.append("Input Quiz was successful!");
       } else {
@@ -719,10 +654,8 @@ public class jquizAdmin extends HttpServlet {
     try {
       rs =
           jlib.callDB(
-              "SELECT qname, startdate, stopdate from quizes "
-                  + " WHERE portfolio = '"
-                  + thisUser.getPortfolio()
-                  + "' ");
+              "SELECT qname, startdate, stopdate from quizes WHERE portfolio = ? ",
+              thisUser.getPortfolio());
       while (rs.next()) {
 
         sbuf.append(
@@ -762,13 +695,14 @@ public class jquizAdmin extends HttpServlet {
     sbuf.append("<option value='null'>No question\n");
     ResultSet rs = null;
     try {
+      List<String> pids = thisUser.myPortfolio.getPList();
+      String marks = String.join(",", Collections.nCopies(pids.size(), "?"));
       rs =
           jlib.callDB(
-              "SELECT qid, question from questions "
-                  + " WHERE portfolio IN "
-                  + thisUser.myPortfolio.getPList()
-                  + " "
-                  + " ORDER by question");
+              "SELECT qid, question from questions  WHERE portfolio IN ("
+                  + marks
+                  + ")  ORDER by question",
+              pids.toArray());
       while (rs.next()) {
         try {
           sbuf.append(

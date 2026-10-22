@@ -11,8 +11,7 @@
 <%
 portfolioUser thisUser = (portfolioUser)session.getAttribute("User");
 
-ResultSet myResultSet = pgsql.doSQL("Select * from scores "
-	+" where userid ='"+ thisUser.getUserID() +"' and portfolio = '"+ thisUser.getPortfolio() +"' ");
+ResultSet myResultSet = jlib.callDB("Select * from scores  where userid = ? and portfolio = ?", thisUser.getUserID(), thisUser.getPortfolio());
 %>
 
 <link rel=stylesheet type=text/css href="<%= jlib.httpBase%>/css/<%= thisUser.getStyle() %>.css">

@@ -242,17 +242,12 @@ public class jquiz extends HttpServlet {
     try {
       rs =
           jlib.callDB(
-              "SELECT a.qid, q.qname, s.score from quizattempts a, "
-                  + " quizes q, scores s "
-                  + " WHERE a.userID = '"
-                  + thisUser.getUserID()
-                  + "' "
-                  + " and a.portfolio = '"
-                  + thisUser.getPortfolio()
-                  + "' "
-                  + " and a.qid = q.quiznum and s.assign = q.quiznum "
-                  + " and s.userid = a.userID "
-                  + (" and s.portfolio = a.portfolio and q.stopdate < " + "CURRENT_TIMESTAMP "));
+              "SELECT a.qid, q.qname, s.score from quizattempts a,  quizes q, scores s "
+                  + " WHERE a.userID = ?  and a.portfolio = ? "
+                  + " and a.qid = q.quiznum and s.assign = q.quiznum  and s.userid = a.userID "
+                  + (" and s.portfolio = a.portfolio and q.stopdate < CURRENT_TIMESTAMP "),
+              thisUser.getUserID(),
+              thisUser.getPortfolio());
       while (rs.next()) {
         sbuf.append(
             "<TR><TD> "
@@ -318,60 +313,39 @@ public class jquiz extends HttpServlet {
          */
         ResultSet rs6 =
             jlib.callDB(
-                "SELECT attempt +1 as att from quizattempts WHERE"
-                    + " userid = '"
-                    + thisUser.getUserID()
-                    + "' "
-                    + " and portfolio = '"
-                    + thisUser.getPortfolio()
-                    + "' "
-                    + " and qid = '"
-                    + quizID
-                    + "' ");
+                "SELECT attempt +1 as att from quizattempts WHERE userid = ? "
+                    + " and portfolio = ?  and qid = ?::int ",
+                thisUser.getUserID(),
+                thisUser.getPortfolio(),
+                quizID);
         if (rs6.next()) {
           thisAttempt = rs6.getString("att");
         }
 
         /** Now query the DB to see how many attempts are allowed for this quiz */
-        ResultSet rs7 =
-            jlib.callDB("SELECT attempts FROM quizes " + " WHERE quiznum = " + quizID + " ");
+        ResultSet rs7 = jlib.callDB("SELECT attempts FROM quizes  WHERE quiznum = ?::int ", quizID);
         rs7.next();
         String allowedAttempts = rs7.getString("attempts");
 
         if (thisQuiz.goodAttempt(thisAttempt)) { // Allowed
           // Delete previous quiz attempts
           jlib.updateDB(
-              "DELETE from quizattempts WHERE"
-                  + " userid = '"
-                  + thisUser.getUserID()
-                  + "' "
-                  + " and portfolio = '"
-                  + thisUser.getPortfolio()
-                  + "' "
-                  + " and qid = '"
-                  + quizID
-                  + "' ");
+              "DELETE from quizattempts WHERE userid = ?  and portfolio = ?  and qid = ?::int ",
+              thisUser.getUserID(),
+              thisUser.getPortfolio(),
+              quizID);
           // Save this quiz attempt
           jlib.updateDB(
               "INSERT into quizattempts(qid, question1, question2, question3,"
                   + " userid, portfolio, attempt) VALUES"
-                  + " ("
-                  + quizID
-                  + ", "
-                  + " '"
-                  + question1
-                  + "', '"
-                  + question2
-                  + "', '"
-                  + question3
-                  + "', "
-                  + " '"
-                  + thisUser.getUserID()
-                  + "', '"
-                  + thisUser.getPortfolio()
-                  + "', "
-                  + thisAttempt
-                  + ")");
+                  + " (?::int, ?, ?, ?, ?, ?, ?::int)",
+              quizID,
+              question1,
+              question2,
+              question3,
+              thisUser.getUserID(),
+              thisUser.getPortfolio(),
+              thisAttempt);
           sbuf.append("Your quiz attempt has successfully been saved.");
 
           sbuf.append("<H3>Quiz Grade:</H3>");
@@ -388,13 +362,9 @@ public class jquiz extends HttpServlet {
             if (numQs.equalsIgnoreCase(myRight)) {
               sbuf.append("<BR>You got them all right!\n");
               jlib.updateDB(
-                  "UPDATE quizattempts SET attempt = -1 "
-                      + " WHERE userid = '"
-                      + thisUser.getUserID()
-                      + "' "
-                      + " and portfolio = '"
-                      + thisUser.getPortfolio()
-                      + "' ");
+                  "UPDATE quizattempts SET attempt = -1  WHERE userid = ?  and portfolio = ? ",
+                  thisUser.getUserID(),
+                  thisUser.getPortfolio());
               sbuf.append(
                   "<BR>Since you answered the questions correctly, "
                       + " you will not be allowed to take the quiz again.\n");
@@ -447,8 +417,7 @@ public class jquiz extends HttpServlet {
          */
         ResultSet maxth =
             jlib.callDB(
-                "select MAX (idnum)+1 as result from dialog"
-                    + " WHERE idnum > 10000 and idnum < 20000");
+                "select MAX (idnum)+1 as result from dialog WHERE idnum > 10000 and idnum < 20000");
         maxth.next();
         myMessage.setidnum(maxth.getString("result"));
         myMessage.setThreadID(maxth.getString("result"));
@@ -470,22 +439,11 @@ public class jquiz extends HttpServlet {
         for (int i = 0; i < myVect.size(); i++) {
           String thisUserID = (String) myVect.get(i);
           dbInterface.updateDB(
-              "insert into notify(username, portfolio, program "
-                  + ", message) values('"
-                  + thisUserID
-                  + "', '"
-                  + thisUser.getPortfolio()
-                  + "' "
-                  + ", '"
-                  + notifyBaseURL2
-                  + "?dialogType=private&mode=r&idnum="
-                  + myMessage.getidnum()
-                  + "' "
-                  + ", 'Quiz "
-                  + thisQuizName
-                  + " Response: "
-                  + thisUser.getRealName()
-                  + "')");
+              "insert into notify(username, portfolio, program , message) values(?, ? , ?, ?)",
+              thisUserID,
+              thisUser.getPortfolio(),
+              notifyBaseURL2 + "?dialogType=private&mode=r&idnum=" + myMessage.getidnum(),
+              "Quiz " + thisQuizName + " Response: " + thisUser.getRealName());
         }
       } // End of Dialog insert
 
@@ -519,11 +477,9 @@ public class jquiz extends HttpServlet {
 
         ResultSet portHome =
             dbInterface.callDB(
-                "SELECT porthome "
-                    + " from portfolios WHERE portfolio = '"
-                    + thisUser.getPortfolio()
-                    + "' "
-                    + " and  porthome != '/jportfolio/servlet/' ");
+                "SELECT porthome  from portfolios WHERE portfolio = ? "
+                    + " and  porthome != '/jportfolio/servlet/' ",
+                thisUser.getPortfolio());
         if (portHome.next()) {
           notifyBaseURL = portHome.getString("porthome") + "/quiz/index.jsp";
           notifyBaseURL2 = portHome.getString("porthome") + ("/dialog/" + "index.jsp");
@@ -531,8 +487,7 @@ public class jquiz extends HttpServlet {
 
         ResultSet maxth =
             jlib.callDB(
-                "select MAX (idnum)+1 as result "
-                    + " from dialog  WHERE idnum > 10000 and idnum < 20000");
+                "select MAX (idnum)+1 as result  from dialog  WHERE idnum > 10000 and idnum < 20000");
         maxth.next();
         myMessage.setidnum(maxth.getString("result"));
         myMessage.setThreadID(maxth.getString("result"));
@@ -554,22 +509,11 @@ public class jquiz extends HttpServlet {
         for (int i = 0; i < myVect.size(); i++) {
           String thisUserID = (String) myVect.get(i);
           dbInterface.updateDB(
-              "insert into notify(username, portfolio, "
-                  + " program, message) values('"
-                  + thisUserID
-                  + "', "
-                  + " '"
-                  + thisUser.getPortfolio()
-                  + "' , '"
-                  + notifyBaseURL2
-                  + "?dialogType=private&mode=r&idnum="
-                  + myMessage.getidnum()
-                  + "' "
-                  + ",'Post Quiz "
-                  + thisQuizName
-                  + " Response: "
-                  + thisUser.getRealName()
-                  + "')");
+              "insert into notify(username, portfolio,  program, message) values(?, ?, ?, ?)",
+              thisUserID,
+              thisUser.getPortfolio(),
+              notifyBaseURL2 + "?dialogType=private&mode=r&idnum=" + myMessage.getidnum(),
+              "Post Quiz " + thisQuizName + " Response: " + thisUser.getRealName());
         }
       } // End of Dialog insert
 
@@ -686,18 +630,14 @@ public class jquiz extends HttpServlet {
     try {
       rs =
           jlib.callDB(
-              "SELECT quizes.qname, quizes.quiznum, "
-                  + "getQuestionText(question1id) as q1,"
-                  + " getQuestionText(question2id) as q2, "
-                  + " getQuestionText(question3id) as q3 , "
+              "SELECT quizes.qname, quizes.quiznum, getQuestionText(question1id) as q1,"
+                  + " getQuestionText(question2id) as q2,  getQuestionText(question3id) as q3 , "
                   + "quizattempts.entered from quizattempts, quizes WHERE "
-                  + " quizattempts.portfolio = '"
-                  + thisUser.getPortfolio()
-                  + "' and "
-                  + " quizattempts.userID = '"
-                  + thisUser.getUserID()
-                  + "' and quizes.quiznum = quizattempts.qid "
-                  + " ORDER by entered DESC LIMIT 3");
+                  + " quizattempts.portfolio = ? and "
+                  + " quizattempts.userID = ? and quizes.quiznum = quizattempts.qid "
+                  + " ORDER by entered DESC LIMIT 3",
+              thisUser.getPortfolio(),
+              thisUser.getUserID());
       while (rs.next()) {
         myBuffer.append(
             "<P><a href=\""
@@ -759,16 +699,10 @@ public class jquiz extends HttpServlet {
         // Lets go and get the quiz attempt for this quiz
         ResultSet myQuizAttempt =
             jlib.callDB(
-                "SELECT * from quizattempts "
-                    + " WHERE userid = '"
-                    + thisUser.getUserID()
-                    + "' "
-                    + " and portfolio = '"
-                    + thisUser.getPortfolio()
-                    + "' "
-                    + " and qid = "
-                    + qid
-                    + " ");
+                "SELECT * from quizattempts  WHERE userid = ?  and portfolio = ?  and qid = ?::int ",
+                thisUser.getUserID(),
+                thisUser.getPortfolio(),
+                qid);
         myQuizAttempt.next();
 
         String q1Ans = myQuizAttempt.getString("question1");
@@ -883,11 +817,9 @@ public class jquiz extends HttpServlet {
 
     rs =
         dbInterface.callDB(
-            "SELECT quiznum, qname, attempts from quizes"
-                + " WHERE portfolio = '"
-                + thisUser.getPortfolio()
-                + "' "
-                + (" and startdate < CURRENT_TIMESTAMP and " + "stopdate > CURRENT_TIMESTAMP "));
+            "SELECT quiznum, qname, attempts from quizes WHERE portfolio = ? "
+                + (" and startdate < CURRENT_TIMESTAMP and stopdate > CURRENT_TIMESTAMP "),
+            thisUser.getPortfolio());
 
     if (rs != null) {
       try {
@@ -903,16 +835,11 @@ public class jquiz extends HttpServlet {
           // Figure out how many times this student has attempted the quiz
           rs2 =
               jlib.callDB(
-                  "SELECT attempt from quizattempts WHERE "
-                      + " userid = '"
-                      + thisUser.getUserID()
-                      + "' "
-                      + " and portfolio = '"
-                      + thisUser.getPortfolio()
-                      + "' "
-                      + " and qid = "
-                      + qID
-                      + " ");
+                  "SELECT attempt from quizattempts WHERE  userid = ? "
+                      + " and portfolio = ?  and qid = ?::int ",
+                  thisUser.getUserID(),
+                  thisUser.getPortfolio(),
+                  qID);
           if (rs2.next()) {
             myAttempts = rs2.getString("attempt");
             if (Integer.parseInt(myAttempts) == -1) // Student got them all right!

@@ -26,9 +26,9 @@ public class sqlBean {
 
   public sqlBean() {}
 
-  public ResultSet doSQL(String querry) {
+  public ResultSet doSQL(String querry, Object... params) {
 
-    ResultSet rs = dbInterface.callDB(querry);
+    ResultSet rs = dbInterface.callDB(querry, params);
 
     return rs;
   }

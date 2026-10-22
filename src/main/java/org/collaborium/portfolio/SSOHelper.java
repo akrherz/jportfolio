@@ -89,15 +89,11 @@ public class SSOHelper {
     try {
       jlib.updateDB(
           "INSERT into users(fname, lname, passwd, username, email) "
-              + " values('"
-              + jlib.cleanString(firstName)
-              + "', '"
-              + jlib.cleanString(lastName)
-              + "', 'SSO_AUTH', '"
-              + userID
-              + "', '"
-              + (email != null ? email : "")
-              + "')");
+              + " values(?, ?, 'SSO_AUTH', ?, ?)",
+          jlib.cleanString(firstName),
+          jlib.cleanString(lastName),
+          userID,
+          email != null ? email : "");
     } catch (Exception e) {
       e.printStackTrace();
     }

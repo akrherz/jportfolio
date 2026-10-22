@@ -48,13 +48,9 @@ public class gradebook {
     try {
       rs =
           dbInterface.callDB(
-              "SELECT sum(score) as ssum from scores "
-                  + " WHERE userID = '"
-                  + thisUser.getUserID()
-                  + "' "
-                  + " and portfolio = '"
-                  + thisUser.getPortfolio()
-                  + "' ");
+              "SELECT sum(score) as ssum from scores  WHERE userID = ? and portfolio = ? ",
+              thisUser.getUserID(),
+              thisUser.getPortfolio());
       if (rs.next()) {
         myScore = rs.getString("ssum");
       } else {
@@ -74,15 +70,10 @@ public class gradebook {
       rs =
           dbInterface.callDB(
               "SELECT sum(score) as ssum from scores "
-                  + " WHERE userID = '"
-                  + thisUser.getUserID()
-                  + "' "
-                  + " and portfolio = '"
-                  + thisUser.getPortfolio()
-                  + "' "
-                  + " and app = '"
-                  + app
-                  + "' ");
+                  + " WHERE userID = ? and portfolio = ? and app = ? ",
+              thisUser.getUserID(),
+              thisUser.getPortfolio(),
+              app);
       if (rs.next()) {
         myScore = rs.getString("ssum");
       } else {
@@ -96,33 +87,19 @@ public class gradebook {
 
   public boolean addScoreElement(String app, String ID, String score) {
     dbInterface.updateDB(
-        "DELETE from scores WHERE "
-            + " portfolio = '"
-            + thisUser.getPortfolio()
-            + "' "
-            + " and userID = '"
-            + thisUser.getUserID()
-            + "' "
-            + " and assign = '"
-            + ID
-            + "' and app = '"
-            + app
-            + "' ");
+        "DELETE from scores WHERE portfolio = ? and userID = ? and assign = ? and app = ? ",
+        thisUser.getPortfolio(),
+        thisUser.getUserID(),
+        ID,
+        app);
     dbInterface.updateDB(
-        "INSERT into scores"
-            + " (portfolio, userID, assign, app, score) VALUES"
-            + " ('"
-            + thisUser.getPortfolio()
-            + "', "
-            + " '"
-            + thisUser.getUserID()
-            + "', '"
-            + ID
-            + "', '"
-            + app
-            + "', '"
-            + score
-            + "') ");
+        "INSERT into scores (portfolio, userID, assign, app, score) VALUES"
+            + " (?, ?, ?, ?, ?::numeric) ",
+        thisUser.getPortfolio(),
+        thisUser.getUserID(),
+        ID,
+        app,
+        score);
 
     return true;
   } // End of addScoreElement()
@@ -138,34 +115,22 @@ public class gradebook {
       rs =
           dbInterface.callDB(
               "SELECT score from scores WHERE "
-                  + " portfolio = '"
-                  + thisUser.getPortfolio()
-                  + "' "
-                  + " and userID = '"
-                  + thisUser.getUserID()
-                  + "' and "
-                  + " app = '"
-                  + app
-                  + "' and assign = '"
-                  + ID
-                  + "' ");
+                  + " portfolio = ? and userID = ? and app = ? and assign = ? ",
+              thisUser.getPortfolio(),
+              thisUser.getUserID(),
+              app,
+              ID);
       if (rs.next()) {
         myScore = rs.getString("score");
       } else {
         rs =
             dbInterface.callDB(
                 "SELECT score from scores WHERE "
-                    + " portfolio = '"
-                    + thisUser.getPortfolio()
-                    + "' "
-                    + " and userID = '"
-                    + thisUser.getUserID()
-                    + "' and "
-                    + " app = '"
-                    + app
-                    + "' and assign = '"
-                    + quizName
-                    + "' ");
+                    + " portfolio = ? and userID = ? and app = ? and assign = ? ",
+                thisUser.getPortfolio(),
+                thisUser.getUserID(),
+                app,
+                quizName);
         if (rs.next()) {
           myScore = rs.getString("score");
         }
@@ -184,17 +149,11 @@ public class gradebook {
       rs =
           dbInterface.callDB(
               "SELECT score from scores WHERE "
-                  + " portfolio = '"
-                  + thisUser.getPortfolio()
-                  + "' "
-                  + " and userID = '"
-                  + thisUser.getUserID()
-                  + "' and "
-                  + " app = '"
-                  + app
-                  + "' and assign = '"
-                  + ID
-                  + "' ");
+                  + " portfolio = ? and userID = ? and app = ? and assign = ? ",
+              thisUser.getPortfolio(),
+              thisUser.getUserID(),
+              app,
+              ID);
       if (rs.next()) {
         myScore = rs.getString("score");
       }

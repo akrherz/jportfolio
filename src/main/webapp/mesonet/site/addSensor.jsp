@@ -5,8 +5,8 @@
 You should specify the install date of the sensor if possible.</p>
 
 <%
-  rs = dbInterface.callDB("SELECT * from iem_sensors WHERE "
-   +" portfolio = '"+thisUser.getPortfolio() +"' ");
+  rs = dbInterface.callDB("SELECT * from iem_sensors WHERE portfolio = ?",
+   thisUser.getPortfolio());
   sbuf = new StringBuffer();
   sbuf.append("<option value='null'>None\n");
   while ( rs.next() ){
@@ -51,9 +51,8 @@ You should specify the install date of the sensor if possible.</p>
 <%
   rs = dbInterface.callDB("select h.installed, r.r_name, o.o_serial from "
    +" iem_sensor_history h, iem_sensor o, iem_sensors r, iem_sites s "
-   +" WHERE h.portfolio = '"+ thisUser.getPortfolio() +"' and "
-   +" h.o_id = o.id and o.r_id = r.id and h.s_id = s.id and "
-   +" s.id = "+ id +" ");
+   +" WHERE h.portfolio = ? and  h.o_id = o.id and o.r_id = r.id and h.s_id = s.id and "
+   +" s.id = ?::int", thisUser.getPortfolio(), id);
 
   out.println("<p><table>\n"
    +"<tr><th>Serial</th><th>Name</th><th>Installed</th></tr>\n");

@@ -78,9 +78,8 @@
 <%
   ResultSet rs = dbInterface.callDB("select h.installed, r.r_name, o.o_serial, o.id from "
    +" iem_sensor_history h, iem_sensor o, iem_sensors r, iem_sites s "
-   +" WHERE h.portfolio = '"+ thisUser.getPortfolio() +"' and "
-   +" h.o_id = o.id and o.r_id = r.id and h.s_id = s.id and "
-   +" s.s_mid = '"+ s_mid +"' and h.removed IS null");
+   +" WHERE h.portfolio = ? and  h.o_id = o.id and o.r_id = r.id and h.s_id = s.id and "
+   +" s.s_mid = ? and h.removed IS null", thisUser.getPortfolio(), s_mid);
 
   out.println("<p><table width=\"100%\">\n"
    +"<tr><th>Serial</th><th>Name</th><th>Installed</th><td></td></tr>\n");

@@ -58,9 +58,8 @@ public class portfolioUtils {
         ResultSet rs =
             dbInterface.callDB(
                 "SELECT s.username, u.email from students s, users u "
-                    + " WHERE s.portfolio = '"
-                    + portfolio
-                    + "' and s.username = u.username ");
+                    + " WHERE s.portfolio = ? and s.username = u.username ",
+                portfolio);
         while (rs.next()) {
           String email = rs.getString("email");
           if (email != null) {

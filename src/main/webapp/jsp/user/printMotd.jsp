@@ -14,10 +14,10 @@ ResultSet myResultSet = null;
 <%
 if (idnum == null) {
   myResultSet = dbInterface.callDB("Select issue at time zone 'America/Chicago' as issue, body from motd "
-	+" where portfolio = '"+ thisUser.getPortfolio() +"' ");
+	+" where portfolio = ? ", thisUser.getPortfolio());
 } else {
   myResultSet = dbInterface.callDB("Select issue at time zone 'America/Chicago' as issue, body from motd "
-	+" where id ='"+idnum+"' and portfolio = '"+ thisUser.getPortfolio() +"' ");
+	+" where id = ?::int and portfolio = ? ", idnum, thisUser.getPortfolio());
 }
 %>
 

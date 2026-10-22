@@ -12,9 +12,7 @@
   String name = (String)request.getParameter("name");
   String c_id = (String)request.getParameter("c_id");
   if (c_id != null){ // We must delete a contact
-    dbInterface.updateDB("DELETE from iem_site_contacts WHERE "
-     +" portfolio = '"+ thisUser.getPortfolio() +"' and "
-     +" id = "+ c_id +" ");
+    dbInterface.updateDB("DELETE from iem_site_contacts WHERE  portfolio = ? and id = ?::int", thisUser.getPortfolio(), c_id);
   }
   if (name != null) { // We have a posting
     String email = (String)request.getParameter("email");
@@ -22,8 +20,8 @@
     String phone = (String)request.getParameter("phone");
     if (phone == null) phone = "blank";
     dbInterface.updateDB("INSERT into iem_site_contacts (portfolio, s_mid, "
-     +" name, phone, email) VALUES('"+ thisUser.getPortfolio() +"', "
-     +" '"+ s_mid +"', '"+ name +"', '"+ phone +"', '"+ email +"')");
+     +" name, phone, email) VALUES (?, ?, ?, ?, ?)",
+     thisUser.getPortfolio(), s_mid, name, phone, email);
     out.println("<p>Entered contact info for: "+ name );
   }
 %>

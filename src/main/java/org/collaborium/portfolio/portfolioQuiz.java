@@ -47,8 +47,7 @@ public class portfolioQuiz {
     this.quizID = thisQuizID;
     if (thisQuizID == null || thisQuizID.equals("")) return;
 
-    ResultSet rs =
-        dbInterface.callDB("SELECT * from quizes " + " WHERE quiznum = " + thisQuizID + " ");
+    ResultSet rs = dbInterface.callDB("SELECT * from quizes WHERE quiznum = ?::int ", thisQuizID);
     try {
       if (rs.next()) {
 

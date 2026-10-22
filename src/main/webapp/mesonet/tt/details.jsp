@@ -25,31 +25,26 @@
   if (status != null) { // We have a post to do...
     String comments = (String)request.getParameter("comments");
     dbInterface.updateDB("INSERT into tt_log(portfolio, s_mid, author, "
-     +" status_c, comments, tt_id) VALUES ('"+ thisUser.getPortfolio() +"', "
-     +" '"+ s_mid +"', '"+ thisUser.getUserID() +"', '"+ status +"', "
-     +" '"+ stringUtils.cleanString( comments ) +"', "+ tt_id +")");
+     +" status_c, comments, tt_id) VALUES (?, ?, ?, ?, ?, ?::int)",
+     thisUser.getPortfolio(), s_mid, thisUser.getUserID(), status,
+     stringUtils.cleanString(comments), tt_id);
     /** Change status of tt and update timestamp */
-    dbInterface.updateDB("UPDATE tt_base SET last = 'NOW'::timestamp "
-     +", sensor = '"+ tt_sensor +"' WHERE id = "+ tt_id );
+    dbInterface.updateDB("UPDATE tt_base SET last = 'NOW'::timestamp , sensor = ? WHERE id = ?::int", tt_sensor, tt_id);
     if (! status.equalsIgnoreCase("OKAY") ){ // Update status
-      dbInterface.updateDB("UPDATE tt_base SET status = '"+ status +"' "
-      +" WHERE id = "+ tt_id );
+      dbInterface.updateDB("UPDATE tt_base SET status = ?  WHERE id = ?::int", status, tt_id);
       thisTT.setStatus( status );
     }
     if (status.equalsIgnoreCase("CLOSED") ){  // Close TT
-      dbInterface.updateDB("UPDATE tt_base SET closed = 'NOW'::timestamp "
-       +" WHERE id = "+ tt_id );
+      dbInterface.updateDB("UPDATE tt_base SET closed = 'NOW'::timestamp  WHERE id = ?::int", tt_id);
       thisTT.setStatus( status );
     }
     String emailCheck = (String)request.getParameter("email");
     if (emailCheck.equalsIgnoreCase("yes") ){
-      ResultSet smeta = dbInterface.callDB("SELECT * from iem_sites WHERE "
-       +" portfolio = '"+ thisUser.getPortfolio() +"' and s_mid = '"+ s_mid +"' ");
+      ResultSet smeta = dbInterface.callDB("SELECT * from iem_sites WHERE  portfolio = ? and s_mid = ?", thisUser.getPortfolio(), s_mid);
       smeta.next();
       String siteName = smeta.getString("s_name");
 
-      ResultSet contacts = dbInterface.callDB("SELECT * from iem_site_contacts "
-       +" WHERE s_mid = '"+ s_mid +"' and email IS NOT NULL");
+      ResultSet contacts = dbInterface.callDB("SELECT * from iem_site_contacts  WHERE s_mid = ? and email IS NOT NULL", s_mid);
         while ( contacts.next() ) {
           String emailAddr = contacts.getString("email");
           String message = "\n"
