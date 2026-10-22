@@ -29,6 +29,8 @@ import org.collaborium.util.*; // Import IITAP Utilities
  * @author Daryl Herzmann (akrherz@iastate.edu)
  */
 public class jlib {
+  /** Changes on each deploy/restart so browsers refetch updated CSS. */
+  private static final String ASSET_VERSION = String.valueOf(System.currentTimeMillis());
 
   public static String servletHttpBase = settings.servletHttpBase;
   public static String httpBase = settings.httpBase;
@@ -266,7 +268,9 @@ public class jlib {
             + "</TITLE>\n"
             + " \t<link rel=stylesheet type=text/css href=\""
             + httpBase
-            + "/css/screen.css?style="
+            + "/css/screen.css?v="
+            + ASSET_VERSION
+            + "&style="
             + style
             + "\">\n"
             + "<script language=\"JavaScript\" type=\"text/javascript\">\n"
@@ -348,12 +352,16 @@ public class jlib {
             + "</title>\n"
             + " \t<link rel=\"stylesheet\" type=\"text/css\" href=\""
             + httpBase
-            + "/css/screen.css?style="
+            + "/css/screen.css?v="
+            + ASSET_VERSION
+            + "&style="
             + style
             + "\" media=\"all\">\n"
             + " \t<link rel=\"stylesheet\" type=\"text/css\" href=\""
             + httpBase
-            + "/css/print.css?style="
+            + "/css/print.css?v="
+            + ASSET_VERSION
+            + "&style="
             + style
             + "\" media=\"print\">\n"
             + "<script src=\""
@@ -405,7 +413,16 @@ public class jlib {
       /* Forecast */
       if (thisUser.usesForecast) {
         uri = "/jportfolio/servlet/forecast";
-        sbuf.append(tabBox("main", "Forecast", uri, selected));
+        String label = "Forecast";
+        try {
+          if (org.collaborium.portfolio.forecast.forecast.isForecastPending(thisUser)) {
+            label = "Forecast <span class=\"fx-badge\">!</span>";
+          }
+        } catch (Exception ex) {
+          plogger.report("Problem checking pending forecast " + ex);
+        }
+        String forecastTab = tabBox("main", "Forecast", uri, selected);
+        sbuf.append(forecastTab.replace(">Forecast</a>", ">" + label + "</a>"));
       }
 
       /* Quiz */
