@@ -494,6 +494,11 @@ public class forecast extends HttpServlet {
 
     if (sqlDate == null) sqlDate = "tomorrow";
 
+    if (!isForecastDay(thisUser)) {
+      return "<div class='fx-status fx-pending'><b>The forecast period is closed.</b> "
+          + "Forecasts can no longer be submitted or amended.</div>\n";
+    }
+
     forecastDay thisDay = new forecastDay(thisUser, sqlDate);
     if (thisDay.getForecast())
       sbuf.append(
