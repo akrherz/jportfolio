@@ -23,12 +23,18 @@ package org.collaborium.portfolio.forecast;
 
 import java.io.*;
 import java.sql.*;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import org.collaborium.portfolio.*;
 import org.collaborium.util.*;
 
 public class forecast extends HttpServlet {
+
+  private static final ZoneId FORECAST_ZONE = ZoneId.of("America/Chicago");
 
   public void init(ServletConfig config) throws ServletException {
     super.init(config);
@@ -438,7 +444,8 @@ public class forecast extends HttpServlet {
 
   /** True when a forecast is currently due and this user has not yet submitted it. */
   public static boolean isForecastPending(portfolioUser thisUser) {
-    return isForecastDay(thisUser) && !new forecastDay(thisUser, "tomorrow").getForecast();
+    String forecastDate = activeForecastDate(thisUser);
+    return forecastDate != null && !new forecastDay(thisUser, forecastDate).getForecast();
   }
 
   public String classOptions(portfolioUser thisUser, String thisPageURL) {
@@ -446,8 +453,9 @@ public class forecast extends HttpServlet {
 
     sbuf.append(jlib.topBox("Forecast Options:"));
     sbuf.append("<ul>\n");
-    if (isForecastDay(thisUser)) {
-      if (new forecastDay(thisUser, "tomorrow").getForecast()) {
+    String forecastDate = activeForecastDate(thisUser);
+    if (forecastDate != null) {
+      if (new forecastDay(thisUser, forecastDate).getForecast()) {
         sbuf.append(
             "<LI><div class='fx-status fx-done'><b>&#10004; Forecast submitted</b><br>"
                 + "You're all set.<br><a href='"
@@ -491,12 +499,12 @@ public class forecast extends HttpServlet {
   public String makeForecast(portfolioUser thisUser, String sqlDate, String thisPageURL) {
     StringBuffer sbuf = new StringBuffer();
 
-    if (sqlDate == null) sqlDate = "tomorrow";
-
-    if (!isForecastDay(thisUser)) {
+    String forecastDate = activeForecastDate(thisUser);
+    if (forecastDate == null) {
       return "<div class='fx-status fx-pending'><b>The forecast period is closed.</b> "
           + "Forecasts can no longer be submitted or amended.</div>\n";
     }
+    if (sqlDate == null) sqlDate = forecastDate;
 
     forecastDay thisDay = new forecastDay(thisUser, sqlDate);
     if (thisDay.getForecast())
@@ -586,40 +594,44 @@ public class forecast extends HttpServlet {
    * @return boolean for it is is or not.
    */
   public static boolean isForecastDay(portfolioUser thisUser) {
-    if (thisUser == null) return false;
+    return activeForecastDate(thisUser) != null;
+  }
 
-    if (!thisUser.doForecast()) return false;
+  private static String activeForecastDate(portfolioUser thisUser) {
+    return activeForecastDate(thisUser, Instant.now());
+  }
+
+  static String activeForecastDate(portfolioUser thisUser, Instant now) {
+    if (thisUser == null || !thisUser.doForecast()) return null;
 
     try {
       ResultSet rs =
           dbInterface.callDB(
-              "SELECT day from forecast_days  WHERE portfolio = ? "
-                  + " and day = 'TODAY'::date + '1 day'::interval ",
-              thisUser.getPortfolio());
+              "SELECT fxtime from portfolios WHERE portfolio = ?", thisUser.getPortfolio());
       if (rs.next()) {
-        ResultSet rs2 =
+        int fxtime = rs.getInt("fxtime");
+        LocalDate forecastDate = forecastDateBeforeDeadline(now, fxtime);
+        if (forecastDate == null) return null;
+
+        ResultSet days =
             dbInterface.callDB(
-                "SELECT fxtime from portfolios WHERE portfolio = ?", thisUser.getPortfolio());
-        if (rs2.next()) {
-          int fxtime = rs2.getInt("fxtime");
-          // Get current hour in America/Chicago
-          java.util.TimeZone tz = java.util.TimeZone.getTimeZone("America/Chicago");
-          java.util.Calendar cal = java.util.Calendar.getInstance(tz);
-          int currentHour = cal.get(java.util.Calendar.HOUR_OF_DAY);
-          // Add debugging for now.
-          plogger.report("Current Hour: " + currentHour + " Forecast Time: " + fxtime);
-          if (fxtime > currentHour) {
-            return true;
-          }
-        }
+                "SELECT day from forecast_days WHERE portfolio = ? and day = ?::date",
+                thisUser.getPortfolio(),
+                forecastDate.toString());
+        if (days.next()) return forecastDate.toString();
       }
     } catch (Exception ex) {
       plogger.report("Problem Getting Active Days " + ex);
       ex.printStackTrace();
     }
 
-    return false;
-  } // End of isForecastDay
+    return null;
+  }
+
+  static LocalDate forecastDateBeforeDeadline(Instant now, int fxtime) {
+    ZonedDateTime localNow = now.atZone(FORECAST_ZONE);
+    return localNow.getHour() < fxtime ? localNow.toLocalDate().plusDays(1) : null;
+  }
 
   public String enterForecast(portfolioUser thisUser, HttpServletRequest req) throws myException {
     StringBuffer sbuf = new StringBuffer();
@@ -627,8 +639,6 @@ public class forecast extends HttpServlet {
     if (thisUser == null) {
       throw new myException("No logged in user, cannot enter forecast.");
     }
-
-    String sqlDate = "tomorrow";
 
     int Int_local_high = parseRequiredInt(req, "local_high");
     int Int_local_low = parseRequiredInt(req, "local_low");
@@ -653,7 +663,8 @@ public class forecast extends HttpServlet {
     }
     String discussion = stringUtils.cleanString(req.getParameter("discussion"));
 
-    if (!isForecastDay(thisUser)) {
+    String sqlDate = activeForecastDate(thisUser);
+    if (sqlDate == null) {
       return "Forecast Period Expired.  Sorry!";
     }
 

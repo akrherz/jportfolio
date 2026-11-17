@@ -292,7 +292,7 @@ public class forecastAdmin extends HttpServlet {
 
     sbuf.append(jlib.topBox("Forecast Deadline"));
     sbuf.append(
-        "<blockquote class=\"instructions\">You must specify a local "
+        "<blockquote class=\"instructions\">You must specify a Chicago local "
             + "time at which the\n"
             + " forecasts are due by.  This time is in the format of "
             + "24HH, which means that 7 PM \n"
