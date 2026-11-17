@@ -5,6 +5,12 @@ circa late 1990s java servlet management stuff
 
 Testing changes
 ===============
+Run the unit tests with:
+```
+mvn test
+```
+GitHub CI runs these tests before building the package.
+
 Run the command
 ```
 mvn package cargo:run
